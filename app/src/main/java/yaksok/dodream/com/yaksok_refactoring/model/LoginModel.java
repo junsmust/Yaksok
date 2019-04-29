@@ -58,7 +58,7 @@ public class LoginModel implements IPresennterToModel {
            // presenter_login.OnErrorMessage("아이디 또는 비밀번호가 일치하지 않습니다.");
 //        }
     }
-    void performLoginOperation(User_Info_Model user_info_model) {
+    void performLoginOperation(final User_Info_Model user_info_model) {
 
         Log.d("maybe_perform","maybe_perform");
         Retrofit retrofit = new Retrofit.Builder()
@@ -85,6 +85,7 @@ public class LoginModel implements IPresennterToModel {
                 if(bodyVO.getStatus().equals("200")){
                     presenter_login.OnLoginResponse(true);
                     presenter_login.MakeToastMessage("로그인 성공입니다.!");
+                    User_Id.user_Id = user_info_model.getId();
                 }
                 else if (bodyVO.getStatus().equals("024")) {
                     presenter_login.OnLoginResponse(false);

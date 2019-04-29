@@ -104,7 +104,6 @@ public class Login_activity extends AppCompatActivity implements IPresenterToVie
                 signUp_btn.performClick();
                 break;
 
-
         }
     }
 }
