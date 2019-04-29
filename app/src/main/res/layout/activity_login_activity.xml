@@ -130,7 +130,6 @@
                     android:layout_height="20dp"
                     android:layout_gravity="center"
                     android:layout_margin="5dp"
-                    android:background="@color/colorAc"
                     android:text="@string/login_btn_txt"
                     android:textColor="@color/colorPrimaryDark"
                     android:textStyle="bold"
