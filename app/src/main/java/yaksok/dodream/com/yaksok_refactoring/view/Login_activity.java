@@ -39,8 +39,6 @@ public class Login_activity extends AppCompatActivity implements IPresenterToVie
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login_activity);
 
-
-
         id_edt = (EditText) findViewById(R.id.main_id_edt);
         pw_edt = (EditText) findViewById(R.id.main_pw_edt);
         signUp_btn = (Button) findViewById(R.id.login_sign_up_btn);
