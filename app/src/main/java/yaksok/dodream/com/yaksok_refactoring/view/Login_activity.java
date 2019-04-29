@@ -168,9 +168,12 @@ public class Login_activity extends AppCompatActivity implements IPresenterToVie
 
     @Override
     public void onClick(View v) {
-        switch (v.getId()){
 
 
+        switch (v.getId()) {
+            case R.id.fake_sign_up:
+                signUp_btn.performClick();
+                break;
 
 
         }
