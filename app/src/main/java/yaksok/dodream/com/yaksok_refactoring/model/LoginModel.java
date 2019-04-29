@@ -1,6 +1,15 @@
 package yaksok.dodream.com.yaksok_refactoring.model;
 
+import android.annotation.SuppressLint;
+import android.content.Context;
 import android.util.Log;
+
+import com.google.gson.JsonObject;
+import com.nhn.android.naverlogin.OAuthLogin;
+import com.nhn.android.naverlogin.OAuthLoginHandler;
+
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -23,8 +32,15 @@ public class LoginModel implements IPresennterToModel {
 
    User_Info_Model user_info_model = new User_Info_Model();
 
+
+
    private static UserService userService;
    Presenter_Login presenter_login;
+    private static OAuthLogin oAuthLogin;
+    private static Context mContext;
+    private String tocken,data;
+
+
 
     public static final Pattern VALID_PASSWOLD_REGEX_ALPHA_NUM = Pattern.compile("^[a-zA-Z0-9!@.#$%^&*?_~]{4,10}$"); // 4자리 ~ 10자리까지 가능
 
@@ -115,6 +131,45 @@ public class LoginModel implements IPresennterToModel {
 
     }
 
+
+    @SuppressLint("HandlerLeak")
+    @Override
+    public void NaverOAuthHandler(JSONObject jsonObject) throws JSONException {
+
+
+
+        String id = jsonObject.getJSONObject("response").getString("id");
+        String name = jsonObject.getJSONObject("response").getString("name");
+        String profile_path = jsonObject.getJSONObject("response").getString("profile_image");
+        String email = jsonObject.getJSONObject("response").getString("email");
+        String birthday = jsonObject.getJSONObject("response").getString("birthday");
+        String age_range = jsonObject.getJSONObject("response").getString("age");
+
+       user_info_model.setId(id);
+       user_info_model.setUserType("N");
+
+        performLoginOperation(user_info_model);
+
+
+
+
+
+
+
+    }
+
+
+
+
+    @Override
+    public void getTocken(String token) {
+        this.tocken =  token;
+    }
+
+    @Override
+    public void getData(String data) {
+        this.data  = data;
+    }
 
 
 

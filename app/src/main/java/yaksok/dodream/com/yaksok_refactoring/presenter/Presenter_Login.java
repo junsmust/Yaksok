@@ -1,9 +1,15 @@
 package yaksok.dodream.com.yaksok_refactoring.presenter;
 
+import com.google.gson.JsonObject;
+import com.nhn.android.naverlogin.OAuthLoginHandler;
+
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import yaksok.dodream.com.yaksok_refactoring.model.LoginModel;
 import yaksok.dodream.com.yaksok_refactoring.model.User_Info_Model;
 import yaksok.dodream.com.yaksok_refactoring.view.IPresenterToView;
-import yaksok.dodream.com.yaksok_refactoring.model.User_Info_Model;
+
 
 public class Presenter_Login implements ITo_Presenter {
     private IPresenterToView view;
@@ -40,6 +46,7 @@ public class Presenter_Login implements ITo_Presenter {
 
     }
 
+
     @Override
     public void OnErrorMessage(String message) {
         view.onError(message);
@@ -49,5 +56,14 @@ public class Presenter_Login implements ITo_Presenter {
     public void MakeToastMessage(String message) {
         view.onMakeToastMessage(message);
     }
+
+    @Override
+    public void NaverOAuthHandler(JSONObject jsonObject) throws JSONException {
+        model.NaverOAuthHandler(jsonObject);
+    }
+
+
+
+
 
 }
