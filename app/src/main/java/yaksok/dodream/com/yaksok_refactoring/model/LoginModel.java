@@ -85,7 +85,7 @@ public class LoginModel implements IPresennterToModel {
                 if(bodyVO.getStatus().equals("200")){
                     presenter_login.OnLoginResponse(true);
                     presenter_login.MakeToastMessage("로그인 성공입니다.!");
-                    User_Id.user_Id = user_info_model.getId();
+                    User_Id.setUser_Id(user_info_model.getId());
                 }
                 else if (bodyVO.getStatus().equals("024")) {
                     presenter_login.OnLoginResponse(false);

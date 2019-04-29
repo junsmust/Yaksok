@@ -2,7 +2,9 @@ package yaksok.dodream.com.yaksok_refactoring.vo;
 
 import retrofit2.Call;
 import retrofit2.http.Body;
+import retrofit2.http.GET;
 import retrofit2.http.POST;
+import retrofit2.http.Path;
 import yaksok.dodream.com.yaksok_refactoring.model.User_Info_Model;
 
 
@@ -11,6 +13,9 @@ public interface UserService {
 
     @POST("/users/login")
     Call<BodyVO>postGneralLogin(@Body User_Info_Model userVO);
+
+    @GET("/mymedicines/{userId}")
+    Call<MyPillVO>getMymediciens(@Path("userId")String userId);
 
 //    @POST("/users")
 //    Call<BodyVO>postSignUp(@Body UserVO userVO);
