@@ -7,6 +7,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 
 import yaksok.dodream.com.yaksok_refactoring.R;
+import yaksok.dodream.com.yaksok_refactoring.view.login.Login_activity;
 
 
 public class Splash extends AppCompatActivity {

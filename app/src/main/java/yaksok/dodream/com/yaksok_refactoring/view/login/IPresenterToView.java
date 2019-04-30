@@ -1,4 +1,4 @@
-package yaksok.dodream.com.yaksok_refactoring.view;
+package yaksok.dodream.com.yaksok_refactoring.view.login;
 
 import com.nhn.android.naverlogin.OAuthLoginHandler;
 
@@ -7,6 +7,7 @@ public interface IPresenterToView {
     void onError(String errorMsg);
     void isLoggedIn(boolean isLoggedIn);
     void onMakeToastMessage(String message);
+    void returnToLoginActivity();
 
 
 }

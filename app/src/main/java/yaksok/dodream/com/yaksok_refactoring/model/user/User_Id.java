@@ -1,4 +1,4 @@
-package yaksok.dodream.com.yaksok_refactoring.model;
+package yaksok.dodream.com.yaksok_refactoring.model.user;
 
 public class User_Id {
     public static String user_Id;

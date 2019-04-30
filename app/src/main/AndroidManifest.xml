@@ -6,6 +6,7 @@
     <uses-permission android:name="android.permission.INTERNET" />
 
     <application
+        android:name=".view.kakao.GlobalApplication"
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
@@ -20,9 +21,16 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name="yaksok.dodream.com.yaksok_refactoring.view.Login_activity" />
+        <activity android:name="yaksok.dodream.com.yaksok_refactoring.view.login.Login_activity" />
+        <meta-data
+            android:name="com.kakao.sdk.AppKey"
+            android:value="@string/kakao_app_key" />
+        <meta-data
+            android:name="com.kakao.sdk.ClientSecret"
+            android:value="kakao client secret value" />
         <activity android:name="yaksok.dodream.com.yaksok_refactoring.view.MainPage_activity"></activity>
         <activity android:name=".view.MyPill.MyPill_activity"/>
+        <activity android:name=".view.KakaoSignUp"/>
     </application>
 
 </manifest>
