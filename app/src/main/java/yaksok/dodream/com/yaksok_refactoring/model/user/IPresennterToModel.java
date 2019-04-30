@@ -1,13 +1,12 @@
-package yaksok.dodream.com.yaksok_refactoring.presenter;
+package yaksok.dodream.com.yaksok_refactoring.model.user;
 
 
-import com.google.gson.JsonObject;
-import com.nhn.android.naverlogin.OAuthLoginHandler;
+import com.kakao.usermgmt.response.model.UserAccount;
 
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import yaksok.dodream.com.yaksok_refactoring.model.User_Info_Model;
+import yaksok.dodream.com.yaksok_refactoring.model.user.User_Info_Model;
 
 public interface IPresennterToModel  {
 
@@ -18,5 +17,8 @@ public interface IPresennterToModel  {
    //OAuthLoginHandler getOAuth();
     void getTocken(String token);
     void getData(String data);
+    void kakaoLoginMethod();
+    void handleScopeError(UserAccount userAccount);
+
 
 }

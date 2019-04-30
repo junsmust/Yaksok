@@ -1,14 +1,15 @@
-package yaksok.dodream.com.yaksok_refactoring.presenter;
+package yaksok.dodream.com.yaksok_refactoring.presenter.login_presenter;
 
-import com.google.gson.JsonObject;
-import com.nhn.android.naverlogin.OAuthLoginHandler;
+import com.kakao.usermgmt.response.model.UserAccount;
 
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import yaksok.dodream.com.yaksok_refactoring.model.LoginModel;
-import yaksok.dodream.com.yaksok_refactoring.model.User_Info_Model;
-import yaksok.dodream.com.yaksok_refactoring.view.IPresenterToView;
+import yaksok.dodream.com.yaksok_refactoring.model.user.IPresennterToModel;
+import yaksok.dodream.com.yaksok_refactoring.model.user.LoginModel;
+import yaksok.dodream.com.yaksok_refactoring.model.user.User_Info_Model;
+import yaksok.dodream.com.yaksok_refactoring.presenter.login_presenter.ITo_Presenter;
+import yaksok.dodream.com.yaksok_refactoring.view.login.IPresenterToView;
 
 
 public class Presenter_Login implements ITo_Presenter {
@@ -62,8 +63,20 @@ public class Presenter_Login implements ITo_Presenter {
         model.NaverOAuthHandler(jsonObject);
     }
 
+    @Override
+    public void kakaoLoginMethod() {
+        model.kakaoLoginMethod();
+    }
 
+    @Override
+    public void handleScopeError(UserAccount userAccount) {
+        model.handleScopeError(userAccount);
+    }
 
+    @Override
+    public void redirectLoginActivity() {
+        view.returnToLoginActivity();
+    }
 
 
 }

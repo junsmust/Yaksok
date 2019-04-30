@@ -1,16 +1,23 @@
-package yaksok.dodream.com.yaksok_refactoring.model;
+package yaksok.dodream.com.yaksok_refactoring.model.user;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.util.Log;
 
-import com.google.gson.JsonObject;
+import com.kakao.network.ErrorResult;
+import com.kakao.usermgmt.UserManagement;
+import com.kakao.usermgmt.callback.MeV2ResponseCallback;
+import com.kakao.usermgmt.response.MeV2Response;
+import com.kakao.usermgmt.response.model.Gender;
+import com.kakao.usermgmt.response.model.UserAccount;
+import com.kakao.util.OptionalBoolean;
 import com.nhn.android.naverlogin.OAuthLogin;
-import com.nhn.android.naverlogin.OAuthLoginHandler;
 
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -20,13 +27,9 @@ import retrofit2.Response;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 import retrofit2.converter.scalars.ScalarsConverterFactory;
-import yaksok.dodream.com.yaksok_refactoring.presenter.IPresennterToModel;
-import yaksok.dodream.com.yaksok_refactoring.presenter.Presenter_Login;
+import yaksok.dodream.com.yaksok_refactoring.presenter.login_presenter.Presenter_Login;
 import yaksok.dodream.com.yaksok_refactoring.vo.BodyVO;
 import yaksok.dodream.com.yaksok_refactoring.vo.UserService;
-import yaksok.dodream.com.yaksok_refactoring.presenter.Presenter_Login;
-import yaksok.dodream.com.yaksok_refactoring.vo.UserService;
-import yaksok.dodream.com.yaksok_refactoring.model.User_Info_Model;
 
 public class LoginModel implements IPresennterToModel {
 
@@ -39,6 +42,8 @@ public class LoginModel implements IPresennterToModel {
     private static OAuthLogin oAuthLogin;
     private static Context mContext;
     private String tocken,data;
+    String id,pw;
+    Gender user_gender;
 
 
 
@@ -122,6 +127,8 @@ public class LoginModel implements IPresennterToModel {
             @Override
             public void onFailure(Call<BodyVO> call, Throwable t) {
                 Log.d("test",t.getMessage());
+
+                presenter_login.redirectLoginActivity();
             }
         });
 
@@ -139,7 +146,7 @@ public class LoginModel implements IPresennterToModel {
 
 
 
-        String id = jsonObject.getJSONObject("response").getString("id");
+        id = jsonObject.getJSONObject("response").getString("id");
         String name = jsonObject.getJSONObject("response").getString("name");
         String profile_path = jsonObject.getJSONObject("response").getString("profile_image");
         String email = jsonObject.getJSONObject("response").getString("email");
@@ -172,6 +179,104 @@ public class LoginModel implements IPresennterToModel {
         this.data  = data;
     }
 
+    @Override
+    public void kakaoLoginMethod() {
+        List<String> keys = new ArrayList<>();
+        keys.add("properties.nickname");
+        keys.add("properties.profile_image");
+        keys.add("kakao_account.email");
+        keys.add("kakao_account.birthday");
+        keys.add("kakao_account.gender");
+        keys.add("kakao_account.gender");
+        keys.add("kakao_account.age_range");
+
+
+
+        UserManagement.getInstance().me(keys, new MeV2ResponseCallback() {
+            @Override
+            public void onSuccess(MeV2Response result) {
+
+
+                OptionalBoolean gender = result.getKakaoAccount().hasGender();
+                if(gender == OptionalBoolean.FALSE){
+                    handleScopeError(result.getKakaoAccount());
+
+                    user_info_model.setId(String.valueOf(result.getId()));
+                    user_info_model.setUserType("K");
+                    /*user_info_model.setNickname(result.getNickname());
+                    user_info_model.setProfileImagePath(result.getProfileImagePath());
+                    user_info_model.setEmail(result.getKakaoAccount().getEmail());
+                    user_info_model.setBirthday(result.getKakaoAccount().getBirthday());
+                    user_info_model.setAgeRange(String.valueOf(result.getKakaoAccount().getAgeRange()));*/
+
+                    Log.i("nickname",result.getNickname());
+                    Log.i("profile_img",result.getProfileImagePath());
+                    Log.i("email",result.getKakaoAccount().getEmail());
+                   // Log.i("birthday",kakaoUser_info.getBirth());
+                    Log.i("id",""+result.getId());
+                   /* Log.i("arange",""+kakaoUser_info.getK_age());
+                    Log.i("userType",""+kakaoUser_info.getUser_type());
+*/
+                   /* if(LoginActivity.loginInformation.getBoolean("auto",true)){
+                        LoginActivity.editor.putString("id",String.valueOf(kakaoUser_info.getId()));
+                        LoginActivity.editor.putString("userType","K");
+                        LoginActivity.editor.apply();
+                    }
+                    LoginActivity.userType = kakaoUser_info.getUser_type();
+*/
+
+                    performLoginOperation(user_info_model);
+
+                    //presenter_login.redirectLoginActivity();
+
+                }
+
+
+
+
+            }
+
+            @Override
+            public void onFailure(ErrorResult errorResult) {
+                super.onFailure(errorResult);
+            }
+
+
+            @Override
+            public void onSessionClosed(ErrorResult errorResult) {
+
+            }
+
+
+
+        });
+    }
+
+    @Override
+    public void handleScopeError(UserAccount userAccount) {
+        List<String> neededScopes = new ArrayList<>();
+
+        /*if (userAccount.needsScopeGender()) {
+            neededScopes.add("gender");
+
+        }else{
+
+        }*/
+      /*  Session.getCurrentSession().updateScopes(this, neededScopes, new
+                AccessTokenCallback() {
+                    @Override
+                    public void onAccessTokenReceived(AccessToken accessToken) {
+
+
+
+                    }
+
+                    @Override
+                    public void onAccessTokenFailure(ErrorResult errorResult) {
+                        // 동의 얻기 실패
+                    }
+                });*/
+    }
 
 
 

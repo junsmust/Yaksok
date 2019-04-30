@@ -5,8 +5,7 @@ import com.google.gson.annotations.SerializedName;
 
 import java.util.List;
 
-import yaksok.dodream.com.yaksok_refactoring.model.User_Info_Model;
-import yaksok.dodream.com.yaksok_refactoring.model.User_Info_Model;
+import yaksok.dodream.com.yaksok_refactoring.model.user.User_Info_Model;
 
 //BODY{
 //	“id” : “…” NOT NULL

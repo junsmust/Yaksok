@@ -184,6 +184,17 @@
         </FrameLayout>
 
     </LinearLayout>
+
+    <!--android:layout_below="@id/frame_1">-->
+
+
+    <com.kakao.usermgmt.LoginButton
+        android:id="@+id/login_kakao_btn"
+        android:layout_width="187dp"
+        android:layout_height="30dp"
+        android:layout_gravity="center">
+
+    </com.kakao.usermgmt.LoginButton>
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
