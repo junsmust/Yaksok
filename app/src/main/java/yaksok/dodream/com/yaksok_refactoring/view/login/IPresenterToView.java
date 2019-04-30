@@ -7,7 +7,6 @@ public interface IPresenterToView {
     void onError(String errorMsg);
     void isLoggedIn(boolean isLoggedIn);
     void onMakeToastMessage(String message);
-    void kakaoLogin();
     void returnToLoginActivity();
 
 

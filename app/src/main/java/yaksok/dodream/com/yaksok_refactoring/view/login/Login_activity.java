@@ -200,10 +200,6 @@ public class Login_activity extends AppCompatActivity implements IPresenterToVie
         Toast.makeText(getApplicationContext(), message, Toast.LENGTH_LONG).show();
     }
 
-    @Override
-    public void kakaoLogin() {
-
-    }
 
     @Override
     public void returnToLoginActivity() {
