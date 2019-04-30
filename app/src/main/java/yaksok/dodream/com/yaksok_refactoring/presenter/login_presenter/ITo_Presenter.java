@@ -1,6 +1,8 @@
 package yaksok.dodream.com.yaksok_refactoring.presenter.login_presenter;
 
 
+import android.content.SharedPreferences;
+
 import com.kakao.usermgmt.response.model.UserAccount;
 
 import org.json.JSONException;
@@ -19,6 +21,9 @@ public interface ITo_Presenter {
      void kakaoLoginMethod();
      void handleScopeError(UserAccount userAccount);
      void redirectLoginActivity();
+     void checkBox(SharedPreferences sharedPreferences,SharedPreferences.Editor editor,boolean auto);
+     void autoLogin(String id, String pw,String userType);
+     void autoLogin(String id,String userType);
 
 
 

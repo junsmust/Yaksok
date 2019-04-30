@@ -3,12 +3,16 @@ package yaksok.dodream.com.yaksok_refactoring.view.login;
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.Button;
+import android.widget.CheckBox;
+import android.widget.CompoundButton;
 import android.widget.EditText;
 import android.widget.Toast;
 
@@ -38,10 +42,12 @@ public class Login_activity extends AppCompatActivity implements IPresenterToVie
     public Button signUp_btn, login_btn;
     private User_Info_Model user_info_model;
     private Presenter_Login presenter_login;
+    private CheckBox checkBox;
     UserService userService;
     Retrofit retrofit;
     OAuthLoginHandler moAuthLoginHandler;
     String tocken;
+
 
     //kakao
 
@@ -50,6 +56,8 @@ public class Login_activity extends AppCompatActivity implements IPresenterToVie
     ISessionCallback callback;
 
 
+    public SharedPreferences loginInformation;
+    public  SharedPreferences.Editor editor;
 
 
     //네이버 로그인
@@ -74,14 +82,75 @@ public class Login_activity extends AppCompatActivity implements IPresenterToVie
         pw_edt = (EditText) findViewById(R.id.main_pw_edt);
         signUp_btn = (Button) findViewById(R.id.login_sign_up_btn);
         login_btn = (Button) findViewById(R.id.login_normal_btn);
-        Button btn = (Button) findViewById(R.id.btn);
+        checkBox = (CheckBox)findViewById(R.id.setAutoLogin_check);
+
+        loginInformation = getSharedPreferences("user",MODE_PRIVATE);
+        editor = loginInformation.edit();
 
         presenter_login = new Presenter_Login(this);
+
+
+        checkBox.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                if(isChecked){
+
+                    editor.putBoolean("auto", checkBox.isChecked());
+                    editor.apply();
+                    presenter_login.checkBox(loginInformation,editor,true);
+                    Log.d("aaaaa"," "+loginInformation.getBoolean("aaaau",true));
+                }
+                else{
+
+                }
+
+            }
+        });
+
+
+        //Log.d("auttto",""+loginInformation.getBoolean("auto",true)+loginInformation.getString("id","")+loginInformation.getString("userType",""));
+
+        if(loginInformation.getBoolean("auto",true)){
+
+            switch (loginInformation.getString("userType","")){
+                case "G":
+
+                    String test_id = loginInformation.getString("id","");
+                    String test_pw = loginInformation.getString("pw","");
+                    String test_userType = loginInformation.getString("userType","");
+                    Log.d("auttto",""+test_id+", "+test_pw+""+test_userType);
+
+                    presenter_login.autoLogin(test_id,test_pw,test_userType);
+
+
+                    break;
+                case "N":
+                    String naver_id = loginInformation.getString("id","");
+                    String naver_type = "N";
+                    presenter_login.autoLogin(naver_id,naver_type);
+
+                    break;
+                case "K":
+                    String kakao_id = loginInformation.getString("id","");
+                    String kakao_type = loginInformation.getString("userType","");
+                    presenter_login.autoLogin(kakao_id,kakao_type);
+                    break;
+            }
+
+        }
+        else{
+            checkBox.setChecked(false);
+        }
+
+        Button btn = (Button) findViewById(R.id.btn);
+
+
 
         login_btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Toast.makeText(getApplicationContext(), "test", Toast.LENGTH_LONG).show();
+                //Toast.makeText(getApplicationContext(), "test", Toast.LENGTH_LONG).show();
+                presenter_login.autoLogin(id_edt.getText().toString(),pw_edt.getText().toString(),"G");
             }
         });
 

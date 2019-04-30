@@ -1,5 +1,8 @@
 package yaksok.dodream.com.yaksok_refactoring.presenter.login_presenter;
 
+import android.content.SharedPreferences;
+import android.util.Log;
+
 import com.kakao.usermgmt.response.model.UserAccount;
 
 import org.json.JSONException;
@@ -21,9 +24,6 @@ public class Presenter_Login implements ITo_Presenter {
         this.view = view;
         model = new LoginModel(this);
     }
-
-
-
 
     @Override
     public void Login(User_Info_Model user_info_model) {
@@ -76,6 +76,22 @@ public class Presenter_Login implements ITo_Presenter {
     @Override
     public void redirectLoginActivity() {
         view.returnToLoginActivity();
+    }
+
+    @Override
+    public void checkBox(SharedPreferences sharedPreferences, SharedPreferences.Editor editor,boolean auto) {
+        model.checkBox(sharedPreferences,editor,auto);
+    }
+
+    @Override
+    public void autoLogin(String id, String pw, String userType) {
+        Log.d("!!!!",id);
+        model.autoLogin(id,pw,userType);
+    }
+
+    @Override
+    public void autoLogin(String id, String userType) {
+        model.autoLogin(id,userType);
     }
 
 

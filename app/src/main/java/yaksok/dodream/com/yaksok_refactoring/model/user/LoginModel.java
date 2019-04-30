@@ -2,6 +2,7 @@ package yaksok.dodream.com.yaksok_refactoring.model.user;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
+import android.content.SharedPreferences;
 import android.util.Log;
 
 import com.kakao.network.ErrorResult;
@@ -37,13 +38,19 @@ public class LoginModel implements IPresennterToModel {
 
 
 
-   private static UserService userService;
-   Presenter_Login presenter_login;
+    private static UserService userService;
+    Presenter_Login presenter_login;
     private static OAuthLogin oAuthLogin;
     private static Context mContext;
     private String tocken,data;
     String id,pw;
     Gender user_gender;
+
+    SharedPreferences sharedPreferences;
+    SharedPreferences.Editor editor;
+    boolean auto;
+
+
 
 
 
@@ -105,8 +112,21 @@ public class LoginModel implements IPresennterToModel {
 
                 if(bodyVO.getStatus().equals("200")){
                     presenter_login.OnLoginResponse(true);
-                    presenter_login.MakeToastMessage("로그인 성공입니다.!");
+
+
+
                     User_Id.setUser_Id(user_info_model.getId());
+
+                    if(auto){
+                        editor.putString("id",user_info_model.getId());
+                        editor.putString("pw",user_info_model.getPw());
+                        editor.putString("userType",user_info_model.getUserType());
+                        editor.apply();
+
+                        presenter_login.MakeToastMessage(sharedPreferences.getString("id","")+sharedPreferences.getString("pw","")+sharedPreferences.getBoolean("auto",true)+sharedPreferences.getString("userType",""));
+
+                    }
+
                 }
                 else if (bodyVO.getStatus().equals("024")) {
                     presenter_login.OnLoginResponse(false);
@@ -156,6 +176,8 @@ public class LoginModel implements IPresennterToModel {
        user_info_model.setId(id);
        user_info_model.setUserType("N");
 
+
+
         performLoginOperation(user_info_model);
 
 
@@ -164,19 +186,6 @@ public class LoginModel implements IPresennterToModel {
 
 
 
-    }
-
-
-
-
-    @Override
-    public void getTocken(String token) {
-        this.tocken =  token;
-    }
-
-    @Override
-    public void getData(String data) {
-        this.data  = data;
     }
 
     @Override
@@ -217,13 +226,8 @@ public class LoginModel implements IPresennterToModel {
                    /* Log.i("arange",""+kakaoUser_info.getK_age());
                     Log.i("userType",""+kakaoUser_info.getUser_type());
 */
-                   /* if(LoginActivity.loginInformation.getBoolean("auto",true)){
-                        LoginActivity.editor.putString("id",String.valueOf(kakaoUser_info.getId()));
-                        LoginActivity.editor.putString("userType","K");
-                        LoginActivity.editor.apply();
-                    }
-                    LoginActivity.userType = kakaoUser_info.getUser_type();
-*/
+
+
 
                     performLoginOperation(user_info_model);
 
@@ -278,7 +282,33 @@ public class LoginModel implements IPresennterToModel {
                 });*/
     }
 
+    @Override
+    public void checkBox(SharedPreferences sharedPreferences, SharedPreferences.Editor editor,boolean auto) {
+        this.sharedPreferences = sharedPreferences;
+        this.editor = editor;
+        this.auto = auto;
 
+
+
+    }
+
+    @Override
+    public void autoLogin(String id, String pw, String userType) {
+        user_info_model.setId(id);
+        user_info_model.setPw(pw);
+        user_info_model.setUserType(userType);
+        Log.d("exxxx",id+" "+pw+" "+userType);
+
+        performLoginOperation(user_info_model);
+    }
+
+    @Override
+    public void autoLogin(String id, String userType) {
+        user_info_model.setId(id);
+        user_info_model.setId(userType);
+
+        performLoginOperation(user_info_model);
+    }
 
 
 }
