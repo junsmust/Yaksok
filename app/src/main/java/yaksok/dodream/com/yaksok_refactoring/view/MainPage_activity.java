@@ -18,9 +18,6 @@ public class MainPage_activity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main_page_activity);
-<<<<<<< HEAD
-        
-=======
 
         bt_InsertPill = (Button)findViewById(R.id.bt_InsertPill);
 
@@ -30,6 +27,6 @@ public class MainPage_activity extends AppCompatActivity {
                 startActivity(new Intent(getApplicationContext(), MyPill_activity.class));
             }
         });
->>>>>>> feature/js_version1
+
     }
 }
