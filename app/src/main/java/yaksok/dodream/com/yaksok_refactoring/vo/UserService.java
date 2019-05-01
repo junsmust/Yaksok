@@ -17,6 +17,9 @@ public interface UserService {
     @GET("/mymedicines/{userId}")
     Call<MyPillVO>getMymediciens(@Path("userId")String userId);
 
+    @GET("/mymedicines/{userId}/neartime")
+    Call<NearTimePillVO>getNearTime(@Path("userId") String userId);
+
 //    @POST("/users")
 //    Call<BodyVO>postSignUp(@Body UserVO userVO);
 //
@@ -50,8 +53,7 @@ public interface UserService {
 //    @GET("/mymedicines/{userId}")
 //    Call<MyMedicineResponseTypeVO>getMymediciens(@Path("userId") String userId);
 //
-//    @GET("/mymedicines/{userId}/neartime")
-//    Call<NearTimeMedicineVO>getNearTime(@Path("userId") String userId);
+
 //
 //    @PUT("/mymedicines/takingmedicine")
 //    Call<StatusVO>putTakeMedicine(@Body TakeOk takeOk);
