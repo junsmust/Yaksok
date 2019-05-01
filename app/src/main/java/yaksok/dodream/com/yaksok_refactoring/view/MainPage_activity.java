@@ -30,11 +30,7 @@ public class MainPage_activity extends AppCompatActivity{
                 startActivity(new Intent(getApplicationContext(), MyPill_activity.class));
             }
         });
-<<<<<<< HEAD
-
-=======
->>>>>>> f67d051b19616e1a9a14240228862e867ec0dcfb
-    }
+}
 
     @Override
     protected void onStart() {
