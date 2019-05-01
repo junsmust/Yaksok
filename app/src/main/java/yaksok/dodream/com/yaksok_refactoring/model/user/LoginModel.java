@@ -295,7 +295,7 @@ public class LoginModel implements IPresennterToModel {
         this.auto = auto;
 
 
-       // presenter_main.getAutoInfo(auto);
+
 
 
 

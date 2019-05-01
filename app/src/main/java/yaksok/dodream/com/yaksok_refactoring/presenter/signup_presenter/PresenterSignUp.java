@@ -91,7 +91,7 @@ public class PresenterSignUp implements ITo_Presenter_SignUp {
 
     @Override
     public void isvalidatePhone(String pn) {
-
+        model.isvalidatePhone(pn);
     }
 
 

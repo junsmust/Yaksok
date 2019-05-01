@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -28,7 +29,7 @@ import yaksok.dodream.com.yaksok_refactoring.view.Main.MainPage_activity;
 
 public class Signup_activity extends AppCompatActivity implements IPresenter_To_SignUp_View , View.OnClickListener{
 
-    boolean isvalidatedId,isIsvalidatedPw,isIsvalidatedEmail;
+    boolean isvalidatedId,isIsvalidatedPW,isIsvalidatedEmail;
     PresenterSignUp presenterSignUp;
 
 
@@ -95,7 +96,7 @@ public class Signup_activity extends AppCompatActivity implements IPresenter_To_
         nowDate = simpleDateFormat.format(date);
 
 
-      /*sign_up_year_spin.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+      sign_up_year_spin.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
           @Override
           public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
               presenterSignUp.guessAge(nowDate,String.valueOf(sign_up_year_spin.getItemAtPosition(position)));
@@ -137,7 +138,6 @@ public class Signup_activity extends AppCompatActivity implements IPresenter_To_
 
             }
         });
-*/
 
 
        sign_up_check_id_btn.setOnClickListener(this);
@@ -196,7 +196,8 @@ public class Signup_activity extends AppCompatActivity implements IPresenter_To_
 
     @Override
     public void isValidatedUser(boolean isValidatedID, boolean isValidatedPW, boolean isValidatedEmail) {
-        if(isvalidatedId&&isValidatedPW&&isIsvalidatedEmail){
+        Log.d("tag"," "+isvalidatedId+" "+isValidatedPW+" "+isValidatedEmail);
+        if(isValidatedID&&isValidatedPW&&isValidatedEmail){
             presenterSignUp.setName(sign_up_name_edt.getText().toString());
             presenterSignUp.onSignUp();
         }

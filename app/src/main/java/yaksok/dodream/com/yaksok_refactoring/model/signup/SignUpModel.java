@@ -27,14 +27,14 @@ import yaksok.dodream.com.yaksok_refactoring.vo.FcmTokenVO;
 import yaksok.dodream.com.yaksok_refactoring.vo.UserService;
 
 public class SignUpModel implements IPresenterToSignUpModel {
-    PresenterSignUp presenterSignUp;
-    boolean isValidateID,isValidatePW,isValidateEmial;
-    String email,nowDate;
+    private PresenterSignUp presenterSignUp;
+    private boolean isValidateID,isValidatePW,isValidateEmial;
+    private String email,nowDate;
     int age;
-    String birthday;
+    private String birthday;
     private User_Info_Model user_info_model = new User_Info_Model();
-    Retrofit retrofit;
-    UserService userService;
+    private Retrofit retrofit;
+    private UserService userService;
 
     public SignUpModel(PresenterSignUp presenterSignUp) {
         this.presenterSignUp = presenterSignUp;
@@ -48,8 +48,8 @@ public class SignUpModel implements IPresenterToSignUpModel {
 
         }
         else{
-            presenterSignUp.makeToastMessage("아이디가 적합합니다");
             isValidateID = true;
+            presenterSignUp.makeToastMessage("아이디가 적합합니다");
             user_info_model.setId(id);
         }
     }
@@ -109,6 +109,7 @@ public class SignUpModel implements IPresenterToSignUpModel {
     @Override
     public void completeSignUp() {
         presenterSignUp.isValidatedUser(isValidateID,isValidatePW,isValidateEmial);
+
     }
 
     @Override
@@ -116,8 +117,9 @@ public class SignUpModel implements IPresenterToSignUpModel {
         int cy = Integer.parseInt(currentYear.substring(0,4));
         int by = Integer.parseInt(bornYear.substring(0,4));
 
-        /*checkAge(cy-by);*/
-        user_info_model.setAgeRange("1-9");
+
+        checkAge(cy-by+1);
+        //user_info_model.setAgeRange("1-9");
 
     }
 
@@ -150,7 +152,7 @@ public class SignUpModel implements IPresenterToSignUpModel {
 
         user_info_model.setProfileImagePath("");
         user_info_model.setUserType("G");
-        user_info_model.setAgeRange("1-9");
+
 
         Call<BodyVO> call = userService.postSignUp(user_info_model);
 
@@ -226,7 +228,8 @@ public class SignUpModel implements IPresenterToSignUpModel {
         else return false;
 
     }
-   /* private void checkAge(int age){
+ /*  */
+    private void checkAge(int age){
 
         if(0<= age && age <10){
 
@@ -269,9 +272,8 @@ public class SignUpModel implements IPresenterToSignUpModel {
         }
         else if(90 <= age && age < 99){
             user_info_model.setAgeRange("90-99");
-
         }
-    }*/
+    }
     public void pushToken(){
         FcmTokenVO fcmTokenVO = new FcmTokenVO();
         fcmTokenVO.setId(user_info_model.getId());
