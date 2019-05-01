@@ -6,6 +6,7 @@ import retrofit2.http.GET;
 import retrofit2.http.POST;
 import retrofit2.http.PUT;
 import retrofit2.http.Path;
+import retrofit2.http.Query;
 import yaksok.dodream.com.yaksok_refactoring.model.user.User_Info_Model;
 
 
@@ -26,6 +27,9 @@ public interface UserService {
 
     @GET("/mymedicines/{userId}/neartime")
     Call<NearTimePillVO>getNearTime(@Path("userId") String userId);
+
+    @GET("medicines/{item}")
+    Call<SearchPillListVO>getSearchPillList(@Path("item") String item, @Query("itemType") String itemtype);
 
 //    @POST("/users")
 //    Call<BodyVO>postSignUp(@Body UserVO userVO);
@@ -51,8 +55,7 @@ public interface UserService {
 //    Call<BodyVO> putToken(@Body FcmTokenVO fcmTokenVO);
 //
 //    //js
-//    @GET("medicines/{item}")
-//    Call<MedicineVOList>getSearchPillList(@Path("item") String item, @Query("itemType") String itemtype);
+
 //
 //    @POST("mymedicines/")
 //    Call<StatusVO> postMyInserttPill(@Body InsertPillList insertPillList);

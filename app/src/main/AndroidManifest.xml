@@ -33,6 +33,9 @@
         <activity android:name=".view.MyPill.MyPill_activity" />
         <activity android:name=".view.signup.Signup_activity" />
         <activity android:name=".AddFamily"></activity>
+        <activity android:name=".view.InsertPill.InsertPill_activity"/>
+        <activity android:name=".view.InsertPill.SearchPill.SearchPill_activity"
+            android:windowSoftInputMode="adjustPan"/>
 
         <service
             android:name=".firebaseService.FirebaseMessageService"
