@@ -29,6 +29,7 @@ import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 import retrofit2.converter.scalars.ScalarsConverterFactory;
 import yaksok.dodream.com.yaksok_refactoring.presenter.login_presenter.Presenter_Login;
+import yaksok.dodream.com.yaksok_refactoring.presenter.main_menu.Presenter_Main;
 import yaksok.dodream.com.yaksok_refactoring.vo.BodyVO;
 import yaksok.dodream.com.yaksok_refactoring.vo.UserService;
 
@@ -39,7 +40,10 @@ public class LoginModel implements IPresennterToModel {
 
 
     private static UserService userService;
+
     Presenter_Login presenter_login;
+    Presenter_Main presenter_main;
+
     private static OAuthLogin oAuthLogin;
     private static Context mContext;
     private String tocken,data;
@@ -62,7 +66,9 @@ public class LoginModel implements IPresennterToModel {
         this.presenter_login = presenter_login;
     }
 
-
+    public LoginModel(Presenter_Main presenter_main) {
+        this.presenter_main = presenter_main;
+    }
 
     boolean validatePw(String pw) {
         Matcher matcher = VALID_PASSWOLD_REGEX_ALPHA_NUM.matcher(pw);
@@ -287,6 +293,10 @@ public class LoginModel implements IPresennterToModel {
         this.sharedPreferences = sharedPreferences;
         this.editor = editor;
         this.auto = auto;
+
+
+       // presenter_main.getAutoInfo(auto);
+
 
 
 

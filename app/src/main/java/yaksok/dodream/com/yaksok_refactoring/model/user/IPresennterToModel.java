@@ -24,4 +24,5 @@ public interface IPresennterToModel  {
     void autoLogin(String id,String userType);
 
 
+
 }
