@@ -1,12 +1,10 @@
-package yaksok.dodream.com.yaksok_refactoring.presenter.main_menu;
+package yaksok.dodream.com.yaksok_refactoring.presenter.Main;
 
 import yaksok.dodream.com.yaksok_refactoring.model.user.IPresennterToModel;
 import yaksok.dodream.com.yaksok_refactoring.model.user.LoginModel;
-import yaksok.dodream.com.yaksok_refactoring.view.IPresenterToView_Main;
-import yaksok.dodream.com.yaksok_refactoring.view.MainPage_activity;
-import yaksok.dodream.com.yaksok_refactoring.view.login.IPresenterToView;
+import yaksok.dodream.com.yaksok_refactoring.view.Main.IPresenterToView_Main;
 
-public class Presenter_Main implements I_mainmenu {
+public class Presenter_Main implements MainToPresenter {
 
     private IPresenterToView_Main view;
     private IPresennterToModel model;

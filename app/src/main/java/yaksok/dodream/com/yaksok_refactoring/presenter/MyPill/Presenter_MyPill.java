@@ -3,6 +3,7 @@ package yaksok.dodream.com.yaksok_refactoring.presenter.MyPill;
 import java.util.List;
 
 import yaksok.dodream.com.yaksok_refactoring.model.MyPill.MyPill_Model;
+import yaksok.dodream.com.yaksok_refactoring.model.MyPill.MyPill_PresenterToModel;
 import yaksok.dodream.com.yaksok_refactoring.view.MyPill.MyPill_PresenterToView;
 
 public class Presenter_MyPill implements MyPillToPresenter {

@@ -1,4 +1,4 @@
-package yaksok.dodream.com.yaksok_refactoring.view;
+package yaksok.dodream.com.yaksok_refactoring.view.Main;
 
 public interface IPresenterToView_Main {
 

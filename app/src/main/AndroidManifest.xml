@@ -28,7 +28,7 @@
         <meta-data
             android:name="com.kakao.sdk.ClientSecret"
             android:value="kakao client secret value" />
-        <activity android:name="yaksok.dodream.com.yaksok_refactoring.view.MainPage_activity"></activity>
+        <activity android:name="yaksok.dodream.com.yaksok_refactoring.view.Main.MainPage_activity"></activity>
         <activity android:name=".view.MyPill.MyPill_activity"/>
         <activity android:name=".view.KakaoSignUp"/>
     </application>

@@ -29,7 +29,7 @@ import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 import retrofit2.converter.scalars.ScalarsConverterFactory;
 import yaksok.dodream.com.yaksok_refactoring.presenter.login_presenter.Presenter_Login;
-import yaksok.dodream.com.yaksok_refactoring.presenter.main_menu.Presenter_Main;
+import yaksok.dodream.com.yaksok_refactoring.presenter.Main.Presenter_Main;
 import yaksok.dodream.com.yaksok_refactoring.vo.BodyVO;
 import yaksok.dodream.com.yaksok_refactoring.vo.UserService;
 

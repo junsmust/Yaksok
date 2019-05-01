@@ -1,4 +1,4 @@
-package yaksok.dodream.com.yaksok_refactoring.view;
+package yaksok.dodream.com.yaksok_refactoring.view.Main;
 
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
