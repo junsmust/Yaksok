@@ -1,6 +1,7 @@
 package yaksok.dodream.com.yaksok_refactoring.view.Main;
 
 import android.content.Intent;
+import android.os.CountDownTimer;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
@@ -19,7 +20,7 @@ public class MainPage_activity extends AppCompatActivity implements Main_Present
     private Button bt_InsertPill;
     private boolean pillTime_day;
     private TextView tv_main_hour, tv_main_min;
-    private int myNeaeTime_sec;
+    private int myNeaeTime_sec,hour,min;
 
 
     @Override
@@ -44,13 +45,46 @@ public class MainPage_activity extends AppCompatActivity implements Main_Present
 
     }
 
-    @Override
+    @Override // 가까운 약시간 요청해서 UI변경 할 부분
     public void onMyNearPillResponce(boolean MyNearPillResponse) {
         if(MyNearPillResponse) {
+            CountDownTimer countDownTimer = new CountDownTimer((myNeaeTime_sec)*1000,60000) {
+                @Override
+                public void onTick(long millisUntilFinished) {
+                    if((millisUntilFinished/60000L)/60 < 10){
+                        if((millisUntilFinished/6000L)/60 <= 0){
+                            tv_main_hour.setText("00");
+                        }
+                        else {
+                            tv_main_hour.setText("0" + String.valueOf((millisUntilFinished / 60000L) / 60));
+                            if ((millisUntilFinished / 1000) % 3600 / 60 < 10) {
+                                tv_main_min.setText("0" + String.valueOf((millisUntilFinished / 1000) % 3600 / 60));
+                            } else {
+                                tv_main_min.setText(String.valueOf((millisUntilFinished / 1000) % 3600 / 60));
+                            }
+                        }
+                    }
+                    else{
+                        tv_main_hour.setText(String.valueOf((millisUntilFinished/60000L)/60));
+                        if((millisUntilFinished/1000)%3600/60 < 10){
+                            tv_main_min.setText("0"+String.valueOf((millisUntilFinished/1000)%3600 /60));
+                        }
+                        else{
+                            tv_main_min.setText(String.valueOf((millisUntilFinished/1000)%3600 / 60));
+                        }
+                    }
+                    Log.d("Time", String .valueOf((millisUntilFinished/60000L)/60));
+                }
+
+                @Override
+                public void onFinish() {
+
+                }
+            }.start();
         }
     }
 
-    @Override
+    @Override // 가까운 약시간 가져와서 화면에 뿌릴 값 정리
     public void MyNearTime(int  nearTime_sec, boolean pillTime_day) {
         myNeaeTime_sec = nearTime_sec;
         this.pillTime_day = pillTime_day;

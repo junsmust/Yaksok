@@ -48,6 +48,7 @@ public class Main_Model implements Main_PresenterToModel{
                     now = new Date();
                     SimpleDateFormat time = new SimpleDateFormat("HHmm");
                     curTime = time.format(now);
+                    Log.d("TImee",String.valueOf(curTime) + "!!" +String.valueOf(nearTimePillVO.getResult().getTime()));
                     //현재 시간, 서버에서 받은시간의 시간과 분 나누는 곳
                     int nowtime_hour = Integer.parseInt(curTime.substring(0, 2));
                     int nowtime_min = Integer.parseInt(curTime.substring(2));
