@@ -2,7 +2,6 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="yaksok.dodream.com.yaksok_refactoring">
 
-
     <uses-permission android:name="android.permission.INTERNET" />
 
     <application
@@ -14,23 +13,43 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true">
-        <activity android:name="yaksok.dodream.com.yaksok_refactoring.view.Splash">
+        <activity android:name=".view.Splash">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name="yaksok.dodream.com.yaksok_refactoring.view.login.Login_activity" />
+        <activity android:name=".view.login.Login_activity" />
+
         <meta-data
             android:name="com.kakao.sdk.AppKey"
             android:value="@string/kakao_app_key" />
         <meta-data
             android:name="com.kakao.sdk.ClientSecret"
             android:value="kakao client secret value" />
-        <activity android:name="yaksok.dodream.com.yaksok_refactoring.view.Main.MainPage_activity"></activity>
-        <activity android:name=".view.MyPill.MyPill_activity"/>
-        <activity android:name=".view.KakaoSignUp"/>
+
+        <activity android:name=".view.Main.MainPage_activity" />
+        <activity android:name=".view.MyPill.MyPill_activity" />
+        <activity android:name=".view.signup.Signup_activity" />
+        <activity android:name=".AddFamily"></activity>
+
+        <service
+            android:name=".firebaseService.FirebaseMessageService"
+            android:enabled="true"
+            android:exported="true">
+            <intent-filter>
+                <action android:name="com.google.firebase.MESSAGING_EVENT" />
+            </intent-filter>
+        </service>
+        <service
+            android:name=".firebaseService.FirebaseGetInstanceID"
+            android:enabled="true"
+            android:exported="true">
+            <intent-filter>
+                <action android:name="com.google.firebase.INSTANCE_ID_EVENT" />
+            </intent-filter>
+        </service>
     </application>
 
 </manifest>

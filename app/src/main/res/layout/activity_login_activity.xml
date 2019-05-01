@@ -135,18 +135,7 @@
                     android:textStyle="bold"
                     />
             </FrameLayout>
-            <FrameLayout
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                >
 
-                <ImageView
-                    android:id="@+id/fake_sign_up"
-                    android:layout_width="match_parent"
-                    android:layout_height="67dp"
-                    android:layout_gravity="center"
-                    android:src="@drawable/signup" />
                 <Button
                     android:id="@+id/login_sign_up_btn"
                     android:layout_width="wrap_content"
@@ -154,13 +143,12 @@
                     android:layout_gravity="center"
                     android:layout_margin="5dp"
                     android:background="#ffffff"
-                    android:text="@string/sign_up"
+                    android:text="회원가입"
                     android:textColor="@color/colorPrimaryDark"
                     android:textStyle="bold"
-                    android:layout_weight="1"
-                    android:visibility="invisible"/>
+                    android:layout_weight="1"/>
 
-            </FrameLayout>
+
 
 
 

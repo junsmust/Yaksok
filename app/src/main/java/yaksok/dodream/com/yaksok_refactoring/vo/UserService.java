@@ -4,6 +4,7 @@ import retrofit2.Call;
 import retrofit2.http.Body;
 import retrofit2.http.GET;
 import retrofit2.http.POST;
+import retrofit2.http.PUT;
 import retrofit2.http.Path;
 import yaksok.dodream.com.yaksok_refactoring.model.user.User_Info_Model;
 
@@ -11,8 +12,14 @@ import yaksok.dodream.com.yaksok_refactoring.model.user.User_Info_Model;
 public interface UserService {
     public static final String API_URL = "http://54.180.81.180:8080";
 
+    @POST("/users")
+    Call<BodyVO>postSignUp(@Body User_Info_Model userVO);
+
     @POST("/users/login")
     Call<BodyVO>postGneralLogin(@Body User_Info_Model userVO);
+
+    @PUT("/users/fcmtokens")
+    Call<BodyVO> putToken(@Body FcmTokenVO fcmTokenVO);
 
     @GET("/mymedicines/{userId}")
     Call<MyPillVO>getMymediciens(@Path("userId")String userId);

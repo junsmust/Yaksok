@@ -31,12 +31,13 @@ import yaksok.dodream.com.yaksok_refactoring.R;
 import yaksok.dodream.com.yaksok_refactoring.model.user.User_Info_Model;
 import yaksok.dodream.com.yaksok_refactoring.presenter.login_presenter.Presenter_Login;
 import yaksok.dodream.com.yaksok_refactoring.view.Main.MainPage_activity;
+import yaksok.dodream.com.yaksok_refactoring.view.signup.Signup_activity;
 import yaksok.dodream.com.yaksok_refactoring.vo.UserService;
 
 import com.kakao.auth.ISessionCallback;
 import com.kakao.util.exception.KakaoException;
 
-public class Login_activity extends AppCompatActivity implements IPresenterToView , View.OnClickListener{
+public class Login_activity extends AppCompatActivity implements IPresenterToView{
 
     private EditText id_edt, pw_edt;
     public Button signUp_btn, login_btn;
@@ -89,6 +90,14 @@ public class Login_activity extends AppCompatActivity implements IPresenterToVie
 
         presenter_login = new Presenter_Login(this);
 
+
+        signUp_btn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(getApplicationContext(), Signup_activity.class));
+
+            }
+        });
 
         checkBox.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
@@ -279,19 +288,7 @@ public class Login_activity extends AppCompatActivity implements IPresenterToVie
     }
 
 
-    @Override
-    public void onClick(View v) {
 
-
-        switch (v.getId()) {
-            case R.id.fake_sign_up:
-                signUp_btn.performClick();
-                break;
-
-
-        }
-
-    }
 
     private class SessionCallback implements ISessionCallback {
 
