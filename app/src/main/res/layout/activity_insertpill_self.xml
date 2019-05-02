@@ -110,6 +110,7 @@
                         android:layout_width="20dp"
                         android:layout_height="20dp"
                         android:layout_gravity="center"
+                        android:src="@drawable/minus"
                         />
                     <TextView
                         android:layout_marginLeft="10dp"
@@ -133,7 +134,8 @@
                         android:layout_width="20dp"
                         android:layout_height="20dp"
                         android:layout_gravity="center"
-                        android:layout_marginLeft="10dp"/>
+                        android:layout_marginLeft="10dp"
+                        android:src="@drawable/plus"/>
 
                 </LinearLayout>
 
@@ -180,8 +182,10 @@
 
                 <Button
                     android:id="@+id/bt_1time"
-                    android:layout_width="30dp"
-                    android:layout_height="30dp"
+                    android:layout_marginLeft="10dp"
+                    android:layout_width="20dp"
+                    android:layout_height="20dp"
+                    android:background="@drawable/timeadd"
                     />
             </LinearLayout>
 
@@ -212,9 +216,11 @@
 
 
                 <Button
+                    android:layout_marginLeft="10dp"
                     android:id="@+id/bt_2time"
-                    android:layout_width="30dp"
-                    android:layout_height="30dp"
+                    android:layout_width="20dp"
+                    android:layout_height="20dp"
+                    android:background="@drawable/timeadd"
                     />
             </LinearLayout>
 
@@ -245,9 +251,11 @@
 
 
                 <Button
+                    android:layout_marginLeft="10dp"
                     android:id="@+id/bt_3time"
-                    android:layout_width="30dp"
-                    android:layout_height="30dp"
+                    android:layout_width="20dp"
+                    android:layout_height="20dp"
+                    android:background="@drawable/timeadd"
                     />
             </LinearLayout>
             <LinearLayout

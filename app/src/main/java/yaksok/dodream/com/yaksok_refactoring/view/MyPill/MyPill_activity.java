@@ -6,7 +6,11 @@ import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.ListView;
+import android.widget.TextView;
+import android.widget.Toast;
 
 
 import java.util.ArrayList;
@@ -24,6 +28,7 @@ public class MyPill_activity extends AppCompatActivity implements MyPill_Present
     ArrayAdapter adapter;
 
     Button bt_Insert;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -46,6 +51,8 @@ public class MyPill_activity extends AppCompatActivity implements MyPill_Present
 
     }
 
+
+
     @Override
     public void onMyPillResponce(boolean MyPillResponse) {
         if(MyPillResponse){
@@ -60,4 +67,5 @@ public class MyPill_activity extends AppCompatActivity implements MyPill_Present
             myPillList.add(pillList.get(i));
         }
     }
+
 }
