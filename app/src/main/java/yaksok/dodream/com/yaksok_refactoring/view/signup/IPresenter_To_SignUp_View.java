@@ -12,4 +12,6 @@ public interface IPresenter_To_SignUp_View {
 
     void onSignUoResponse(boolean loginResponse);
     void onError(String errorMsg);
+
+
 }

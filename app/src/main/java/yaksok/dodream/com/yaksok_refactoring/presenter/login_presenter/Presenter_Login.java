@@ -94,5 +94,17 @@ public class Presenter_Login implements ITo_Presenter {
         model.autoLogin(id,userType);
     }
 
+    @Override
+    public void onSnsSignUp(String userType) {
+        view.onSnsSignUp(userType);
+    }
+
+
+
+    /*@Override
+    public void onSnsSignUp(String userType) {
+        view.onSnsSignUp(userType);
+    }*/
+
 
 }

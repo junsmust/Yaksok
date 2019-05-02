@@ -20,6 +20,7 @@ import retrofit2.Response;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 import retrofit2.converter.scalars.ScalarsConverterFactory;
+import yaksok.dodream.com.yaksok_refactoring.model.user.LoginModel;
 import yaksok.dodream.com.yaksok_refactoring.model.user.User_Info_Model;
 import yaksok.dodream.com.yaksok_refactoring.presenter.signup_presenter.PresenterSignUp;
 import yaksok.dodream.com.yaksok_refactoring.vo.BodyVO;
@@ -35,6 +36,10 @@ public class SignUpModel implements IPresenterToSignUpModel {
     private User_Info_Model user_info_model = new User_Info_Model();
     private Retrofit retrofit;
     private UserService userService;
+
+
+    public SignUpModel() {
+    }
 
     public SignUpModel(PresenterSignUp presenterSignUp) {
         this.presenterSignUp = presenterSignUp;
@@ -139,6 +144,8 @@ public class SignUpModel implements IPresenterToSignUpModel {
 
     }
 
+
+
     @Override
     public void onSignUp() {
 
@@ -150,8 +157,8 @@ public class SignUpModel implements IPresenterToSignUpModel {
                 .build();
         userService = retrofit.create(UserService.class);
 
-        user_info_model.setProfileImagePath("");
-        user_info_model.setUserType("G");
+       user_info_model = LoginModel.user_info_model;
+
 
 
         Call<BodyVO> call = userService.postSignUp(user_info_model);
@@ -162,6 +169,8 @@ public class SignUpModel implements IPresenterToSignUpModel {
                 BodyVO bodyVO = response.body();
                 Log.d("server","server");
                 Log.d("server_before","sssssssss");
+                Log.d("sssssss",user_info_model.getId()+"\n"+user_info_model.getUserType()+"\n"+user_info_model.getAgeRange()+"" +
+                        "\n"+user_info_model.getBirthday()+user_info_model.getPhoneNumber());
 
                 if(bodyVO.getStatus().equals("201")){
                     presenterSignUp.onSignupResponse(true);
@@ -204,6 +213,25 @@ public class SignUpModel implements IPresenterToSignUpModel {
         user_info_model.setPhoneNumber(pn);
         presenterSignUp.makeToastMessage("인증되었습니다.");
     }
+
+    @Override
+    public void setUserType(String userType) {
+        user_info_model.setUserType(userType);
+    }
+
+    @Override
+    public void setGeneralUserType() {
+        user_info_model.setUserType("G");
+    }
+
+
+    @Override
+    public void setPn(String pn) {
+        LoginModel.user_info_model.setPhoneNumber(pn);
+        onSignUp();
+    }
+
+
 
     public static boolean hasSpecialCharacter(String string){
         if(TextUtils.isEmpty(string)){

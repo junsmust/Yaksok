@@ -2,6 +2,7 @@ package yaksok.dodream.com.yaksok_refactoring.presenter.signup_presenter;
 
 import yaksok.dodream.com.yaksok_refactoring.model.signup.IPresenterToSignUpModel;
 import yaksok.dodream.com.yaksok_refactoring.model.signup.SignUpModel;
+import yaksok.dodream.com.yaksok_refactoring.model.user.User_Info_Model;
 import yaksok.dodream.com.yaksok_refactoring.view.signup.IPresenter_To_SignUp_View;
 
 public class PresenterSignUp implements ITo_Presenter_SignUp {
@@ -94,7 +95,21 @@ public class PresenterSignUp implements ITo_Presenter_SignUp {
         model.isvalidatePhone(pn);
     }
 
+    @Override
+    public void setPhone(String pn) {
+        model.setPn(pn);
+    }
 
+
+    @Override
+    public void setUserType(String userType) {
+        model.setUserType("G");
+    }
+
+    @Override
+    public void setGeneralUserType() {
+        model.setGeneralUserType();
+    }
 
 
 }

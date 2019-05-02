@@ -28,6 +28,7 @@ import retrofit2.Response;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 import retrofit2.converter.scalars.ScalarsConverterFactory;
+import yaksok.dodream.com.yaksok_refactoring.model.signup.SignUpModel;
 import yaksok.dodream.com.yaksok_refactoring.presenter.login_presenter.Presenter_Login;
 import yaksok.dodream.com.yaksok_refactoring.presenter.Main.Presenter_Main;
 import yaksok.dodream.com.yaksok_refactoring.vo.BodyVO;
@@ -35,7 +36,7 @@ import yaksok.dodream.com.yaksok_refactoring.vo.UserService;
 
 public class LoginModel implements IPresennterToModel {
 
-   User_Info_Model user_info_model = new User_Info_Model();
+  public static User_Info_Model user_info_model = new User_Info_Model();
 
 
 
@@ -53,6 +54,8 @@ public class LoginModel implements IPresennterToModel {
     SharedPreferences sharedPreferences;
     SharedPreferences.Editor editor;
     boolean auto;
+
+    private SignUpModel signUpModel = new SignUpModel();
 
 
 
@@ -136,6 +139,9 @@ public class LoginModel implements IPresennterToModel {
                 }
                 else if (bodyVO.getStatus().equals("024")) {
                     presenter_login.OnLoginResponse(false);
+                    if(user_info_model.getUserType().equals("N")||user_info_model.getUserType().equals("K")){
+                        presenter_login.onSnsSignUp(user_info_model.getUserType());
+                    }
                     presenter_login.MakeToastMessage("잘못된 요청");
                 }
                 else if (bodyVO.getStatus().equals("400")) {
@@ -181,6 +187,11 @@ public class LoginModel implements IPresennterToModel {
 
        user_info_model.setId(id);
        user_info_model.setUserType("N");
+       user_info_model.setNickname(name);
+       user_info_model.setProfileImagePath(profile_path);
+       user_info_model.setEmail(email);
+       user_info_model.setBirthday(birthday);
+       user_info_model.setAgeRange(age_range);
 
 
 
@@ -218,11 +229,11 @@ public class LoginModel implements IPresennterToModel {
 
                     user_info_model.setId(String.valueOf(result.getId()));
                     user_info_model.setUserType("K");
-                    /*user_info_model.setNickname(result.getNickname());
+                    user_info_model.setNickname(result.getNickname());
                     user_info_model.setProfileImagePath(result.getProfileImagePath());
                     user_info_model.setEmail(result.getKakaoAccount().getEmail());
                     user_info_model.setBirthday(result.getKakaoAccount().getBirthday());
-                    user_info_model.setAgeRange(String.valueOf(result.getKakaoAccount().getAgeRange()));*/
+                    user_info_model.setAgeRange(String.valueOf(result.getKakaoAccount().getAgeRange()));
 
                     Log.i("nickname",result.getNickname());
                     Log.i("profile_img",result.getProfileImagePath());
@@ -318,6 +329,11 @@ public class LoginModel implements IPresennterToModel {
         user_info_model.setId(userType);
 
         performLoginOperation(user_info_model);
+    }
+
+    @Override
+    public void setUserInfoModel(User_Info_Model user_info_model) {
+        this.user_info_model = user_info_model;
     }
 
 

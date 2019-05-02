@@ -254,6 +254,7 @@ public class Signup_activity extends AppCompatActivity implements IPresenter_To_
                 break;
             case R.id.sign_up_complete_btn:
                 presenterSignUp.isValdiatedUser();
+                presenterSignUp.setGeneralUserType();
                 break;
             case R.id.sign_up_get_autho_btn:
                 presenterSignUp.isvalidatePhone(sign_up_phone_number_edt.getText().toString());
@@ -261,4 +262,5 @@ public class Signup_activity extends AppCompatActivity implements IPresenter_To_
 
         }
     }
+
 }
