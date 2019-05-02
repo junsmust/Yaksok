@@ -32,7 +32,7 @@
         <activity android:name=".view.Main.MainPage_activity" />
         <activity android:name=".view.MyPill.MyPill_activity" />
         <activity android:name=".view.signup.Signup_activity" />
-        <activity android:name=".AddFamily" />
+        <activity android:name=".view.addFamily.Register_Family" />
         <activity android:name=".view.InsertPill.InsertPill_activity" />
         <activity
             android:name=".view.InsertPill.SearchPill.SearchPill_activity"
@@ -56,6 +56,7 @@
         </service>
 
         <activity android:name=".view.signup.GetPn"></activity>
+
     </application>
 
 </manifest>

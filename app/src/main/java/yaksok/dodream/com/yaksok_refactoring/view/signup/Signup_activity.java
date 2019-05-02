@@ -22,10 +22,9 @@ import android.widget.Toast;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
-import yaksok.dodream.com.yaksok_refactoring.AddFamily;
+import yaksok.dodream.com.yaksok_refactoring.view.addFamily.Register_Family;
 import yaksok.dodream.com.yaksok_refactoring.R;
 import yaksok.dodream.com.yaksok_refactoring.presenter.signup_presenter.PresenterSignUp;
-import yaksok.dodream.com.yaksok_refactoring.view.Main.MainPage_activity;
 
 public class Signup_activity extends AppCompatActivity implements IPresenter_To_SignUp_View , View.OnClickListener{
 
@@ -229,7 +228,7 @@ public class Signup_activity extends AppCompatActivity implements IPresenter_To_
     @Override
     public void onSignUoResponse(boolean loginResponse) {
             if(loginResponse){
-                startActivity(new Intent(getApplicationContext(), AddFamily.class));
+                startActivity(new Intent(getApplicationContext(), Register_Family.class));
                 finish();
             }
     }

@@ -31,6 +31,13 @@ public interface UserService {
     @GET("medicines/{item}")
     Call<SearchPillListVO>getSearchPillList(@Path("item") String item, @Query("itemType") String itemtype);
 
+    @POST("families/")
+    Call<BodyVO>postRegisterFamily(@Body FamilyVO familyVO);
+
+    @GET("/families/{userId}")
+    Call<FindFamilyVO> getConnectedFamilyInfo(@Path("userId") String userId);
+
+
 //    @POST("/users")
 //    Call<BodyVO>postSignUp(@Body UserVO userVO);
 //
@@ -42,14 +49,10 @@ public interface UserService {
 //    @POST("mymedicines/")
 //    Call<BodyVO> postQRCode(@Body PillVO pillVO);
 //
-//    @GET("/users/{item}")
-//    Call<FindFamilyVO> getUserList(@Path("item") String item, @Query("itemType") String itemType);
-//
-//    @POST("families/")
-//    Call<BodyVO>postRegisterFamily(@Body FamilyVO familyVO);
-//
-//    @GET("/families/{userId}")
-//    Call<FindFamilyVO> getConnectedFamilyInfo(@Path("userId") String userId);
+    @GET("/users/{item}")
+    Call<FindFamilyVO> getUserList(@Path("item") String item, @Query("itemType") String itemType);
+
+
 //
 //    @PUT("/users/fcmtokens")
 //    Call<BodyVO> putToken(@Body FcmTokenVO fcmTokenVO);

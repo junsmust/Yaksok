@@ -48,6 +48,7 @@
             android:layout_height="350dp"
             android:layout_margin="3dp"
             android:background="@drawable/bg"
+            android:choiceMode="singleChoice"
             >
 
         </ListView>

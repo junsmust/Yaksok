@@ -14,7 +14,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import yaksok.dodream.com.yaksok_refactoring.AddFamily;
+import yaksok.dodream.com.yaksok_refactoring.view.addFamily.Register_Family;
 import yaksok.dodream.com.yaksok_refactoring.R;
 import yaksok.dodream.com.yaksok_refactoring.presenter.signup_presenter.PresenterSignUp;
 
@@ -82,7 +82,7 @@ public class GetPn extends AppCompatActivity implements IPresenter_To_SignUp_Vie
     public void onSignUoResponse(boolean loginResponse) {
 
         if(loginResponse){
-            startActivity(new Intent(getApplicationContext(), AddFamily.class));
+            startActivity(new Intent(getApplicationContext(), Register_Family.class));
             finish();
         }
     }
