@@ -27,6 +27,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import retrofit2.Retrofit;
+import yaksok.dodream.com.yaksok_refactoring.view.signup.GetPn;
 import yaksok.dodream.com.yaksok_refactoring.R;
 import yaksok.dodream.com.yaksok_refactoring.model.user.User_Info_Model;
 import yaksok.dodream.com.yaksok_refactoring.presenter.login_presenter.Presenter_Login;
@@ -283,6 +284,14 @@ public class Login_activity extends AppCompatActivity implements IPresenterToVie
     public void returnToLoginActivity() {
         final Intent intent = new Intent(this,MainPage_activity.class);
         intent.setFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
+        startActivity(intent);
+        finish();
+    }
+
+    @Override
+    public void onSnsSignUp(String userType) {
+        Intent intent = new Intent(getApplicationContext(),GetPn.class);
+        intent.putExtra("userType",userType);
         startActivity(intent);
         finish();
     }

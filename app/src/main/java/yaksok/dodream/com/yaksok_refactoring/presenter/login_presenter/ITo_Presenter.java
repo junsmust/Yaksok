@@ -24,6 +24,9 @@ public interface ITo_Presenter {
      void checkBox(SharedPreferences sharedPreferences,SharedPreferences.Editor editor,boolean auto);
      void autoLogin(String id, String pw,String userType);
      void autoLogin(String id,String userType);
+     void onSnsSignUp(String userType);
+
+
 
 
 
