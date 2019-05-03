@@ -1,4 +1,4 @@
-package yaksok.dodream.com.yaksok_refactoring.Adapter;
+package yaksok.dodream.com.yaksok_refactoring.Adapter.SearchPill;
 
 import android.content.Context;
 import android.view.LayoutInflater;

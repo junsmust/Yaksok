@@ -1,4 +1,4 @@
-package yaksok.dodream.com.yaksok_refactoring.Adapter;
+package yaksok.dodream.com.yaksok_refactoring.Adapter.SearchPill;
 
 public class PillSearchItem {
     private int medicineNO;
