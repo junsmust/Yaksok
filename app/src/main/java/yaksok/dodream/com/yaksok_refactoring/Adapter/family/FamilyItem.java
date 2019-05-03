@@ -5,8 +5,12 @@ public class FamilyItem {
     public int user_img,gotoright;
 
 
+    public FamilyItem(String name) {
+        this.name = name;
+    }
 
-
+    public FamilyItem() {
+    }
 
     public int getGotoright() {
         return gotoright;

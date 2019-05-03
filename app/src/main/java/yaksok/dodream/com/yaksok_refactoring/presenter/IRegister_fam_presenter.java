@@ -11,7 +11,8 @@ public interface IRegister_fam_presenter {
     void sendAdapterToView(FamilyFindAdapter adapter);
     void adapterInit(FamilyFindAdapter adapter);
     void onResponse(boolean response);
-    void getArrayList(ArrayList<FamilyItem> familyItems);
-
+    void sendArrayList(ArrayList<FamilyItem> familyItems);
+    void makeDialog(String name);
+    void setYesRegisterFam(boolean isOkay);
 
 }

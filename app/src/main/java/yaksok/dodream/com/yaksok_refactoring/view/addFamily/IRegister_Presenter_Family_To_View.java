@@ -10,5 +10,6 @@ public interface IRegister_Presenter_Family_To_View {
     void makeToastMessage(String message);
     void onResponse(boolean response);
     void getArrayList(ArrayList<FamilyItem> familyItems);
+    void makeDialog(String name);
 
 }

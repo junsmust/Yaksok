@@ -6,4 +6,5 @@ public interface IRegister_Presenter_To_FamModel {
 
     void findFam(String pn);
     void adapterInit(FamilyFindAdapter adapter);
+    void setYesRegisterFam(boolean isOkay);
 }

@@ -45,7 +45,7 @@ public class Register_Family extends AppCompatActivity implements IRegister_Pres
     public UserService userService;
     public DeleteService deleteService;
     public FamilyFindAdapter adapter;
-    public ArrayList<FamilyItem> familyItems;
+    public ArrayList<FamilyItem> familyItemss = new ArrayList<>();
     public  AlertDialog.Builder dialog;
     public static FamilyVO familyVO;
     public String family_user_id = "";
@@ -53,6 +53,7 @@ public class Register_Family extends AppCompatActivity implements IRegister_Pres
     Intent intent;
     String itForSignUp;
     Register_Fam_Presenter presenter;
+
 
 
     @Override
@@ -66,6 +67,9 @@ public class Register_Family extends AppCompatActivity implements IRegister_Pres
         presenter = new Register_Fam_Presenter(this);
 
 
+        dialog = new AlertDialog.Builder(this);
+
+
         fmaily_number_edt = (EditText) findViewById(R.id.findFamily_edt);
         family_find_btn = (Button) findViewById(R.id.findFamily_btn);
         family_list_view = (ListView) findViewById(R.id.family_list);
@@ -77,10 +81,8 @@ public class Register_Family extends AppCompatActivity implements IRegister_Pres
         family_find_btn.setOnClickListener(this);
         family_find_skip_btn.setOnClickListener(this);
 
-        familyItems = new ArrayList<>();
-        adapter = new FamilyFindAdapter(this,familyItems,R.layout.family_list_item);
-        presenter.adapterInit(adapter);
 
+        adapter = new FamilyFindAdapter(this,familyItemss,R.layout.family_list_item);
 
 
 
@@ -90,372 +92,6 @@ public class Register_Family extends AppCompatActivity implements IRegister_Pres
 
 
 
-/*
-                if(itForSignUp == null)
-                {
-                    family_find_skip_btn.setVisibility(View.GONE);
-
-                }
-                else if(itForSignUp.equals("itForSignUp")){
-
-                    family_find_skip_btn.setVisibility(View.VISIBLE);
-
-                }*/
-
-
-
-
-/*
-                //스킵버튼
-                family_find_skip_btn.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        Log.d("aaaaaaaaaaaaaaaLoginId",""+LoginActivity.userVO.getId());
-
-                        LoginActivity.editor.putString("id",LoginActivity.userVO.getId());
-                        Log.d("aaaaaaaaaaaaaaa",""+LoginActivity.loginInformation.getBoolean("auto",true)+LoginActivity.loginInformation.getString("id",LoginActivity.userVO.getId()));
-                        Log.d("aaaaaaaaaaaaaaaid",""+LoginActivity.userVO.getId());
-
-
-                        if(LoginActivity.loginInformation.getBoolean("auto",true)){
-                            LoginActivity.editor.putString("id",LoginActivity.userVO.getId());
-                        }
-                        startActivity(new Intent(getApplicationContext(),MainPageActivity.class));
-                        finish();
-                    }
-                });*/
-
-        /*
-            스킵 버튼 구현 그리고 인텐트 값 받아온 것을 이용해서
-            skip btn 보여주기 , 안 보여주기 나눔
-         */
-
-
-
-
-              //  dialog = new AlertDialog.Builder(this);
-
-                /*familyItems = new ArrayList<>();
-
-                retrofit = new Retrofit.Builder()
-                        .baseUrl(userService.API_URL)
-                        .addConverterFactory(ScalarsConverterFactory.create())
-                        .addConverterFactory(GsonConverterFactory.create())
-                        .build();
-                userService = retrofit.create(UserService.class);*/
-
-
-/*
-
-                retorofit2 = new Retrofit.Builder()
-                        .baseUrl(deleteService.API_URL)
-                        .addConverterFactory(ScalarsConverterFactory.create())
-                        .addConverterFactory(GsonConverterFactory.create())
-                        .build();
-                deleteService = retrofit.create(DeleteService.class);
-*/
-
-
-/*
-                adapter = new FamilyFindAdapter(this,familyItems,R.layout.family_list_item);
-
-
-                alreadyConnectedFamily();
-
-
-                family_find_btn.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        if (fmaily_number_edt.getText().toString().equals("")) {
-                            Toast.makeText(getApplicationContext(), "전화번호를 입력하세요", Toast.LENGTH_LONG).show();
-                        }
-                        else {
-                            Call<FindFamilyVO> findFamilyVOCall = userService.getUserList(fmaily_number_edt.getText().toString(), "phoneNumber");
-                            findFamilyVOCall.enqueue(new Callback<FindFamilyVO>() {
-                                @Override
-                                public void onResponse(Call<FindFamilyVO> call, Response<FindFamilyVO> response) {
-                                    final FindFamilyVO findFamilyVO = response.body();
-
-                                    if (findFamilyVO.getStatus().equals("200")) {
-                                        isAddedFamily = true;
-                                        for (int i = 0; i < findFamilyVO.getResult().size(); i++) {
-                                            if (findFamilyVO.getResult().get(i).getPhoneNumber().equals(LoginActivity.userVO.getPhoneNumber())) {
-                                            } else {
-                                                if(LoginActivity.userVO.getPhoneNumber().equals(findFamilyVO.getResult().get(i).getPhoneNumber())){
-
-                                                }
-                                                else {
-                                                    adapter.addItem(findFamilyVO.getResult().get(i).getNickName() + "/" + findFamilyVO.getResult().get(i).getUserId());
-                                                    adapter.setNameToId(findFamilyVO.getResult().get(i).getUserId());
-                                                    //Log.d("ddddddd",id);
-                                                    family_list_view.setAdapter(adapter);
-                                                    familyVO = new FamilyVO();
-                                                    //Log.d("bbbbbbbbbbb",""+family_list_view.getMeasuredHeight());
-
-
-                                                    family_user_id = findFamilyVO.getResult().get(i).getUserId();
-                                                }
-                                            }
-                                        }
-
-
-
-
-                                    } else if (findFamilyVO.getStatus().equals("204")) {
-                                        Toast.makeText(getApplicationContext(), "상대의 계정이 존재하지 않습니다.", Toast.LENGTH_LONG).show();
-                                    } else if (findFamilyVO.getStatus().equals("400")) {
-                                        Toast.makeText(getApplicationContext(), "잘못된 요청입니다.", Toast.LENGTH_LONG).show();
-                                    } else if (findFamilyVO.getStatus().equals("500")) {
-                                        Toast.makeText(getApplicationContext(), "서버 오루 입니다..", Toast.LENGTH_LONG).show();
-                                    }
-                                }
-
-                                @Override
-                                public void onFailure(Call<FindFamilyVO> call, Throwable t) {
-                                    System.out.println(t.getMessage());
-                                }
-                            });
-                        }
-                    }
-                });*/
-
-            /*    family_list_view.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-                    @Override
-                    public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                        String name = ((FamilyItem)adapter.getItem(position)).getName();
-                        dialog.setTitle("가족찾기");
-                        dialog.setMessage(name+"을 가족으로 등록 하시겠습니까?");
-                        dialog.setCancelable(false);
-                        String user_id = "";
-
-                        fmaily_number_edt.setText("");
-                        FamilyItem familyItem = (FamilyItem)family_list_view.getItemAtPosition(position);
-                        String user2_id = familyItem.getName();
-
-                        int user_index = user2_id.indexOf("/")+1;
-
-                        user2_id = user2_id.substring(user_index);
-
-                        //final String finalUser_id = user_id;
-                        final String finalUser2_id = user2_id;
-                        dialog.setPositiveButton("네", new DialogInterface.OnClickListener() {
-                            @Override
-                            public void onClick(DialogInterface dialog, int which) {
-                                fmaily_number_edt.setText("");
-
-                                final FamilyVO familyVO = new FamilyVO();
-                                familyVO.setUser_1(LoginActivity.userVO.getId());
-                                familyVO.setUser_2(finalUser2_id);
-                                //code
-                                //201 : OK
-                                //403 : 삽입시 중복
-                                //500 : Server Error
-                                Call<BodyVO> call = userService.postRegisterFamily(familyVO);
-                                call.enqueue(new Callback<BodyVO>() {
-                                    @Override
-                                    public void onResponse(Call<BodyVO> call, Response<BodyVO> response) {
-                                        BodyVO bodyVO = response.body();
-                                        assert bodyVO != null;
-                                        switch (bodyVO.getStatus()) {
-                                            case "201":
-//                                        adapter.addItem(bodyVO.getResult().getNickName()+"/"+bodyVO.getResult().getUserId());
-//                                        family_list_view.setAdapter(adapter);
-                                                Toast.makeText(getApplicationContext(), "가족 추가가 되었습니다.", Toast.LENGTH_LONG).show();
-                                                break;
-                                            case "403":
-                                                Toast.makeText(getApplicationContext(), "삽입시 중복이 됩니다.", Toast.LENGTH_LONG).show();
-                                                break;
-                                            case "500":
-                                                Toast.makeText(getApplicationContext(), "서버 에러", Toast.LENGTH_LONG).show();
-                                                break;
-                                        }
-
-                                    }
-
-                                    @Override
-                                    public void onFailure(Call<BodyVO> call, Throwable t) {
-                                        Toast.makeText(getApplicationContext(),t.getMessage(),Toast.LENGTH_LONG).show();
-                                    }
-                                });
-                            }
-                        });
-                        dialog.setNegativeButton("아니요", new DialogInterface.OnClickListener() {
-                            @Override
-                            public void onClick(DialogInterface dialog, int which) {
-                                fmaily_number_edt.setText("");
-                            }
-                        });
-                        AlertDialog alertDialog = dialog.create();
-                        alertDialog.show();
-
-
-                    }
-                });
-*/
-
-
-
-
-
-               /* //삭제할때
-                family_list_view.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
-                    @Override
-                    public boolean onItemLongClick(AdapterView<?> parent, View view, final int position, long id) {
-
-                        final String name = ((FamilyItem)adapter.getItem(position)).getName();
-                        FamilyItem familyItem = (FamilyItem)family_list_view.getItemAtPosition(position);
-                        String user2_id = familyItem.getName();
-
-                        int user_index = user2_id.indexOf("/")+1;
-
-                        user2_id = user2_id.substring(user_index);
-                        Log.d("user222222",user2_id);
-
-                        dialog.setTitle("가족 삭제");
-                        dialog.setMessage(name+"을 삭제 하시겠습니까?");
-                        dialog.setCancelable(false);
-
-                        final String finalUser2_id = user2_id;
-                        dialog.setPositiveButton("네", new DialogInterface.OnClickListener() {
-                            @Override
-                            public void onClick(DialogInterface dialog, int which) {
-                                Log.d("user_id_2",name);
-                                FamilyDelVO familyDelVO = new FamilyDelVO();
-                                familyDelVO.setUser_1(LoginActivity.userVO.getId());
-                                familyDelVO.setUser_2(finalUser2_id);
-                                Log.d("aaaaaaaa",family_user_id);
-
-                                Call<FamilyBodyVO> delectionCall = deleteService.deleteBody(familyDelVO);
-
-                                delectionCall.enqueue(new Callback<FamilyBodyVO>() {
-                                    @Override
-                                    public void onResponse(Call<FamilyBodyVO> call, Response<FamilyBodyVO> response) {
-                                        FamilyBodyVO familyBodyVO = response.body();
-                                        if(familyBodyVO.getStatus().equals("201")){
-                                            Toast.makeText(getApplicationContext(),"삭제되었습니다.",Toast.LENGTH_LONG).show();
-
-                                            familyItems.remove(position);
-                                            adapter.notifyDataSetChanged();
-                                            adapter.notifyDataSetInvalidated();
-
-                                            // alreadyConnectedFamily();
-                                        }else if(familyBodyVO.getStatus().equals("500")){
-                                            Toast.makeText(getApplicationContext(),"서버 에러입니다.",Toast.LENGTH_LONG).show();
-
-                                        }
-
-                                    }
-
-
-                                    @Override
-                                    public void onFailure(Call<FamilyBodyVO> call, Throwable t) {
-
-                                    }
-                                });
-                            }
-
-                        });
-
-                        dialog.setNegativeButton("아니요", new DialogInterface.OnClickListener() {
-                            @Override
-                            public void onClick(DialogInterface dialog, int which) {
-                                dialog.cancel();
-                            }
-                        });
-                        AlertDialog alertDialog = dialog.create();
-                        alertDialog.show();
-
-
-
-
-
-
-                        return false;
-                    }
-                });
-*/
-
-
-/*
-                //완료버튼
-                complete_btn.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        //Toast.makeText(getApplicationContext(),LoginActivity.userVO.getId(),Toast.LENGTH_LONG).show();
-                        if(isAddedFamily){
-                            Log.d("aaaaaaaaaaaaaaa",""+LoginActivity.loginInformation.getBoolean("auto",true));
-                            if(LoginActivity.loginInformation.getBoolean("auto",true)){
-                                LoginActivity.editor.putString("id",LoginActivity.userVO.getId());
-                            }
-                            Log.d("aaaaaaaaavvvvvvvvvv",LoginActivity.loginInformation.getString("id",""));
-                            startActivity(new Intent(getApplicationContext(),MainPageActivity.class));
-
-                            finish();
-                        }
-                        if(itForSignUp == null) {
-
-
-                            if(LoginActivity.loginInformation.getBoolean("auto",true)){
-                                LoginActivity.editor.putString("id",LoginActivity.userVO.getId());
-                                startActivity(new Intent(getApplicationContext(),MainPageActivity.class));
-                                finish();
-                            }
-                            else{
-                                startActivity(new Intent(getApplicationContext(),MainPageActivity.class));
-                                finish();
-                            }
-
-
-                        }
-
-                *//*
-                    완료될 떄 원래 가족을 한 사람이라도 지정 한 사람들만 완료 버튼을 누를 수 있게 했는데
-                    이건 첫 회원가입 떄 만 필요한거고 다음번에 가족 등록을 안 하더라도 메인 엑티비티로 넘어갈 수
-                    있게 해줌.
-                 *//*
-
-
-                    }
-                });
-
-            }*/
-
-
-          /*  private void alreadyConnectedFamily() {
-
-                userService = retrofit.create(UserService.class);
-
-                Call<FindFamilyVO> findFamilyVOCall = userService.getConnectedFamilyInfo(LoginActivity.userVO.getId());
-                findFamilyVOCall.enqueue(new Callback<FindFamilyVO>() {
-                    @Override
-                    public void onResponse(Call<FindFamilyVO> call, Response<FindFamilyVO> response) {
-                        FindFamilyVO findFamilyVO = response.body();
-
-                        if (findFamilyVO.getStatus().equals("200")) {
-
-                            for(int i = 0; i < findFamilyVO.getResult().size();i++){
-                                adapter.addItem(findFamilyVO.getResult().get(i).getNickName()+"/"+findFamilyVO.getResult().get(i).getUserId());
-                                family_list_view.setAdapter(adapter);
-                            }
-                        } else if (findFamilyVO.getStatus().equals("204")) {
-                            Toast.makeText(getApplicationContext(), "상대의 계정이 존재하지 않습니다.", Toast.LENGTH_LONG).show();
-                        } else if (findFamilyVO.getStatus().equals("400")) {
-                            Toast.makeText(getApplicationContext(), "잘못된 요청입니다.", Toast.LENGTH_LONG).show();
-                        } else if (findFamilyVO.getStatus().equals("500")) {
-                            Toast.makeText(getApplicationContext(), "서버 오루 입니다..", Toast.LENGTH_LONG).show();
-                        }
-
-                    }
-
-
-                    @Override
-                    public void onFailure(Call<FindFamilyVO> call, Throwable t) {
-                        System.out.println(t.getMessage());
-                    }
-                });
-
-            }
-*/
         }
     @Override
     protected void onStart() {
@@ -523,19 +159,56 @@ public class Register_Family extends AppCompatActivity implements IRegister_Pres
     }
 
     @Override
-    public void onResponse(boolean response) {
-        if(response){
-            for(int i=0;i<familyItems.size();i++){
-                adapter.addItem(familyItems.get(i).getName());
-                adapter.notifyDataSetChanged();
-            }
-        }
+    public void getArrayList(ArrayList<FamilyItem> familyItems) {
+        Log.d("djkdjdjdj",familyItems+" ");
+        familyItemss = familyItems;
+
     }
 
     @Override
-    public void getArrayList(ArrayList<FamilyItem> familyItems) {
-        this.familyItems = familyItems;
+    public void makeDialog(String name) {
+
+        dialog.setTitle("가족찾기");
+        dialog.setMessage(name+"을 가족으로 등록 하시겠습니까?");
+        dialog.setCancelable(false);
+        String user_id = "";
+
+
+        dialog.setPositiveButton("네", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                presenter.setYesRegisterFam(true);
+            }
+        });
+        dialog.setNegativeButton("아니요", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+
+            }
+        });
+        AlertDialog alertDialog = dialog.create();
+        alertDialog.show();
+
+
     }
+
+    @Override
+    public void onResponse(boolean response) {
+        if(response){
+            for(int i=0;i<familyItemss.size();i++){
+                adapter.addItem(familyItemss.get(i).getName());
+                adapter.notifyDataSetChanged();
+                family_list_view.setAdapter(adapter);
+
+            }
+
+        }
+        else{
+            fmaily_number_edt.setText("");
+        }
+    }
+
+
 
 
 }

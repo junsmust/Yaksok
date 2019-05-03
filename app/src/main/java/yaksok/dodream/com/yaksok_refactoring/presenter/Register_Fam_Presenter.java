@@ -1,6 +1,8 @@
 package yaksok.dodream.com.yaksok_refactoring.presenter;
 
 
+import android.util.Log;
+
 import java.util.ArrayList;
 
 import yaksok.dodream.com.yaksok_refactoring.Adapter.family.FamilyFindAdapter;
@@ -19,7 +21,7 @@ public class Register_Fam_Presenter implements IRegister_fam_presenter {
 
     public Register_Fam_Presenter(IRegister_Presenter_Family_To_View view) {
         this.view = view;
-        model = new Register_Fam_Model();
+        model = new Register_Fam_Model(this);
     }
 
 
@@ -50,8 +52,21 @@ public class Register_Fam_Presenter implements IRegister_fam_presenter {
     }
 
     @Override
-    public void getArrayList(ArrayList<FamilyItem> familyItems) {
+    public void sendArrayList(ArrayList<FamilyItem> familyItems) {
+        Log.d("faaamm"," "+familyItems+familyItems.get(0).getName());
+
         view.getArrayList(familyItems);
+        Log.d("faaamm"," "+familyItems+familyItems.get(0).getName());
+    }
+
+    @Override
+    public void makeDialog(String name) {
+        view.makeDialog(name);
+    }
+
+    @Override
+    public void setYesRegisterFam(boolean isOkay) {
+        model.setYesRegisterFam(isOkay);
     }
 
 
