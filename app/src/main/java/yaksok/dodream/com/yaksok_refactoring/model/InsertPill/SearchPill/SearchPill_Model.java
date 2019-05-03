@@ -8,10 +8,8 @@ import retrofit2.Response;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 import retrofit2.converter.scalars.ScalarsConverterFactory;
-import yaksok.dodream.com.yaksok_refactoring.Adapter.PillSearchItem;
+import yaksok.dodream.com.yaksok_refactoring.Adapter.SearchPill.PillSearchItem;
 import yaksok.dodream.com.yaksok_refactoring.presenter.InsertPill.SearchPill.Presenter_SearchPill;
-import yaksok.dodream.com.yaksok_refactoring.presenter.InsertPill.SearchPill.SearchPillToPresenter;
-import yaksok.dodream.com.yaksok_refactoring.view.InsertPill.SearchPill.SearchPill_PresenterToView;
 import yaksok.dodream.com.yaksok_refactoring.vo.SearchPillListVO;
 import yaksok.dodream.com.yaksok_refactoring.vo.UserService;
 

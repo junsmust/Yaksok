@@ -8,14 +8,12 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ListView;
 
-import java.sql.BatchUpdateException;
 import java.util.ArrayList;
 
-import yaksok.dodream.com.yaksok_refactoring.Adapter.PillSearchItem;
-import yaksok.dodream.com.yaksok_refactoring.Adapter.SearchListAdapter;
+import yaksok.dodream.com.yaksok_refactoring.Adapter.SearchPill.PillSearchItem;
+import yaksok.dodream.com.yaksok_refactoring.Adapter.SearchPill.SearchListAdapter;
 import yaksok.dodream.com.yaksok_refactoring.R;
 import yaksok.dodream.com.yaksok_refactoring.presenter.InsertPill.SearchPill.Presenter_SearchPill;
-import yaksok.dodream.com.yaksok_refactoring.presenter.InsertPill.SearchPill.SearchPillToPresenter;
 
 public class SearchPill_activity extends AppCompatActivity implements SearchPill_PresenterToView{
 

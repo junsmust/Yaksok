@@ -2,7 +2,7 @@ package yaksok.dodream.com.yaksok_refactoring.presenter.InsertPill.SearchPill;
 
 import java.util.ArrayList;
 
-import yaksok.dodream.com.yaksok_refactoring.Adapter.PillSearchItem;
+import yaksok.dodream.com.yaksok_refactoring.Adapter.SearchPill.PillSearchItem;
 import yaksok.dodream.com.yaksok_refactoring.model.InsertPill.SearchPill.SearchPill_Model;
 import yaksok.dodream.com.yaksok_refactoring.model.InsertPill.SearchPill.SearchPill_PresenterToModel;
 import yaksok.dodream.com.yaksok_refactoring.view.InsertPill.SearchPill.SearchPill_PresenterToView;

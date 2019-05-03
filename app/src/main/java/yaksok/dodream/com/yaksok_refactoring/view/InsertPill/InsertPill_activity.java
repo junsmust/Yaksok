@@ -4,10 +4,12 @@ import android.app.TimePickerDialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.view.MotionEvent;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.TimePicker;
 import android.widget.Toast;
@@ -16,14 +18,16 @@ import java.util.ArrayList;
 import java.util.List;
 
 import yaksok.dodream.com.yaksok_refactoring.R;
+import yaksok.dodream.com.yaksok_refactoring.view.InsertPill.Sel_AlarmRecive.Sel_AlarmRecive_activity;
 import yaksok.dodream.com.yaksok_refactoring.view.InsertPill.SearchPill.SearchPill_activity;
 
 public class InsertPill_activity extends AppCompatActivity implements InsertPill_PresenterToView, View.OnClickListener{
 
     EditText et_DiseaseName;
-    Button bt_ListAdd, bt_1time, bt_2time, bt_3time;
+    Button bt_ListAdd, bt_1time, bt_2time, bt_3time, bt_AlarmReciveFamily;
     TextView tv_1h, tv_1m, tv_2h, tv_2m, tv_3h, tv_3m;
     TextView et_dosagi;
+    ListView lv_alarmFamily;
     ImageView minus_count,plus_count;
     List<String> time;
     String h, m;
@@ -48,6 +52,8 @@ public class InsertPill_activity extends AppCompatActivity implements InsertPill
         tv_2m = (TextView) findViewById(R.id.tv_2_m);
         tv_3h = (TextView) findViewById(R.id.tv_3_h);
         tv_3m = (TextView) findViewById(R.id.tv_3_m);
+        bt_AlarmReciveFamily = (Button)findViewById(R.id.bt_AlarmReciveFamily);
+        lv_alarmFamily = (ListView)findViewById(R.id.lv_alarmFamily);
 
         minus_count.setOnClickListener(this);
         plus_count.setOnClickListener(this);
@@ -81,6 +87,23 @@ public class InsertPill_activity extends AppCompatActivity implements InsertPill
             @Override
             public void onClick(View v) {
                 startActivity(new Intent(getApplicationContext(), SearchPill_activity.class));
+            }
+        });
+
+        bt_AlarmReciveFamily.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getApplicationContext(), Sel_AlarmRecive_activity.class); // 다음 넘어갈 클래스 지정
+                // startActivity(intent);
+                startActivityForResult(intent, 9000);
+            }
+        });
+
+        lv_alarmFamily.setOnTouchListener(new View.OnTouchListener() {
+            @Override
+            public boolean onTouch(View v, MotionEvent event) {
+                lv_alarmFamily.requestDisallowInterceptTouchEvent(true);
+                return false;
             }
         });
     }
