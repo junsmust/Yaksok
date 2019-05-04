@@ -32,8 +32,10 @@ import yaksok.dodream.com.yaksok_refactoring.Adapter.family.FamilyItem;
 import yaksok.dodream.com.yaksok_refactoring.R;
 import yaksok.dodream.com.yaksok_refactoring.presenter.IRegister_fam_presenter;
 import yaksok.dodream.com.yaksok_refactoring.presenter.Register_Fam_Presenter;
+import yaksok.dodream.com.yaksok_refactoring.view.Main.MainPage_activity;
 import yaksok.dodream.com.yaksok_refactoring.vo.DeleteService;
 import yaksok.dodream.com.yaksok_refactoring.vo.FamilyVO;
+import yaksok.dodream.com.yaksok_refactoring.vo.FindFamilyVO;
 import yaksok.dodream.com.yaksok_refactoring.vo.UserService;
 
 public class Register_Family extends AppCompatActivity implements IRegister_Presenter_Family_To_View ,View.OnClickListener{
@@ -82,10 +84,11 @@ public class Register_Family extends AppCompatActivity implements IRegister_Pres
         family_find_skip_btn.setOnClickListener(this);
 
 
+
         adapter = new FamilyFindAdapter(this,familyItemss,R.layout.family_list_item);
 
 
-
+        presenter.setPreviousRegistered();
 
 
 
@@ -147,8 +150,12 @@ public class Register_Family extends AppCompatActivity implements IRegister_Pres
                 presenter.searchFam(fmaily_number_edt.getText().toString());
                 break;
             case R.id.family_complete_btn:
+                startActivity(new Intent(getApplicationContext(), MainPage_activity.class));
+                finish();
                 break;
             case R.id.family_skip_btn:
+                startActivity(new Intent(getApplicationContext(), MainPage_activity.class));
+                finish();
                 break;
         }
     }
@@ -166,7 +173,7 @@ public class Register_Family extends AppCompatActivity implements IRegister_Pres
     }
 
     @Override
-    public void makeDialog(String name) {
+    public void makeDialog(String name, final String id) {
 
         dialog.setTitle("가족찾기");
         dialog.setMessage(name+"을 가족으로 등록 하시겠습니까?");
@@ -177,7 +184,8 @@ public class Register_Family extends AppCompatActivity implements IRegister_Pres
         dialog.setPositiveButton("네", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
-                presenter.setYesRegisterFam(true);
+                presenter.setYesRegisterFam(true,id);
+
             }
         });
         dialog.setNegativeButton("아니요", new DialogInterface.OnClickListener() {
@@ -195,20 +203,32 @@ public class Register_Family extends AppCompatActivity implements IRegister_Pres
     @Override
     public void onResponse(boolean response) {
         if(response){
-            for(int i=0;i<familyItemss.size();i++){
-                adapter.addItem(familyItemss.get(i).getName());
-                adapter.notifyDataSetChanged();
-                family_list_view.setAdapter(adapter);
 
+            for(int i=0;i<familyItemss.size();i++){
+               // Log.d("ffffff1"," "+familyItemss.size());
+
+                adapter.addItem(familyItemss.get(i).getName());
+               // adapter.notifyDataSetChanged();
+
+                family_list_view.setAdapter(adapter);
+                Log.d("i",i+familyItemss.get(i).getName());
             }
+
+
 
         }
         else{
             fmaily_number_edt.setText("");
         }
     }
-
-
+    @Override
+    public void onResponse2(boolean response2, FamilyItem familyItem) {
+        if(response2){
+            adapter.addItem(familyItem.getName());
+            adapter.notifyDataSetChanged();
+            family_list_view.setAdapter(adapter);
+        }
+    }
 
 
 }

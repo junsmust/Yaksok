@@ -21,6 +21,7 @@ import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 import retrofit2.converter.scalars.ScalarsConverterFactory;
 import yaksok.dodream.com.yaksok_refactoring.model.user.LoginModel;
+import yaksok.dodream.com.yaksok_refactoring.model.user.User_Id;
 import yaksok.dodream.com.yaksok_refactoring.model.user.User_Info_Model;
 import yaksok.dodream.com.yaksok_refactoring.presenter.signup_presenter.PresenterSignUp;
 import yaksok.dodream.com.yaksok_refactoring.vo.BodyVO;
@@ -175,6 +176,7 @@ public class SignUpModel implements IPresenterToSignUpModel {
                 if(bodyVO.getStatus().equals("201")){
                     presenterSignUp.onSignupResponse(true);
                     presenterSignUp.makeToastMessage("가입 성공 되었습니다.");
+                    User_Id.setUser_Id(user_info_model.getId());
                     pushToken();
 
 

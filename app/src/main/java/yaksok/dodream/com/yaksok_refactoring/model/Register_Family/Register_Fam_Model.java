@@ -1,5 +1,7 @@
 package yaksok.dodream.com.yaksok_refactoring.model.Register_Family;
 
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.util.Log;
 import android.widget.Toast;
 
@@ -13,8 +15,11 @@ import retrofit2.converter.gson.GsonConverterFactory;
 import retrofit2.converter.scalars.ScalarsConverterFactory;
 import yaksok.dodream.com.yaksok_refactoring.Adapter.family.FamilyFindAdapter;
 import yaksok.dodream.com.yaksok_refactoring.Adapter.family.FamilyItem;
+import yaksok.dodream.com.yaksok_refactoring.model.user.User_Id;
 import yaksok.dodream.com.yaksok_refactoring.presenter.MyPill.Presenter_MyPill;
 import yaksok.dodream.com.yaksok_refactoring.presenter.Register_Fam_Presenter;
+import yaksok.dodream.com.yaksok_refactoring.vo.BodyVO;
+import yaksok.dodream.com.yaksok_refactoring.vo.FamilyVO;
 import yaksok.dodream.com.yaksok_refactoring.vo.FindFamilyVO;
 import yaksok.dodream.com.yaksok_refactoring.vo.UserService;
 
@@ -26,6 +31,9 @@ public class Register_Fam_Model implements IRegister_Presenter_To_FamModel {
     private FamilyFindAdapter adapter;
     private ArrayList<FamilyItem> familyItems = new ArrayList<>();
     private boolean isOkayForFamily = false;
+    private String second_user_id;
+    private ArrayList<FamilyItem> registered_Fam = new ArrayList<>();
+    private Retrofit retrofit;
 
 
     public Register_Fam_Model(Register_Fam_Presenter presenter) {
@@ -39,7 +47,7 @@ public class Register_Fam_Model implements IRegister_Presenter_To_FamModel {
         }
         else {
 
-            Retrofit retrofit = new Retrofit.Builder()
+             retrofit = new Retrofit.Builder()
                     .baseUrl(userService.API_URL)
                     .addConverterFactory(ScalarsConverterFactory.create())
                     .addConverterFactory(GsonConverterFactory.create())
@@ -57,9 +65,10 @@ public class Register_Fam_Model implements IRegister_Presenter_To_FamModel {
                         for (int i = 0; i < findFamilyVO.getResult().size(); i++) {
 
                             Log.d("ddddddd",findFamilyVO.getResult().get(i).getNickName()+findFamilyVO.getResult().get(i).getUserId());
-                                    familyItems.add(new FamilyItem(findFamilyVO.getResult().get(i).getNickName()+"/"+findFamilyVO.getResult().get(i).getUserId()));
+                                    second_user_id = findFamilyVO.getResult().get(i).getUserId();
+                                    familyItems.add(new FamilyItem(findFamilyVO.getResult().get(i).getNickName()))/*"/"+findFamilyVO.getResult().get(i).getUserId())*/;
                             }
-                            presenter.makeDialog(findFamilyVO.getResult().get(0).getNickName());
+                            presenter.makeDialog(findFamilyVO.getResult().get(0).getNickName(),second_user_id);
                             /*if(isOkayForFamily){
                                 Log.d("112","" +familyItems.get(0).getName());
                                 presenter.sendArrayList(familyItems);
@@ -88,14 +97,106 @@ public class Register_Fam_Model implements IRegister_Presenter_To_FamModel {
             });
     }
     }
+    private void onRegisterFamily(final String finalUser2_id){
+
+
+
+
+                final FamilyVO familyVO = new FamilyVO();
+                familyVO.setUser_1(User_Id.getUser_Id());
+                familyVO.setUser_2(finalUser2_id);
+
+                final FamilyItem familyItem = new FamilyItem();
+                //code
+                //201 : OK
+                //403 : 삽입시 중복
+                //500 : Server Error
+                Log.d("eeeeee",familyVO.getUser_1()+familyVO.getUser_2());
+                Call<BodyVO> call = userService.postRegisterFamily(familyVO);
+                call.enqueue(new Callback<BodyVO>() {
+                    @Override
+                    public void onResponse(Call<BodyVO> call, Response<BodyVO> response) {
+                        BodyVO bodyVO = response.body();
+                        assert bodyVO != null;
+
+                        switch (bodyVO.getStatus()) {
+                            case "201":
+                                /*Log.d("112","" +familyItems.get(0).getName());
+                                //registered_Fam.add(new FamilyItem(finalUser2_id));
+                                Log.d("eeeeee2",registered_Fam.get(0).getName());*/
+                                familyItem.setName(finalUser2_id);
+                                //presenter.sendArrayList(registered_Fam);
+                                presenter.onResponse2(true,familyItem);
+                                presenter.makeToastMessage( "가족 추가가 되었습니다.");
+                                break;
+                            case "403":
+                                presenter.makeToastMessage( "삽입시 중복이 됩니다.");
+                                break;
+                            case "500":
+                                presenter.makeToastMessage( "서버 에러");
+                                //Log.d("eeeee3",finalUser2_id+User_Id.getUser_Id());
+                                break;
+                        }
+
+                    }
+
+                    @Override
+                    public void onFailure(Call<BodyVO> call, Throwable t) {
+                        presenter.makeToastMessage(t.getMessage());
+                    }
+                });
+            }
+
+
 
     @Override
-    public void adapterInit(FamilyFindAdapter adapter) {
-        this.adapter = adapter;
-    }
-
-    @Override
-    public void setYesRegisterFam(boolean isOkay) {
+    public void setYesRegisterFam(boolean isOkay,String id) {
         isOkayForFamily = isOkay;
+        onRegisterFamily(id);
     }
+
+    @Override
+    public void setPreviousRegistered() {
+
+        retrofit = new Retrofit.Builder()
+                .baseUrl(userService.API_URL)
+                .addConverterFactory(ScalarsConverterFactory.create())
+                .addConverterFactory(GsonConverterFactory.create())
+                .build();
+        userService = retrofit.create(UserService.class);
+
+
+        Call<FindFamilyVO> findFamilyVOCall = userService.getConnectedFamilyInfo(User_Id.getUser_Id());
+        findFamilyVOCall.enqueue(new Callback<FindFamilyVO>() {
+            @Override
+            public void onResponse(Call<FindFamilyVO> call, Response<FindFamilyVO> response) {
+                FindFamilyVO findFamilyVO = response.body();
+
+                if (findFamilyVO.getStatus().equals("200")) {
+
+                    for(int i = 0; i < findFamilyVO.getResult().size();i++){
+                        familyItems.add(new FamilyItem(findFamilyVO.getResult().get(i).getNickName()));
+                    }
+                    presenter.sendArrayList(familyItems);
+                    presenter.onResponse(true);
+
+                } else if (findFamilyVO.getStatus().equals("204")) {
+                   presenter.makeToastMessage( "상대의 계정이 존재하지 않습니다.");
+                } else if (findFamilyVO.getStatus().equals("400")) {
+                   presenter.makeToastMessage("잘못된 요청입니다.");
+                } else if (findFamilyVO.getStatus().equals("500")) {
+                   presenter.makeToastMessage("서버 오루 입니다..");
+                }
+
+            }
+
+
+            @Override
+            public void onFailure(Call<FindFamilyVO> call, Throwable t) {
+                System.out.println(t.getMessage());
+            }
+        });
+    }
+
+
 }

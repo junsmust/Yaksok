@@ -9,7 +9,8 @@ import yaksok.dodream.com.yaksok_refactoring.vo.FamilyVO;
 public interface IRegister_Presenter_Family_To_View {
     void makeToastMessage(String message);
     void onResponse(boolean response);
+    void onResponse2(boolean response2,FamilyItem familyItem);
     void getArrayList(ArrayList<FamilyItem> familyItems);
-    void makeDialog(String name);
+    void makeDialog(String name,String id);
 
 }

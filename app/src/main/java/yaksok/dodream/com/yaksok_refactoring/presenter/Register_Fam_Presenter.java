@@ -35,38 +35,36 @@ public class Register_Fam_Presenter implements IRegister_fam_presenter {
         view.makeToastMessage(message);
     }
 
-    @Override
-    public void sendAdapterToView(FamilyFindAdapter adapter) {
-
-    }
-
-
-    @Override
-    public void adapterInit(FamilyFindAdapter adapter) {
-        model.adapterInit(adapter);
-    }
 
     @Override
     public void onResponse(boolean response) {
         view.onResponse(response);
     }
 
-    @Override
+   @Override
     public void sendArrayList(ArrayList<FamilyItem> familyItems) {
-        Log.d("faaamm"," "+familyItems+familyItems.get(0).getName());
-
         view.getArrayList(familyItems);
-        Log.d("faaamm"," "+familyItems+familyItems.get(0).getName());
+
     }
 
     @Override
-    public void makeDialog(String name) {
-        view.makeDialog(name);
+    public void makeDialog(String name,String id) {
+        view.makeDialog(name,id);
     }
 
     @Override
-    public void setYesRegisterFam(boolean isOkay) {
-        model.setYesRegisterFam(isOkay);
+    public void setYesRegisterFam(boolean isOkay,String id) {
+        model.setYesRegisterFam(isOkay,id);
+    }
+
+    @Override
+    public void onResponse2(boolean response2, FamilyItem familyItem) {
+        view.onResponse2(response2,familyItem);
+    }
+
+    @Override
+    public void setPreviousRegistered() {
+        model.setPreviousRegistered();
     }
 
 
