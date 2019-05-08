@@ -20,9 +20,9 @@ public interface IPresennterToModel  {
     void kakaoLoginMethod();
     void handleScopeError(UserAccount userAccount);
     void checkBox(SharedPreferences sharedPreferences,SharedPreferences.Editor editor,boolean auto);
-    void autoLogin(String id, String pw,String userType);
-    void autoLogin(String id,String userType);
-    void setUserInfoModel(User_Info_Model user_info_model);
+    void autoLogin(String id, String pw,String userType,boolean auto);
+    void autoLogin(String id,String userType,boolean auto);
+    void getEditor(SharedPreferences.Editor editor);
 
 
 

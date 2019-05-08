@@ -92,6 +92,8 @@ public class Login_activity extends AppCompatActivity implements IPresenterToVie
         presenter_login = new Presenter_Login(this);
 
 
+        presenter_login.sendEditor(editor);
+
         signUp_btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -118,8 +120,7 @@ public class Login_activity extends AppCompatActivity implements IPresenterToVie
         });
 
 
-        //Log.d("auttto",""+loginInformation.getBoolean("auto",true)+loginInformation.getString("id","")+loginInformation.getString("userType",""));
-
+        Log.d("cc",loginInformation.getBoolean("auto",true)+" ");
         if(loginInformation.getBoolean("auto",true)){
 
             switch (loginInformation.getString("userType","")){
@@ -130,20 +131,24 @@ public class Login_activity extends AppCompatActivity implements IPresenterToVie
                     String test_userType = loginInformation.getString("userType","");
                     Log.d("auttto",""+test_id+", "+test_pw+""+test_userType);
 
-                    presenter_login.autoLogin(test_id,test_pw,test_userType);
+
+                    presenter_login.autoLogin(test_id,test_pw,test_userType,loginInformation.getBoolean("auto",true));
 
 
                     break;
                 case "N":
                     String naver_id = loginInformation.getString("id","");
-                    String naver_type = "N";
-                    presenter_login.autoLogin(naver_id,naver_type);
+                    String naver_type = loginInformation.getString("userType","");
+                    Log.d("nnnnaver",naver_id+naver_type);
+                    presenter_login.autoLogin(naver_id,naver_type,loginInformation.getBoolean("auto",true));
 
                     break;
                 case "K":
                     String kakao_id = loginInformation.getString("id","");
                     String kakao_type = loginInformation.getString("userType","");
-                    presenter_login.autoLogin(kakao_id,kakao_type);
+                    Log.d("tag","실행");
+                    Log.d("auttto",""+loginInformation.getBoolean("auto",true)+kakao_id+kakao_type);
+                    presenter_login.autoLogin(kakao_id,kakao_type,loginInformation.getBoolean("auto",true));
                     break;
             }
 
@@ -152,15 +157,21 @@ public class Login_activity extends AppCompatActivity implements IPresenterToVie
             checkBox.setChecked(false);
         }
 
-        Button btn = (Button) findViewById(R.id.btn);
-
 
 
         login_btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 //Toast.makeText(getApplicationContext(), "test", Toast.LENGTH_LONG).show();
-                presenter_login.autoLogin(id_edt.getText().toString(),pw_edt.getText().toString(),"G");
+                presenter_login.autoLogin(id_edt.getText().toString(),pw_edt.getText().toString(),"G"
+                        ,loginInformation.getBoolean("auto",true));
+                if(loginInformation.getBoolean("auto",true)){
+
+                 editor.putString("id",id_edt.getText().toString());
+                 editor.putString("pw",pw_edt.getText().toString());
+                 editor.putString("userType","G");
+                 editor.apply();
+                 }
             }
         });
 
@@ -169,17 +180,6 @@ public class Login_activity extends AppCompatActivity implements IPresenterToVie
         callback = new SessionCallback();
         com.kakao.auth.Session.getCurrentSession().addCallback(callback);
 
-        //일반로그인
-        btn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                user_info_model = new User_Info_Model(id_edt.getText().toString(), pw_edt.getText().toString(), "G");
-                Toast.makeText(getApplicationContext(), "눌림", Toast.LENGTH_LONG).show();
-
-
-                presenter_login.Login(user_info_model);
-            }
-        });
 
 
         //네이버 연동 로그인-----------------------------------------------------------------------------
