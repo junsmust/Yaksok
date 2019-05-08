@@ -3,9 +3,13 @@ package yaksok.dodream.com.yaksok_refactoring.view.InsertPill;
 import android.app.TimePickerDialog;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
+import android.view.ViewGroup;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
@@ -29,9 +33,10 @@ public class InsertPill_activity extends AppCompatActivity implements InsertPill
     TextView et_dosagi;
     ListView lv_alarmFamily;
     ImageView minus_count,plus_count;
-    List<String> time;
+    List<String> time, family_id, alarm_f_list;
     String h, m;
     TimePickerDialog dialog1,dialog2,dialog3;
+    ArrayAdapter adapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -54,6 +59,10 @@ public class InsertPill_activity extends AppCompatActivity implements InsertPill
         tv_3m = (TextView) findViewById(R.id.tv_3_m);
         bt_AlarmReciveFamily = (Button)findViewById(R.id.bt_AlarmReciveFamily);
         lv_alarmFamily = (ListView)findViewById(R.id.lv_alarmFamily);
+
+        family_id = new ArrayList<String>();
+        alarm_f_list = new ArrayList<String>();
+        adapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, alarm_f_list);
 
         minus_count.setOnClickListener(this);
         plus_count.setOnClickListener(this);
@@ -95,7 +104,7 @@ public class InsertPill_activity extends AppCompatActivity implements InsertPill
             public void onClick(View v) {
                 Intent intent = new Intent(getApplicationContext(), Sel_AlarmRecive_activity.class); // 다음 넘어갈 클래스 지정
                 // startActivity(intent);
-                startActivityForResult(intent, 9000);
+                startActivityForResult(intent, 3000);
             }
         });
 
@@ -183,6 +192,33 @@ public class InsertPill_activity extends AppCompatActivity implements InsertPill
                 et_dosagi.setText(String.valueOf(count));
                 break;
 
+        }
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if(data != null){
+            if(requestCode == 3000){
+                int size = 0;
+                if (data.getStringExtra("status").equals("true")) {
+                    for (int i = 0; i < Integer.parseInt(data.getStringExtra("list_size")); i++) {
+                        if (data.getStringExtra("name" + i).equals("null")) {
+                        } else {
+                            family_id.add(data.getStringExtra("id" + i));
+                            alarm_f_list.add(data.getStringExtra("name" + i));
+                            Log.d("data1", data.getStringExtra("name" + i) + "/" + data.getStringExtra("id" + i));
+                            size++;
+                        }
+                    }
+                    adapter.notifyDataSetChanged();
+                    bt_AlarmReciveFamily.setEnabled(false);
+                    ViewGroup.LayoutParams params = lv_alarmFamily.getLayoutParams();
+                    params.height = 200 * size;
+                    lv_alarmFamily.setLayoutParams(params);
+                    lv_alarmFamily.setAdapter(adapter);
+                }
+            }
         }
     }
 }

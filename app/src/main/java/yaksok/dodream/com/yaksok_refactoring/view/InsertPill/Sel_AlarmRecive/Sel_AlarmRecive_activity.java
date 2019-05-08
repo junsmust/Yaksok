@@ -1,8 +1,13 @@
 package yaksok.dodream.com.yaksok_refactoring.view.InsertPill.Sel_AlarmRecive;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
+import android.util.SparseBooleanArray;
+import android.view.View;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.ListView;
 
 import java.util.ArrayList;
@@ -18,16 +23,52 @@ public class Sel_AlarmRecive_activity extends AppCompatActivity implements Sel_A
     private List<String> familyList_Id = new ArrayList<String>();
     ListView lv_sel_family;
     ArrayAdapter adapter;
+    Intent resultIntent;
+    Button bt_select;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_sel_alarmrecive);
 
+        resultIntent = new Intent();
+        setResult(3000,resultIntent);
+
+        resultIntent.putExtra("status","false");
+
         lv_sel_family = (ListView)findViewById(R.id.listview_family);
+        bt_select = (Button)findViewById(R.id.bt_AlarmReciveFamily_Ok);
 
         presenter_alarmRecive = new Presenter_Sel_AlarmRecive(this);
         presenter_alarmRecive.getFamilyList();
+
+        bt_select.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                SparseBooleanArray checkedItems = lv_sel_family.getCheckedItemPositions();
+                Log.d("data+++","들어 왔는데..");
+                int count = adapter.getCount();
+                resultIntent.putExtra("status","true");
+                resultIntent.putExtra("list_size",String.valueOf(count));
+                Log.d("list_size",String.valueOf(count));
+                for(int i=count-1; i>=0; i--) {
+                    Log.d("dataNum",String.valueOf(i));
+                    if (checkedItems.get(i)) {
+                        resultIntent.putExtra("name"+i,familyList.get(i));
+                        resultIntent.putExtra("id"+i,familyList_Id.get(i));
+                        Log.d("data_name", familyList.get(i) + familyList_Id.get(i));
+                    }
+                    else{
+                        resultIntent.putExtra("name"+i,"null");
+                        resultIntent.putExtra("id"+i,"null");
+                    }
+                }
+                finish();
+            }
+        });
     }
+
+
 
     @Override
     public void onFamilyResponce(boolean Responce) {
