@@ -31,12 +31,13 @@ public class InsertPill_activity extends AppCompatActivity implements InsertPill
     Button bt_ListAdd, bt_1time, bt_2time, bt_3time, bt_AlarmReciveFamily;
     TextView tv_1h, tv_1m, tv_2h, tv_2m, tv_3h, tv_3m;
     TextView et_dosagi;
-    ListView lv_alarmFamily;
+    ListView lv_alarmFamily, lv_Pill;
     ImageView minus_count,plus_count;
-    List<String> time, family_id, alarm_f_list;
+    List<String> time, family_id, alarm_f_list, pill_list, pill_list_num;
     String h, m;
     TimePickerDialog dialog1,dialog2,dialog3;
-    ArrayAdapter adapter;
+    ArrayAdapter adapter,pillAdapter;
+    int size = 0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -59,10 +60,16 @@ public class InsertPill_activity extends AppCompatActivity implements InsertPill
         tv_3m = (TextView) findViewById(R.id.tv_3_m);
         bt_AlarmReciveFamily = (Button)findViewById(R.id.bt_AlarmReciveFamily);
         lv_alarmFamily = (ListView)findViewById(R.id.lv_alarmFamily);
+        lv_Pill = (ListView)findViewById(R.id.lv_Pill);
 
         family_id = new ArrayList<String>();
         alarm_f_list = new ArrayList<String>();
         adapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, alarm_f_list);
+
+        pill_list = new ArrayList<String>();
+        pill_list_num = new ArrayList<>();
+        pillAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, pill_list);
+
 
         minus_count.setOnClickListener(this);
         plus_count.setOnClickListener(this);
@@ -95,7 +102,9 @@ public class InsertPill_activity extends AppCompatActivity implements InsertPill
         bt_ListAdd.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivity(new Intent(getApplicationContext(), SearchPill_activity.class));
+                Intent intent = new Intent(getApplicationContext(), SearchPill_activity.class); // 다음 넘어갈 클래스 지정
+                // startActivity(intent);
+                startActivityForResult(intent, 2000);
             }
         });
 
@@ -218,6 +227,17 @@ public class InsertPill_activity extends AppCompatActivity implements InsertPill
                     lv_alarmFamily.setLayoutParams(params);
                     lv_alarmFamily.setAdapter(adapter);
                 }
+            }
+            if(requestCode == 2000){
+                pill_list.add(size,data.getStringExtra("result"));
+                pill_list_num.add(size,data.getStringExtra("number"));
+                Log.d("pill_Num",pill_list_num.get(size));
+                size++;
+                pillAdapter.notifyDataSetChanged();
+                ViewGroup.LayoutParams params = lv_Pill.getLayoutParams();
+                params.height = 200 * size;
+                lv_Pill.setLayoutParams(params);
+                lv_Pill.setAdapter(pillAdapter);
             }
         }
     }

@@ -1,9 +1,13 @@
 package yaksok.dodream.com.yaksok_refactoring.view.InsertPill.SearchPill;
 
+import android.app.AlertDialog;
+import android.content.DialogInterface;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ListView;
@@ -23,10 +27,18 @@ public class SearchPill_activity extends AppCompatActivity implements SearchPill
     ListView lv_SearchList;
     ArrayList<PillSearchItem> searchItems = new ArrayList<PillSearchItem>();
     SearchListAdapter adapter;
+    Intent resultIntent;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.searchpill);
+        setContentView(R.layout.activity_searchpill);
+
+        final AlertDialog.Builder builder = new AlertDialog.Builder(this);
+
+        resultIntent = new Intent();
+        setResult(2000,resultIntent);
+
+        resultIntent.putExtra("status","false");
 
         presenter_searchPill = new Presenter_SearchPill(this);
 
@@ -48,6 +60,28 @@ public class SearchPill_activity extends AppCompatActivity implements SearchPill
         });
 
 
+        lv_SearchList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> adapterView, View view, final int i, long l) {
+                Log.d("sta",String.valueOf(i));
+                builder.setTitle("알림");
+                builder.setMessage("약을 등록하시겠습니까?");
+                builder.setPositiveButton("확인",
+                        new DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface dialog, int which) {
+                                Intent resultIntent = new Intent();
+                                resultIntent.putExtra("status","true");
+                                resultIntent.putExtra("result", searchItems.get(i).getName());
+                                resultIntent.putExtra("number", String.valueOf(searchItems.get(i).getMedicineNO()));
+                                setResult(RESULT_OK,resultIntent);
+                                Log.d("zzzz",searchItems.get(i).getName() + String.valueOf(searchItems.get(i).getMedicineNO()));
+                                finish();
+                            }
+                        });
+                builder.show();
+
+            }
+        });
 
     }
 

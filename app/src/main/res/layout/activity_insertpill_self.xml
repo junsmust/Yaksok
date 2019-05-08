@@ -55,41 +55,6 @@
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="10dp"
                 android:layout_margin="15dp"
-                android:orientation="horizontal">
-
-                <TextView
-                    android:layout_width="35dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="0.2"
-                    android:text="약 성분"
-                    tools:ignore="NestedWeights" />
-                <Button
-                    android:id="@+id/bt_ListAdd"
-                    android:layout_width="60dp"
-                    android:layout_height="20dp"
-                    android:layout_marginLeft="20dp"
-                    android:layout_weight="0.1"
-                    android:background="@color/main_color"
-                    android:text="추가하기"
-                    android:textSize="10sp"
-                    android:textStyle="bold"
-                    android:textColor="#FFFFFF"
-                    android:layout_gravity="center"
-
-
-                    />
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"/>
-
-            </LinearLayout>
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="10dp"
-                android:layout_margin="15dp"
                 android:layout_weight="1">
 
                 <TextView
@@ -257,6 +222,54 @@
                     android:layout_height="20dp"
                     android:background="@drawable/timeadd"
                     />
+            </LinearLayout>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="10dp"
+                android:layout_margin="15dp"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:layout_width="35dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="0.2"
+                    android:text="약 성분"
+                    tools:ignore="NestedWeights" />
+                <Button
+                    android:id="@+id/bt_ListAdd"
+                    android:layout_width="60dp"
+                    android:layout_height="20dp"
+                    android:layout_marginLeft="20dp"
+                    android:layout_weight="0.1"
+                    android:background="@color/main_color"
+                    android:text="추가하기"
+                    android:textSize="10sp"
+                    android:textStyle="bold"
+                    android:textColor="#FFFFFF"
+                    android:layout_gravity="center"
+
+
+                    />
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="      (선택사항)"
+                    android:layout_weight="1"/>
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="10dp"
+                android:layout_margin="15dp"
+                android:layout_weight="1">
+                <ListView
+                    android:id="@+id/lv_Pill"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+                </ListView>
             </LinearLayout>
             <LinearLayout
                 android:layout_width="match_parent"
