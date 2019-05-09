@@ -63,8 +63,29 @@ public class Register_Fam_Presenter implements IRegister_fam_presenter {
     }
 
     @Override
+    public void onResponse3(boolean response3) {
+        view.onResponse3(response3);
+    }
+
+    @Override
+    public void deleteFam(boolean isOkay, String id,int position) {
+        model.deleteFam(isOkay,id,position);
+    }
+
+
+    @Override
     public void setPreviousRegistered() {
         model.setPreviousRegistered();
+    }
+
+    @Override
+    public void sendAdapter(FamilyFindAdapter adapter) {
+        model.getAdapter(adapter);
+    }
+
+    @Override
+    public void sendToViewAdapter(FamilyFindAdapter adapter) {
+        view.getFromModelAdapter(adapter);
     }
 
 

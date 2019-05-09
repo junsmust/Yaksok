@@ -6,12 +6,12 @@
     android:orientation="horizontal"
     android:layout_weight="1"
     android:layout_margin="7dp">
-    <ImageView
+   <!-- <ImageView
         android:id="@+id/pn_user"
         android:layout_width="50dp"
         android:layout_height="wrap_content"
         android:src="@drawable/user_pic"
-        android:layout_margin="10dp"/>
+        android:layout_margin="10dp"/>-->
 
     <TextView
         android:id="@+id/family_list_item_name"
@@ -20,15 +20,16 @@
         android:layout_gravity="center"
         android:layout_margin="10dp"
         android:layout_weight="0.8"
-        android:text="이름" />
-    <ImageView
+        android:text="이름"
+        android:textSize="20sp"/>
+   <!-- <ImageView
         android:id="@+id/gotoright"
         android:layout_width="20dp"
         android:layout_height="20dp"
         android:src="@drawable/gotoright"
         android:layout_margin="10dp"
         android:layout_marginEnd="40dp"
-        android:layout_gravity="center"/>
+        android:layout_gravity="center"/>-->
 
 
 </LinearLayout>

@@ -12,7 +12,7 @@ public class FamilyItem {
     public FamilyItem() {
     }
 
-    public int getGotoright() {
+    /*public int getGotoright() {
         return gotoright;
     }
 
@@ -27,7 +27,7 @@ public class FamilyItem {
     public void setUser_img(int user_img) {
         this.user_img = user_img;
     }
-
+*/
     public String getName() {
         return name;
     }

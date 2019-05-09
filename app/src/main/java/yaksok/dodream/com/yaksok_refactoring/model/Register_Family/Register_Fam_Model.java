@@ -19,6 +19,9 @@ import yaksok.dodream.com.yaksok_refactoring.model.user.User_Id;
 import yaksok.dodream.com.yaksok_refactoring.presenter.MyPill.Presenter_MyPill;
 import yaksok.dodream.com.yaksok_refactoring.presenter.Register_Fam_Presenter;
 import yaksok.dodream.com.yaksok_refactoring.vo.BodyVO;
+import yaksok.dodream.com.yaksok_refactoring.vo.DeleteService;
+import yaksok.dodream.com.yaksok_refactoring.vo.FamilyBodyVO;
+import yaksok.dodream.com.yaksok_refactoring.vo.FamilyDelVO;
 import yaksok.dodream.com.yaksok_refactoring.vo.FamilyVO;
 import yaksok.dodream.com.yaksok_refactoring.vo.FindFamilyVO;
 import yaksok.dodream.com.yaksok_refactoring.vo.UserService;
@@ -33,7 +36,8 @@ public class Register_Fam_Model implements IRegister_Presenter_To_FamModel {
     private boolean isOkayForFamily = false;
     private String second_user_id;
     private ArrayList<FamilyItem> registered_Fam = new ArrayList<>();
-    private Retrofit retrofit;
+    public Retrofit retrofit;
+    public DeleteService deleteService;
 
 
     public Register_Fam_Model(Register_Fam_Presenter presenter) {
@@ -175,7 +179,8 @@ public class Register_Fam_Model implements IRegister_Presenter_To_FamModel {
                 if (findFamilyVO.getStatus().equals("200")) {
 
                     for(int i = 0; i < findFamilyVO.getResult().size();i++){
-                        familyItems.add(new FamilyItem(findFamilyVO.getResult().get(i).getNickName()));
+                        familyItems.add(new FamilyItem(findFamilyVO.getResult().get(i).getUserId()));
+
                     }
                     presenter.sendArrayList(familyItems);
                     presenter.onResponse(true);
@@ -196,6 +201,67 @@ public class Register_Fam_Model implements IRegister_Presenter_To_FamModel {
                 System.out.println(t.getMessage());
             }
         });
+    }
+
+    @Override
+    public void deleteFam(boolean isOkay, String id, final int position) {
+
+        retrofit = new Retrofit.Builder()
+                .baseUrl(deleteService.API_URL)
+                .addConverterFactory(ScalarsConverterFactory.create())
+                .addConverterFactory(GsonConverterFactory.create())
+                .build();
+        deleteService = retrofit.create(DeleteService.class);
+
+        FamilyDelVO familyDelVO = new FamilyDelVO();
+        familyDelVO.setUser_1(User_Id.getUser_Id());
+        familyDelVO.setUser_2(id);
+
+        Log.d("dddddd5",familyDelVO.getUser_1()+" "+familyDelVO.getUser_2());
+
+        Call<FamilyBodyVO> delectionCall = deleteService.deleteBody(familyDelVO);
+
+        delectionCall.enqueue(new Callback<FamilyBodyVO>() {
+            @Override
+            public void onResponse(Call<FamilyBodyVO> call, Response<FamilyBodyVO> response) {
+                FamilyBodyVO familyBodyVO = response.body();
+                Log.d("dddddd2",familyBodyVO.getStatus());
+                if(familyBodyVO.getStatus().equals("201")){
+
+
+                   //presenter.deleteResponse(true);
+                    familyItems.remove(position);
+                    presenter.sendArrayList(familyItems);
+                    presenter.onResponse3(true);
+                  //  adapter.notifyDataSetInvalidated();
+
+
+
+//                    presenter.makeToastMessage("삭제");
+//                    presenter.onResponse3(true);
+
+
+
+
+                    // alreadyConnectedFamily();
+                }else if(familyBodyVO.getStatus().equals("500")){
+                    //Toast.makeText(getApplicationContext(),"서버 에러입니다.",Toast.LENGTH_LONG).show();
+
+                }
+
+            }
+
+
+            @Override
+            public void onFailure(Call<FamilyBodyVO> call, Throwable t) {
+
+            }
+        });
+    }
+
+    @Override
+    public void getAdapter(FamilyFindAdapter familyFindAdapter) {
+        adapter = familyFindAdapter;
     }
 
 

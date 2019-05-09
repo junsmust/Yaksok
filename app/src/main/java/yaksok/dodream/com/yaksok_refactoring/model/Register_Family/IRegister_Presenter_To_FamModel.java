@@ -9,4 +9,8 @@ public interface IRegister_Presenter_To_FamModel {
     void setYesRegisterFam(boolean isOkay,String id);
     void setPreviousRegistered();
 
+    void deleteFam(boolean isOkay,String id,int position);
+    void getAdapter(FamilyFindAdapter familyFindAdapter);
+
+
 }

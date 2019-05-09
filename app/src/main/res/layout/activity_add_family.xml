@@ -42,16 +42,16 @@
         android:layout_below="@+id/layout_family"
         android:layout_above="@+id/linear_btns">
 
-        <ListView
+        <com.baoyz.swipemenulistview.SwipeMenuListView
             android:id="@+id/family_list"
             android:layout_width="match_parent"
             android:layout_height="350dp"
             android:layout_margin="3dp"
             android:background="@drawable/bg"
-            android:choiceMode="singleChoice"
-            >
+            android:choiceMode="singleChoice">
 
-        </ListView>
+    </com.baoyz.swipemenulistview.SwipeMenuListView>
+
     </LinearLayout>
 
 
@@ -82,8 +82,7 @@
             android:textColor="#ffffff"
             android:textStyle="bold"
             android:background="@color/main_color"
-            android:layout_margin="3dp"
-            />
+            android:layout_margin="3dp" />
 
 
     </LinearLayout>

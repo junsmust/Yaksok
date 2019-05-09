@@ -60,8 +60,8 @@ public class FamilyFindAdapter extends BaseAdapter {
             FamilyItem familyItem = new FamilyItem();
 
             familyItem.setName(name);
-            familyItem.setUser_img(R.drawable.user_pic);
-            familyItem.setGotoright(R.drawable.gotoright);
+            /*familyItem.setUser_img(R.drawable.user_pic);
+            familyItem.setGotoright(R.drawable.gotoright);*/
 
             familyItems.add(familyItem);
         }

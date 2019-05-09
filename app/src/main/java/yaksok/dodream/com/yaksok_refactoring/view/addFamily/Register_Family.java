@@ -3,6 +3,8 @@ package yaksok.dodream.com.yaksok_refactoring.view.addFamily;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -18,6 +20,11 @@ import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import com.baoyz.swipemenulistview.SwipeMenu;
+import com.baoyz.swipemenulistview.SwipeMenuCreator;
+import com.baoyz.swipemenulistview.SwipeMenuItem;
+import com.baoyz.swipemenulistview.SwipeMenuListView;
 
 import java.util.ArrayList;
 
@@ -42,7 +49,7 @@ public class Register_Family extends AppCompatActivity implements IRegister_Pres
 
     public EditText fmaily_number_edt;
     public Button family_find_btn, family_find_skip_btn,complete_btn,deleteFamilyBtn;
-    public ListView family_list_view;
+    public SwipeMenuListView family_list_view;
     public Retrofit retrofit,retorofit2;
     public UserService userService;
     public DeleteService deleteService;
@@ -74,7 +81,7 @@ public class Register_Family extends AppCompatActivity implements IRegister_Pres
 
         fmaily_number_edt = (EditText) findViewById(R.id.findFamily_edt);
         family_find_btn = (Button) findViewById(R.id.findFamily_btn);
-        family_list_view = (ListView) findViewById(R.id.family_list);
+        family_list_view = (SwipeMenuListView) findViewById(R.id.family_list);
         family_find_skip_btn = (Button) findViewById(R.id.family_skip_btn);
         complete_btn = (Button)findViewById(R.id.family_complete_btn);
 
@@ -87,9 +94,68 @@ public class Register_Family extends AppCompatActivity implements IRegister_Pres
 
         adapter = new FamilyFindAdapter(this,familyItemss,R.layout.family_list_item);
 
+        presenter.sendAdapter(adapter);
+
+        SwipeMenuCreator creator = new SwipeMenuCreator() {
+
+            @Override
+            public void create(SwipeMenu menu) {
+                // create "open" item
+                SwipeMenuItem openItem = new SwipeMenuItem(
+                        getApplicationContext());
+                // set item background
+                openItem.setBackground(new ColorDrawable(Color.rgb(0x00, 0x66,
+                        0xff)));
+                // set item width
+                openItem.setWidth(120);
+                // set item title
+                openItem.setTitle("Open");
+                // set item title fontsize
+                openItem.setTitleSize(10);
+                // set item title font color
+                openItem.setTitleColor(Color.WHITE);
+                // add to menu
+                menu.addMenuItem(openItem);
+
+                // create "delete" item
+                SwipeMenuItem deleteItem = new SwipeMenuItem(
+                        getApplicationContext());
+                // set item background
+                deleteItem.setBackground(new ColorDrawable(Color.rgb(0xF9,
+                        0x3F, 0x25)));
+                // set item width
+                deleteItem.setWidth(120);
+                // set a icon
+                 deleteItem.setIcon(R.drawable.delete6);
+                // add to menu
+                menu.addMenuItem(deleteItem);
+            }
+        };
 
         presenter.setPreviousRegistered();
 
+
+
+
+
+        family_list_view.setMenuCreator(creator);
+        family_list_view.setOnMenuItemClickListener(new SwipeMenuListView.OnMenuItemClickListener() {
+            @Override
+            public boolean onMenuItemClick(int position, SwipeMenu menu, int index) {
+                switch (index) {
+                    case 0:
+                        makeToastMessage("눌림");
+                        break;
+                    case 1:
+                       // makeToastMessage("삭제"+family_list_view.getSelectedItemPosition()+"ㅔㅔ"+position);
+                        String id = ((FamilyItem)adapter.getItem(position)).getName();
+                        makeDialog(id,position);
+                        break;
+                }
+                // false : close the menu; true : not close the menu
+                return false;
+            }
+        });
 
 
 
@@ -201,6 +267,39 @@ public class Register_Family extends AppCompatActivity implements IRegister_Pres
     }
 
     @Override
+    public void makeDialog(final String id, final int index) {
+        dialog.setTitle("가족삭제");
+        dialog.setMessage(id+"님을 삭제 하시겠습니까?");
+        dialog.setCancelable(false);
+        String user_id = "";
+
+
+        dialog.setPositiveButton("네", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                presenter.deleteFam(true,id,index);
+
+            }
+        });
+        dialog.setNegativeButton("아니요", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+               makeToastMessage("취소 되었습니다. ");
+            }
+        });
+        AlertDialog alertDialog = dialog.create();
+        alertDialog.show();
+    }
+
+    @Override
+    public void getFromModelAdapter(FamilyFindAdapter adapter) {
+        this.adapter = adapter;
+
+
+        family_list_view.setAdapter(adapter);
+    }
+
+    @Override
     public void onResponse(boolean response) {
         if(response){
 
@@ -208,8 +307,7 @@ public class Register_Family extends AppCompatActivity implements IRegister_Pres
                // Log.d("ffffff1"," "+familyItemss.size());
 
                 adapter.addItem(familyItemss.get(i).getName());
-               // adapter.notifyDataSetChanged();
-
+                adapter.notifyDataSetChanged();
                 family_list_view.setAdapter(adapter);
                 Log.d("i",i+familyItemss.get(i).getName());
             }
@@ -230,5 +328,21 @@ public class Register_Family extends AppCompatActivity implements IRegister_Pres
         }
     }
 
+    @Override
+    public void onResponse3(boolean response3) {
+        if(response3){
 
-}
+            adapter.notifyDataSetChanged();
+            family_list_view.setAdapter(adapter);
+            Log.d("dddddd","실행");
+
+            }
+
+            //family_list_view.setAdapter(adapter);
+
+        }
+
+    }
+
+
+
