@@ -55,6 +55,7 @@ public class Register_Family extends AppCompatActivity implements IRegister_Pres
     public DeleteService deleteService;
     public FamilyFindAdapter adapter;
     public ArrayList<FamilyItem> familyItemss = new ArrayList<>();
+    public ArrayList<FamilyItem> familyItemss2 = new ArrayList<>();
     public  AlertDialog.Builder dialog;
     public static FamilyVO familyVO;
     public String family_user_id = "";
@@ -95,6 +96,9 @@ public class Register_Family extends AppCompatActivity implements IRegister_Pres
         adapter = new FamilyFindAdapter(this,familyItemss,R.layout.family_list_item);
 
         presenter.sendAdapter(adapter);
+
+
+
 
         SwipeMenuCreator creator = new SwipeMenuCreator() {
 
@@ -147,7 +151,6 @@ public class Register_Family extends AppCompatActivity implements IRegister_Pres
                         makeToastMessage("눌림");
                         break;
                     case 1:
-                       // makeToastMessage("삭제"+family_list_view.getSelectedItemPosition()+"ㅔㅔ"+position);
                         String id = ((FamilyItem)adapter.getItem(position)).getName();
                         makeDialog(id,position);
                         break;
@@ -236,6 +239,14 @@ public class Register_Family extends AppCompatActivity implements IRegister_Pres
         Log.d("djkdjdjdj",familyItems+" ");
         familyItemss = familyItems;
 
+            familyItemss2 = (ArrayList<FamilyItem>) familyItemss.clone();
+
+
+        /*if(familyItems.size()>0) {
+            adapter = new FamilyFindAdapter(this, familyItemss, R.layout.family_list_item);
+        }*/
+        //adapter.notifyDataSetChanged();
+
     }
 
     @Override
@@ -271,13 +282,14 @@ public class Register_Family extends AppCompatActivity implements IRegister_Pres
         dialog.setTitle("가족삭제");
         dialog.setMessage(id+"님을 삭제 하시겠습니까?");
         dialog.setCancelable(false);
-        String user_id = "";
+
 
 
         dialog.setPositiveButton("네", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
                 presenter.deleteFam(true,id,index);
+                //adapter.notifyDataSetChanged();
 
             }
         });
@@ -302,6 +314,8 @@ public class Register_Family extends AppCompatActivity implements IRegister_Pres
     @Override
     public void onResponse(boolean response) {
         if(response){
+
+
 
             for(int i=0;i<familyItemss.size();i++){
                // Log.d("ffffff1"," "+familyItemss.size());
@@ -331,10 +345,28 @@ public class Register_Family extends AppCompatActivity implements IRegister_Pres
     @Override
     public void onResponse3(boolean response3) {
         if(response3){
-
+            Log.d("tmp1 size ", " "+familyItemss2.size());
+            familyItemss.clear();
             adapter.notifyDataSetChanged();
+            Log.d("basic1 size ", " "+familyItemss.size());
+            Log.d("tmp2 size ", " "+familyItemss2.size());
+            familyItemss = (ArrayList<FamilyItem>)familyItemss2.clone();
+            Log.d("basic2 size ", " "+familyItemss.size());
+            Log.d("tmp3 size ", " "+familyItemss2.size());
+
+            adapter = new FamilyFindAdapter(this,familyItemss,R.layout.family_list_item);
+            for(int i=0;i<familyItemss.size();i++){
+                // Log.d("ffffff1"," "+familyItemss.size());
+
+                adapter.addItem(familyItemss.get(i).getName());
+                adapter.notifyDataSetChanged();
+//                Log.d("i",i+familyItemss.get(i).getName());
+                Log.d("basic3 size ", " "+familyItemss.size());
+            }
+            adapter.notifyDataSetChanged();
+
             family_list_view.setAdapter(adapter);
-            Log.d("dddddd","실행");
+            Log.d("basic4 size ", " "+familyItemss.size());
 
             }
 
@@ -342,7 +374,13 @@ public class Register_Family extends AppCompatActivity implements IRegister_Pres
 
         }
 
+    @Override
+    protected void onResume() {
+        super.onResume();
+        adapter.notifyDataSetChanged();
+        Log.d("ddd111","실행됨");
     }
+}
 
 
 
