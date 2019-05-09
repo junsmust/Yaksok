@@ -275,15 +275,17 @@ public class InsertPill_activity extends AppCompatActivity implements InsertPill
                 }
             }
             if(requestCode == 2000){ //선택 한 약 리스트뷰 생성
-                pill_list.add(size,data.getStringExtra("result"));
-                pill_list_num.add(size,Integer.parseInt(data.getStringExtra("number")));
-                Log.d("pill_Num",String.valueOf(pill_list_num.get(size)));
-                size++;
-                pillAdapter.notifyDataSetChanged();
-                ViewGroup.LayoutParams params = lv_Pill.getLayoutParams();
-                params.height = 200 * size;
-                lv_Pill.setLayoutParams(params);
-                lv_Pill.setAdapter(pillAdapter);
+                if(data.getStringExtra("status").equals("true")) {
+                    pill_list.add(size, data.getStringExtra("result"));
+                    pill_list_num.add(size, Integer.parseInt(data.getStringExtra("number")));
+                    Log.d("pill_Num", String.valueOf(pill_list_num.get(size)));
+                    size++;
+                    pillAdapter.notifyDataSetChanged();
+                    ViewGroup.LayoutParams params = lv_Pill.getLayoutParams();
+                    params.height = 200 * size;
+                    lv_Pill.setLayoutParams(params);
+                    lv_Pill.setAdapter(pillAdapter);
+                }
             }
         }
     }

@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
@@ -25,9 +26,8 @@ public class MyPill_activity extends AppCompatActivity implements MyPill_Present
 
     private Presenter_MyPill presenter_myPill;
     ListView lv_MyPill;
-    List<String> myPillList = new ArrayList<String>();
+    List<String> myPillList = new ArrayList<String>();;
     ArrayAdapter adapter;
-
     Button bt_Insert;
 
 
@@ -39,17 +39,16 @@ public class MyPill_activity extends AppCompatActivity implements MyPill_Present
         lv_MyPill = (ListView)findViewById(R.id.lv_MyPill);
         bt_Insert = (Button)findViewById(R.id.bt_Insert);
 
+
         bt_Insert.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                myPillList.clear();
                 Intent intent = new Intent(getApplicationContext(), InsertPill_activity.class);
                 startActivityForResult(intent,4000);
             }
         });
-
         presenter_myPill = new Presenter_MyPill( this);
-        presenter_myPill.getMyPill();
-
 
     }
 
@@ -65,8 +64,10 @@ public class MyPill_activity extends AppCompatActivity implements MyPill_Present
 
     @Override
     public void myPillList(List<String> pillList) {
+        Log.d("test5",String.valueOf(pillList.size()));
         for(int i=0; i<pillList.size(); i++){
             myPillList.add(pillList.get(i));
+            Log.d("test",pillList.get(i));
         }
     }
 
@@ -74,8 +75,16 @@ public class MyPill_activity extends AppCompatActivity implements MyPill_Present
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
             if(requestCode == 4000){
-                finish();
-                startActivity(new Intent(this, MyPill_activity.class));
             }
     }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        presenter_myPill.getMyPill();
+        Log.d("test1","true");
+    }
+
+
+
 }

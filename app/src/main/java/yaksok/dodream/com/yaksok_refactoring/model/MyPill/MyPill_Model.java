@@ -42,6 +42,7 @@ public class MyPill_Model implements MyPill_PresenterToModel {
                 myPillVO = response.body();
                 //1System.out.println("############" + myMedicineResponseTypeVO.getStatus());
                 if (myPillVO.getStatus().equals("200")) {
+                    pillList.clear();
                     for(int i=0; i<myPillVO.getResult().size(); i++) {
                         //adapter.addItem(myPillVO.getResult().get(i).getName());
                        // myMedicineNo = myPillVO.getResult().get(i).getMyMedicineNo();

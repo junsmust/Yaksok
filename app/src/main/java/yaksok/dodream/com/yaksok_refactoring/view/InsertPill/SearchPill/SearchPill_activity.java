@@ -66,7 +66,7 @@ public class SearchPill_activity extends AppCompatActivity implements SearchPill
                 Log.d("sta",String.valueOf(i));
                 builder.setTitle("알림");
                 builder.setMessage("약을 등록하시겠습니까?");
-                builder.setPositiveButton("확인",
+                builder.setPositiveButton("예",
                         new DialogInterface.OnClickListener() {
                             public void onClick(DialogInterface dialog, int which) {
                                 Intent resultIntent = new Intent();
@@ -78,6 +78,12 @@ public class SearchPill_activity extends AppCompatActivity implements SearchPill
                                 finish();
                             }
                         });
+                builder.setNegativeButton("아니오", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+
+                    }
+                });
                 builder.show();
 
             }
