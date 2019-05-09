@@ -13,6 +13,7 @@ import yaksok.dodream.com.yaksok_refactoring.presenter.IRegister_fam_presenter;
 import yaksok.dodream.com.yaksok_refactoring.view.addFamily.IRegister_Presenter_Family_To_View;
 
 public class Register_Fam_Presenter implements IRegister_fam_presenter {
+    private static final String TAG = "Register_Fam_Presenter";
     IRegister_Presenter_To_FamModel model;
     IRegister_Presenter_Family_To_View view;
 
@@ -44,6 +45,7 @@ public class Register_Fam_Presenter implements IRegister_fam_presenter {
    @Override
     public void sendArrayList(ArrayList<FamilyItem> familyItems) {
         view.getArrayList(familyItems);
+       Log.e(TAG, "sendArrayList: "+ familyItems.size() );
 
     }
 

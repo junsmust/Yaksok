@@ -1,6 +1,7 @@
 package yaksok.dodream.com.yaksok_refactoring.Adapter.family;
 
 import android.content.Context;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -12,12 +13,15 @@ import java.util.ArrayList;
 import yaksok.dodream.com.yaksok_refactoring.R;
 
 public class FamilyFindAdapter extends BaseAdapter {
+    private static final String TAG = "FamilyFindAdapter";
+
         private LayoutInflater inflater;
         private ArrayList<FamilyItem> familyItems = new ArrayList<>();
         private int layout;
         private String id;
-
+        private boolean isplay=false;
         public FamilyFindAdapter(Context context, ArrayList<FamilyItem> familyItems, int layout) {
+            Log.e(TAG, "FamilyFindAdapter: "+ familyItems.size() );
             this.inflater=(LayoutInflater)context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
             this.familyItems = familyItems;
             this.layout = layout;
@@ -57,13 +61,17 @@ public class FamilyFindAdapter extends BaseAdapter {
         }
 
         public void addItem(String name){
+
             FamilyItem familyItem = new FamilyItem();
 
             familyItem.setName(name);
             /*familyItem.setUser_img(R.drawable.user_pic);
             familyItem.setGotoright(R.drawable.gotoright);*/
-
+            if(isplay==false) {
+             familyItems.clear();
+            }
             familyItems.add(familyItem);
+            isplay=true;
         }
         public void remove(String string) {
             // TODO Auto-generated method stub

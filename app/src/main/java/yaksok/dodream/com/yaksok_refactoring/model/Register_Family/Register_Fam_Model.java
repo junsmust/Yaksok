@@ -27,6 +27,7 @@ import yaksok.dodream.com.yaksok_refactoring.vo.FindFamilyVO;
 import yaksok.dodream.com.yaksok_refactoring.vo.UserService;
 
 public class Register_Fam_Model implements IRegister_Presenter_To_FamModel {
+    private static final String TAG = "Register_Fam_Model";
 
     private Register_Fam_Presenter presenter = new Register_Fam_Presenter();
     private UserService userService;
@@ -102,8 +103,6 @@ public class Register_Fam_Model implements IRegister_Presenter_To_FamModel {
     }
     }
     private void onRegisterFamily(final String finalUser2_id){
-
-
 
 
                 final FamilyVO familyVO = new FamilyVO();
@@ -182,6 +181,7 @@ public class Register_Fam_Model implements IRegister_Presenter_To_FamModel {
                         familyItems.add(new FamilyItem(findFamilyVO.getResult().get(i).getUserId()));
 
                     }
+                    Log.e(TAG, "onResponse: "+ familyItems.size() );
                     presenter.sendArrayList(familyItems);
                     presenter.onResponse(true);
 
@@ -230,10 +230,13 @@ public class Register_Fam_Model implements IRegister_Presenter_To_FamModel {
 
 
                    //presenter.deleteResponse(true);
+
+
                     familyItems.remove(position);
                     presenter.sendArrayList(familyItems);
-                    presenter.onResponse3(true);
-                  //  adapter.notifyDataSetInvalidated();
+                    Log.d("aaaaa",""+familyItems.size());
+                   presenter.onResponse3(true);
+//                    adapter.notifyDataSetInvalidated();
 
 
 
