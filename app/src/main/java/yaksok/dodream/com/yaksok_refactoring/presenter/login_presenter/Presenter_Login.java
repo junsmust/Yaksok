@@ -84,19 +84,24 @@ public class Presenter_Login implements ITo_Presenter {
     }
 
     @Override
-    public void autoLogin(String id, String pw, String userType) {
+    public void autoLogin(String id, String pw, String userType,boolean auto) {
         Log.d("!!!!",id);
-        model.autoLogin(id,pw,userType);
+        model.autoLogin(id,pw,userType,auto);
     }
 
     @Override
-    public void autoLogin(String id, String userType) {
-        model.autoLogin(id,userType);
+    public void autoLogin(String id, String userType,boolean auto) {
+        model.autoLogin(id,userType,auto);
     }
 
     @Override
     public void onSnsSignUp(String userType) {
         view.onSnsSignUp(userType);
+    }
+
+    @Override
+    public void sendEditor(SharedPreferences.Editor editor) {
+        model.getEditor(editor);
     }
 
 

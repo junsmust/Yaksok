@@ -127,10 +127,10 @@
                 <Button
                     android:id="@+id/login_normal_btn"
                     android:layout_width="wrap_content"
-                    android:layout_height="20dp"
+                    android:layout_height="wrap_content"
                     android:layout_gravity="center"
                     android:layout_margin="5dp"
-                    android:text="@string/login_btn_txt"
+                    android:text="로그인"
                     android:textColor="@color/colorPrimaryDark"
                     android:textStyle="bold"
                     />
@@ -153,10 +153,7 @@
 
 
         </LinearLayout>
-        <Button
-            android:id="@+id/btn"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
+
         <FrameLayout
             android:id="@+id/frame_1"
             android:layout_width="match_parent"

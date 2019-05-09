@@ -57,6 +57,8 @@ public class LoginModel implements IPresennterToModel {
 
     private SignUpModel signUpModel = new SignUpModel();
 
+    String id_ex,type_ex;
+
 
 
 
@@ -105,11 +107,11 @@ public class LoginModel implements IPresennterToModel {
                 .build();
         userService = retrofit.create(UserService.class);
 
+        Log.d("ddd",user_info_model.getId()+"userinfo"+user_info_model.getUserType());
 
 
-        Log.d("check",user_info_model+" ");
+        //Log.d("check",user_info_model+" ");
         Call<BodyVO> bodyVOCall = userService.postGneralLogin(user_info_model);
-        Log.d("bodycheck","" +user_info_model);
         bodyVOCall.enqueue(new Callback<BodyVO>() {
             @Override
             public void onResponse(Call<BodyVO> call, Response<BodyVO> response) {
@@ -126,27 +128,22 @@ public class LoginModel implements IPresennterToModel {
 
                     User_Id.setUser_Id(user_info_model.getId());
 
-                    if(auto){
-                        editor.putString("id",user_info_model.getId());
-                        editor.putString("pw",user_info_model.getPw());
-                        editor.putString("userType",user_info_model.getUserType());
-                        editor.apply();
+                    Log.d("tag_a","ddd");
 
-                        presenter_login.MakeToastMessage(sharedPreferences.getString("id","")+sharedPreferences.getString("pw","")+sharedPreferences.getBoolean("auto",true)+sharedPreferences.getString("userType",""));
 
-                    }
-
+                    presenter_login.MakeToastMessage("ee"+auto);
                 }
                 else if (bodyVO.getStatus().equals("024")) {
                     presenter_login.OnLoginResponse(false);
                     if(user_info_model.getUserType().equals("N")||user_info_model.getUserType().equals("K")){
                         presenter_login.onSnsSignUp(user_info_model.getUserType());
+
                     }
-                    presenter_login.MakeToastMessage("잘못된 요청");
+                    presenter_login.MakeToastMessage("로그인 실패");
                 }
                 else if (bodyVO.getStatus().equals("400")) {
                     presenter_login.OnLoginResponse(false);
-                    presenter_login.MakeToastMessage("아이디 중복");
+                    presenter_login.MakeToastMessage("잘못된요청(userType)");
 
                 }
 
@@ -193,6 +190,14 @@ public class LoginModel implements IPresennterToModel {
        user_info_model.setBirthday(birthday);
        user_info_model.setAgeRange(age_range);
 
+        if(auto){
+            editor.putString("id",user_info_model.getId());
+            editor.putString("pw",user_info_model.getPw());
+            editor.putString("userType",user_info_model.getUserType());
+            editor.apply();
+
+            Log.d("auto333","실행됨");
+        }
 
 
         performLoginOperation(user_info_model);
@@ -243,7 +248,14 @@ public class LoginModel implements IPresennterToModel {
                    /* Log.i("arange",""+kakaoUser_info.getK_age());
                     Log.i("userType",""+kakaoUser_info.getUser_type());
 */
+                if(auto){
+                    editor.putString("id",user_info_model.getId());
+                    editor.putString("pw",user_info_model.getPw());
+                    editor.putString("userType",user_info_model.getUserType());
+                    editor.apply();
 
+                    Log.d("auto333","실행됨");
+                }
 
 
                     performLoginOperation(user_info_model);
@@ -277,26 +289,7 @@ public class LoginModel implements IPresennterToModel {
     public void handleScopeError(UserAccount userAccount) {
         List<String> neededScopes = new ArrayList<>();
 
-        /*if (userAccount.needsScopeGender()) {
-            neededScopes.add("gender");
 
-        }else{
-
-        }*/
-      /*  Session.getCurrentSession().updateScopes(this, neededScopes, new
-                AccessTokenCallback() {
-                    @Override
-                    public void onAccessTokenReceived(AccessToken accessToken) {
-
-
-
-                    }
-
-                    @Override
-                    public void onAccessTokenFailure(ErrorResult errorResult) {
-                        // 동의 얻기 실패
-                    }
-                });*/
     }
 
     @Override
@@ -305,35 +298,60 @@ public class LoginModel implements IPresennterToModel {
         this.editor = editor;
         this.auto = auto;
 
+        if(auto){
 
+            Log.d("sser","sss");
+            editor.putString("id",user_info_model.getId());
+            editor.putString("pw",user_info_model.getPw());
+            editor.putString("userType",user_info_model.getUserType());
+            editor.apply();
 
+            presenter_login.MakeToastMessage(sharedPreferences.getString("id","")+sharedPreferences.getString("pw","")+sharedPreferences.getBoolean("auto",true)+sharedPreferences.getString("userType",""));
 
-
+        }
 
 
     }
 
     @Override
-    public void autoLogin(String id, String pw, String userType) {
+    public void autoLogin(String id, String pw, String userType,boolean auto) {
         user_info_model.setId(id);
         user_info_model.setPw(pw);
         user_info_model.setUserType(userType);
+
+        this.auto = auto;
+
+
+
+
+
         Log.d("exxxx",id+" "+pw+" "+userType);
 
         performLoginOperation(user_info_model);
     }
 
     @Override
-    public void autoLogin(String id, String userType) {
-        user_info_model.setId(id);
-        user_info_model.setId(userType);
+    public void autoLogin(String id, String userType,boolean auto) {
+//        user_info_model.setId(id);
+//        user_info_model.setId(userType);
 
+
+        user_info_model = new User_Info_Model(id,userType);
+
+        Log.d("autoSns2",userType);
+        Log.d("autoSns3",user_info_model.getId()+user_info_model.getUserType());
+
+        this.auto  = auto;
         performLoginOperation(user_info_model);
+
+
     }
 
+
+
     @Override
-    public void setUserInfoModel(User_Info_Model user_info_model) {
-        this.user_info_model = user_info_model;
+    public void getEditor(SharedPreferences.Editor editor) {
+        this.editor = editor;
     }
 
 
