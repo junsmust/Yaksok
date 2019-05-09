@@ -2,6 +2,7 @@ package yaksok.dodream.com.yaksok_refactoring.view.MyPill;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.ArrayAdapter;
@@ -41,7 +42,8 @@ public class MyPill_activity extends AppCompatActivity implements MyPill_Present
         bt_Insert.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivity(new Intent(getApplicationContext(), InsertPill_activity.class));
+                Intent intent = new Intent(getApplicationContext(), InsertPill_activity.class);
+                startActivityForResult(intent,4000);
             }
         });
 
@@ -68,4 +70,12 @@ public class MyPill_activity extends AppCompatActivity implements MyPill_Present
         }
     }
 
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+            if(requestCode == 4000){
+                finish();
+                startActivity(new Intent(this, MyPill_activity.class));
+            }
+    }
 }

@@ -60,8 +60,8 @@ public interface UserService {
 //    //js
 
 //
-//    @POST("mymedicines/")
-//    Call<StatusVO> postMyInserttPill(@Body InsertPillList insertPillList);
+    @POST("mymedicines/")
+    Call<BodyVO> postMyInserttPill(@Body InsertPill_Item insertPill_item);
 //
 //    @GET("/mymedicines/{userId}")
 //    Call<MyMedicineResponseTypeVO>getMymediciens(@Path("userId") String userId);

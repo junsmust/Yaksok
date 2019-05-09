@@ -22,21 +22,28 @@ import java.util.ArrayList;
 import java.util.List;
 
 import yaksok.dodream.com.yaksok_refactoring.R;
+import yaksok.dodream.com.yaksok_refactoring.model.user.User_Id;
+import yaksok.dodream.com.yaksok_refactoring.presenter.InsertPill.Presenter_InsertPill;
 import yaksok.dodream.com.yaksok_refactoring.view.InsertPill.Sel_AlarmRecive.Sel_AlarmRecive_activity;
 import yaksok.dodream.com.yaksok_refactoring.view.InsertPill.SearchPill.SearchPill_activity;
+import yaksok.dodream.com.yaksok_refactoring.vo.InsertPill_Item;
 
 public class InsertPill_activity extends AppCompatActivity implements InsertPill_PresenterToView, View.OnClickListener{
 
     EditText et_DiseaseName;
-    Button bt_ListAdd, bt_1time, bt_2time, bt_3time, bt_AlarmReciveFamily;
+    Button bt_ListAdd, bt_1time, bt_2time, bt_3time, bt_AlarmReciveFamily, bt_PillInsert;
     TextView tv_1h, tv_1m, tv_2h, tv_2m, tv_3h, tv_3m;
-    TextView et_dosagi;
+    TextView tv_dosagi;
     ListView lv_alarmFamily, lv_Pill;
     ImageView minus_count,plus_count;
-    List<String> time, family_id, alarm_f_list, pill_list, pill_list_num;
+    List<String> time, family_id, alarm_f_list, pill_list;
+    List<Integer> pill_list_num;
     String h, m;
     TimePickerDialog dialog1,dialog2,dialog3;
     ArrayAdapter adapter,pillAdapter;
+    Presenter_InsertPill presenter_insertPill;
+    InsertPill_Item insertPill_item;
+    Intent resultIntent;
     int size = 0;
 
     @Override
@@ -44,11 +51,14 @@ public class InsertPill_activity extends AppCompatActivity implements InsertPill
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_insertpill_self);
 
+        resultIntent = new Intent();
+        setResult(4000,resultIntent);
+
         et_DiseaseName = (EditText)findViewById(R.id.et_DiseaseName);
         bt_ListAdd = (Button)findViewById(R.id.bt_ListAdd);
         minus_count = (ImageView) findViewById(R.id.minus_count);
         plus_count = (ImageView) findViewById(R.id.plus_count);
-        et_dosagi = (TextView) findViewById(R.id.et_Dosagi);
+        tv_dosagi = (TextView) findViewById(R.id.et_Dosagi);
         bt_1time = (Button) findViewById(R.id.bt_1time);
         bt_2time = (Button) findViewById(R.id.bt_2time);
         bt_3time = (Button) findViewById(R.id.bt_3time);
@@ -61,6 +71,11 @@ public class InsertPill_activity extends AppCompatActivity implements InsertPill
         bt_AlarmReciveFamily = (Button)findViewById(R.id.bt_AlarmReciveFamily);
         lv_alarmFamily = (ListView)findViewById(R.id.lv_alarmFamily);
         lv_Pill = (ListView)findViewById(R.id.lv_Pill);
+        bt_PillInsert = (Button)findViewById(R.id.bt_PillInsert);
+
+        presenter_insertPill = new Presenter_InsertPill(this);
+
+        insertPill_item = new InsertPill_Item();
 
         family_id = new ArrayList<String>();
         alarm_f_list = new ArrayList<String>();
@@ -124,9 +139,40 @@ public class InsertPill_activity extends AppCompatActivity implements InsertPill
                 return false;
             }
         });
+
+        bt_PillInsert.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if(et_DiseaseName.getText().toString().equals("")) {
+                    Toast.makeText(getApplicationContext(), "약 이름을 입력하세요", Toast.LENGTH_LONG).show();
+                }else if(tv_dosagi.getText().toString().equals("0")){
+                    Toast.makeText(getApplicationContext(), "복용횟수를 설정하세요", Toast.LENGTH_LONG).show();
+                }else if(time.size() == 0){
+                    Toast.makeText(getApplicationContext(), "시간을 입력하세요", Toast.LENGTH_LONG).show();
+                }else if(alarm_f_list.size() == 0){
+                    Toast.makeText(getApplicationContext(), "알림받을 가족을 선택하세요", Toast.LENGTH_LONG).show();
+                }else {
+                    Log.d("commName",et_DiseaseName.getText().toString());
+                    Log.d("commDosagi",tv_dosagi.getText().toString());
+                    Log.d("commTIme",time.get(0));
+                    Log.d("commElement",String.valueOf(pill_list_num.get(0)));
+                    Log.d("commAlarm",family_id.get(0));
+                    Log.d("commUserId",User_Id.getUser_Id());
+                    insertPill_item.setName(et_DiseaseName.getText().toString());
+                    insertPill_item.setDosagi(tv_dosagi.getText().toString());
+                    insertPill_item.setTimeList(time);
+                    insertPill_item.setElementList(pill_list_num);
+                    insertPill_item.setAlarmList(family_id);
+                    insertPill_item.setUserId(User_Id.getUser_Id());
+
+                    presenter_insertPill.insertPill(insertPill_item);
+                }
+
+            }
+        });
     }
 
-    private TimePickerDialog.OnTimeSetListener listener1 = new TimePickerDialog.OnTimeSetListener() {
+    private TimePickerDialog.OnTimeSetListener listener1 = new TimePickerDialog.OnTimeSetListener() { //시간설정 다이얼로그 1
         @Override
         public void onTimeSet(TimePicker view, int hourOfDay, int minute) {// 설정버튼 눌렀을 때
             Toast.makeText(getApplicationContext(), hourOfDay + "시 " + minute + "분", Toast.LENGTH_SHORT).show();
@@ -144,7 +190,7 @@ public class InsertPill_activity extends AppCompatActivity implements InsertPill
             time.add(h+m);
         }
     };
-    private TimePickerDialog.OnTimeSetListener listener2 = new TimePickerDialog.OnTimeSetListener() {
+    private TimePickerDialog.OnTimeSetListener listener2 = new TimePickerDialog.OnTimeSetListener() {//시간설정 다이얼로그 2
         @Override
         public void onTimeSet(TimePicker view, int hourOfDay, int minute) {// 설정버튼 눌렀을 때
             Toast.makeText(getApplicationContext(), hourOfDay + "시 " + minute + "분", Toast.LENGTH_SHORT).show();
@@ -161,7 +207,7 @@ public class InsertPill_activity extends AppCompatActivity implements InsertPill
             time.add(h+m);
         }
     };
-    private TimePickerDialog.OnTimeSetListener listener3 = new TimePickerDialog.OnTimeSetListener() {
+    private TimePickerDialog.OnTimeSetListener listener3 = new TimePickerDialog.OnTimeSetListener() {//시간설정 다이얼로그 3
         @Override
         public void onTimeSet(TimePicker view, int hourOfDay, int minute) {// 설정버튼 눌렀을 때
             Toast.makeText(getApplicationContext(), hourOfDay + "시 " + minute + "분", Toast.LENGTH_SHORT).show();
@@ -183,22 +229,22 @@ public class InsertPill_activity extends AppCompatActivity implements InsertPill
     public void onClick(View v) {
         switch (v.getId()){
             case R.id.minus_count:
-                if(Integer.parseInt(et_dosagi.getText().toString())<=0){
+                if(Integer.parseInt(tv_dosagi.getText().toString())<=0){
                     Toast.makeText(getApplicationContext(),"복욕횟수를 차감할 수 없습니다.",Toast.LENGTH_LONG).show();
                 }
-                else{
-                    int count = Integer.parseInt(et_dosagi.getText().toString());
+                else{ // 복용횟수 뻬기
+                    int count = Integer.parseInt(tv_dosagi.getText().toString());
                     count--;
                     System.out.print(count);
-                    et_dosagi.setText(String.valueOf(count));
+                    tv_dosagi.setText(String.valueOf(count));
                     //e_dosagi.setText(et_dosagi.getText().toString().substring(0,1)+String.valueOf(count)+et_dosagi.getText().toString().substring(2));
                 }
                 break;
-            case R.id.plus_count:
-                int count = Integer.parseInt(et_dosagi.getText().toString());
+            case R.id.plus_count: //복용 횟수 플러
+                int count = Integer.parseInt(tv_dosagi.getText().toString());
                 count++;
                 System.out.print(count);
-                et_dosagi.setText(String.valueOf(count));
+                tv_dosagi.setText(String.valueOf(count));
                 break;
 
         }
@@ -218,7 +264,7 @@ public class InsertPill_activity extends AppCompatActivity implements InsertPill
                             alarm_f_list.add(data.getStringExtra("name" + i));
                             Log.d("data1", data.getStringExtra("name" + i) + "/" + data.getStringExtra("id" + i));
                             size++;
-                        }
+                        } //알림 받을 가족 리스트뷰 생성
                     }
                     adapter.notifyDataSetChanged();
                     bt_AlarmReciveFamily.setEnabled(false);
@@ -228,10 +274,10 @@ public class InsertPill_activity extends AppCompatActivity implements InsertPill
                     lv_alarmFamily.setAdapter(adapter);
                 }
             }
-            if(requestCode == 2000){
+            if(requestCode == 2000){ //선택 한 약 리스트뷰 생성
                 pill_list.add(size,data.getStringExtra("result"));
-                pill_list_num.add(size,data.getStringExtra("number"));
-                Log.d("pill_Num",pill_list_num.get(size));
+                pill_list_num.add(size,Integer.parseInt(data.getStringExtra("number")));
+                Log.d("pill_Num",String.valueOf(pill_list_num.get(size)));
                 size++;
                 pillAdapter.notifyDataSetChanged();
                 ViewGroup.LayoutParams params = lv_Pill.getLayoutParams();
@@ -239,6 +285,14 @@ public class InsertPill_activity extends AppCompatActivity implements InsertPill
                 lv_Pill.setLayoutParams(params);
                 lv_Pill.setAdapter(pillAdapter);
             }
+        }
+    }
+
+    @Override
+    public void onInsertResponse(boolean response) {
+        if(response){
+            Toast.makeText(getApplicationContext(), "약이 등록되었습니다.", Toast.LENGTH_LONG).show();
+            finish();
         }
     }
 }
