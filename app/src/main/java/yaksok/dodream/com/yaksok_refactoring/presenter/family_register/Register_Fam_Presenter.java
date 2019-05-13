@@ -1,4 +1,4 @@
-package yaksok.dodream.com.yaksok_refactoring.presenter;
+package yaksok.dodream.com.yaksok_refactoring.presenter.family_register;
 
 
 import android.util.Log;
@@ -9,7 +9,6 @@ import yaksok.dodream.com.yaksok_refactoring.Adapter.family.FamilyFindAdapter;
 import yaksok.dodream.com.yaksok_refactoring.Adapter.family.FamilyItem;
 import yaksok.dodream.com.yaksok_refactoring.model.Register_Family.IRegister_Presenter_To_FamModel;
 import yaksok.dodream.com.yaksok_refactoring.model.Register_Family.Register_Fam_Model;
-import yaksok.dodream.com.yaksok_refactoring.presenter.IRegister_fam_presenter;
 import yaksok.dodream.com.yaksok_refactoring.view.addFamily.IRegister_Presenter_Family_To_View;
 
 public class Register_Fam_Presenter implements IRegister_fam_presenter {
@@ -17,8 +16,7 @@ public class Register_Fam_Presenter implements IRegister_fam_presenter {
     IRegister_Presenter_To_FamModel model;
     IRegister_Presenter_Family_To_View view;
 
-    public Register_Fam_Presenter() {
-    }
+
 
     public Register_Fam_Presenter(IRegister_Presenter_Family_To_View view) {
         this.view = view;

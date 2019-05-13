@@ -14,11 +14,12 @@ import yaksok.dodream.com.yaksok_refactoring.R;
 import yaksok.dodream.com.yaksok_refactoring.presenter.Main.Presenter_Main;
 import yaksok.dodream.com.yaksok_refactoring.view.MyPill.MyPill_activity;
 import yaksok.dodream.com.yaksok_refactoring.view.addFamily.Register_Family;
+import yaksok.dodream.com.yaksok_refactoring.view.chat.Chatting_list;
 
 public class MainPage_activity extends AppCompatActivity implements Main_PresenterToView, View.OnClickListener{
 
     private Presenter_Main presenter_main;
-    private Button bt_InsertPill,bt_InsertFamily;
+    private Button bt_InsertPill,bt_InsertFamily,bt_chat;
     private boolean pillTime_day;
     private TextView tv_main_hour, tv_main_min;
     private int myNeaeTime_sec,hour,min;
@@ -33,6 +34,7 @@ public class MainPage_activity extends AppCompatActivity implements Main_Present
         tv_main_hour = (TextView)findViewById(R.id.tv_main_hour);
         tv_main_min = (TextView)findViewById(R.id.tv_main_min);
         bt_InsertFamily = (Button)findViewById(R.id.bt_InsertFamily);
+        bt_chat = (Button)findViewById(R.id.bt_Chat);
 
         presenter_main = new Presenter_Main(this);
         presenter_main.getNearTimePill();
@@ -44,7 +46,9 @@ public class MainPage_activity extends AppCompatActivity implements Main_Present
             }
         });
 
+
         bt_InsertFamily.setOnClickListener(this);
+        bt_chat.setOnClickListener(this);
     }
 
     @Override // 가까운 약시간 요청해서 UI변경 할 부분
@@ -107,6 +111,9 @@ public class MainPage_activity extends AppCompatActivity implements Main_Present
         switch (v.getId()){
             case R.id.bt_InsertFamily:
                 startActivity(new Intent(getApplicationContext(), Register_Family.class));
+                break;
+            case R.id.bt_Chat:
+                startActivity(new Intent(getApplicationContext(), Chatting_list.class));
                 break;
         }
     }

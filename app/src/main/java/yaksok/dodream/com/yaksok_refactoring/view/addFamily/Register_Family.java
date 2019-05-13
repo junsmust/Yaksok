@@ -12,12 +12,10 @@ import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
-import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
-import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -28,21 +26,14 @@ import com.baoyz.swipemenulistview.SwipeMenuListView;
 
 import java.util.ArrayList;
 
-import retrofit2.Call;
-import retrofit2.Callback;
-import retrofit2.Response;
 import retrofit2.Retrofit;
-import retrofit2.converter.gson.GsonConverterFactory;
-import retrofit2.converter.scalars.ScalarsConverterFactory;
 import yaksok.dodream.com.yaksok_refactoring.Adapter.family.FamilyFindAdapter;
 import yaksok.dodream.com.yaksok_refactoring.Adapter.family.FamilyItem;
 import yaksok.dodream.com.yaksok_refactoring.R;
-import yaksok.dodream.com.yaksok_refactoring.presenter.IRegister_fam_presenter;
-import yaksok.dodream.com.yaksok_refactoring.presenter.Register_Fam_Presenter;
+import yaksok.dodream.com.yaksok_refactoring.presenter.family_register.Register_Fam_Presenter;
 import yaksok.dodream.com.yaksok_refactoring.view.Main.MainPage_activity;
 import yaksok.dodream.com.yaksok_refactoring.vo.DeleteService;
 import yaksok.dodream.com.yaksok_refactoring.vo.FamilyVO;
-import yaksok.dodream.com.yaksok_refactoring.vo.FindFamilyVO;
 import yaksok.dodream.com.yaksok_refactoring.vo.UserService;
 
 public class Register_Family extends AppCompatActivity implements IRegister_Presenter_Family_To_View ,View.OnClickListener{
@@ -151,7 +142,10 @@ public class Register_Family extends AppCompatActivity implements IRegister_Pres
                         makeToastMessage("눌림");
                         break;
                     case 1:
-                        String id = ((FamilyItem)adapter.getItem(position)).getName();
+                        int index1 = ((FamilyItem)adapter.getItem(position)).getName().indexOf('(');
+                        int index2 = ((FamilyItem)adapter.getItem(position)).getName().indexOf(')');
+
+                        String id = ((FamilyItem)adapter.getItem(position)).getName().substring(index1+1,index2);
                         makeDialog(id,position);
                         break;
                 }
@@ -250,18 +244,24 @@ public class Register_Family extends AppCompatActivity implements IRegister_Pres
     }
 
     @Override
-    public void makeDialog(String name, final String id) {
+    public void makeDialog(final String name, final String id) {
 
         dialog.setTitle("가족찾기");
         dialog.setMessage(name+"을 가족으로 등록 하시겠습니까?");
         dialog.setCancelable(false);
         String user_id = "";
 
+        Log.d("@@@@!!!",id);
+        int index1 = name.indexOf('(');
+        int index2 = name.indexOf(')');
+
+        final String id2 = name.substring(index1+1,index2);
+
 
         dialog.setPositiveButton("네", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
-                presenter.setYesRegisterFam(true,id);
+                presenter.setYesRegisterFam(true,name);
 
             }
         });

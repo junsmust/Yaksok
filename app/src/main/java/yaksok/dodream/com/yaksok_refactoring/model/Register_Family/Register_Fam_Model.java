@@ -1,9 +1,6 @@
 package yaksok.dodream.com.yaksok_refactoring.model.Register_Family;
 
-import android.app.AlertDialog;
-import android.content.DialogInterface;
 import android.util.Log;
-import android.widget.Toast;
 
 import java.util.ArrayList;
 
@@ -16,8 +13,7 @@ import retrofit2.converter.scalars.ScalarsConverterFactory;
 import yaksok.dodream.com.yaksok_refactoring.Adapter.family.FamilyFindAdapter;
 import yaksok.dodream.com.yaksok_refactoring.Adapter.family.FamilyItem;
 import yaksok.dodream.com.yaksok_refactoring.model.user.User_Id;
-import yaksok.dodream.com.yaksok_refactoring.presenter.MyPill.Presenter_MyPill;
-import yaksok.dodream.com.yaksok_refactoring.presenter.Register_Fam_Presenter;
+import yaksok.dodream.com.yaksok_refactoring.presenter.family_register.Register_Fam_Presenter;
 import yaksok.dodream.com.yaksok_refactoring.vo.BodyVO;
 import yaksok.dodream.com.yaksok_refactoring.vo.DeleteService;
 import yaksok.dodream.com.yaksok_refactoring.vo.FamilyBodyVO;
@@ -29,7 +25,7 @@ import yaksok.dodream.com.yaksok_refactoring.vo.UserService;
 public class Register_Fam_Model implements IRegister_Presenter_To_FamModel {
     private static final String TAG = "Register_Fam_Model";
 
-    private Register_Fam_Presenter presenter = new Register_Fam_Presenter();
+    private Register_Fam_Presenter presenter;
     private UserService userService;
     private boolean isAddedFamily = false;
     private FamilyFindAdapter adapter;
@@ -71,9 +67,9 @@ public class Register_Fam_Model implements IRegister_Presenter_To_FamModel {
 
                             Log.d("ddddddd",findFamilyVO.getResult().get(i).getNickName()+findFamilyVO.getResult().get(i).getUserId());
                                     second_user_id = findFamilyVO.getResult().get(i).getUserId();
-                                    familyItems.add(new FamilyItem(findFamilyVO.getResult().get(i).getNickName()))/*"/"+findFamilyVO.getResult().get(i).getUserId())*/;
+                                    familyItems.add(new FamilyItem(findFamilyVO.getResult().get(i).getNickName()+"("+findFamilyVO.getResult().get(i).getUserId()))/*"/"+findFamilyVO.getResult().get(i).getUserId())*/;
                             }
-                            presenter.makeDialog(findFamilyVO.getResult().get(0).getNickName(),second_user_id);
+                            presenter.makeDialog(findFamilyVO.getResult().get(0).getNickName()+"("+findFamilyVO.getResult().get(0).getUserId()+")",second_user_id);
                             /*if(isOkayForFamily){
                                 Log.d("112","" +familyItems.get(0).getName());
                                 presenter.sendArrayList(familyItems);
@@ -104,10 +100,14 @@ public class Register_Fam_Model implements IRegister_Presenter_To_FamModel {
     }
     private void onRegisterFamily(final String finalUser2_id){
 
+        Log.d("@@@@@@@@",finalUser2_id);
+        int index1 = finalUser2_id.indexOf('(');
+        int index2 = finalUser2_id.indexOf(')');
 
+        final String id2 = finalUser2_id.substring(index1+1,index2);
                 final FamilyVO familyVO = new FamilyVO();
                 familyVO.setUser_1(User_Id.getUser_Id());
-                familyVO.setUser_2(finalUser2_id);
+                familyVO.setUser_2(id2);
 
                 final FamilyItem familyItem = new FamilyItem();
                 //code
@@ -128,6 +128,7 @@ public class Register_Fam_Model implements IRegister_Presenter_To_FamModel {
                                 //registered_Fam.add(new FamilyItem(finalUser2_id));
                                 Log.d("eeeeee2",registered_Fam.get(0).getName());*/
                                 familyItem.setName(finalUser2_id);
+                                Log.d("setName",familyItem.getName());
                                 //presenter.sendArrayList(registered_Fam);
                                 presenter.onResponse2(true,familyItem);
                                 presenter.makeToastMessage( "가족 추가가 되었습니다.");
@@ -178,7 +179,7 @@ public class Register_Fam_Model implements IRegister_Presenter_To_FamModel {
                 if (findFamilyVO.getStatus().equals("200")) {
 
                     for(int i = 0; i < findFamilyVO.getResult().size();i++){
-                        familyItems.add(new FamilyItem(findFamilyVO.getResult().get(i).getUserId()));
+                        familyItems.add(new FamilyItem(findFamilyVO.getResult().get(i).getNickName()+"("+findFamilyVO.getResult().get(i).getUserId()+")"));
 
                     }
                     Log.e(TAG, "onResponse: "+ familyItems.size() );
