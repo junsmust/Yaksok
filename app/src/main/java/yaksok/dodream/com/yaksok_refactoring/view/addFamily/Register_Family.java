@@ -345,28 +345,23 @@ public class Register_Family extends AppCompatActivity implements IRegister_Pres
     @Override
     public void onResponse3(boolean response3) {
         if(response3){
-            Log.d("tmp1 size ", " "+familyItemss2.size());
             familyItemss.clear();
             adapter.notifyDataSetChanged();
-            Log.d("basic1 size ", " "+familyItemss.size());
-            Log.d("tmp2 size ", " "+familyItemss2.size());
-            familyItemss = (ArrayList<FamilyItem>)familyItemss2.clone();
-            Log.d("basic2 size ", " "+familyItemss.size());
-            Log.d("tmp3 size ", " "+familyItemss2.size());
+            family_list_view.setAdapter(adapter);
 
-            adapter = new FamilyFindAdapter(this,familyItemss,R.layout.family_list_item);
+
+            adapter = new FamilyFindAdapter(this,familyItemss2,R.layout.family_list_item);
             for(int i=0;i<familyItemss.size();i++){
-                // Log.d("ffffff1"," "+familyItemss.size());
 
-                adapter.addItem(familyItemss.get(i).getName());
+                adapter.addItem(familyItemss2.get(i).getName());
                 adapter.notifyDataSetChanged();
-//                Log.d("i",i+familyItemss.get(i).getName());
-                Log.d("basic3 size ", " "+familyItemss.size());
+                Log.d("basic3 size ", " "+familyItemss2.size());
             }
             adapter.notifyDataSetChanged();
-
             family_list_view.setAdapter(adapter);
-            Log.d("basic4 size ", " "+familyItemss.size());
+
+            familyItemss = (ArrayList<FamilyItem>)familyItemss2.clone();
+            presenter.snedViewToModelArrayList(familyItemss);
 
             }
 

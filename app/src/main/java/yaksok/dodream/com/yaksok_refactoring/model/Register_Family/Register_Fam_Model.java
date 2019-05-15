@@ -231,12 +231,14 @@ public class Register_Fam_Model implements IRegister_Presenter_To_FamModel {
 
 
                    //presenter.deleteResponse(true);
+                    Log.d("aaaaa0",""+familyItems.size());
 
-
+                    Log.d("aaaaa1",""+position+"ff"+familyItems.get(position).getName());
                     familyItems.remove(position);
                     presenter.sendArrayList(familyItems);
                     Log.d("aaaaa",""+familyItems.size());
                    presenter.onResponse3(true);
+                    Log.d("aaaaa3",""+familyItems.size());
 //                    adapter.notifyDataSetInvalidated();
 
 
@@ -266,6 +268,11 @@ public class Register_Fam_Model implements IRegister_Presenter_To_FamModel {
     @Override
     public void getAdapter(FamilyFindAdapter familyFindAdapter) {
         adapter = familyFindAdapter;
+    }
+
+    @Override
+    public void getArrayList(ArrayList<FamilyItem> familyItems) {
+        this.familyItems = familyItems;
     }
 
 

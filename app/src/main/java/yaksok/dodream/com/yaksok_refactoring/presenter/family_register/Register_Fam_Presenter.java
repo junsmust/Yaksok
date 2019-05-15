@@ -48,6 +48,11 @@ public class Register_Fam_Presenter implements IRegister_fam_presenter {
     }
 
     @Override
+    public void snedViewToModelArrayList(ArrayList<FamilyItem> familyItems) {
+        model.getArrayList(familyItems);
+    }
+
+    @Override
     public void makeDialog(String name,String id) {
         view.makeDialog(name,id);
     }
