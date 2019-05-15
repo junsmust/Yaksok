@@ -5,6 +5,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.support.annotation.Nullable;
+import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
@@ -78,6 +79,11 @@ public class Login_activity extends AppCompatActivity implements IPresenterToVie
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login_activity);
+
+
+        ActionBar actionBar = getSupportActionBar();
+        actionBar.hide();
+
 
 
         id_edt = (EditText) findViewById(R.id.main_id_edt);
