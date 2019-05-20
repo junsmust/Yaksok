@@ -136,4 +136,9 @@ public class Chatting_list extends AppCompatActivity implements I_chat_list{
     public void sendChatArrayList(ArrayList<SendMessageVO> albumList) {
 
     }
+
+    @Override
+    public void getSendVO(SendMessageVO sendVO) {
+
+    }
 }
