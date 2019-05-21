@@ -135,8 +135,8 @@ public class Chat_Room extends AppCompatActivity implements I_chat_list{
     public void onResponse(boolean response) {
 
         if(response){
-                albumList.add(sendMessageVO);
-               // chatAdapter.addItem(sendMessageVO);
+                //albumList.add(sendMessageVO);
+                chatAdapter.addItem(sendMessageVO);
                 chatAdapter.notifyDataSetChanged();
                 chat_recycler_list.setLayoutManager(linearLayoutManager);
                 chat_recycler_list.setAdapter(chatAdapter);
