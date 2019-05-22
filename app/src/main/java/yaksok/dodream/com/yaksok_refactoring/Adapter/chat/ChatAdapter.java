@@ -174,7 +174,7 @@ public class ChatAdapter extends RecyclerView.Adapter<ChatAdapter.ViewHolder>
             viewHolder1.user1.setVisibility(View.INVISIBLE);
 //            viewHolder1.user2.setLayoutParams(layoutParams2);
 //            viewHolder1.user2.setLayoutParams(layoutParams7);
-            viewHolder1.user2.setText(Chat_Room.user_name);
+            viewHolder1.user2.setText(Chat_Room.user2_name);
             viewHolder1.user2.setVisibility(View.VISIBLE);
             viewHolder1.user2.setTextSize(13);
             viewHolder1.user2.setLayoutParams(layoutParams8);

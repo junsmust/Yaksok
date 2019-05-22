@@ -124,11 +124,9 @@ public class LoginModel implements IPresennterToModel {
                 if(bodyVO.getStatus().equals("200")){
                     presenter_login.OnLoginResponse(true);
 
-
-
                     User_Id.setUser_Id(user_info_model.getId());
 
-                    Log.d("tag_a","ddd");
+                    Log.d("tag_a",""+User_Id.getUser_Id());
 
 
                     presenter_login.MakeToastMessage("ee"+auto);
@@ -190,13 +188,15 @@ public class LoginModel implements IPresennterToModel {
        user_info_model.setBirthday(birthday);
        user_info_model.setAgeRange(age_range);
 
+       User_Id.setUser_Id(user_info_model.getId());
+
         if(auto){
             editor.putString("id",user_info_model.getId());
             editor.putString("pw",user_info_model.getPw());
             editor.putString("userType",user_info_model.getUserType());
             editor.apply();
 
-            Log.d("auto333","실행됨");
+            Log.d("auto333","실행됨"+user_info_model.getId());
         }
 
 
@@ -240,6 +240,8 @@ public class LoginModel implements IPresennterToModel {
                     user_info_model.setBirthday(result.getKakaoAccount().getBirthday());
                     user_info_model.setAgeRange(String.valueOf(result.getKakaoAccount().getAgeRange()));
 
+                    User_Id.setUser_Id(user_info_model.getId());
+
                     Log.i("nickname",result.getNickname());
                     Log.i("profile_img",result.getProfileImagePath());
                     Log.i("email",result.getKakaoAccount().getEmail());
@@ -254,7 +256,7 @@ public class LoginModel implements IPresennterToModel {
                     editor.putString("userType",user_info_model.getUserType());
                     editor.apply();
 
-                    Log.d("auto333","실행됨");
+                    Log.d("auto333",""+User_Id.getUser_Id());
                 }
 
 

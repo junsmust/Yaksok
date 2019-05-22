@@ -29,6 +29,7 @@ public class Chatting_list extends AppCompatActivity implements I_chat_list{
     private ArrayList<FamilyItem> familyItemss = new ArrayList<>();
     private FamilyFindAdapter adapter;
     private Chat_Presenter presenter;
+    public static String user2_id;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -55,7 +56,8 @@ public class Chatting_list extends AppCompatActivity implements I_chat_list{
 
                 Intent intent = new Intent(getApplicationContext(),Chat_Room.class);
                 intent.putExtra("user_name",user_name);
-                intent.putExtra("user_id",user_id);
+                //intent.putExtra("user_id",user_id);
+                user2_id = user_id;
                 startActivity(intent);
             }
         });
