@@ -51,4 +51,14 @@ public class Chat_Presenter implements I_chat_presenter{
     public void sendMessage(String message,String user2_id) {
         model.sendMessage(message,user2_id);
     }
+
+    @Override
+    public void sendSendVO(SendMessageVO sendVO) {
+        view.getSendVO(sendVO);
+    }
+
+    @Override
+    public void getPreviouseConversation(String u_id, String y_id) {
+        model.getPreviouseConversation(u_id,y_id);
+    }
 }

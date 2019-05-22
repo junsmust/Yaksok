@@ -15,4 +15,6 @@ public interface I_chat_presenter {
     void sendMessage(String message,String user2_id);
 
 
+    void sendSendVO(SendMessageVO sendVO);
+    void getPreviouseConversation(String u_id,String y_id);
 }

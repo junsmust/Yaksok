@@ -10,4 +10,5 @@ public interface I_chat_list {
     void onResponse(boolean response);
     void getArrayList(ArrayList<FamilyItem> familyItems);
     void sendChatArrayList(ArrayList<SendMessageVO> albumList);
+    void getSendVO(SendMessageVO sendVO);
 }
