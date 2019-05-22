@@ -57,9 +57,18 @@
             </intent-filter>
         </service>
 
+        <activity android:name=".view.Alarm_On"/>
+
         <activity android:name=".view.signup.GetPn" />
         <activity android:name=".view.chat.Chatting_list" />
         <activity android:name=".view.chat.Chat_Room"></activity>
+
+        <receiver android:name=".model.Main.NotificationUtil" android:enabled="true" android:exported="false">
+            <intent-filter>
+                <action android:name="android.intent.action.BOOT_COMPLETED"></action>
+            </intent-filter>
+        </receiver>
+
     </application>
 
 </manifest>

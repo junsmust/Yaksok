@@ -1,8 +1,13 @@
 package yaksok.dodream.com.yaksok_refactoring.model.Main;
 
+import android.app.AlarmManager;
+import android.app.PendingIntent;
+import android.content.Context;
+import android.content.Intent;
 import android.util.Log;
 
 import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.Date;
 
 import retrofit2.Call;
@@ -30,6 +35,12 @@ public class Main_Model implements Main_PresenterToModel{
 
     @Override
     public void getNearTimePill() {
+        pilltime_h = 0;
+        pillTime_day = true;
+        pilltime_m = 0;
+        pilltime_sec = 0;
+        ptime = 0;
+        times = 0;
         retrofit = new Retrofit.Builder()
                 .baseUrl(userService.API_URL)
                 .addConverterFactory(ScalarsConverterFactory.create())
@@ -54,43 +65,21 @@ public class Main_Model implements Main_PresenterToModel{
                     int nowtime_min = Integer.parseInt(curTime.substring(2));
                     pilltime_h = Integer.parseInt(nearTimePillVO.getResult().getTime().substring(0, 2));
                     pilltime_m = Integer.parseInt(nearTimePillVO.getResult().getTime().substring(2));
+                    Log.d("min",String.valueOf(pilltime_m));
                     ptime = Integer.parseInt(nearTimePillVO.getResult().getTime().substring(0, 4));
                     if(ptime <= Integer.parseInt(curTime)){
                         pillTime_day = false;//다음약이 내일일(초로 계산)
                         pilltime_sec = (((23 * 3600) + (59 * 60)) - ((nowtime_hour * 3600) + (nowtime_min * 60)));
                         times = (pilltime_sec + ((pilltime_h * 3600) + (pilltime_m * 60)));
-                        //  h = times / 3600;
-                        //  m = (times % 3600 / 60);
                     }
                     else {
                         //다음약이 오늘 일 때(초로 계산)
                         Log.d("if_PillTime_day", "오늘");
                         times = ((pilltime_h * 3600) + (pilltime_m * 60)) - ((nowtime_hour * 3600) + (nowtime_min * 60));
-                          /*  if (times < 3600)
-                                h = 0;
-                            else {
-                                h = times / 3600;
-                                m = (times % 3600 / 60) + 1;
-                            }*/
+
                     }
                     presenter_main.MyNearTime(times,pillTime_day);
                     presenter_main.onMyNearPillResponce(true);
-
-                    /*tv_main_hour.setText(h + "");
-                    if (m / 10 == 0)
-                        tv_main_min.setText("0" + String.valueOf(m).substring(0));
-                    else
-                        tv_main_min.setText(String.valueOf(m).substring(0, 2));//시간의 나머지초/60하여 분으로 표시
-                    ctime = Integer.parseInt(curTime.substring(0, 4));
-                    BackThread thread = new BackThread();
-                    thread.setDaemon(true);
-                    thread.start();
-
-                   *//* Intent intent = new Intent(MainPageActivity.this, MyService.class);
-                    intent.putExtra("pillTime", String.valueOf(times));*//*
-
-                    Log.d("Test1:", String.valueOf(times));
-                    alarm_on();*/
 
                 } else if (nearTimePillVO.getStatus().equals("204")){
                     presenter_main.onMyNearPillResponce(false);
@@ -106,5 +95,31 @@ public class Main_Model implements Main_PresenterToModel{
 
             }
         });
+    }
+
+    @Override
+    public void setAlarm(int time, Context context) {
+        AlarmManager alarmManager = (AlarmManager)context.getSystemService(Context.ALARM_SERVICE);
+
+        Intent intent = new Intent(context, NotificationUtil.class);
+
+        PendingIntent pendingIntent = PendingIntent.getBroadcast(context, 0, intent, PendingIntent.FLAG_CANCEL_CURRENT);
+
+        Calendar calendar = Calendar.getInstance();
+        //알람시간 calendar에 set해주기
+
+        Log.d("알림 시간", calendar.get(Calendar.YEAR) + "/" + String.valueOf(calendar.get(Calendar.MONTH)+1) + "/" + calendar.get(Calendar.DATE) + "/" + pilltime_h + ":" + pilltime_m);
+        if (!pillTime_day) {
+            calendar.set(calendar.get(Calendar.YEAR), calendar.get(Calendar.MONTH)+1 , calendar.get(Calendar.DATE), pilltime_h + 24, pilltime_m);
+            Log.d("음..","내일약");
+        }
+        else {
+            calendar.set(calendar.get(Calendar.YEAR), calendar.get(Calendar.MONTH)+1 , calendar.get(Calendar.DATE), pilltime_h, pilltime_m);//시간을 셋팅
+            Log.d("음..","오늘약");
+        }
+
+        Log.d("times",String.valueOf(System.currentTimeMillis()+times*1000));
+
+        alarmManager.setExact(AlarmManager.RTC_WAKEUP,System.currentTimeMillis()+times*1000,pendingIntent);
     }
 }
