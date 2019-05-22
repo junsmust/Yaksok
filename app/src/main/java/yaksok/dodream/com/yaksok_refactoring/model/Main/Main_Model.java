@@ -109,14 +109,14 @@ public class Main_Model implements Main_PresenterToModel{
         //알람시간 calendar에 set해주기
 
         Log.d("알림 시간", calendar.get(Calendar.YEAR) + "/" + String.valueOf(calendar.get(Calendar.MONTH)+1) + "/" + calendar.get(Calendar.DATE) + "/" + pilltime_h + ":" + pilltime_m);
-        if (!pillTime_day) {
+     /*   if (!pillTime_day) {
             calendar.set(calendar.get(Calendar.YEAR), calendar.get(Calendar.MONTH)+1 , calendar.get(Calendar.DATE), pilltime_h + 24, pilltime_m);
             Log.d("음..","내일약");
         }
         else {
             calendar.set(calendar.get(Calendar.YEAR), calendar.get(Calendar.MONTH)+1 , calendar.get(Calendar.DATE), pilltime_h, pilltime_m);//시간을 셋팅
             Log.d("음..","오늘약");
-        }
+        }*/
 
         Log.d("times",String.valueOf(System.currentTimeMillis()+times*1000));
 
