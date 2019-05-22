@@ -105,8 +105,7 @@ public class ChatAdapter extends RecyclerView.Adapter<ChatAdapter.ViewHolder>
             viewHolder1.user_lv.setVisibility(View.GONE);
 
 
-            Log.d("givingtimeadatper",albumList.get(position).getRegidate());
-            // viewHolder1.giving_time.setLayoutParams(layoutParams3);
+
 
 
         }

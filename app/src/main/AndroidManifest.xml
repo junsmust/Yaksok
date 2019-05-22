@@ -59,7 +59,9 @@
 
         <activity android:name=".view.signup.GetPn" />
         <activity android:name=".view.chat.Chatting_list" />
-        <activity android:name=".view.chat.Chat_Room"></activity>
+        <activity android:name=".view.chat.Chat_Room">
+
+        </activity>
     </application>
 
 </manifest>
