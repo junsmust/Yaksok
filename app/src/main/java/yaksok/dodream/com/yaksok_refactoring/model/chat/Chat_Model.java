@@ -167,16 +167,18 @@ public class Chat_Model implements I_chat_model {
                                 bodyVO.getResult().get(i).getRegiDate().substring(11,16));
 
                         albumList.add(sendMessageVO);
-                        chat_presenter.sendChatArrayList(albumList);
-                        Log.e("onResponse: ", "  ss "+bodyVO.getResult().size());
+
+
 
 //                        chat_presenter.sendSendVO(sendMessageVO);
 //                        chat_presenter.onResponse(true);
 
-
-
                     }
                     Collections.reverse(albumList);
+                    chat_presenter.sendChatArrayList(albumList);
+                    Log.e("onResponse: ", "  ss "+bodyVO.getResult().size()
+                            +"\n"+albumList.size());
+                    //Collections.reverse(albumList);
                    /* mRecyclerView.setAdapter(new MyRecyclerAdapter(albumList,R.layout.recycleritem));
                     linearLayoutManager.setStackFromEnd(true);
                     mRecyclerView.setLayoutManager(linearLayoutManager);*/
