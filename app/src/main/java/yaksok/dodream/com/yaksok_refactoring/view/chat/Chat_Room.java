@@ -29,26 +29,32 @@ import yaksok.dodream.com.yaksok_refactoring.vo.SendMessageVO;
 public class Chat_Room extends AppCompatActivity implements I_chat_list{
 
     private Intent intent;
-    public static String user_name,user_id;
-    RecyclerView chat_recycler_list;
+    public static String user_name,user_id,my_id;
+    public static RecyclerView chat_recycler_list;
     Button bt_send;
     EditText ed_context;
     ChatAdapter chatAdapter;
     private SendMessageVO sendMessageVO;
 
 
-    public  ArrayList<SendMessageVO> albumList = new ArrayList<>();
+    public static boolean iInTheChattingRoom;
+    public static boolean msgStatus=true;
+
+
+
+    public ArrayList<SendMessageVO> albumList = new ArrayList<>();
     public static LinearLayoutManager linearLayoutManager;
     private Chat_Presenter presenter;
-    public static boolean iInTheChattingRoom;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_chat__room);
 
+        iInTheChattingRoom = true;
         intent = new Intent(getIntent());
 
-
+        my_id = User_Id.getUser_Id();
         user_name = intent.getStringExtra("user_name");
         user_id = intent.getStringExtra("user_id");
 
@@ -142,7 +148,7 @@ public class Chat_Room extends AppCompatActivity implements I_chat_list{
                 chat_recycler_list.setAdapter(chatAdapter);
 
 
-
+            Log.e( "11111onResponse: ", "실행 됨");
 
             //mRecyclerView.setItemAnimator(new DefaultItemAnimator());
             ed_context.setText("");
@@ -159,6 +165,7 @@ public class Chat_Room extends AppCompatActivity implements I_chat_list{
     @Override
     public void sendChatArrayList(ArrayList<SendMessageVO> albumList) {
         this.albumList = albumList;
+
         Log.e( "sendChatArrayList: ",albumList.size()+"");
         for(int i = 0; i < this.albumList.size(); i++){
             SendMessageVO sendMessageVO = new SendMessageVO(albumList.get(i).getGivingUser(),
@@ -167,11 +174,12 @@ public class Chat_Room extends AppCompatActivity implements I_chat_list{
                     albumList.get(i).getRegidate());
                      chatAdapter.addItem(sendMessageVO);
 
-
         }
-        Collections.reverse(albumList);
+
+
+
         chat_recycler_list.setAdapter(chatAdapter);
-        linearLayoutManager.setStackFromEnd(true);
+
         chat_recycler_list.setLayoutManager(linearLayoutManager);
         }
 
