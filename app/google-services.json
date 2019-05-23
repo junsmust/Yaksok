@@ -25,15 +25,13 @@
         }
       ],
       "services": {
-        "analytics_service": {
-          "status": 1
-        },
         "appinvite_service": {
-          "status": 1,
-          "other_platform_oauth_client": []
-        },
-        "ads_service": {
-          "status": 2
+          "other_platform_oauth_client": [
+            {
+              "client_id": "415379176174-adb8vqd80h063lrb43ggq3g8rf1urggv.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
         }
       }
     },
@@ -56,15 +54,42 @@
         }
       ],
       "services": {
-        "analytics_service": {
-          "status": 1
-        },
         "appinvite_service": {
-          "status": 1,
-          "other_platform_oauth_client": []
-        },
-        "ads_service": {
-          "status": 2
+          "other_platform_oauth_client": [
+            {
+              "client_id": "415379176174-adb8vqd80h063lrb43ggq3g8rf1urggv.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:415379176174:android:1bd524fc0037d2d0",
+        "android_client_info": {
+          "package_name": "yaksok.dodream.com.yaksok_refactoring"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "415379176174-adb8vqd80h063lrb43ggq3g8rf1urggv.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDNE08z-XQfqCtIRdGbIG0nqKsbSwF5M3k"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "415379176174-adb8vqd80h063lrb43ggq3g8rf1urggv.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
         }
       }
     }

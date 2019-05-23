@@ -15,6 +15,9 @@ import android.widget.EditText;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
+
+import com.google.firebase.iid.FirebaseInstanceId;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -29,11 +32,11 @@ import yaksok.dodream.com.yaksok_refactoring.vo.SendMessageVO;
 public class Chat_Room extends AppCompatActivity implements I_chat_list{
 
     private Intent intent;
-    public static String user_name,user_id,my_id;
+    public static String user2_name,user2_id,my_id;
     public static RecyclerView chat_recycler_list;
     Button bt_send;
     EditText ed_context;
-    ChatAdapter chatAdapter;
+    public static ChatAdapter chatAdapter;
     private SendMessageVO sendMessageVO;
 
 
@@ -42,9 +45,9 @@ public class Chat_Room extends AppCompatActivity implements I_chat_list{
 
 
 
-    public ArrayList<SendMessageVO> albumList = new ArrayList<>();
+    public static ArrayList<SendMessageVO> albumList = new ArrayList<>();
     public static LinearLayoutManager linearLayoutManager;
-    private Chat_Presenter presenter;
+    private Chat_Presenter presenter,presenter2;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -55,13 +58,22 @@ public class Chat_Room extends AppCompatActivity implements I_chat_list{
         intent = new Intent(getIntent());
 
         my_id = User_Id.getUser_Id();
-        user_name = intent.getStringExtra("user_name");
-        user_id = intent.getStringExtra("user_id");
 
-        Log.d("user_id",user_id);
-       // presenter.setChatUserInfo(user_name,user_id);
+        Log.e("onCreate: ",my_id+"!!!!" );
+        user2_name = intent.getStringExtra("user_name");
+        user2_id = Chatting_list.user2_id;
+
+
+
 
         presenter = new Chat_Presenter(this);
+        presenter2 = new Chat_Presenter(this,"s");
+
+
+        presenter.getPreviouseConversation(my_id,user2_id);
+
+
+
         chat_recycler_list = (RecyclerView)findViewById(R.id.chat_recycler_list);
         bt_send = (Button)findViewById(R.id.send_btn);
         ed_context = (EditText)findViewById(R.id.user_context_edt);
@@ -72,14 +84,15 @@ public class Chat_Room extends AppCompatActivity implements I_chat_list{
         chatAdapter = new ChatAdapter(albumList,R.layout.chat_item);
 
 
-        presenter.getPreviouseConversation(User_Id.getUser_Id(),user_id);
+
 
 
         bt_send.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 if(!ed_context.getText().toString().equals("")){
-                    presenter.sendMessage(user_id,ed_context.getText().toString());
+                    presenter.sendMessage(user2_id,ed_context.getText().toString());
+                    makeToastMessage(FirebaseInstanceId.getInstance().getToken()+"dd");
                 }
             }
         });
@@ -122,7 +135,7 @@ public class Chat_Room extends AppCompatActivity implements I_chat_list{
                 finish();
             }
         });
-        textView.setText(user_name);
+        textView.setText(user2_name);
         textView.setGravity(Gravity.CENTER);
         actionBar.setTitle(textView.getText().toString());
 
@@ -134,7 +147,7 @@ public class Chat_Room extends AppCompatActivity implements I_chat_list{
 
     @Override
     public void makeToastMessage(String message) {
-
+        Toast.makeText(getApplicationContext(),message,Toast.LENGTH_LONG).show();
     }
 
     @Override
@@ -144,6 +157,7 @@ public class Chat_Room extends AppCompatActivity implements I_chat_list{
                 //albumList.add(sendMessageVO);
                 chatAdapter.addItem(sendMessageVO);
                 chatAdapter.notifyDataSetChanged();
+                linearLayoutManager.setStackFromEnd(true);
                 chat_recycler_list.setLayoutManager(linearLayoutManager);
                 chat_recycler_list.setAdapter(chatAdapter);
 
@@ -178,8 +192,9 @@ public class Chat_Room extends AppCompatActivity implements I_chat_list{
 
 
 
-        chat_recycler_list.setAdapter(chatAdapter);
 
+        chat_recycler_list.setAdapter(chatAdapter);
+        linearLayoutManager.setStackFromEnd(true);
         chat_recycler_list.setLayoutManager(linearLayoutManager);
         }
 
@@ -189,4 +204,11 @@ public class Chat_Room extends AppCompatActivity implements I_chat_list{
         sendMessageVO = sendVO;
     }
 
+    @Override
+    protected void onResume() {
+        super.onResume();
+
+
+
+    }
 }
