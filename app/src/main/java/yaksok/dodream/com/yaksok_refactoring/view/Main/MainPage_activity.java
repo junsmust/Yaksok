@@ -23,6 +23,7 @@ public class MainPage_activity extends AppCompatActivity implements Main_Present
     private TextView tv_main_hour, tv_main_min;
     private int myNeaeTime_sec,hour,min;
     CountDownTimer countDownTimer = null;
+    private Boolean countSW = false;
 
 
     @Override
@@ -56,13 +57,13 @@ public class MainPage_activity extends AppCompatActivity implements Main_Present
             countDownTimer = new CountDownTimer((myNeaeTime_sec)*1000,60000) {
                 @Override
                 public void onTick(long millisUntilFinished) {
+                    countSW = true;
                     Log.d("testt",String.valueOf(millisUntilFinished));
                     if((millisUntilFinished/60000L)/60 < 10){
                         if((millisUntilFinished/6000L)/60 <= 0){
                             tv_main_hour.setText("00");
                             if ((millisUntilFinished / 1000) % 3600 / 60 < 10) {
                                 if((millisUntilFinished / 1000) % 3600 / 60 == 0){
-                                    onResume();
                                 }
                                 else
                                     tv_main_min.setText("0" + String.valueOf((millisUntilFinished / 1000) % 3600 / 60));
@@ -138,7 +139,8 @@ public class MainPage_activity extends AppCompatActivity implements Main_Present
     @Override
     protected void onPause() {
         super.onPause();
-        countDownTimer.cancel();
+        if(countSW)
+            countDownTimer.cancel();
     }
 
     /* @Override

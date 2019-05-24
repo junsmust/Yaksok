@@ -39,6 +39,7 @@
             android:name=".view.InsertPill.SearchPill.SearchPill_activity"
             android:windowSoftInputMode="adjustPan" />
         <activity android:name=".view.InsertPill.Sel_AlarmRecive.Sel_AlarmRecive_activity" />
+        <activity android:name=".view.Alarm_On"></activity>
 
         <service
             android:name=".firebaseService.FirebaseMessageService"
@@ -56,6 +57,8 @@
                 <action android:name="com.google.firebase.INSTANCE_ID_EVENT" />
             </intent-filter>
         </service>
+        <receiver android:name=".model.Main.NotificationUtil"
+            android:enabled="true"/>
 
 
         <activity android:name=".view.signup.GetPn" />

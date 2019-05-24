@@ -57,17 +57,18 @@ public class Main_Model implements Main_PresenterToModel{
                     //    TakeMedicineVO.setGivingUser(LoginActivity.userVO.getId());
                     //    TakeMedicineVO.setMedicineNO(String.valueOf(nearTimeMedicineVO.getResult().getMyMedicineNo()));
                     now = new Date();
-                    SimpleDateFormat time = new SimpleDateFormat("HHmm");
+                    SimpleDateFormat time = new SimpleDateFormat("HHmmss");
                     curTime = time.format(now);
                     Log.d("TImee",String.valueOf(curTime) + "!!" +String.valueOf(nearTimePillVO.getResult().getTime()));
                     //현재 시간, 서버에서 받은시간의 시간과 분 나누는 곳
                     int nowtime_hour = Integer.parseInt(curTime.substring(0, 2));
-                    int nowtime_min = Integer.parseInt(curTime.substring(2));
+                    int nowtime_min = Integer.parseInt(curTime.substring(2,4));
+                    int nowtime_sec = Integer.parseInt(curTime.substring(4));
                     pilltime_h = Integer.parseInt(nearTimePillVO.getResult().getTime().substring(0, 2));
                     pilltime_m = Integer.parseInt(nearTimePillVO.getResult().getTime().substring(2));
                     Log.d("min",String.valueOf(pilltime_m));
                     ptime = Integer.parseInt(nearTimePillVO.getResult().getTime().substring(0, 4));
-                    if(ptime <= Integer.parseInt(curTime)){
+                    if(ptime <= Integer.parseInt(curTime.substring(0,4))){
                         pillTime_day = false;//다음약이 내일일(초로 계산)
                         pilltime_sec = (((23 * 3600) + (59 * 60)) - ((nowtime_hour * 3600) + (nowtime_min * 60)));
                         times = (pilltime_sec + ((pilltime_h * 3600) + (pilltime_m * 60)));
@@ -78,6 +79,8 @@ public class Main_Model implements Main_PresenterToModel{
                         times = ((pilltime_h * 3600) + (pilltime_m * 60)) - ((nowtime_hour * 3600) + (nowtime_min * 60));
 
                     }
+                    Log.d("nowtimeMIN",curTime.substring(4));
+                    times -= nowtime_sec;
                     presenter_main.MyNearTime(times,pillTime_day);
                     presenter_main.onMyNearPillResponce(true);
 
@@ -118,6 +121,7 @@ public class Main_Model implements Main_PresenterToModel{
             Log.d("음..","오늘약");
         }*/
 
+     Log.d("time1",String.valueOf(times));
         Log.d("times",String.valueOf(System.currentTimeMillis()+times*1000));
 
         alarmManager.setExact(AlarmManager.RTC_WAKEUP,System.currentTimeMillis()+times*1000,pendingIntent);
