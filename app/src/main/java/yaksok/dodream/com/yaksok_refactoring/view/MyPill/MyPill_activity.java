@@ -1,11 +1,14 @@
 package yaksok.dodream.com.yaksok_refactoring.view.MyPill;
 
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
@@ -29,12 +32,15 @@ public class MyPill_activity extends AppCompatActivity implements MyPill_Present
     List<String> myPillList = new ArrayList<String>();;
     ArrayAdapter adapter;
     Button bt_Insert;
+    public AlertDialog.Builder dialog;
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_mypill);
+
+        dialog = new AlertDialog.Builder(this);
 
         lv_MyPill = (ListView)findViewById(R.id.lv_MyPill);
         bt_Insert = (Button)findViewById(R.id.bt_Insert);
@@ -49,6 +55,13 @@ public class MyPill_activity extends AppCompatActivity implements MyPill_Present
             }
         });
         presenter_myPill = new Presenter_MyPill( this);
+
+        lv_MyPill.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                showDialog("약이름","10:50");
+            }
+        });
 
     }
 
@@ -83,6 +96,32 @@ public class MyPill_activity extends AppCompatActivity implements MyPill_Present
         super.onResume();
         presenter_myPill.getMyPill();
         Log.d("test1","true");
+    }
+
+    public void showDialog(String name, String regidate){
+
+        dialog.setTitle("약 등록 확인");
+        dialog.setMessage("등록된 약 이름은  \n"+name+"\n"+regidate);
+        dialog.setCancelable(false);
+
+
+
+        dialog.setPositiveButton("네", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                dialog.cancel();
+            }
+        });
+        dialog.setNegativeButton("삭제하기", new DialogInterface.OnClickListener() {
+
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                //삭제할 메서드 만들자
+            }
+        });
+       AlertDialog alertDialog = dialog.create();
+        alertDialog.show();
+
     }
 
 

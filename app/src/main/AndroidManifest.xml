@@ -39,7 +39,10 @@
             android:name=".view.InsertPill.SearchPill.SearchPill_activity"
             android:windowSoftInputMode="adjustPan" />
         <activity android:name=".view.InsertPill.Sel_AlarmRecive.Sel_AlarmRecive_activity" />
-        <activity android:name=".view.Alarm_On"></activity>
+        <activity android:name=".view.Alarm_On" android:launchMode="singleInstance"
+            android:screenOrientation="unspecified"
+            android:theme="@android:style/Theme.Translucent" >
+        </activity>
 
         <service
             android:name=".firebaseService.FirebaseMessageService"
