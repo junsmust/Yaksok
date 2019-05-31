@@ -7,4 +7,5 @@ import yaksok.dodream.com.yaksok_refactoring.vo.MyPillVO;
 public interface MyPill_PresenterToView {
     void onMyPillResponce(boolean MyPillResponse);
     void myPillList(MyPillVO myPillVO);
+    void onMyPillDeleteRespoce(boolean MyPillResponse);
 }

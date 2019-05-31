@@ -12,8 +12,7 @@ public class MyPillVO {
     MyPillVO(){}
 
     public class Result {
-        @SerializedName("medicinNo")@Expose
-        private int medicineNo;
+        @SerializedName("myMedicineNo")@Expose private int medicineNo;
         @SerializedName("name") @Expose private String name;
         @SerializedName("regiDate") @Expose private String regiDate;
 

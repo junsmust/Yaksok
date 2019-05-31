@@ -48,6 +48,8 @@ public class MyPill_Model implements MyPill_PresenterToModel {
                     myPillVO.getResult().clear();
                 }
                 myPillVO = response.body();
+
+                Log.d("약 가져올때 번호",String.valueOf(myPillVO.getResult().get(0).getMedicineNo()));
                 //1System.out.println("############" + myMedicineResponseTypeVO.getStatus());
                 if (myPillVO.getStatus().equals("200")) {
                     pillList.clear();
@@ -89,18 +91,22 @@ public class MyPill_Model implements MyPill_PresenterToModel {
         deleteService = retrofit.create(DeleteService.class);
 
         DeleteMyMeidicineVO myMedicineNoVO1 = new DeleteMyMeidicineVO();
+        Log.d("약 pillNo",String.valueOf(pillNo));
         myMedicineNoVO1.setMyMedicineNo(pillNo);
 
         Call<FamilyBodyVO> myMedicineNoVOCall = deleteService.deleteMyMedicine(myMedicineNoVO1);
+        Log.d("약 넘버",String.valueOf(myMedicineNoVO1.getMyMedicineNo()));
         myMedicineNoVOCall.enqueue(new Callback<FamilyBodyVO>() {
             @Override
             public void onResponse(Call<FamilyBodyVO> call, Response<FamilyBodyVO> response) {
                 FamilyBodyVO meDiDelete = response.body();
 
                 if(meDiDelete.getStatus().equals("201")){
+                    presenter_myPill.onMyPillDeleteRespoce(true);
                     Log.d("약 삭제 상태", "True");
                 }
                 else if(meDiDelete.getStatus().equals("500")){
+                    presenter_myPill.onMyPillDeleteRespoce(false);
                     Log.d("약 삭제 상태", "False");
                 }
             }

@@ -65,6 +65,7 @@ public class MyPill_activity extends AppCompatActivity implements MyPill_Present
                 showDialog(mypill.getResult().get(position).getName(),
                         mypill.getResult().get(position).getRegiDate().substring(0,10),
                         mypill.getResult().get(position).getMedicineNo());
+                Log.d("처음 약 번호",String.valueOf(mypill.getResult().get(position).getMedicineNo()));
             }
         });
 
@@ -88,6 +89,13 @@ public class MyPill_activity extends AppCompatActivity implements MyPill_Present
 
         }
         mypill = myPillVO;
+    }
+
+    @Override
+    public void onMyPillDeleteRespoce(boolean MyPillResponse) {
+        if(MyPillResponse){
+            onResume();
+        }
     }
 
     @Override
@@ -123,6 +131,8 @@ public class MyPill_activity extends AppCompatActivity implements MyPill_Present
             @Override
             public void onClick(DialogInterface dialog, int which) {
                 presenter_myPill.myPillDelete(pillNo);
+                myPillList.clear();
+                onMyPillResponce(true);
             }
         });
        AlertDialog alertDialog = dialog.create();

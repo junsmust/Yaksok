@@ -36,5 +36,10 @@ public class Presenter_MyPill implements MyPillToPresenter {
         model.myPillDelete(pillNo);
     }
 
+    @Override
+    public void onMyPillDeleteRespoce(boolean MyPillResponse) {
+        view.onMyPillDeleteRespoce(MyPillResponse);
+    }
+
 
 }

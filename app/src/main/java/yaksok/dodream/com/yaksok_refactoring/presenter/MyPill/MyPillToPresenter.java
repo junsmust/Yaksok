@@ -9,4 +9,5 @@ public interface MyPillToPresenter {
     void onMyPillResponce(boolean MyPillResponse);
     void myPillList(MyPillVO pillList);
     void myPillDelete(int pillNo);
+    void onMyPillDeleteRespoce(boolean MyPillResponse);
 }
