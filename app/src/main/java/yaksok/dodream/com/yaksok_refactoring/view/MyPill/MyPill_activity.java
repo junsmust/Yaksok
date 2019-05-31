@@ -24,6 +24,7 @@ import java.util.List;
 import yaksok.dodream.com.yaksok_refactoring.R;
 import yaksok.dodream.com.yaksok_refactoring.presenter.MyPill.Presenter_MyPill;
 import yaksok.dodream.com.yaksok_refactoring.view.InsertPill.InsertPill_activity;
+import yaksok.dodream.com.yaksok_refactoring.vo.MyPillVO;
 
 public class MyPill_activity extends AppCompatActivity implements MyPill_PresenterToView {
 
@@ -33,6 +34,8 @@ public class MyPill_activity extends AppCompatActivity implements MyPill_Present
     ArrayAdapter adapter;
     Button bt_Insert;
     public AlertDialog.Builder dialog;
+    MyPillVO mypill = null;
+
 
 
     @Override
@@ -59,7 +62,9 @@ public class MyPill_activity extends AppCompatActivity implements MyPill_Present
         lv_MyPill.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                showDialog("약이름","10:50");
+                showDialog(mypill.getResult().get(position).getName(),
+                        mypill.getResult().get(position).getRegiDate().substring(0,10),
+                        mypill.getResult().get(position).getMedicineNo());
             }
         });
 
@@ -76,12 +81,13 @@ public class MyPill_activity extends AppCompatActivity implements MyPill_Present
     }
 
     @Override
-    public void myPillList(List<String> pillList) {
-        Log.d("test5",String.valueOf(pillList.size()));
-        for(int i=0; i<pillList.size(); i++){
-            myPillList.add(pillList.get(i));
-            Log.d("test",pillList.get(i));
+    public void myPillList(MyPillVO myPillVO) {
+        for(int i=0; i<myPillVO.getResult().size(); i++){
+            myPillList.add(myPillVO.getResult().get(i).getName());
+            Log.d("test",myPillVO.getResult().get(i).getName());
+
         }
+        mypill = myPillVO;
     }
 
     @Override
@@ -98,10 +104,10 @@ public class MyPill_activity extends AppCompatActivity implements MyPill_Present
         Log.d("test1","true");
     }
 
-    public void showDialog(String name, String regidate){
+    public void showDialog(String name, String regidate, final int pillNo){
 
-        dialog.setTitle("약 등록 확인");
-        dialog.setMessage("등록된 약 이름은  \n"+name+"\n"+regidate);
+        dialog.setTitle("약 등록 정보");
+        dialog.setMessage(name+"\n"+regidate);
         dialog.setCancelable(false);
 
 
@@ -116,7 +122,7 @@ public class MyPill_activity extends AppCompatActivity implements MyPill_Present
 
             @Override
             public void onClick(DialogInterface dialog, int which) {
-                //삭제할 메서드 만들자
+                presenter_myPill.myPillDelete(pillNo);
             }
         });
        AlertDialog alertDialog = dialog.create();

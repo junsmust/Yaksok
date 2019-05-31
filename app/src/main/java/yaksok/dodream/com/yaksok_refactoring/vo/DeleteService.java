@@ -13,7 +13,7 @@ public interface DeleteService {
     @HTTP(method = "DELETE",path = "users?",hasBody = true)
     Call<FamilyBodyVO> deleteUser(@Body UserDeleteVO userDeleteVO);
 
-//    @HTTP(method = "DELETE",path = "/mymedicines?",hasBody = true)
-//    Call<FamilyBodyVO> deleteMyMedicine(@Body DeleteMyMeidicineVO myMeidicineVO);
+    @HTTP(method = "DELETE",path = "/mymedicines?",hasBody = true)
+    Call<FamilyBodyVO> deleteMyMedicine(@Body DeleteMyMeidicineVO myMeidicineVO);
 
 }

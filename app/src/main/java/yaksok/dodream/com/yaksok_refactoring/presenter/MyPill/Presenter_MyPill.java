@@ -5,6 +5,7 @@ import java.util.List;
 import yaksok.dodream.com.yaksok_refactoring.model.MyPill.MyPill_Model;
 import yaksok.dodream.com.yaksok_refactoring.model.MyPill.MyPill_PresenterToModel;
 import yaksok.dodream.com.yaksok_refactoring.view.MyPill.MyPill_PresenterToView;
+import yaksok.dodream.com.yaksok_refactoring.vo.MyPillVO;
 
 public class Presenter_MyPill implements MyPillToPresenter {
     private MyPill_PresenterToView view;
@@ -26,8 +27,14 @@ public class Presenter_MyPill implements MyPillToPresenter {
     }
 
     @Override
-    public void myPillList(List<String> pillList) {
-        view.myPillList(pillList);
+    public void myPillList(MyPillVO myPillVO) {
+        view.myPillList(myPillVO);
     }
+
+    @Override
+    public void myPillDelete(int pillNo) {
+        model.myPillDelete(pillNo);
+    }
+
 
 }

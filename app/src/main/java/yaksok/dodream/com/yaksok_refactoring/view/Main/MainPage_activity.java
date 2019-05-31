@@ -54,10 +54,10 @@ public class MainPage_activity extends AppCompatActivity implements Main_Present
     @Override // 가까운 약시간 요청해서 UI변경 할 부분
     public void onMyNearPillResponce(boolean MyNearPillResponse) {
         if(MyNearPillResponse) {
+            countSW = true;
             countDownTimer = new CountDownTimer((myNeaeTime_sec)*1000,60000) {
                 @Override
                 public void onTick(long millisUntilFinished) {
-                    countSW = true;
                     Log.d("testt",String.valueOf(millisUntilFinished));
                     if((millisUntilFinished/60000L)/60 < 10){
                         if((millisUntilFinished/6000L)/60 <= 0){
