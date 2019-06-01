@@ -8,6 +8,9 @@ public class SendMessageVO {
     private String givingUser,receivingUser,content,regidate;
     private int user_img;
 
+    public SendMessageVO() {
+    }
+
     public SendMessageVO(String givingUser, String receivingUser, String content) {
         this.givingUser = givingUser;
         this.receivingUser = receivingUser;

@@ -56,7 +56,15 @@
                 <action android:name="com.google.firebase.INSTANCE_ID_EVENT" />
             </intent-filter>
         </service>
-
+       <!-- <service
+            android:name=".firebaseService.FirebaseGetInstanceID"
+            android:enabled="true"
+            android:exported="true">
+            <intent-filter>
+                <action android:name="com.google.firebase.INSTANCE_ID_EVENT" />
+            </intent-filter>
+        </service>
+-->
 
         <activity android:name=".view.signup.GetPn" />
         <activity android:name=".view.chat.Chatting_list" />

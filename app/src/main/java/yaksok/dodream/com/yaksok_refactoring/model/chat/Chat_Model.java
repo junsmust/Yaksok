@@ -56,9 +56,10 @@ public class Chat_Model implements I_chat_model {
                     for(int i = 0; i < findFamilyVO.getResult().size();i++){
                         familyItems.add(new FamilyItem(findFamilyVO.getResult().get(i).getNickName()+"("+findFamilyVO.getResult().get(i).getUserId()+")"));
                     }
-                   // Log.e(TAG, "onResponse: "+ familyItems.size() );
+                   Log.e("onResponse: chat"," "  +familyItems.size() );
                     chat_presenter.sendArrayList(familyItems);
                     chat_presenter.onResponse(true);
+
 
                 } else if (findFamilyVO.getStatus().equals("204")) {
                     chat_presenter.makeToastMessage( "상대의 계정이 존재하지 않습니다.");

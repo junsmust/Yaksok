@@ -138,7 +138,7 @@ public class MainPage_activity extends AppCompatActivity implements Main_Present
     @Override
     protected void onPause() {
         super.onPause();
-        countDownTimer.cancel();
+      //  countDownTimer.cancel();
     }
 
     /* @Override
