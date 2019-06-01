@@ -21,10 +21,10 @@ public class Chat_Presenter implements I_chat_presenter{
         model = new Chat_Model(this);
     }
 
-    public Chat_Presenter(I_chat_list view,String s) {
+    /*public Chat_Presenter(I_chat_list view,String s) {
         this.view = view;
         service = new FirebaseMessageService(this);
-    }
+    }*/
 
     @Override
     public void setPreviousRegistered() {

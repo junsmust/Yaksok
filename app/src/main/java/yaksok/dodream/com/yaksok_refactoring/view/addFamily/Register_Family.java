@@ -234,13 +234,6 @@ public class Register_Family extends AppCompatActivity implements IRegister_Pres
         familyItemss = familyItems;
 
             familyItemss2 = (ArrayList<FamilyItem>) familyItemss.clone();
-
-
-        /*if(familyItems.size()>0) {
-            adapter = new FamilyFindAdapter(this, familyItemss, R.layout.family_list_item);
-        }*/
-        //adapter.notifyDataSetChanged();
-
     }
 
     @Override

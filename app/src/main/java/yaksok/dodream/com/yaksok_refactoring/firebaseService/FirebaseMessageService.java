@@ -36,8 +36,202 @@ import yaksok.dodream.com.yaksok_refactoring.vo.SendMessageVO;
 import static android.os.Build.ID;
 import static com.google.firebase.messaging.RemoteMessage.*;
 
-public class FirebaseMessageService extends FirebaseMessagingService implements I_Connect_To_Presenter_with_FCM {
+public class FirebaseMessageService extends FirebaseMessagingService {
 
+    private static final String TAG = "MyFirebaseMsgService";
+    public static final String NOTIFICATION_CHANNEL_ID = "7788";
+    public static Boolean fireStatus = false;
+    public static String userss_name;
+    String decodeName, decodeMessage, decodeId, decodeRegiDate;
+    String channelId;
+    NotificationCompat.Builder notificationBuilder;
+    NotificationManager notificationManager;
+    Intent intent;
+
+    @Override
+    public void onMessageReceived(RemoteMessage remoteMessage) {
+        super.onMessageReceived(remoteMessage);
+
+        Log.d("message??", "메시지 왔어요");
+
+        // 이거 추가 하면
+        PowerManager pm = (PowerManager) getSystemService(Context.POWER_SERVICE);
+        PowerManager.WakeLock wakeLock = pm.newWakeLock(PowerManager.SCREEN_DIM_WAKE_LOCK
+                | PowerManager.ACQUIRE_CAUSES_WAKEUP, "TAG");
+        wakeLock.acquire(3000);
+
+
+        try {
+            decodeName = URLDecoder.decode(remoteMessage.getData().get("name"), "UTF-8");
+        } catch (UnsupportedEncodingException e) {
+            e.printStackTrace();
+        }
+        try {
+            decodeMessage = URLDecoder.decode(remoteMessage.getData().get("message"), "UTF-8");
+        } catch (UnsupportedEncodingException e) {
+            e.printStackTrace();
+        }
+        try {
+            decodeId = URLDecoder.decode(remoteMessage.getData().get("id"), "UTF-8");
+        } catch (UnsupportedEncodingException e) {
+            e.printStackTrace();
+        }
+        try {
+            decodeRegiDate = URLDecoder.decode(remoteMessage.getData().get("messageRegiDate"), "UTF-8");
+        } catch (UnsupportedEncodingException e) {
+            e.printStackTrace();
+        }
+
+
+        sendNotification(decodeName, decodeMessage);
+    }
+
+    private void sendNotification(String title, String message) { //FCM서버에서 메세지를 앱으로 보내줄시 백그라운드에서 받는 알림내용
+
+        int NOTIFICATION_ID = 234;
+
+        if (User_Id.getUser_Id() == null) {
+            fireStatus = true;
+            userss_name = decodeName;
+            Log.d("test_k", "id == null");
+            intent = new Intent(this, Login_activity.class);
+            intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+            PendingIntent pendingIntent = PendingIntent.getActivity(this, 0 /* Request code */, intent,
+                    PendingIntent.FLAG_ONE_SHOT);
+
+            channelId = "my_channel_01";
+            Uri defaultSoundUri = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION);
+            notificationBuilder = new NotificationCompat.Builder(this)
+                    .setSmallIcon(R.mipmap.ic_launcher)
+                    .setContentTitle(title) //알림제목
+                    .setContentText(message)    //알림내용
+                    .setAutoCancel(true)
+                    .setSound(defaultSoundUri)
+                    .setPriority(Notification.PRIORITY_MAX)
+                    .setContentIntent(pendingIntent)
+                    .setChannelId("my_channel_01");
+
+            notificationManager =
+                    (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
+
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+                String CHANNEL_ID = "my_channel_01";
+                CharSequence name = "my_channel";
+                String Description = "This is my channel";
+                int importance = NotificationManager.IMPORTANCE_HIGH;
+                NotificationChannel mChannel = new NotificationChannel(CHANNEL_ID, name, importance);
+                mChannel.setDescription(Description);
+                mChannel.enableLights(true);
+                mChannel.setLightColor(Color.RED);
+                mChannel.enableVibration(true);
+                mChannel.setVibrationPattern(new long[]{100, 200, 300, 400, 500, 400, 300, 200, 400});
+                mChannel.setShowBadge(false);
+                notificationManager.createNotificationChannel(mChannel);
+            }
+
+            notificationManager.notify(234 /* ID of notification */, notificationBuilder.build());
+
+        } else {
+            intent = new Intent(this, Chat_Room.class);
+
+
+            intent.putExtra("send_user", decodeName);
+            intent.putExtra("recived_message", decodeMessage);
+            intent.putExtra("goBack", "123");
+            intent.putExtra("user_id", User_Id.getUser_Id());
+            intent.putExtra("your_id", decodeId);
+
+            intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+            PendingIntent pendingIntent = PendingIntent.getActivity(this, 0 /* Request code */, intent,
+                    PendingIntent.FLAG_ONE_SHOT);
+
+
+            //채팅방에 없을 때
+            if (!Chat_Room.iInTheChattingRoom) {
+                channelId = getString(R.string.default_notification_channel_id);
+                Uri defaultSoundUri = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION);
+
+                notificationBuilder = new NotificationCompat.Builder(this)
+                        .setSmallIcon(R.mipmap.ic_launcher)
+                        .setContentTitle(title) //알림제목
+                        .setContentText(message)    //알림내용
+                        .setAutoCancel(true)
+                        .setSound(defaultSoundUri)
+                        .setPriority(Notification.PRIORITY_MAX)
+                        .setContentIntent(pendingIntent)
+                        .setChannelId("my_channel_01");
+                //채널 아이디 값을 정확히 지정해줘야 함
+
+
+                Chatting_list.user_id = decodeId; // 상대 아이디 값
+                Chatting_list.user = User_Id.getUser_Id(); // 자신의 아이디 값
+                Chat_Room.msgStatus = false; // 채팅방에 없다는 뜻
+
+
+
+
+
+                notificationManager =
+                        (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
+
+                // Since android Oreo notification channel is needed.
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+                    /*NotificationChannel channel = new NotificationChannel(channelId,
+                            "channel",
+                            NotificationManager.IMPORTANCE_DEFAULT);
+                    notificationManager.createNotificationChannel(channel);
+                    notificationManager.notify(0 *//* ID of notification *//*, notificationBuilder.build());*/
+
+                    String CHANNEL_ID = "my_channel_01";
+                    CharSequence name = "my_channel";
+                    String Description = "This is my channel";
+                    int importance = NotificationManager.IMPORTANCE_HIGH;
+                    NotificationChannel mChannel = new NotificationChannel(CHANNEL_ID, name, importance);
+                    mChannel.setDescription(Description);
+                    mChannel.enableLights(true);
+                    mChannel.setLightColor(Color.RED);
+                    mChannel.enableVibration(true);
+                    mChannel.setVibrationPattern(new long[]{100, 200, 300, 400, 500, 400, 300, 200, 400});
+                    mChannel.setShowBadge(false);
+                    notificationManager.createNotificationChannel(mChannel);
+                }
+
+                notificationManager.notify(234 /* ID of notification */, notificationBuilder.build());
+                //notify(Id of notification,
+
+
+            } else if (Chat_Room.iInTheChattingRoom) {
+
+                Handler handler = new Handler(Looper.getMainLooper());
+                handler.post(new Runnable() {
+                    @Override
+                    public void run() {  // Runnable 의 Run() 메소드에서 UI 접근
+                        SendMessageVO sendVO = new SendMessageVO();
+                        sendVO.setGivingUser(decodeId);
+                        sendVO.setContent(decodeMessage);
+                        sendVO.setReceivingUser(User_Id.getUser_Id());
+                        sendVO.setRegidate(decodeRegiDate.substring(11, 16));
+                        if (Chat_Room.your_id.equals(sendVO.getGivingUser())) {
+                            Chat_Room.albumList.add(sendVO);
+                            //linearLayoutManager.setReverseLayout(true);
+
+                            Chat_Room.linearLayoutManager.setStackFromEnd(true);
+                            Chat_Room.chat_recycler_list.setAdapter(Chat_Room.chatAdapter);
+                            Chat_Room.chat_recycler_list.setLayoutManager(Chat_Room.linearLayoutManager);
+                        }
+
+                    }
+                });
+
+
+            }
+
+        }
+
+    }
+}// end class
+
+/*
     private static final String TAG = "MyFirebaseMsgService";
     public static final String NOTIFICATION_CHANNEL_ID = "7788";
     public static Boolean fireStatus = false;
@@ -53,6 +247,8 @@ public class FirebaseMessageService extends FirebaseMessagingService implements 
 
 
     private Chat_Presenter chat_presenter;
+
+
 
     public FirebaseMessageService() {
     }
@@ -115,7 +311,7 @@ public class FirebaseMessageService extends FirebaseMessagingService implements 
             Log.d("test_k", "id == null");
             intent = new Intent(this, Login_activity.class);
             intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-            PendingIntent pendingIntent = PendingIntent.getActivity(this, 0 /* Request code */, intent,
+            PendingIntent pendingIntent = PendingIntent.getActivity(this, 0 *//* Request code *//*, intent,
                     PendingIntent.FLAG_ONE_SHOT);
 
             channelId = "my_channel_01";
@@ -148,7 +344,7 @@ public class FirebaseMessageService extends FirebaseMessagingService implements 
                 notificationManager.createNotificationChannel(mChannel);
             }
 
-            notificationManager.notify(234 /* ID of notification */, notificationBuilder.build());
+            notificationManager.notify(234 *//* ID of notification *//*, notificationBuilder.build());
 
         }
 
@@ -164,7 +360,7 @@ public class FirebaseMessageService extends FirebaseMessagingService implements 
             intent.putExtra("your_id", decodeId);
 
             intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-            PendingIntent pendingIntent = PendingIntent.getActivity(this, 0 /* Request code */, intent,
+            PendingIntent pendingIntent = PendingIntent.getActivity(this, 0 *//* Request code *//*, intent,
                     PendingIntent.FLAG_ONE_SHOT);
 
 
@@ -195,11 +391,11 @@ public class FirebaseMessageService extends FirebaseMessagingService implements 
 
                 // Since android Oreo notification channel is needed.
                 if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-                    /*NotificationChannel channel = new NotificationChannel(channelId,
+                    *//*NotificationChannel channel = new NotificationChannel(channelId,
                             "channel",
                             NotificationManager.IMPORTANCE_DEFAULT);
                     notificationManager.createNotificationChannel(channel);
-                    notificationManager.notify(0 *//* ID of notification *//*, notificationBuilder.build());*/
+                    notificationManager.notify(0 *//**//* ID of notification *//**//*, notificationBuilder.build());*//*
 
                     String CHANNEL_ID = "my_channel_01";
                     CharSequence name = "my_channel";
@@ -215,7 +411,7 @@ public class FirebaseMessageService extends FirebaseMessagingService implements 
                     notificationManager.createNotificationChannel(mChannel);
                 }
 
-                notificationManager.notify(234 /* ID of notification */, notificationBuilder.build());
+                notificationManager.notify(234 *//* ID of notification *//*, notificationBuilder.build());
                 //notify(Id of notification,
 
 
@@ -230,12 +426,12 @@ public class FirebaseMessageService extends FirebaseMessagingService implements 
 
                         if(Chat_Room.user2_id.equals(sendVO.getGivingUser())) {
                           //  Chat_Room.albumList.add(sendVO);
-                          /*  Log.e(TAG, "run: "+User_Id.getUser_Id() +""+chat_presenter.toString());
+                          *//*  Log.e(TAG, "run: "+User_Id.getUser_Id() +""+chat_presenter.toString());
                             chat_presenter.sendSendVO(sendVO);
-*/
-                           /* Chat_Room.linearLayoutManager.setStackFromEnd(true);
+*//*
+                           *//* Chat_Room.linearLayoutManager.setStackFromEnd(true);
                             Chat_Room.chat_recycler_list.setAdapter(Chat_Room.chatAdapter);
-                            Chat_Room.chat_recycler_list.setLayoutManager(Chat_Room.linearLayoutManager);*/
+                            Chat_Room.chat_recycler_list.setLayoutManager(Chat_Room.linearLayoutManager);*//*
 
 
 
@@ -256,7 +452,7 @@ public class FirebaseMessageService extends FirebaseMessagingService implements 
 
     }
 
-}
+}*/
 
 
 

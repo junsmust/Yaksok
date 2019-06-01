@@ -20,6 +20,7 @@ import java.util.ArrayList;
 import yaksok.dodream.com.yaksok_refactoring.Adapter.family.FamilyFindAdapter;
 import yaksok.dodream.com.yaksok_refactoring.Adapter.family.FamilyItem;
 import yaksok.dodream.com.yaksok_refactoring.R;
+import yaksok.dodream.com.yaksok_refactoring.model.user.User_Id;
 import yaksok.dodream.com.yaksok_refactoring.presenter.chat.Chat_Presenter;
 import yaksok.dodream.com.yaksok_refactoring.vo.SendMessageVO;
 
@@ -30,6 +31,8 @@ public class Chatting_list extends AppCompatActivity implements I_chat_list{
     private FamilyFindAdapter adapter;
     private Chat_Presenter presenter;
     public static String user2_id;
+    public static String user_id;
+    public static String user;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -51,13 +54,16 @@ public class Chatting_list extends AppCompatActivity implements I_chat_list{
                 int index1 = ((FamilyItem)adapter.getItem(position)).getName().indexOf('(');
                 int index2 = ((FamilyItem)adapter.getItem(position)).getName().indexOf(')');
 
-                String user_name = ((FamilyItem)adapter.getItem(position)).getName().substring(0,index1);
-                String user_id = ((FamilyItem)adapter.getItem(position)).getName().substring(index1+1,index2);
+                Log.e( "onItemClick:2 ", (((FamilyItem) adapter.getItem(position)).getName().substring(index1+1,index2)));
+                String user_name = (((FamilyItem) adapter.getItem(position)).getName().substring(0,index1));
+                user_id = (((FamilyItem) adapter.getItem(position)).getName().substring(index1+1,index2));
+                user = User_Id.getUser_Id();
 
                 Intent intent = new Intent(getApplicationContext(),Chat_Room.class);
                 intent.putExtra("user_name",user_name);
-                //intent.putExtra("user_id",user_id);
-                user2_id = user_id;
+                intent.putExtra("user_id",user_id);
+
+
                 startActivity(intent);
             }
         });
