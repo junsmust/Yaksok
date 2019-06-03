@@ -9,6 +9,8 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 
+import javax.sql.StatementEvent;
+
 import yaksok.dodream.com.yaksok_refactoring.R;
 import yaksok.dodream.com.yaksok_refactoring.presenter.Main.Presenter_Main;
 import yaksok.dodream.com.yaksok_refactoring.view.MyPill.MyPill_activity;
@@ -20,7 +22,7 @@ public class MainPage_activity extends AppCompatActivity implements Main_Present
     private Presenter_Main presenter_main;
     private Button bt_InsertPill,bt_InsertFamily,bt_chat;
     private boolean pillTime_day;
-    private TextView tv_main_hour, tv_main_min;
+    private TextView tv_main_hour, tv_main_min,tv_main_sec;
     private int myNeaeTime_sec,hour,min;
     CountDownTimer countDownTimer = null;
     private Boolean countSW = false;
@@ -34,6 +36,7 @@ public class MainPage_activity extends AppCompatActivity implements Main_Present
         bt_InsertPill = (Button)findViewById(R.id.bt_InsertPill);
         tv_main_hour = (TextView)findViewById(R.id.tv_main_hour);
         tv_main_min = (TextView)findViewById(R.id.tv_main_min);
+        tv_main_sec = (TextView)findViewById(R.id.tv_main_sec);
         bt_InsertFamily = (Button)findViewById(R.id.bt_InsertFamily);
         bt_chat = (Button)findViewById(R.id.bt_Chat);
 
@@ -55,11 +58,46 @@ public class MainPage_activity extends AppCompatActivity implements Main_Present
     public void onMyNearPillResponce(boolean MyNearPillResponse) {
         if(MyNearPillResponse) {
             countSW = true;
-            countDownTimer = new CountDownTimer((myNeaeTime_sec)*1000,60000) {
+            countDownTimer = new CountDownTimer((myNeaeTime_sec)*1000,1000) {
                 @Override
                 public void onTick(long millisUntilFinished) {
                     Log.d("testt",String.valueOf(millisUntilFinished));
-                    if((millisUntilFinished/60000L)/60 < 10){
+                    //시간 설정 부분
+                    if(millisUntilFinished >= 3600000){
+                        if((millisUntilFinished/6000L)/60 < 10){
+                            tv_main_hour.setText("0" + String.valueOf((millisUntilFinished / 60000L) / 60));
+                        }
+                        else{
+                            tv_main_hour.setText(String.valueOf((millisUntilFinished / 60000L) / 60));
+                        }
+                    }
+                    else{
+                        tv_main_hour.setText("00");
+                    }
+
+                    //분 설정 부분
+                    if((millisUntilFinished >= 60000)){
+                        if((millisUntilFinished / 1000) % 3600 / 60 < 10){
+                            tv_main_min.setText("0" + String.valueOf((millisUntilFinished / 1000) % 3600 / 60));
+                        }
+                        else{
+                            tv_main_min.setText(String.valueOf((millisUntilFinished / 1000) % 3600 / 60));
+                        }
+                    }
+                    else{
+                        tv_main_min.setText("00");
+                    }
+
+                    //초 설정 부분
+                    if((millisUntilFinished >= 1000)){
+                        if((millisUntilFinished/1000) % 3600 % 60 < 10){
+                            tv_main_sec.setText("0" + (millisUntilFinished/1000) % 3600 % 60);
+                        }
+                        else{
+                            tv_main_sec.setText(String.valueOf((millisUntilFinished/1000) % 3600 % 60));
+                        }
+                    }
+                   /* if((millisUntilFinished/60000L)/60 < 10){
                         if((millisUntilFinished/6000L)/60 <= 0){
                             tv_main_hour.setText("00");
                             if ((millisUntilFinished / 1000) % 3600 / 60 < 10) {
@@ -89,7 +127,7 @@ public class MainPage_activity extends AppCompatActivity implements Main_Present
                             tv_main_min.setText(String.valueOf((millisUntilFinished/1000)%3600 / 60));
                         }
                     }
-                    Log.d("Time", String .valueOf((millisUntilFinished/60000L)/60));
+                    Log.d("Time", String .valueOf((millisUntilFinished/60000L)/60));*/
                 }
 
                 @Override

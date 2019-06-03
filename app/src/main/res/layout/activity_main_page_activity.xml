@@ -83,30 +83,44 @@
                         android:layout_height="wrap_content"
                         android:text="00"
                         android:textColor="#FFFFFF"
-                        android:textSize="60dp" />
+                        android:textSize="50dp" />
 
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="시간 "
-
                         android:textColor="#FFFFFF"
-                        android:textSize="60dp" />
+                        android:textSize="50dp" />
 
                     <TextView
                         android:id="@+id/tv_main_min"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="01"
+                        android:text="00"
                         android:textColor="#FFFFFF"
-                        android:textSize="60dp" />
+                        android:textSize="50dp" />
 
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="분"
+                        android:text="분 "
                         android:textColor="#FFFFFF"
-                        android:textSize="60dp" />
+                        android:textSize="50dp" />
+
+                    <TextView
+                        android:id="@+id/tv_main_sec"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="01"
+                        android:textColor="#FFFFFF"
+                        android:textSize="50dp" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="초 "
+                        android:textColor="#FFFFFF"
+                        android:textSize="50dp" />
                 </LinearLayout>
             </LinearLayout>
 
