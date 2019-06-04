@@ -48,7 +48,7 @@ public class SignUpModel implements IPresenterToSignUpModel {
 
     @Override
     public void validateId(String id) {
-        if(id.length()<=6){
+        if(id.length()<6){
             presenterSignUp.nonValidatedIl();
             presenterSignUp.makeToastMessage("6글자 이상으로 아이디를 입력해주세요.");
 
@@ -56,7 +56,10 @@ public class SignUpModel implements IPresenterToSignUpModel {
         else{
             isValidateID = true;
             presenterSignUp.makeToastMessage("아이디가 적합합니다");
+            presenterSignUp.isValidedId(isValidateID);
             user_info_model.setId(id);
+
+            Log.e( "validateId: id" ,user_info_model.getId());
         }
     }
 
@@ -79,7 +82,9 @@ public class SignUpModel implements IPresenterToSignUpModel {
         else{
             presenterSignUp.makeToastMessage("비밀번호가 적절합니다.");
             isValidatePW = true;
+            presenterSignUp.isValidedPW(isValidatePW);
             user_info_model.setPw(pw1);
+            Log.e( "validateId: pw" ,user_info_model.getPw());
         }
     }
 
@@ -91,6 +96,8 @@ public class SignUpModel implements IPresenterToSignUpModel {
            presenterSignUp.makeToastMessage("사용할 수 있는 이메일 입니다.");
             isValidateEmial = true;
             user_info_model.setEmail(email);
+            presenterSignUp.isValidedEmail(isValidateEmial);
+            Log.e( "validateId: email" ,user_info_model.getEmail());
         }
         else{
             if(email1.equals("")){
@@ -114,7 +121,22 @@ public class SignUpModel implements IPresenterToSignUpModel {
 
     @Override
     public void completeSignUp() {
-        presenterSignUp.isValidatedUser(isValidateID,isValidatePW,isValidateEmial);
+        Log.e( "completeSignUp: ","id  "+isValidateID+"  pw   "+isValidatePW+"  email "+isValidateEmial );
+       // presenterSignUp.isValidatedUser(isValidateID,isValidatePW,isValidateEmial);
+        Log.d("sssssss1",
+                "\n"+"id : "+user_info_model.getId()+
+                        "\n"+"type : "+user_info_model.getUserType()+
+                        "\n"+"pw : "+user_info_model.getPw()+"" +
+                        "\n"+"nickName : "+user_info_model.getNickname()+
+                        "\n"+"getPhoneNum : "+user_info_model.getPhoneNumber()+
+                        "\n"+"email : "+user_info_model.getEmail());
+
+        if(isValidateID&&isValidatePW&&isValidateEmial){
+            onSignUp();
+        }else{
+            presenterSignUp.makeToastMessage("확인 버튼을 눌러주세요");
+        }
+
 
     }
 
@@ -133,6 +155,7 @@ public class SignUpModel implements IPresenterToSignUpModel {
     public void setBirth(String month, String day) {
         birthday = String.valueOf(month)+"-"+String.valueOf(day);
         user_info_model.setBirthday(birthday);
+        Log.e( "validateId: id" ,user_info_model.getBirthday());
     }
 
     @Override
@@ -158,10 +181,22 @@ public class SignUpModel implements IPresenterToSignUpModel {
                 .build();
         userService = retrofit.create(UserService.class);
 
-       user_info_model = LoginModel.user_info_model;
+       // "id":"dldjzhs","phoneNumber":"010","nickname":"권재환","userType":"G","pw":"031289"}
+
+      // user_info_model = LoginModel.user_info_model;
+
+       /* user_info_model.setId(user_info_model.getId());
+        user_info_model.setpw*/
 
 
-
+      /* final User_Info_Model user_info_model2 = new User_Info_Model();
+       user_info_model2.setId(user_info_model.getId());
+       user_info_model2.setPhoneNumber(user_info_model.getPhoneNumber());
+       user_info_model2.setNickname(user_info_model.getNickname());
+       user_info_model2.setUserType("G");
+       user_info_model2.setUserType(user_info_model2.getPw());
+       user_info_model2.setEmail(user_info_model2.getEmail());
+*/
         Call<BodyVO> call = userService.postSignUp(user_info_model);
 
         call.enqueue(new Callback<BodyVO>() {
@@ -170,8 +205,15 @@ public class SignUpModel implements IPresenterToSignUpModel {
                 BodyVO bodyVO = response.body();
                 Log.d("server","server");
                 Log.d("server_before","sssssssss");
-                Log.d("sssssss",user_info_model.getId()+"\n"+user_info_model.getUserType()+"\n"+user_info_model.getAgeRange()+"" +
-                        "\n"+user_info_model.getBirthday()+user_info_model.getPhoneNumber());
+                Log.d("sssssss",
+                        "\n"+"id : "+user_info_model.getId()+
+                        "\n"+"type : "+user_info_model.getUserType()+
+                        "\n"+"pw : "+user_info_model.getPw()+"" +
+                        "\n"+"nickName : "+user_info_model.getNickname()+
+                        "\n"+"getPhoneNum : "+user_info_model.getPhoneNumber()+
+                        "\n"+"email : "+user_info_model.getEmail());
+
+
 
                 if(bodyVO.getStatus().equals("201")){
                     presenterSignUp.onSignupResponse(true);
@@ -186,8 +228,10 @@ public class SignUpModel implements IPresenterToSignUpModel {
                 }
                 else if (bodyVO.getStatus().equals("403")) {
                     presenterSignUp.makeToastMessage( "아이디 중복");
+                    presenterSignUp.isValidedId(false);
                 }else if (bodyVO.getStatus().equals("409")) {
                     presenterSignUp.makeToastMessage("입력된 핸드폰 계정 아이디 존재");
+                    presenterSignUp.isValidedPn(false);
 
                 } else if (bodyVO.getStatus().equals("500")) {
                     presenterSignUp.makeToastMessage("서버 오류");
@@ -214,6 +258,7 @@ public class SignUpModel implements IPresenterToSignUpModel {
     public void isvalidatePhone(String pn) {
         user_info_model.setPhoneNumber(pn);
         presenterSignUp.makeToastMessage("인증되었습니다.");
+        presenterSignUp.isValidedPn(true);
     }
 
     @Override
@@ -230,7 +275,7 @@ public class SignUpModel implements IPresenterToSignUpModel {
     @Override
     public void setPn(String pn) {
         LoginModel.user_info_model.setPhoneNumber(pn);
-        onSignUp();
+        //onSignUp();
     }
 
 
@@ -303,6 +348,8 @@ public class SignUpModel implements IPresenterToSignUpModel {
         else if(90 <= age && age < 99){
             user_info_model.setAgeRange("90-99");
         }
+        Log.e( "validateId: age" ,user_info_model.getAgeRange());
+
     }
     public void pushToken(){
         FcmTokenVO fcmTokenVO = new FcmTokenVO();

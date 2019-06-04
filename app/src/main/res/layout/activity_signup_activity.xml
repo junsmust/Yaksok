@@ -204,7 +204,7 @@
             </LinearLayout>
             <Button
                 android:background="@drawable/y_btn"
-                android:id="@+id/sign_up_get_autho_btn"
+                android:id="@+id/sign_up_pn_register_btn"
                 android:layout_width="match_parent"
                 android:layout_height="30dp"
                 android:text="인증받기"

@@ -44,6 +44,7 @@ public class GetPn extends AppCompatActivity implements IPresenter_To_SignUp_Vie
                 }else{
                     presenterSignUp.setUserType(userType);
                     presenterSignUp.setPhone(get_pn_edt.getText().toString());
+                    makeToastMessage(userType+" "+get_pn_edt.getText().toString());
 
 
                 }
@@ -89,6 +90,26 @@ public class GetPn extends AppCompatActivity implements IPresenter_To_SignUp_Vie
 
     @Override
     public void onError(String errorMsg) {
+
+    }
+
+    @Override
+    public void isValidedId(boolean isId) {
+
+    }
+
+    @Override
+    public void isValidedPW(boolean isPw) {
+
+    }
+
+    @Override
+    public void isValidedEmail(boolean isEmail) {
+
+    }
+
+    @Override
+    public void isValidedPn(boolean isPn) {
 
     }
 

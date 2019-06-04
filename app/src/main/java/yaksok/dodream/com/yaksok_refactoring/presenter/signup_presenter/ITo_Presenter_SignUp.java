@@ -22,6 +22,10 @@ public interface ITo_Presenter_SignUp {
     void setPhone(String pn);
     void setUserType(String userType);
     void setGeneralUserType();
+    void isValidedId(boolean isId);
+    void isValidedPW(boolean isPw);
+    void isValidedEmail(boolean isEmail);
+    void isValidedPn(boolean isPn);
 
 
 
