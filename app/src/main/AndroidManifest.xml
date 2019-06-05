@@ -43,7 +43,8 @@
             android:screenOrientation="unspecified"
             android:theme="@android:style/Theme.Translucent" >
         </activity>
-        <activity android:name=".TakeMedicineDialog"/>
+        <activity android:name=".Settings.SettingActivity"/>
+        <activity android:name=".Settings.Developer"/>
 
         <service
             android:name=".firebaseService.FirebaseMessageService"

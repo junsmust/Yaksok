@@ -21,9 +21,7 @@ import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 import retrofit2.converter.scalars.ScalarsConverterFactory;
 import yaksok.dodream.com.yaksok_refactoring.R;
-import yaksok.dodream.com.yaksok_refactoring.TakeMedicineDialog;
 import yaksok.dodream.com.yaksok_refactoring.model.Main.NotificationUtil;
-import yaksok.dodream.com.yaksok_refactoring.view.login.Login_activity;
 import yaksok.dodream.com.yaksok_refactoring.vo.BodyVO;
 import yaksok.dodream.com.yaksok_refactoring.vo.TakeOk;
 import yaksok.dodream.com.yaksok_refactoring.vo.UserService;
@@ -67,11 +65,10 @@ public class Alarm_On extends Activity {
          //userId = intent.getStringExtra("TakingUser");
          //pillNo = intent.getStringExtra("TakingPill");
 
-        launchIntent = getPackageManager().getLaunchIntentForPackage("yaksok.dodream.com.yaksok");
+        launchIntent = getPackageManager().getLaunchIntentForPackage("yaksok.dodream.com.yaksok_refactoring");
         bt_Ok.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent1 = new Intent(getApplicationContext(), TakeMedicineDialog.class);
                 //intent1.putExtra("uId",userId);
                // intent1.putExtra("pNo",pillNo);
                // startActivityForResult(intent1,7000);

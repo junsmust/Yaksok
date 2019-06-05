@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <PreferenceCategory android:title="설정">
+        <SwitchPreference
+            android:key="auto_login"
+            android:title="자동 로그인"/>
+    </PreferenceCategory>
+
+    <PreferenceCategory android:title="개인 정보">
+        <PreferenceScreen
+            android:key="myPage"
+            android:title="개인정보 설정">
+        </PreferenceScreen>
+    </PreferenceCategory>
+
+
+    <PreferenceCategory android:title="앱 정보">
+        <PreferenceScreen
+            android:key="dep_ver"
+            android:title="배포 버전"
+            android:summary="1.0.0">
+        </PreferenceScreen>
+
+        <PreferenceScreen
+            android:key="build_ver"
+            android:title="빌드 버전"
+            android:summary="1.1.1">
+        </PreferenceScreen>
+        <PreferenceScreen
+            android:key="developer"
+            android:title="개발자 정보">
+        </PreferenceScreen>
+    </PreferenceCategory>
+
+</PreferenceScreen>

@@ -10,9 +10,8 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 
-import javax.sql.StatementEvent;
-
 import yaksok.dodream.com.yaksok_refactoring.R;
+import yaksok.dodream.com.yaksok_refactoring.Settings.SettingActivity;
 import yaksok.dodream.com.yaksok_refactoring.presenter.Main.Presenter_Main;
 import yaksok.dodream.com.yaksok_refactoring.view.MyPill.MyPill_activity;
 import yaksok.dodream.com.yaksok_refactoring.view.addFamily.Register_Family;
@@ -21,7 +20,7 @@ import yaksok.dodream.com.yaksok_refactoring.view.chat.Chatting_list;
 public class MainPage_activity extends AppCompatActivity implements Main_PresenterToView, View.OnClickListener{
 
     private Presenter_Main presenter_main;
-    private Button bt_InsertPill,bt_InsertFamily,bt_chat;
+    private Button bt_InsertPill,bt_InsertFamily,bt_chat,bt_setting;
     private boolean pillTime_day;
     private TextView tv_main_hour, tv_main_min,tv_main_sec,tv_main_hour_text, tv_main_min_text,tv_main_sec_text;
     private int myNeaeTime_sec,hour,min;
@@ -34,6 +33,7 @@ public class MainPage_activity extends AppCompatActivity implements Main_Present
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main_page_activity);
 
+        bt_setting = (Button)findViewById(R.id.bt_option);
         bt_InsertPill = (Button)findViewById(R.id.bt_InsertPill);
         tv_main_hour = (TextView)findViewById(R.id.tv_main_hour);
         tv_main_min = (TextView)findViewById(R.id.tv_main_min);
@@ -50,6 +50,13 @@ public class MainPage_activity extends AppCompatActivity implements Main_Present
             @Override
             public void onClick(View v) {
                 startActivity(new Intent(getApplicationContext(), MyPill_activity.class));
+            }
+        });
+
+        bt_setting.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(getApplicationContext(), SettingActivity.class));
             }
         });
 
