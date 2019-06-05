@@ -11,7 +11,7 @@ import yaksok.dodream.com.yaksok_refactoring.model.user.User_Info_Model;
 
 
 public interface UserService {
-    public static final String API_URL = "http://54.180.81.180:8080";
+    public static final String API_URL = "http://15.164.163.234:8080";
 
     @POST("/users")
     Call<BodyVO>postSignUp(@Body User_Info_Model userVO);

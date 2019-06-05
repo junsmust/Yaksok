@@ -68,21 +68,12 @@
             android:id="@+id/family_complete_btn"
             android:layout_width="match_parent"
             android:layout_height="40dp"
-            android:text="완료"
+            android:text="다음"
             android:textColor="#ffffff"
             android:textStyle="bold"
             android:background="@color/main_color"
             android:layout_margin="3dp"/>
-        <Button
-            android:id="@+id/family_skip_btn"
-            android:layout_width="match_parent"
-            android:layout_height="40dp"
-            android:layout_alignParentBottom="true"
-            android:text="스킵하기"
-            android:textColor="#ffffff"
-            android:textStyle="bold"
-            android:background="@color/main_color"
-            android:layout_margin="3dp" />
+
 
 
     </LinearLayout>

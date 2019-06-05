@@ -22,6 +22,7 @@ import android.widget.Toast;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
+import yaksok.dodream.com.yaksok_refactoring.view.WetherChooseFamilyOrNot;
 import yaksok.dodream.com.yaksok_refactoring.view.addFamily.Register_Family;
 import yaksok.dodream.com.yaksok_refactoring.R;
 import yaksok.dodream.com.yaksok_refactoring.presenter.signup_presenter.PresenterSignUp;
@@ -245,7 +246,7 @@ public class Signup_activity extends AppCompatActivity implements IPresenter_To_
     @Override
     public void onSignUoResponse(boolean loginResponse) {
             if(loginResponse){
-                startActivity(new Intent(getApplicationContext(), Register_Family.class));
+                startActivity(new Intent(getApplicationContext(), WetherChooseFamilyOrNot.class));
                 finish();
             }
     }
