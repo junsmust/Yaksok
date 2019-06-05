@@ -149,14 +149,12 @@ public class InsertPill_activity extends AppCompatActivity implements InsertPill
                     Toast.makeText(getApplicationContext(), "복용횟수를 설정하세요", Toast.LENGTH_LONG).show();
                 }else if(time.size() == 0){
                     Toast.makeText(getApplicationContext(), "시간을 입력하세요", Toast.LENGTH_LONG).show();
-                }else if(alarm_f_list.size() == 0){
-                    Toast.makeText(getApplicationContext(), "알림받을 가족을 선택하세요", Toast.LENGTH_LONG).show();
                 }else {
                     Log.d("commName",et_DiseaseName.getText().toString());
                     Log.d("commDosagi",tv_dosagi.getText().toString());
                     Log.d("commTIme",time.get(0));
 //                    Log.d("commElement",String.valueOf(pill_list_num.get(0)));
-                    Log.d("commAlarm",family_id.get(0));
+                    //Log.d("commAlarm",family_id.get(0));
                     Log.d("commUserId",User_Id.getUser_Id());
                     insertPill_item.setName(et_DiseaseName.getText().toString());
                     insertPill_item.setDosagi(tv_dosagi.getText().toString());

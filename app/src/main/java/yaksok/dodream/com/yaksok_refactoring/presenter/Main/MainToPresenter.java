@@ -4,7 +4,7 @@ import android.content.Context;
 
 public interface MainToPresenter {
     void getNearTimePill();
-    void onMyNearPillResponce(boolean MyNearPillResponse);
+    void onMyNearPillResponce(boolean MyNearPillResponse, int status);
     void MyNearTime(int nearTime_sec, boolean pillTime_day);
     void onAlarm(int time, Context context);
 }

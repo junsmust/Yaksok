@@ -13,12 +13,15 @@ import yaksok.dodream.com.yaksok_refactoring.view.Alarm_On;
 import yaksok.dodream.com.yaksok_refactoring.view.login.Login_activity;
 
 public class NotificationUtil extends BroadcastReceiver{
+    public static String pillNo;
+    public static String userId;
     @Override
     public void onReceive(Context context, Intent intent) {
         Log.d("알람여부", "리시브 들어옴");
 
         NotificationManager nm = (NotificationManager) context.getSystemService(context.NOTIFICATION_SERVICE);
 
+        pillNo = intent.getStringExtra("PillNo");
         Intent intentActivity = new Intent(context, Login_activity.class); //그메세지를 클릭했을때 불러올엑티비티를 설정함
         intentActivity.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK
                 | Intent.FLAG_ACTIVITY_CLEAR_TOP
@@ -27,6 +30,11 @@ public class NotificationUtil extends BroadcastReceiver{
         String ticker = "ticker";//여긴 알림바에 등록될 글이랑 타이틀 적는곳.
         String title = "알림";
         String text = "약 복용시간 입니다";
+
+        Log.d("약 번호",pillNo);
+
+         userId = intent.getStringExtra("takingUser");
+         pillNo = intent.getStringExtra("PillNo");
 
         Notification.Builder builder = new Notification.Builder(context)
                 .setContentIntent(pendingIntent)

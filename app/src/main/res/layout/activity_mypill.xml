@@ -33,22 +33,13 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_margin="5dp"
-            android:text="직접 입력"
+            android:text="약 등록"
             android:textColor="#ffffff"
             android:textStyle="bold"
             android:background="@color/main_color"
             android:layout_weight="1"
             />
-        <Button
-            android:id="@+id/bt_QRScan"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_margin="5dp"
-            android:text="QR 스캔"
-            android:textColor="#ffffff"
-            android:textStyle="bold"
-            android:background="@color/main_color"
-            android:layout_weight="1"/>
+
 
     </LinearLayout>
 </LinearLayout>

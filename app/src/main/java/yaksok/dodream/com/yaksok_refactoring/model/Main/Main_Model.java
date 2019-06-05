@@ -26,7 +26,7 @@ public class Main_Model implements Main_PresenterToModel{
     Date now;
     String curTime;
     Presenter_Main presenter_main;
-    int pilltime_h,pilltime_m,ptime,times,pilltime_sec;
+    int pilltime_h,pilltime_m,ptime,times,pilltime_sec,pillNo;
     boolean pillTime_day = true;
     private static UserService userService;
     Retrofit retrofit;
@@ -54,6 +54,7 @@ public class Main_Model implements Main_PresenterToModel{
                 NearTimePillVO nearTimePillVO = response.body();
                 System.out.println("############" + nearTimePillVO.getStatus());
                 if (nearTimePillVO.getStatus().equals("200")) {
+                    pillNo = nearTimePillVO.getResult().getMyMedicineNo();
                     //    TakeMedicineVO.setGivingUser(LoginActivity.userVO.getId());
                     //    TakeMedicineVO.setMedicineNO(String.valueOf(nearTimeMedicineVO.getResult().getMyMedicineNo()));
                     now = new Date();
@@ -82,13 +83,13 @@ public class Main_Model implements Main_PresenterToModel{
                     Log.d("nowtimeMIN",curTime.substring(4));
                     times -= nowtime_sec;
                     presenter_main.MyNearTime(times,pillTime_day);
-                    presenter_main.onMyNearPillResponce(true);
+                    presenter_main.onMyNearPillResponce(true, 200);
 
                 } else if (nearTimePillVO.getStatus().equals("204")){
-                    presenter_main.onMyNearPillResponce(false);
+                    presenter_main.onMyNearPillResponce(true,204 );
                 }
                 else if (nearTimePillVO.getStatus().equals("500")){
-                    presenter_main.onMyNearPillResponce(false);
+                    presenter_main.onMyNearPillResponce(false, 500);
                 }
 
             }
@@ -106,8 +107,9 @@ public class Main_Model implements Main_PresenterToModel{
 
         Intent intent = new Intent(context, NotificationUtil.class);
 
+        intent.putExtra("PillNo",String.valueOf(pillNo));
+        intent.putExtra("takingUser",User_Id.getUser_Id());
         PendingIntent pendingIntent = PendingIntent.getBroadcast(context, 0, intent, PendingIntent.FLAG_CANCEL_CURRENT);
-
         Calendar calendar = Calendar.getInstance();
         //알람시간 calendar에 set해주기
 
@@ -121,7 +123,7 @@ public class Main_Model implements Main_PresenterToModel{
             Log.d("음..","오늘약");
         }*/
 
-     Log.d("time1",String.valueOf(times));
+        Log.d("time1",String.valueOf(times));
         Log.d("times",String.valueOf(System.currentTimeMillis()+times*1000));
 
         alarmManager.setExact(AlarmManager.RTC_WAKEUP,System.currentTimeMillis()+times*1000,pendingIntent);

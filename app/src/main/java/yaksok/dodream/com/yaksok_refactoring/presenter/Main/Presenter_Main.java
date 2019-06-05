@@ -21,8 +21,8 @@ public class Presenter_Main implements MainToPresenter {
     }
 
     @Override
-    public void onMyNearPillResponce(boolean MyNearPillResponse) {
-        view.onMyNearPillResponce(MyNearPillResponse);
+    public void onMyNearPillResponce(boolean MyNearPillResponse,int status) {
+        view.onMyNearPillResponce(MyNearPillResponse,status);
     }
 
     @Override

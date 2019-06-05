@@ -38,8 +38,8 @@ public class SearchPill_Model implements SearchPill_PresenterToModel{
             @Override
             public void onResponse(Call<SearchPillListVO> call, Response<SearchPillListVO> response) {
                 SearchPillListVO mVO = response.body();
-                System.out.println("@@@@@@@@@@@@@@@@@@@" + mVO.getStatus());
                 if (mVO.getStatus().equals("200")) {
+                    pillSearchItems.clear();
                     for (int i = 0; i < mVO.getResult().size(); i++) {
                         System.out.println("@@@@@@" + mVO.getResult().get(i).getMedicineNo());
                         pillSearchItems.add(new PillSearchItem(mVO.getResult().get(i).getMedicineNo(), mVO.getResult().get(i).getName(), mVO.getResult().get(i).getElement()));

@@ -1,6 +1,7 @@
 package yaksok.dodream.com.yaksok_refactoring.view.Main;
 
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.os.CountDownTimer;
 import android.support.v7.app.AppCompatActivity;
@@ -22,7 +23,7 @@ public class MainPage_activity extends AppCompatActivity implements Main_Present
     private Presenter_Main presenter_main;
     private Button bt_InsertPill,bt_InsertFamily,bt_chat;
     private boolean pillTime_day;
-    private TextView tv_main_hour, tv_main_min,tv_main_sec;
+    private TextView tv_main_hour, tv_main_min,tv_main_sec,tv_main_hour_text, tv_main_min_text,tv_main_sec_text;
     private int myNeaeTime_sec,hour,min;
     CountDownTimer countDownTimer = null;
     private Boolean countSW = false;
@@ -37,6 +38,9 @@ public class MainPage_activity extends AppCompatActivity implements Main_Present
         tv_main_hour = (TextView)findViewById(R.id.tv_main_hour);
         tv_main_min = (TextView)findViewById(R.id.tv_main_min);
         tv_main_sec = (TextView)findViewById(R.id.tv_main_sec);
+        tv_main_hour_text = (TextView)findViewById(R.id.tv_main_hour_text);
+        tv_main_min_text = (TextView)findViewById(R.id.tv_main_min_text);
+        tv_main_sec_text = (TextView)findViewById(R.id.tv_main_sec_text);
         bt_InsertFamily = (Button)findViewById(R.id.bt_InsertFamily);
         bt_chat = (Button)findViewById(R.id.bt_Chat);
 
@@ -55,48 +59,59 @@ public class MainPage_activity extends AppCompatActivity implements Main_Present
     }
 
     @Override // 가까운 약시간 요청해서 UI변경 할 부분
-    public void onMyNearPillResponce(boolean MyNearPillResponse) {
+    public void onMyNearPillResponce(boolean MyNearPillResponse, int status) {
         if(MyNearPillResponse) {
-            countSW = true;
-            countDownTimer = new CountDownTimer((myNeaeTime_sec)*1000,1000) {
-                @Override
-                public void onTick(long millisUntilFinished) {
-                    Log.d("testt",String.valueOf(millisUntilFinished));
-                    //시간 설정 부분
-                    if(millisUntilFinished >= 3600000){
-                        if((millisUntilFinished/6000L)/60 < 10){
-                            tv_main_hour.setText("0" + String.valueOf((millisUntilFinished / 60000L) / 60));
+            if(status == 204){
+                tv_main_min.setText("등록된 약이 없습니다");
+                tv_main_min.setTextSize(25);
+                tv_main_min.setTextColor(Color.GRAY);
+                tv_main_hour.setText("");
+                tv_main_sec.setText("");
+                tv_main_hour_text.setText("");
+                tv_main_min_text.setText("");
+                tv_main_sec_text.setText("");
+            }
+            else if(status == 200) {
+                tv_main_min.setTextSize(50);
+                tv_main_min.setTextColor(Color.WHITE);
+                tv_main_hour_text.setText("시간");
+                tv_main_min_text.setText("분");
+                tv_main_sec_text.setText("초");
+                countSW = true;
+                countDownTimer = new CountDownTimer((myNeaeTime_sec) * 1000, 1000) {
+                    @Override
+                    public void onTick(long millisUntilFinished) {
+                        Log.d("testt", String.valueOf(millisUntilFinished));
+                        //시간 설정 부분
+                        if (millisUntilFinished >= 3600000) {
+                            if ((millisUntilFinished / 6000L) / 60 < 10) {
+                                tv_main_hour.setText("0" + String.valueOf((millisUntilFinished / 60000L) / 60));
+                            } else {
+                                tv_main_hour.setText(String.valueOf((millisUntilFinished / 60000L) / 60));
+                            }
+                        } else {
+                            tv_main_hour.setText("00");
                         }
-                        else{
-                            tv_main_hour.setText(String.valueOf((millisUntilFinished / 60000L) / 60));
-                        }
-                    }
-                    else{
-                        tv_main_hour.setText("00");
-                    }
 
-                    //분 설정 부분
-                    if((millisUntilFinished >= 60000)){
-                        if((millisUntilFinished / 1000) % 3600 / 60 < 10){
-                            tv_main_min.setText("0" + String.valueOf((millisUntilFinished / 1000) % 3600 / 60));
+                        //분 설정 부분
+                        if ((millisUntilFinished >= 60000)) {
+                            if ((millisUntilFinished / 1000) % 3600 / 60 < 10) {
+                                tv_main_min.setText("0" + String.valueOf((millisUntilFinished / 1000) % 3600 / 60));
+                            } else {
+                                tv_main_min.setText(String.valueOf((millisUntilFinished / 1000) % 3600 / 60));
+                            }
+                        } else {
+                            tv_main_min.setText("00");
                         }
-                        else{
-                            tv_main_min.setText(String.valueOf((millisUntilFinished / 1000) % 3600 / 60));
-                        }
-                    }
-                    else{
-                        tv_main_min.setText("00");
-                    }
 
-                    //초 설정 부분
-                    if((millisUntilFinished >= 1000)){
-                        if((millisUntilFinished/1000) % 3600 % 60 < 10){
-                            tv_main_sec.setText("0" + (millisUntilFinished/1000) % 3600 % 60);
+                        //초 설정 부분
+                        if ((millisUntilFinished >= 1000)) {
+                            if ((millisUntilFinished / 1000) % 3600 % 60 < 10) {
+                                tv_main_sec.setText("0" + (millisUntilFinished / 1000) % 3600 % 60);
+                            } else {
+                                tv_main_sec.setText(String.valueOf((millisUntilFinished / 1000) % 3600 % 60));
+                            }
                         }
-                        else{
-                            tv_main_sec.setText(String.valueOf((millisUntilFinished/1000) % 3600 % 60));
-                        }
-                    }
                    /* if((millisUntilFinished/60000L)/60 < 10){
                         if((millisUntilFinished/6000L)/60 <= 0){
                             tv_main_hour.setText("00");
@@ -128,13 +143,14 @@ public class MainPage_activity extends AppCompatActivity implements Main_Present
                         }
                     }
                     Log.d("Time", String .valueOf((millisUntilFinished/60000L)/60));*/
-                }
+                    }
 
-                @Override
-                public void onFinish() {
+                    @Override
+                    public void onFinish() {
 
-                }
-            }.start();
+                    }
+                }.start();
+            }
         }
     }
 
@@ -171,13 +187,14 @@ public class MainPage_activity extends AppCompatActivity implements Main_Present
     @Override
     protected void onResume() {
         super.onResume();
-        presenter_main.getNearTimePill();
+            presenter_main.getNearTimePill();
     }
 
     @Override
     protected void onPause() {
         super.onPause();
-        countDownTimer.cancel();
+        if(countSW)
+            countDownTimer.cancel();
 
     }
 

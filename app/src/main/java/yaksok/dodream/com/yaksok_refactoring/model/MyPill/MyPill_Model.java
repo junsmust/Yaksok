@@ -49,7 +49,7 @@ public class MyPill_Model implements MyPill_PresenterToModel {
                 }
                 myPillVO = response.body();
 
-                Log.d("약 가져올때 번호",String.valueOf(myPillVO.getResult().get(0).getMedicineNo()));
+//                Log.d("약 가져올때 번호",String.valueOf(myPillVO.getResult().get(0).getMedicineNo()));
                 //1System.out.println("############" + myMedicineResponseTypeVO.getStatus());
                 if (myPillVO.getStatus().equals("200")) {
                     pillList.clear();

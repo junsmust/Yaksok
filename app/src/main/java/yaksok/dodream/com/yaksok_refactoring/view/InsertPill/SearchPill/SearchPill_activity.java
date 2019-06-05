@@ -33,6 +33,8 @@ public class SearchPill_activity extends AppCompatActivity implements SearchPill
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_searchpill);
 
+        searchItems = null;
+
         final AlertDialog.Builder builder = new AlertDialog.Builder(this);
 
         resultIntent = new Intent();
@@ -46,12 +48,18 @@ public class SearchPill_activity extends AppCompatActivity implements SearchPill
         bt_PillSearch = (Button)findViewById(R.id.bt_PillSearch);
         lv_SearchList = (ListView)findViewById(R.id.lv_SearchList);
 
-        adapter = new SearchListAdapter();
-        lv_SearchList.setAdapter(adapter);
+
 
         bt_PillSearch.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                adapter = new SearchListAdapter();
+                lv_SearchList.setAdapter(adapter);
+                if(searchItems!=null) {
+                    searchItems.clear();
+                    adapter.notifyDataSetChanged();
+                    Log.d("searchTest","true");
+                }
                 if(!et_PillSearch.getText().toString().equals("")) {
                     Log.d("dosagiName",et_PillSearch.getText().toString());
                     presenter_searchPill.searchpill(et_PillSearch.getText().toString());

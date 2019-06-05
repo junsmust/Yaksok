@@ -5,7 +5,7 @@ import retrofit2.http.Body;
 import retrofit2.http.HTTP;
 
 public interface DeleteService {
-    public static String API_URL = "http://54.180.81.180:8080";
+    public static String API_URL = "http://15.164.163.234:8080";
 
     @HTTP(method = "DELETE",path = "/families?",hasBody = true)
     Call<FamilyBodyVO> deleteBody(@Body FamilyDelVO familyDelVO);
