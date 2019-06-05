@@ -14,4 +14,11 @@ public interface IPresenter_To_SignUp_View {
     void onError(String errorMsg);
 
 
+    void isValidedId(boolean isId);
+    void isValidedPW(boolean isPw);
+    void isValidedEmail(boolean isEmail);
+    void isValidedPn(boolean isPn);
+
+
+
 }

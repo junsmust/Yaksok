@@ -45,6 +45,7 @@ public class Signup_activity extends AppCompatActivity implements IPresenter_To_
         presenterSignUp = new PresenterSignUp(this);
 
 
+        presenterSignUp.setGeneralUserType();
 
 
         //INIT
@@ -53,13 +54,16 @@ public class Signup_activity extends AppCompatActivity implements IPresenter_To_
         sign_up_name_edt = (EditText)findViewById(R.id.sign_name_edt);
         sign_up_id_edt = (EditText) findViewById(R.id.sign_id_edt);
         sign_up_yourself_email = (EditText)findViewById(R.id.sign_email_yourself_edt);
+
+        //email
+
+
         //회원 가입 완료 버튼
         sign_up_compelte_btn = (Button) findViewById(R.id.sign_up_complete_btn);
         sign_up_phone_number_edt = (EditText)findViewById(R.id.sign_phone_number_edt);//전화번호 보내줘야 함
-        sign_up_check_authorization_num_btn = (Button)findViewById(R.id.sign_up_get_autho_btn);
         sign_up_pw_edt = (EditText)findViewById(R.id.sign_pw_edt);
         sign_up_re_pw_edt = (EditText)findViewById(R.id.sign_re_pw_edt);
-        sign_up_check_authorization_num_btn = (Button)findViewById(R.id.sign_up_get_autho_btn);
+        sign_up_check_authorization_num_btn = (Button)findViewById(R.id.sign_up_pn_register_btn);
 
 
         sign_up_check_id_btn = (Button)findViewById(R.id.sign_check_id_btn);
@@ -195,11 +199,24 @@ public class Signup_activity extends AppCompatActivity implements IPresenter_To_
 
     @Override
     public void isValidatedUser(boolean isValidatedID, boolean isValidatedPW, boolean isValidatedEmail) {
-        Log.d("tag"," "+isvalidatedId+" "+isValidatedPW+" "+isValidatedEmail);
-        if(isValidatedID&&isValidatedPW&&isValidatedEmail){
-            presenterSignUp.setName(sign_up_name_edt.getText().toString());
+        Log.d("tag"," "+isValidatedID+" "+isValidatedPW+" "+isValidatedEmail);
+        /*if(isValidatedID&&isValidatedPW&&isValidatedEmail){
             presenterSignUp.onSignUp();
         }
+        else if(!isvalidatedId && !isIsvalidatedPW && isIsvalidatedEmail){
+            makeToastMessage("아이디와 비밀번호 확인 버튼을 눌러주세요 ");
+        }else if(!isvalidatedId && isIsvalidatedPW && !isIsvalidatedEmail){
+            makeToastMessage("아이디와 이메일 확인 버튼을 눌러주세요 ");
+        }else if(isvalidatedId && !isIsvalidatedPW && !isIsvalidatedEmail){
+            makeToastMessage(" 비밀번호와 이메일 확인 버튼을 눌러주세요 ");
+        }else if(isvalidatedId && isIsvalidatedPW && !isIsvalidatedEmail){
+            makeToastMessage("이메일 확인 버튼을 눌러주세요 ");
+        }else if(isvalidatedId && !isIsvalidatedPW && isIsvalidatedEmail){
+            makeToastMessage("비밀번호 확인 버튼을 눌러주세요 ");
+        }else if(!isvalidatedId && isIsvalidatedPW && isIsvalidatedEmail){
+            makeToastMessage("아이디 확인 버튼을 눌러주세요 ");
+        }*/
+
     }
 
     @Override
@@ -219,7 +236,7 @@ public class Signup_activity extends AppCompatActivity implements IPresenter_To_
 
     @Override
     public void nonValidatedEmail() {
-        sign_up_email_edt.setText("");
+        sign_up_yourself_email.setText("");
         sign_up_yourself_address_email.setText("");
     }
 
@@ -238,24 +255,62 @@ public class Signup_activity extends AppCompatActivity implements IPresenter_To_
 
     }
 
+    @Override
+    public void isValidedId(boolean isId) {
+
+        if(isId){
+            sign_up_check_id_btn.setBackgroundColor(getApplicationContext().getResources().getColor(R.color.colorPrimaryDark2));
+        }else{
+            sign_up_check_id_btn.setBackgroundColor(getApplicationContext().getResources().getColor(R.color.main_color));
+            sign_up_id_edt.setText("");
+        }
+    }
+
+    @Override
+    public void isValidedPW(boolean isPw) {
+        if(isPw){
+            sign_up_check_pw_btn.setBackgroundColor(getApplicationContext().getResources().getColor(R.color.colorPrimaryDark2));
+        }
+    }
+
+    @Override
+    public void isValidedEmail(boolean isEmail) {
+        if(isEmail){
+            confirm_email_btn.setBackgroundColor(getApplicationContext().getResources().getColor(R.color.colorPrimaryDark2));
+        }
+    }
+
+    @Override
+    public void isValidedPn(boolean isPn) {
+        if(isPn){
+            sign_up_check_authorization_num_btn.setBackgroundColor(getApplicationContext().getResources().getColor(R.color.colorPrimaryDark2));
+        }else{
+            sign_up_check_authorization_num_btn.setBackgroundColor(getApplicationContext().getResources().getColor(R.color.main_color));
+            sign_up_phone_number_edt.setText("");
+        }
+    }
+
 
     @Override
     public void onClick(View v) {
         switch (v.getId()){
             case R.id.sign_check_id_btn:
                 presenterSignUp.validateId(sign_up_id_edt.getText().toString());
+
                 break;
             case R.id.sign_up_check_pw_btn:
                 presenterSignUp.validatePw(sign_up_pw_edt.getText().toString(),sign_up_re_pw_edt.getText().toString());
+               // sign_up_check_id_btn.setBackgroundColor(getApplicationContext().getResources().getColor(R.color.design_default_color_primary_dark));
                 break;
             case R.id.confirm_email_btn:
                 presenterSignUp.validateEmail(sign_up_yourself_email.getText().toString(),sign_up_yourself_address_email.getText().toString());
+              //  sign_up_check_id_btn.setBackgroundColor(getApplicationContext().getResources().getColor(R.color.design_default_color_primary_dark));
                 break;
             case R.id.sign_up_complete_btn:
+                presenterSignUp.setName(sign_up_name_edt.getText().toString());
                 presenterSignUp.isValdiatedUser();
-                presenterSignUp.setGeneralUserType();
                 break;
-            case R.id.sign_up_get_autho_btn:
+            case R.id.sign_up_pn_register_btn:
                 presenterSignUp.isvalidatePhone(sign_up_phone_number_edt.getText().toString());
                 break;
 

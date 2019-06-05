@@ -82,7 +82,7 @@ public class Chat_Room extends AppCompatActivity{
         user2_id = Chatting_list.user_id;
         connectedName = intent.getStringExtra("user_name");
 
-        Toast.makeText(getApplicationContext(),connectedName,Toast.LENGTH_LONG).show();
+
 
         ActionBar actionBar = getSupportActionBar();
         actionBar.setDisplayOptions(ActionBar.DISPLAY_SHOW_HOME | ActionBar.DISPLAY_SHOW_TITLE);

@@ -111,5 +111,25 @@ public class PresenterSignUp implements ITo_Presenter_SignUp {
         model.setGeneralUserType();
     }
 
+    @Override
+    public void isValidedId(boolean isId) {
+        view.isValidedId(isId);
+    }
+
+    @Override
+    public void isValidedPW(boolean isPw) {
+        view.isValidedPW(isPw);
+    }
+
+    @Override
+    public void isValidedEmail(boolean isEmail) {
+        view.isValidedEmail(isEmail);
+    }
+
+    @Override
+    public void isValidedPn(boolean isPn) {
+        view.isValidedPn(isPn);
+    }
+
 
 }
