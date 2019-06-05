@@ -124,7 +124,12 @@ public class LoginModel implements IPresennterToModel {
                 if(bodyVO.getStatus().equals("200")){
                     presenter_login.OnLoginResponse(true);
 
+
                     User_Id.setUser_Id(user_info_model.getId());
+                    User_Id.setE_mail(bodyVO.getResult().getEmail());
+                    User_Id.setNickname( bodyVO.getResult().getNickName());
+                    User_Id.setPhone_No(bodyVO.getResult().getPhoneNumber());
+
 
                     Log.d("tag_a",""+User_Id.getUser_Id());
 
@@ -189,6 +194,9 @@ public class LoginModel implements IPresennterToModel {
        user_info_model.setAgeRange(age_range);
 
        User_Id.setUser_Id(user_info_model.getId());
+        User_Id.setE_mail(user_info_model.getEmail());
+        User_Id.setNickname(user_info_model.getNickname());
+        User_Id.setPhone_No(user_info_model.getPhoneNumber());
 
         if(auto){
             editor.putString("id",user_info_model.getId());
@@ -241,6 +249,9 @@ public class LoginModel implements IPresennterToModel {
                     user_info_model.setAgeRange(String.valueOf(result.getKakaoAccount().getAgeRange()));
 
                     User_Id.setUser_Id(user_info_model.getId());
+                    User_Id.setE_mail(user_info_model.getEmail());
+                    User_Id.setNickname(user_info_model.getNickname());
+                    User_Id.setPhone_No(user_info_model.getPhoneNumber());
 
                     Log.i("nickname",result.getNickname());
                     Log.i("profile_img",result.getProfileImagePath());

@@ -12,6 +12,7 @@ import android.widget.TextView;
 
 import yaksok.dodream.com.yaksok_refactoring.R;
 import yaksok.dodream.com.yaksok_refactoring.Settings.SettingActivity;
+import yaksok.dodream.com.yaksok_refactoring.model.user.User_Id;
 import yaksok.dodream.com.yaksok_refactoring.presenter.Main.Presenter_Main;
 import yaksok.dodream.com.yaksok_refactoring.view.MyPill.MyPill_activity;
 import yaksok.dodream.com.yaksok_refactoring.view.addFamily.Register_Family;
@@ -22,7 +23,7 @@ public class MainPage_activity extends AppCompatActivity implements Main_Present
     private Presenter_Main presenter_main;
     private Button bt_InsertPill,bt_InsertFamily,bt_chat,bt_setting;
     private boolean pillTime_day;
-    private TextView tv_main_hour, tv_main_min,tv_main_sec,tv_main_hour_text, tv_main_min_text,tv_main_sec_text;
+    private TextView tv_main_hour, tv_main_min,tv_main_sec,tv_main_hour_text, tv_main_min_text,tv_main_sec_text,tv_name;
     private int myNeaeTime_sec,hour,min;
     CountDownTimer countDownTimer = null;
     private Boolean countSW = false;
@@ -43,6 +44,9 @@ public class MainPage_activity extends AppCompatActivity implements Main_Present
         tv_main_sec_text = (TextView)findViewById(R.id.tv_main_sec_text);
         bt_InsertFamily = (Button)findViewById(R.id.bt_InsertFamily);
         bt_chat = (Button)findViewById(R.id.bt_Chat);
+        tv_name = (TextView)findViewById(R.id.tv_main_name);
+
+        tv_name.setText(User_Id.getNickname());
 
         presenter_main = new Presenter_Main(this);
 

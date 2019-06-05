@@ -45,7 +45,7 @@
         </activity>
         <activity android:name=".Settings.SettingActivity"/>
         <activity android:name=".Settings.Developer"/>
-
+        <activity android:name=".Settings.MyPage"/>
         <service
             android:name=".firebaseService.FirebaseMessageService"
             android:enabled="true"
@@ -83,6 +83,7 @@
         <activity android:name=".view.chat.Chat_Room">
 
         </activity>
+        <activity android:name=".Settings.MyPage" />
     </application>
 
 </manifest>
