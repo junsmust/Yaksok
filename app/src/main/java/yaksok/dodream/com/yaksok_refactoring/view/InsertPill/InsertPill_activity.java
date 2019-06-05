@@ -37,7 +37,7 @@ public class InsertPill_activity extends AppCompatActivity implements InsertPill
     ListView lv_alarmFamily, lv_Pill;
     ImageView minus_count,plus_count;
     List<String> time, family_id, alarm_f_list, pill_list;
-    List<Integer> pill_list_num;
+    List<Integer> pill_list_num = null;
     String h, m;
     TimePickerDialog dialog1,dialog2,dialog3;
     ArrayAdapter adapter,pillAdapter;
@@ -155,7 +155,7 @@ public class InsertPill_activity extends AppCompatActivity implements InsertPill
                     Log.d("commName",et_DiseaseName.getText().toString());
                     Log.d("commDosagi",tv_dosagi.getText().toString());
                     Log.d("commTIme",time.get(0));
-                    Log.d("commElement",String.valueOf(pill_list_num.get(0)));
+//                    Log.d("commElement",String.valueOf(pill_list_num.get(0)));
                     Log.d("commAlarm",family_id.get(0));
                     Log.d("commUserId",User_Id.getUser_Id());
                     insertPill_item.setName(et_DiseaseName.getText().toString());
