@@ -39,10 +39,11 @@
             android:name=".view.InsertPill.SearchPill.SearchPill_activity"
             android:windowSoftInputMode="adjustPan" />
         <activity android:name=".view.InsertPill.Sel_AlarmRecive.Sel_AlarmRecive_activity" />
-        <activity android:name=".view.Alarm_On" android:launchMode="singleInstance"
+        <activity
+            android:name=".view.Alarm_On"
+            android:launchMode="singleInstance"
             android:screenOrientation="unspecified"
-            android:theme="@android:style/Theme.Translucent" >
-        </activity>
+            android:theme="@android:style/Theme.Translucent"></activity>
 
         <service
             android:name=".firebaseService.FirebaseMessageService"
@@ -61,11 +62,12 @@
             </intent-filter>
         </service>
 
-        <receiver android:name=".model.Main.NotificationUtil"
-            android:enabled="true"/>
+        <receiver
+            android:name=".model.Main.NotificationUtil"
+            android:enabled="true" />
 
-
-       <!-- <service
+        <!--
+        <service
             android:name=".firebaseService.FirebaseGetInstanceID"
             android:enabled="true"
             android:exported="true">
@@ -73,12 +75,14 @@
                 <action android:name="com.google.firebase.INSTANCE_ID_EVENT" />
             </intent-filter>
         </service>
--->
-
+        -->
 
         <activity android:name=".view.signup.GetPn" />
         <activity android:name=".view.chat.Chatting_list" />
         <activity android:name=".view.chat.Chat_Room">
+
+        </activity>
+        <activity android:name=".view.WetherChooseFamilyOrNot">
 
         </activity>
     </application>
