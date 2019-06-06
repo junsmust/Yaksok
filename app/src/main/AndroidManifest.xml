@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     package="yaksok.dodream.com.yaksok_refactoring">
 
     <uses-permission android:name="android.permission.INTERNET" />
@@ -43,16 +44,12 @@
             android:name=".view.Alarm_On"
             android:launchMode="singleInstance"
             android:screenOrientation="unspecified"
-<<<<<<< HEAD
             android:theme="@android:style/Theme.Translucent" >
         </activity>
         <activity android:name=".Settings.SettingActivity"/>
         <activity android:name=".Settings.Developer"/>
         <activity android:name=".Settings.MyPage"/>
-=======
-            android:theme="@android:style/Theme.Translucent"></activity>
 
->>>>>>> bdc8f212d32d42757a6096bf770a3c374b8af2ed
         <service
             android:name=".firebaseService.FirebaseMessageService"
             android:enabled="true"
@@ -90,13 +87,13 @@
         <activity android:name=".view.chat.Chat_Room">
 
         </activity>
-<<<<<<< HEAD
-        <activity android:name=".Settings.MyPage" />
-=======
+        <activity android:name=".Settings.MyPage"
+            tools:ignore="DuplicateActivity" />
+
         <activity android:name=".view.WetherChooseFamilyOrNot">
 
         </activity>
->>>>>>> bdc8f212d32d42757a6096bf770a3c374b8af2ed
+
     </application>
 
 </manifest>

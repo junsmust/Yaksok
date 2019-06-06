@@ -20,13 +20,14 @@ public class Developer extends AppCompatActivity{
             "숭실대학교 소프트웨어학부",
             "한양대학교 ERICA캠퍼스 산업경영공학과",
             "주식회사 스칼라데이터(SCALAR DATA Co., Ltd.) 대표이사"};
-    private String[] name2 = {"박한을","서범준","윤성희","권재환","이재석","임명준"};
+    private String[] name2 = {"박한을","서범준","윤성희","권재환","이재석","임명준","권보미"};
     private String[] col2 = {"성균관대학교 화학공학부",
             "강남대학교 소프트웨어응용학부",
             "강남대학교 컴퓨터미디어정보공학부",
             "강남대학교 컴퓨터공학과",
             "강남대학교 컴퓨터공학과",
-            "강남대학교 컴퓨터공학과"};
+            "강남대학교 컴퓨터공학과",
+            "개인(디자이너)"};
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
