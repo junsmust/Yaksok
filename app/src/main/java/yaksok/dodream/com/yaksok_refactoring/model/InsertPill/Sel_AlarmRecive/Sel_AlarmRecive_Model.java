@@ -14,6 +14,7 @@ import retrofit2.converter.gson.GsonConverterFactory;
 import retrofit2.converter.scalars.ScalarsConverterFactory;
 import yaksok.dodream.com.yaksok_refactoring.model.user.User_Id;
 import yaksok.dodream.com.yaksok_refactoring.presenter.InsertPill.Sel_AlarmRecive.Presenter_Sel_AlarmRecive;
+import yaksok.dodream.com.yaksok_refactoring.vo.Connected_Family;
 import yaksok.dodream.com.yaksok_refactoring.vo.FindFamilyVO;
 import yaksok.dodream.com.yaksok_refactoring.vo.UserService;
 
@@ -30,18 +31,18 @@ public class Sel_AlarmRecive_Model implements Sel_AlarmRecive_PresenterToModel {
 
     @Override
     public void getFamilyList() {
-      /*  retrofit = new Retrofit.Builder()
+       retrofit = new Retrofit.Builder()
                 .baseUrl(userService.API_URL)
                 .addConverterFactory(ScalarsConverterFactory.create())
                 .addConverterFactory(GsonConverterFactory.create())
                 .build();
         userService = retrofit.create(UserService.class);
 
-        Call<FindFamilyVO> findFamilyVOCall = userService.getConnectedFamilyInfo(User_Id.getUser_Id());
-        findFamilyVOCall.enqueue(new Callback<FindFamilyVO>() {
+        Call<Connected_Family> findFamilyVOCall = userService.getConnectedFamilyInfo(User_Id.getUser_Id());
+        findFamilyVOCall.enqueue(new Callback<Connected_Family>() {
             @Override
-            public void onResponse(Call<FindFamilyVO> call, Response<FindFamilyVO> response) {
-                FindFamilyVO findFamilyVO = response.body();
+            public void onResponse(Call<Connected_Family> call, Response<Connected_Family> response) {
+                Connected_Family findFamilyVO = response.body();
 
                 if (findFamilyVO.getStatus().equals("200")) {
                     Log.d("가족등록","실행됨" + findFamilyVO.getResult().size());
@@ -68,9 +69,9 @@ public class Sel_AlarmRecive_Model implements Sel_AlarmRecive_PresenterToModel {
 
 
             @Override
-            public void onFailure(Call<FindFamilyVO> call, Throwable t) {
+            public void onFailure(Call<Connected_Family> call, Throwable t) {
                 System.out.println(t.getMessage());
             }
-        });*/
+        });
     }
 }
