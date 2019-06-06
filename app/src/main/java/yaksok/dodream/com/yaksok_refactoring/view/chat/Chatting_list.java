@@ -45,6 +45,7 @@ public class Chatting_list extends AppCompatActivity implements I_chat_list{
 
         presenter.setPreviousRegistered();
 
+
         adapter = new FamilyFindAdapter(this,familyItemss,R.layout.family_list_item);
 
 
@@ -147,6 +148,12 @@ public class Chatting_list extends AppCompatActivity implements I_chat_list{
 
     @Override
     public void getSendVO(SendMessageVO sendVO) {
+
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
 
     }
 }

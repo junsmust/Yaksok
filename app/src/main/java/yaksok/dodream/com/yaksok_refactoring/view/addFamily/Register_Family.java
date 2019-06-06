@@ -67,6 +67,7 @@ public class Register_Family extends AppCompatActivity implements IRegister_Pres
 
         presenter = new Register_Fam_Presenter(this);
 
+        presenter.setPreviousRegistered();
 
         dialog = new AlertDialog.Builder(this);
 
@@ -126,7 +127,7 @@ public class Register_Family extends AppCompatActivity implements IRegister_Pres
             }
         };
 
-        presenter.setPreviousRegistered();
+
 
 
 
@@ -363,6 +364,7 @@ public class Register_Family extends AppCompatActivity implements IRegister_Pres
         super.onResume();
         adapter.notifyDataSetChanged();
         Log.d("ddd111","실행됨");
+
     }
 }
 
