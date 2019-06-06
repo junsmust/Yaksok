@@ -30,7 +30,7 @@ public class Sel_AlarmRecive_Model implements Sel_AlarmRecive_PresenterToModel {
 
     @Override
     public void getFamilyList() {
-        retrofit = new Retrofit.Builder()
+      /*  retrofit = new Retrofit.Builder()
                 .baseUrl(userService.API_URL)
                 .addConverterFactory(ScalarsConverterFactory.create())
                 .addConverterFactory(GsonConverterFactory.create())
@@ -71,6 +71,6 @@ public class Sel_AlarmRecive_Model implements Sel_AlarmRecive_PresenterToModel {
             public void onFailure(Call<FindFamilyVO> call, Throwable t) {
                 System.out.println(t.getMessage());
             }
-        });
+        });*/
     }
 }

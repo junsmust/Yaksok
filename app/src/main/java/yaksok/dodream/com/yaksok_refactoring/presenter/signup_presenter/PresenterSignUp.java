@@ -82,7 +82,7 @@ public class PresenterSignUp implements ITo_Presenter_SignUp {
 
     @Override
     public void onSignUp() {
-        model.onSignUp();
+
     }
 
     @Override
@@ -98,6 +98,11 @@ public class PresenterSignUp implements ITo_Presenter_SignUp {
     @Override
     public void setPhone(String pn) {
         model.setPn(pn);
+    }
+
+    @Override
+    public void setPhone(String pn, String usertype) {
+        model.setPn(pn,usertype);
     }
 
 

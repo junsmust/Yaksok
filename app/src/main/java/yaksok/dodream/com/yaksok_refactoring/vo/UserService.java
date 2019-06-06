@@ -12,7 +12,7 @@ import yaksok.dodream.com.yaksok_refactoring.model.user.User_Info_Model;
 
 public interface UserService {
     public static final String API_URL = "http://15.164.163.234:8080";
-
+//http://15.164.163.234:8080/users/01027250856?itemType=phoneNumber&behavior=searchFamily
     @POST("/users")
     Call<BodyVO>postSignUp(@Body User_Info_Model userVO);
 
@@ -35,7 +35,7 @@ public interface UserService {
     Call<BodyVO>postRegisterFamily(@Body FamilyVO familyVO);
 
     @GET("/families/{userId}")
-    Call<FindFamilyVO> getConnectedFamilyInfo(@Path("userId") String userId);
+    Call<Connected_Family> getConnectedFamilyInfo(@Path("userId") String userId);
 
 
 //    @POST("/users")
@@ -49,8 +49,12 @@ public interface UserService {
 //    @POST("mymedicines/")
 //    Call<BodyVO> postQRCode(@Body PillVO pillVO);
 //
+    // public static final String API_URL = "http://15.164.163.234:8080";
+
+
+   // http://15.164.163.234:8080/users/01027250856?itemType=phoneNumber&behavior=searchFamily
     @GET("/users/{item}")
-    Call<FindFamilyVO> getUserList(@Path("item") String item, @Query("itemType") String itemType);
+    Call<FindFamilyVO> getUserList(@Path("item") String item, @Query("itemType") String itemType,@Query("behavior") String searchFamily);
 
 
 //

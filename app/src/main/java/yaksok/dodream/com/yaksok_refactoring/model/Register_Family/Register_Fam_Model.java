@@ -15,6 +15,7 @@ import yaksok.dodream.com.yaksok_refactoring.Adapter.family.FamilyItem;
 import yaksok.dodream.com.yaksok_refactoring.model.user.User_Id;
 import yaksok.dodream.com.yaksok_refactoring.presenter.family_register.Register_Fam_Presenter;
 import yaksok.dodream.com.yaksok_refactoring.vo.BodyVO;
+import yaksok.dodream.com.yaksok_refactoring.vo.Connected_Family;
 import yaksok.dodream.com.yaksok_refactoring.vo.DeleteService;
 import yaksok.dodream.com.yaksok_refactoring.vo.FamilyBodyVO;
 import yaksok.dodream.com.yaksok_refactoring.vo.FamilyDelVO;
@@ -55,30 +56,22 @@ public class Register_Fam_Model implements IRegister_Presenter_To_FamModel {
                     .build();
             userService = retrofit.create(UserService.class);
 
-            Call<FindFamilyVO> findFamilyVOCall = userService.getUserList(pn, "phoneNumber");
+            Call<FindFamilyVO> findFamilyVOCall = userService.getUserList(pn, "phoneNumber","searchFamily");
             findFamilyVOCall.enqueue(new Callback<FindFamilyVO>() {
                 @Override
                 public void onResponse(Call<FindFamilyVO> call, Response<FindFamilyVO> response) {
                     final FindFamilyVO findFamilyVO = response.body();
 
+                    Log.e(TAG, "find"+findFamilyVO.getStatus()+findFamilyVO.getResult().getNickName()+"  "+findFamilyVO.getResult().getUserId());
                     if (findFamilyVO.getStatus().equals("200")) {
                         isAddedFamily = true;
-                        for (int i = 0; i < findFamilyVO.getResult().size(); i++) {
+                        second_user_id = findFamilyVO.getResult().getUserId();
 
-                            Log.d("ddddddd",findFamilyVO.getResult().get(i).getNickName()+findFamilyVO.getResult().get(i).getUserId());
-                                    second_user_id = findFamilyVO.getResult().get(i).getUserId();
-                                    familyItems.add(new FamilyItem(findFamilyVO.getResult().get(i).getNickName()+"("+findFamilyVO.getResult().get(i).getUserId()))/*"/"+findFamilyVO.getResult().get(i).getUserId())*/;
-                            }
-                            presenter.makeDialog(findFamilyVO.getResult().get(0).getNickName()+"("+findFamilyVO.getResult().get(0).getUserId()+")",second_user_id);
-                            /*if(isOkayForFamily){
-                                Log.d("112","" +familyItems.get(0).getName());
-                                presenter.sendArrayList(familyItems);
-                                presenter.onResponse(true);
-                            }
-                            else{
-                                presenter.onResponse(false);
-                            }*/
+                        Log.e(TAG, "oncccccccc "+findFamilyVO.getResult().getNickName()+"("+findFamilyVO.getResult().getUserId()+")" +second_user_id);
+                            presenter.makeDialog(findFamilyVO.getResult().getNickName()+"("+findFamilyVO.getResult().getUserId()+")",second_user_id);
+                            familyItems.add(new FamilyItem(findFamilyVO.getResult().getNickName()+"("+findFamilyVO.getResult().getUserId()));
 
+                            Log.d("ddddddd",findFamilyVO.getResult().getNickName()+findFamilyVO.getResult().getUserId());
                         }
                     else if (findFamilyVO.getStatus().equals("204")) {
                         presenter.makeToastMessage( "상대의 계정이 존재하지 않습니다.");
@@ -93,7 +86,7 @@ public class Register_Fam_Model implements IRegister_Presenter_To_FamModel {
 
                 @Override
                 public void onFailure(Call<FindFamilyVO> call, Throwable t) {
-
+                    Log.e(TAG, "onFailure: "+t.getMessage());
                 }
             });
     }
@@ -124,12 +117,8 @@ public class Register_Fam_Model implements IRegister_Presenter_To_FamModel {
 
                         switch (bodyVO.getStatus()) {
                             case "201":
-                                /*Log.d("112","" +familyItems.get(0).getName());
-                                //registered_Fam.add(new FamilyItem(finalUser2_id));
-                                Log.d("eeeeee2",registered_Fam.get(0).getName());*/
                                 familyItem.setName(finalUser2_id);
                                 Log.d("setName",familyItem.getName());
-                                //presenter.sendArrayList(registered_Fam);
                                 presenter.onResponse2(true,familyItem);
                                 presenter.makeToastMessage( "가족 추가가 되었습니다.");
                                 break;
@@ -170,11 +159,11 @@ public class Register_Fam_Model implements IRegister_Presenter_To_FamModel {
         userService = retrofit.create(UserService.class);
 
 
-        Call<FindFamilyVO> findFamilyVOCall = userService.getConnectedFamilyInfo(User_Id.getUser_Id());
-        findFamilyVOCall.enqueue(new Callback<FindFamilyVO>() {
+        Call<Connected_Family> findFamilyVOCall = userService.getConnectedFamilyInfo(User_Id.getUser_Id());
+        findFamilyVOCall.enqueue(new Callback<Connected_Family>() {
             @Override
-            public void onResponse(Call<FindFamilyVO> call, Response<FindFamilyVO> response) {
-                FindFamilyVO findFamilyVO = response.body();
+            public void onResponse(Call<Connected_Family> call, Response<Connected_Family> response) {
+                Connected_Family findFamilyVO = response.body();
 
                 if (findFamilyVO.getStatus().equals("200")) {
 
@@ -185,7 +174,6 @@ public class Register_Fam_Model implements IRegister_Presenter_To_FamModel {
                     Log.e(TAG, "onResponse: "+ familyItems.size() );
                     presenter.sendArrayList(familyItems);
                     presenter.onResponse(true);
-
                 } else if (findFamilyVO.getStatus().equals("204")) {
                    presenter.makeToastMessage( "상대의 계정이 존재하지 않습니다.");
                 } else if (findFamilyVO.getStatus().equals("400")) {
@@ -198,7 +186,7 @@ public class Register_Fam_Model implements IRegister_Presenter_To_FamModel {
 
 
             @Override
-            public void onFailure(Call<FindFamilyVO> call, Throwable t) {
+            public void onFailure(Call<Connected_Family> call, Throwable t) {
                 System.out.println(t.getMessage());
             }
         });

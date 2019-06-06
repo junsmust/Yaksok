@@ -20,6 +20,7 @@ import retrofit2.Response;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 import retrofit2.converter.scalars.ScalarsConverterFactory;
+import yaksok.dodream.com.yaksok_refactoring.model.chat.User_info;
 import yaksok.dodream.com.yaksok_refactoring.model.user.LoginModel;
 import yaksok.dodream.com.yaksok_refactoring.model.user.User_Id;
 import yaksok.dodream.com.yaksok_refactoring.model.user.User_Info_Model;
@@ -132,7 +133,7 @@ public class SignUpModel implements IPresenterToSignUpModel {
                         "\n"+"email : "+user_info_model.getEmail());
 
         if(isValidateID&&isValidatePW&&isValidateEmial){
-            onSignUp();
+            onSignUp(user_info_model);
         }else{
             presenterSignUp.makeToastMessage("확인 버튼을 눌러주세요");
         }
@@ -171,7 +172,7 @@ public class SignUpModel implements IPresenterToSignUpModel {
 
 
     @Override
-    public void onSignUp() {
+    public void onSignUp(final User_Info_Model user_info_model) {
 
 
         retrofit = new Retrofit.Builder()
@@ -214,12 +215,12 @@ public class SignUpModel implements IPresenterToSignUpModel {
                         "\n"+"email : "+user_info_model.getEmail());
 
 
-
                 if(bodyVO.getStatus().equals("201")){
                     presenterSignUp.onSignupResponse(true);
                     presenterSignUp.makeToastMessage("가입 성공 되었습니다.");
                     User_Id.setUser_Id(user_info_model.getId());
                     pushToken();
+
 
 
                 }
@@ -271,11 +272,17 @@ public class SignUpModel implements IPresenterToSignUpModel {
         user_info_model.setUserType("G");
     }
 
+    @Override
+    public void setPn(String pn, String usertype) {
+            LoginModel.user_info_model.setPhoneNumber(pn);
+            onSignUp(LoginModel.user_info_model);
+    }
+
 
     @Override
     public void setPn(String pn) {
         LoginModel.user_info_model.setPhoneNumber(pn);
-        //onSignUp();
+       // onSignUp();
     }
 
 
@@ -352,7 +359,7 @@ public class SignUpModel implements IPresenterToSignUpModel {
 
     }
     public void pushToken(){
-        FcmTokenVO fcmTokenVO = new FcmTokenVO();
+        final FcmTokenVO fcmTokenVO = new FcmTokenVO();
         fcmTokenVO.setId(user_info_model.getId());
         fcmTokenVO.setFcmToken(FirebaseInstanceId.getInstance().getToken());
 
@@ -360,7 +367,19 @@ public class SignUpModel implements IPresenterToSignUpModel {
         bodyVOCall.enqueue(new Callback<BodyVO>() {
             @Override
             public void onResponse(@NonNull Call<BodyVO> call, @NonNull Response<BodyVO> response) {
-                Log.d("user_token",response.message());
+
+                BodyVO bodyVO = response.body();
+                Log.e( "onResponse:4113 ",bodyVO.getStatus().toString());
+                if(bodyVO.equals("201")){
+                    if(user_info_model.getUserType().equals("G")){
+                        user_info_model.setFcmToken(fcmTokenVO.getFcmToken());
+                    }else{
+                        Log.e( "onResponse:4113 ",bodyVO.getStatus().toString());
+                        LoginModel.user_info_model.setFcmToken(fcmTokenVO.getFcmToken());
+                    }
+
+                }
+
             }
 
             @Override

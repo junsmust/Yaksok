@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -14,6 +15,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import yaksok.dodream.com.yaksok_refactoring.view.WetherChooseFamilyOrNot;
 import yaksok.dodream.com.yaksok_refactoring.view.addFamily.Register_Family;
 import yaksok.dodream.com.yaksok_refactoring.R;
 import yaksok.dodream.com.yaksok_refactoring.presenter.signup_presenter.PresenterSignUp;
@@ -29,6 +31,8 @@ public class GetPn extends AppCompatActivity implements IPresenter_To_SignUp_Vie
         Intent intent = getIntent();
         userType = intent.getStringExtra("userType");
 
+        Log.e( "GET PN ",userType);
+
         final PresenterSignUp presenterSignUp = new PresenterSignUp(this);
 
         final EditText get_pn_edt = (EditText) findViewById(R.id.get_pn_edt);
@@ -43,9 +47,8 @@ public class GetPn extends AppCompatActivity implements IPresenter_To_SignUp_Vie
                     makeToastMessage("번호를 입력해주세요");
                 }else{
                     presenterSignUp.setUserType(userType);
-                    presenterSignUp.setPhone(get_pn_edt.getText().toString());
-                    makeToastMessage(userType+" "+get_pn_edt.getText().toString());
-
+                    presenterSignUp.setPhone(get_pn_edt.getText().toString(),userType);
+                    Log.e( "onClick: ",get_pn_edt.getText().toString()+userType );
 
                 }
 
@@ -83,7 +86,7 @@ public class GetPn extends AppCompatActivity implements IPresenter_To_SignUp_Vie
     public void onSignUoResponse(boolean loginResponse) {
 
         if(loginResponse){
-            startActivity(new Intent(getApplicationContext(), Register_Family.class));
+            startActivity(new Intent(getApplicationContext(), WetherChooseFamilyOrNot.class));
             finish();
         }
     }

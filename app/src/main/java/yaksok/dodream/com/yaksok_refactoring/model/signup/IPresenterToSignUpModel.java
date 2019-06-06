@@ -13,11 +13,11 @@ public interface IPresenterToSignUpModel {
 
     void onSignupResponse(boolean SignUpResponse);
     void onError(String errorMsg);
-    void onSignUp();
+    void onSignUp(User_Info_Model user_info_model);
     void setName(String name);
     void isvalidatePhone(String pn);
     void setPn(String pn);
     void setUserType(String userType);
     void setGeneralUserType();
-
+    void setPn(String pn, String usertype);
 }
