@@ -20,6 +20,7 @@ public interface ITo_Presenter_SignUp {
     void setName(String name);
     void isvalidatePhone(String pn);
     void setPhone(String pn);
+    void setPhone(String pn,String usertype);
     void setUserType(String userType);
     void setGeneralUserType();
     void isValidedId(boolean isId);

@@ -1,7 +1,10 @@
 package yaksok.dodream.com.yaksok_refactoring.model.chat;
 
+import android.support.annotation.NonNull;
 import android.util.Log;
 import android.widget.Toast;
+
+import com.google.firebase.iid.FirebaseInstanceId;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -13,9 +16,13 @@ import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 import retrofit2.converter.scalars.ScalarsConverterFactory;
 import yaksok.dodream.com.yaksok_refactoring.Adapter.family.FamilyItem;
+import yaksok.dodream.com.yaksok_refactoring.model.user.LoginModel;
 import yaksok.dodream.com.yaksok_refactoring.model.user.User_Id;
 import yaksok.dodream.com.yaksok_refactoring.presenter.chat.Chat_Presenter;
 import yaksok.dodream.com.yaksok_refactoring.view.chat.Chat_Room;
+import yaksok.dodream.com.yaksok_refactoring.vo.BodyVO;
+import yaksok.dodream.com.yaksok_refactoring.vo.Connected_Family;
+import yaksok.dodream.com.yaksok_refactoring.vo.FcmTokenVO;
 import yaksok.dodream.com.yaksok_refactoring.vo.FindFamilyVO;
 import yaksok.dodream.com.yaksok_refactoring.vo.MessageBodyVO;
 import yaksok.dodream.com.yaksok_refactoring.vo.MessageResultBodyVO;
@@ -45,13 +52,16 @@ public class Chat_Model implements I_chat_model {
         userService = retrofit.create(UserService.class);
 
 
-        Call<FindFamilyVO> findFamilyVOCall = userService.getConnectedFamilyInfo(User_Id.getUser_Id());
-        findFamilyVOCall.enqueue(new Callback<FindFamilyVO>() {
+        Call<Connected_Family> findFamilyVOCall = userService.getConnectedFamilyInfo(User_Id.getUser_Id());
+        findFamilyVOCall.enqueue(new Callback<Connected_Family>() {
             @Override
-            public void onResponse(Call<FindFamilyVO> call, Response<FindFamilyVO> response) {
-                FindFamilyVO findFamilyVO = response.body();
+            public void onResponse(Call<Connected_Family> call, Response<Connected_Family> response) {
+                Connected_Family findFamilyVO = response.body();
+
+                Log.e( "onResponse:55555 ", findFamilyVO.getStatus());
 
                 if (findFamilyVO.getStatus().equals("200")) {
+
 
                     for(int i = 0; i < findFamilyVO.getResult().size();i++){
                         familyItems.add(new FamilyItem(findFamilyVO.getResult().get(i).getNickName()+"("+findFamilyVO.getResult().get(i).getUserId()+")"));
@@ -59,6 +69,7 @@ public class Chat_Model implements I_chat_model {
                    Log.e("onResponse: chat"," "  +familyItems.size() );
                     chat_presenter.sendArrayList(familyItems);
                     chat_presenter.onResponse(true);
+
 
 
                 } else if (findFamilyVO.getStatus().equals("204")) {
@@ -73,7 +84,7 @@ public class Chat_Model implements I_chat_model {
 
 
             @Override
-            public void onFailure(Call<FindFamilyVO> call, Throwable t) {
+            public void onFailure(Call<Connected_Family> call, Throwable t) {
                 System.out.println(t.getMessage());
             }
         });
@@ -200,4 +211,5 @@ public class Chat_Model implements I_chat_model {
             }
         });
     }
+
 }

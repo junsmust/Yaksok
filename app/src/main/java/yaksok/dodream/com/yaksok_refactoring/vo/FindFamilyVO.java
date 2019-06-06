@@ -17,13 +17,14 @@ import java.util.List;
 //}
 public class FindFamilyVO {
     @SerializedName("status") String status;
-    @SerializedName("result") List<Result> result;
+    @SerializedName("result") Result result;
 
-    public List<Result> getResult() {
+
+    public Result getResult() {
         return result;
     }
 
-    public void setResult(List<Result> result) {
+    public void setResult(Result result) {
         this.result = result;
     }
 
@@ -61,6 +62,15 @@ public class FindFamilyVO {
         @SerializedName("birthDay")@Expose private String birthDay;
         @SerializedName("ageRange")@Expose private String ageRange;
         @SerializedName("userType")@Expose private String userType;
+        @SerializedName("fcmToken")@Expose private String fcmToken;
+
+            public String getFcmToken() {
+                return fcmToken;
+            }
+
+            public void setFcmToken(String fcmToken) {
+                this.fcmToken = fcmToken;
+            }
 
             public String getPw(){
                 return pw;

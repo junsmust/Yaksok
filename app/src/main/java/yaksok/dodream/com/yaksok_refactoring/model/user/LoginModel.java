@@ -140,6 +140,7 @@ public class LoginModel implements IPresennterToModel {
                     presenter_login.OnLoginResponse(false);
                     if(user_info_model.getUserType().equals("N")||user_info_model.getUserType().equals("K")){
                         presenter_login.onSnsSignUp(user_info_model.getUserType());
+                        Log.e( "onResponse:111 ",user_info_model.getUserType() );
 
                     }
                     presenter_login.MakeToastMessage("로그인 실패");
@@ -159,7 +160,6 @@ public class LoginModel implements IPresennterToModel {
             @Override
             public void onFailure(Call<BodyVO> call, Throwable t) {
                 Log.d("test",t.getMessage());
-
                 presenter_login.redirectLoginActivity();
             }
         });

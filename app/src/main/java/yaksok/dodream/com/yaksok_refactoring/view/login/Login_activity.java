@@ -296,9 +296,12 @@ public class Login_activity extends AppCompatActivity implements IPresenterToVie
 
     @Override
     public void onSnsSignUp(String userType) {
+        Log.e( "onSnsSignUp11: ",userType);
+
         Intent intent = new Intent(getApplicationContext(),GetPn.class);
         intent.putExtra("userType",userType);
         startActivity(intent);
+
         finish();
     }
 

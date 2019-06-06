@@ -67,6 +67,7 @@ public class Register_Family extends AppCompatActivity implements IRegister_Pres
 
         presenter = new Register_Fam_Presenter(this);
 
+        presenter.setPreviousRegistered();
 
         dialog = new AlertDialog.Builder(this);
 
@@ -74,13 +75,12 @@ public class Register_Family extends AppCompatActivity implements IRegister_Pres
         fmaily_number_edt = (EditText) findViewById(R.id.findFamily_edt);
         family_find_btn = (Button) findViewById(R.id.findFamily_btn);
         family_list_view = (SwipeMenuListView) findViewById(R.id.family_list);
-        family_find_skip_btn = (Button) findViewById(R.id.family_skip_btn);
         complete_btn = (Button)findViewById(R.id.family_complete_btn);
 
 
         complete_btn.setOnClickListener(this);
         family_find_btn.setOnClickListener(this);
-        family_find_skip_btn.setOnClickListener(this);
+
 
 
 
@@ -127,7 +127,7 @@ public class Register_Family extends AppCompatActivity implements IRegister_Pres
             }
         };
 
-        presenter.setPreviousRegistered();
+
 
 
 
@@ -216,10 +216,7 @@ public class Register_Family extends AppCompatActivity implements IRegister_Pres
                 startActivity(new Intent(getApplicationContext(), MainPage_activity.class));
                 finish();
                 break;
-            case R.id.family_skip_btn:
-                startActivity(new Intent(getApplicationContext(), MainPage_activity.class));
-                finish();
-                break;
+
         }
     }
 
@@ -367,6 +364,7 @@ public class Register_Family extends AppCompatActivity implements IRegister_Pres
         super.onResume();
         adapter.notifyDataSetChanged();
         Log.d("ddd111","실행됨");
+
     }
 }
 
