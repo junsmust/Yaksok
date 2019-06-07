@@ -10,6 +10,7 @@ import com.kakao.usermgmt.UserManagement;
 import com.kakao.usermgmt.callback.MeV2ResponseCallback;
 import com.kakao.usermgmt.response.MeV2Response;
 import com.kakao.usermgmt.response.model.Gender;
+import com.kakao.usermgmt.response.model.User;
 import com.kakao.usermgmt.response.model.UserAccount;
 import com.kakao.util.OptionalBoolean;
 import com.nhn.android.naverlogin.OAuthLogin;
@@ -129,6 +130,7 @@ public class LoginModel implements IPresennterToModel {
                     User_Id.setE_mail(bodyVO.getResult().getEmail());
                     User_Id.setNickname( bodyVO.getResult().getNickName());
                     User_Id.setPhone_No(bodyVO.getResult().getPhoneNumber());
+                    User_Id.setType(bodyVO.getResult().getUserType());
 
 
                     Log.d("tag_a",""+User_Id.getUser_Id());
@@ -197,6 +199,7 @@ public class LoginModel implements IPresennterToModel {
         User_Id.setE_mail(user_info_model.getEmail());
         User_Id.setNickname(user_info_model.getNickname());
         User_Id.setPhone_No(user_info_model.getPhoneNumber());
+        User_Id.setType(user_info_model.getUserType());
 
         if(auto){
             editor.putString("id",user_info_model.getId());
@@ -252,6 +255,7 @@ public class LoginModel implements IPresennterToModel {
                     User_Id.setE_mail(user_info_model.getEmail());
                     User_Id.setNickname(user_info_model.getNickname());
                     User_Id.setPhone_No(user_info_model.getPhoneNumber());
+                    User_Id.setType(user_info_model.getUserType());
 
                     Log.i("nickname",result.getNickname());
                     Log.i("profile_img",result.getProfileImagePath());

@@ -11,7 +11,7 @@ import android.widget.Button;
 import android.widget.TextView;
 
 import yaksok.dodream.com.yaksok_refactoring.R;
-import yaksok.dodream.com.yaksok_refactoring.Settings.SettingActivity;
+import yaksok.dodream.com.yaksok_refactoring.view.Settings.SettingActivity;
 import yaksok.dodream.com.yaksok_refactoring.model.user.User_Id;
 import yaksok.dodream.com.yaksok_refactoring.presenter.Main.Presenter_Main;
 import yaksok.dodream.com.yaksok_refactoring.view.MyPill.MyPill_activity;

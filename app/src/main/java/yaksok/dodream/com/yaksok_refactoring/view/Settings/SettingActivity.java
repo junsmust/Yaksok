@@ -1,4 +1,4 @@
-package yaksok.dodream.com.yaksok_refactoring.Settings;
+package yaksok.dodream.com.yaksok_refactoring.view.Settings;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;

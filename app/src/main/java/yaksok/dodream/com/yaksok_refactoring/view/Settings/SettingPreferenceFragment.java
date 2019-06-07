@@ -1,4 +1,4 @@
-package yaksok.dodream.com.yaksok_refactoring.Settings;
+package yaksok.dodream.com.yaksok_refactoring.view.Settings;
 
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -11,7 +11,6 @@ import android.preference.PreferenceScreen;
 import android.support.annotation.Nullable;
 
 import yaksok.dodream.com.yaksok_refactoring.R;
-import yaksok.dodream.com.yaksok_refactoring.vo.DeleteService;
 
 public class SettingPreferenceFragment extends PreferenceFragment implements Preference.OnPreferenceClickListener{
 

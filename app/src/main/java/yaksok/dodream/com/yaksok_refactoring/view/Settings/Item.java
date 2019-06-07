@@ -1,4 +1,4 @@
-package yaksok.dodream.com.yaksok_refactoring.Settings;
+package yaksok.dodream.com.yaksok_refactoring.view.Settings;
 
 public class Item {
     private String title;

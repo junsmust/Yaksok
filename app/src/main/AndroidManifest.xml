@@ -46,9 +46,9 @@
             android:screenOrientation="unspecified"
             android:theme="@android:style/Theme.Translucent" >
         </activity>
-        <activity android:name=".Settings.SettingActivity"/>
-        <activity android:name=".Settings.Developer"/>
-        <activity android:name=".Settings.MyPage"/>
+        <activity android:name=".view.Settings.SettingActivity"/>
+        <activity android:name=".view.Settings.Developer"/>
+        <activity android:name=".view.Settings.MyPage"/>
 
         <service
             android:name=".firebaseService.FirebaseMessageService"
@@ -87,7 +87,7 @@
         <activity android:name=".view.chat.Chat_Room">
 
         </activity>
-        <activity android:name=".Settings.MyPage"
+        <activity android:name=".view.Settings.MyPage"
             tools:ignore="DuplicateActivity" />
 
         <activity android:name=".view.WetherChooseFamilyOrNot">

@@ -1,4 +1,4 @@
-package yaksok.dodream.com.yaksok_refactoring.Settings;
+package yaksok.dodream.com.yaksok_refactoring.view.Settings;
 
 import android.content.Context;
 import android.view.LayoutInflater;
