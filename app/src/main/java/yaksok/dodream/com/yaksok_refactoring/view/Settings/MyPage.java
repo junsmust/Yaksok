@@ -14,7 +14,10 @@ import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
+import android.widget.Toast;
 import android.widget.ToggleButton;
+
+import com.kakao.usermgmt.response.model.User;
 
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
@@ -26,13 +29,12 @@ import yaksok.dodream.com.yaksok_refactoring.view.login.Login_activity;
 import yaksok.dodream.com.yaksok_refactoring.vo.DeleteService;
 
 public class MyPage extends AppCompatActivity implements MyPage_PresenterToView {
-    public Retrofit retrofit,retorofit2;
-    public DeleteService deleteService;
+    public Retrofit retrofit;
     private Presenter_MyPage presenter_myPage;
     TextView id,nickname,email,phone;
     Button bt_secOUT;
     ToggleButton auto_cancel;
-    Button bt1;
+    Button bt_changePW;
     public android.app.AlertDialog.Builder dialog;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -51,15 +53,8 @@ public class MyPage extends AppCompatActivity implements MyPage_PresenterToView 
         email = (TextView) findViewById(R.id.tv_setting_email);
         phone = (TextView) findViewById(R.id.tv_setting_phone);
         bt_secOUT = (Button)findViewById(R.id.bt_secessionOUT);
+        bt_changePW = (Button)findViewById(R.id.bt_changePW);
 
-
-
-        retorofit2 = new Retrofit.Builder()
-                .baseUrl(deleteService.API_URL)
-                .addConverterFactory(ScalarsConverterFactory.create())
-                .addConverterFactory(GsonConverterFactory.create())
-                .build();
-        deleteService = retorofit2.create(DeleteService.class);
 
         id.setText("아이디 : " + User_Id.getUser_Id());
         nickname.setText("닉네임 : " + User_Id.getNickname());
@@ -70,6 +65,17 @@ public class MyPage extends AppCompatActivity implements MyPage_PresenterToView 
             @Override
             public void onClick(View v) {
                 showDialog();
+            }
+        });
+        bt_changePW.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if(User_Id.getType().equals("G")) {
+                    startActivity(new Intent(getApplicationContext(), ChangePW.class));
+                }
+                else{
+                    Toast.makeText(getApplicationContext(), "SNS 회원은 변경 불가", Toast.LENGTH_LONG).show();
+                }
             }
         });
 

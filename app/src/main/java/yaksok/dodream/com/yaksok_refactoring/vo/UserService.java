@@ -22,6 +22,9 @@ public interface UserService {
     @PUT("/users/fcmtokens")
     Call<BodyVO> putToken(@Body FcmTokenVO fcmTokenVO);
 
+    @PUT(" /users/{id}/originpasswords/{opw}/newpasswords/{npw}")
+    Call<BodyVO>putChangePW(@Path("id") String id, @Path("opw") String opw, @Path("npw") String npw );
+
     @GET("/mymedicines/{userId}")
     Call<MyPillVO>getMymediciens(@Path("userId")String userId);
 
