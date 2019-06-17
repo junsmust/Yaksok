@@ -2,6 +2,8 @@ package yaksok.dodream.com.yaksok_refactoring.view.Main;
 
 import android.content.Intent;
 import android.graphics.Color;
+import android.graphics.Paint;
+import android.graphics.Typeface;
 import android.os.Bundle;
 import android.os.CountDownTimer;
 import android.support.v7.app.AppCompatActivity;
@@ -10,6 +12,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 
+import yaksok.dodream.com.yaksok_refactoring.ApplicationBase;
 import yaksok.dodream.com.yaksok_refactoring.R;
 import yaksok.dodream.com.yaksok_refactoring.view.Settings.SettingActivity;
 import yaksok.dodream.com.yaksok_refactoring.model.user.User_Id;
@@ -18,7 +21,7 @@ import yaksok.dodream.com.yaksok_refactoring.view.MyPill.MyPill_activity;
 import yaksok.dodream.com.yaksok_refactoring.view.addFamily.Register_Family;
 import yaksok.dodream.com.yaksok_refactoring.view.chat.Chatting_list;
 
-public class MainPage_activity extends AppCompatActivity implements Main_PresenterToView, View.OnClickListener{
+public class MainPage_activity extends ApplicationBase implements Main_PresenterToView, View.OnClickListener{
 
     private Presenter_Main presenter_main;
     private Button bt_InsertPill,bt_InsertFamily,bt_chat,bt_setting;
@@ -38,15 +41,18 @@ public class MainPage_activity extends AppCompatActivity implements Main_Present
         bt_InsertPill = (Button)findViewById(R.id.bt_InsertPill);
         tv_main_hour = (TextView)findViewById(R.id.tv_main_hour);
         tv_main_min = (TextView)findViewById(R.id.tv_main_min);
-        tv_main_sec = (TextView)findViewById(R.id.tv_main_sec);
+        //tv_main_sec = (TextView)findViewById(R.id.tv_main_sec);
         tv_main_hour_text = (TextView)findViewById(R.id.tv_main_hour_text);
         tv_main_min_text = (TextView)findViewById(R.id.tv_main_min_text);
-        tv_main_sec_text = (TextView)findViewById(R.id.tv_main_sec_text);
+       // tv_main_sec_text = (TextView)findViewById(R.id.tv_main_sec_text);
         bt_InsertFamily = (Button)findViewById(R.id.bt_InsertFamily);
         bt_chat = (Button)findViewById(R.id.bt_Chat);
         tv_name = (TextView)findViewById(R.id.tv_main_name);
 
         tv_name.setText(User_Id.getNickname());
+        tv_name.setPaintFlags(tv_name.getPaintFlags() | Paint.FAKE_BOLD_TEXT_FLAG);
+        tv_main_hour_text.setPaintFlags(tv_main_hour_text.getPaintFlags()  | Paint.FAKE_BOLD_TEXT_FLAG);
+        tv_main_min_text.setPaintFlags(tv_main_min_text.getPaintFlags() | Paint.FAKE_BOLD_TEXT_FLAG);
 
         presenter_main = new Presenter_Main(this);
 
@@ -77,17 +83,17 @@ public class MainPage_activity extends AppCompatActivity implements Main_Present
                 tv_main_min.setTextSize(25);
                 tv_main_min.setTextColor(Color.GRAY);
                 tv_main_hour.setText("");
-                tv_main_sec.setText("");
+               // tv_main_sec.setText("");
                 tv_main_hour_text.setText("");
                 tv_main_min_text.setText("");
-                tv_main_sec_text.setText("");
+                //tv_main_sec_text.setText("");
             }
             else if(status == 200) {
                 tv_main_min.setTextSize(50);
                 tv_main_min.setTextColor(Color.WHITE);
                 tv_main_hour_text.setText("시간");
                 tv_main_min_text.setText("분");
-                tv_main_sec_text.setText("초");
+               // tv_main_sec_text.setText("초");
                 countSW = true;
                 countDownTimer = new CountDownTimer((myNeaeTime_sec) * 1000, 1000) {
                     @Override
@@ -95,7 +101,7 @@ public class MainPage_activity extends AppCompatActivity implements Main_Present
                         Log.d("testt", String.valueOf(millisUntilFinished));
                         //시간 설정 부분
                         if (millisUntilFinished >= 3600000) {
-                            if ((millisUntilFinished / 6000L) / 60 < 10) {
+                            if ((millisUntilFinished / 60000L) / 60 < 10) {
                                 tv_main_hour.setText("0" + String.valueOf((millisUntilFinished / 60000L) / 60));
                             } else {
                                 tv_main_hour.setText(String.valueOf((millisUntilFinished / 60000L) / 60));
@@ -103,6 +109,8 @@ public class MainPage_activity extends AppCompatActivity implements Main_Present
                         } else {
                             tv_main_hour.setText("00");
                         }
+                        tv_main_hour.setTextSize(60);
+                        tv_main_hour.setPaintFlags(tv_main_hour.getPaintFlags() | Paint.FAKE_BOLD_TEXT_FLAG);
 
                         //분 설정 부분
                         if ((millisUntilFinished >= 60000)) {
@@ -114,15 +122,16 @@ public class MainPage_activity extends AppCompatActivity implements Main_Present
                         } else {
                             tv_main_min.setText("00");
                         }
-
+                        tv_main_min.setTextSize(60);
+                        tv_main_min.setPaintFlags(tv_main_min.getPaintFlags() | Paint.FAKE_BOLD_TEXT_FLAG);
                         //초 설정 부분
-                        if ((millisUntilFinished >= 1000)) {
+                       /* if ((millisUntilFinished >= 1000)) {
                             if ((millisUntilFinished / 1000) % 3600 % 60 < 10) {
                                 tv_main_sec.setText("0" + (millisUntilFinished / 1000) % 3600 % 60);
                             } else {
                                 tv_main_sec.setText(String.valueOf((millisUntilFinished / 1000) % 3600 % 60));
                             }
-                        }
+                        }*/
                    /* if((millisUntilFinished/60000L)/60 < 10){
                         if((millisUntilFinished/6000L)/60 <= 0){
                             tv_main_hour.setText("00");

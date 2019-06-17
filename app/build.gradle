@@ -28,10 +28,8 @@ dependencies {
     testImplementation 'junit:junit:4.12'
     androidTestImplementation 'com.android.support.test:runner:1.0.2'
     androidTestImplementation 'com.android.support.test.espresso:espresso-core:3.0.2'
-
     //카카오 로그인 sdk를 사용하기 위해 필요.
     implementation group: project.KAKAO_SDK_GROUP, name: 'usermgmt', version: project.KAKAO_SDK_VERSION
-
     //네이버
     implementation 'com.naver.nid:naveridlogin-android-sdk:4.2.3'
     implementation 'com.android.support:appcompat-v7:28.0.0'
@@ -49,12 +47,8 @@ dependencies {
     implementation 'com.android.support:design:28.0.0'
     implementation 'com.android.support:recyclerview-v7:28.0.0'
     implementation 'de.hdodenhof:circleimageview:2.2.0'
-
-
-
     //SwipeMenuListView
     implementation 'com.baoyz.swipemenulistview:library:1.3.0'
-
     implementation 'com.google.firebase:firebase-core:16.0.5'
     implementation 'com.google.firebase:firebase-messaging:17.3.4'
 }

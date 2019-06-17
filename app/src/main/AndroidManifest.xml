@@ -50,6 +50,7 @@
         <activity android:name=".view.Settings.Developer"/>
         <activity android:name=".view.Settings.MyPage"/>
         <activity android:name=".view.Settings.ChangePW"/>
+        <activity android:name=".ApplicationBase"/>
 
         <service
             android:name=".firebaseService.FirebaseMessageService"
