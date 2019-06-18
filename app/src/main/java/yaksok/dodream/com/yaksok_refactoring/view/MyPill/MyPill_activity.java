@@ -21,6 +21,8 @@ import android.widget.Toast;
 import java.util.ArrayList;
 import java.util.List;
 
+import yaksok.dodream.com.yaksok_refactoring.Adapter.MyPill.MyPillItem;
+import yaksok.dodream.com.yaksok_refactoring.Adapter.MyPill.MypillListAdapter;
 import yaksok.dodream.com.yaksok_refactoring.R;
 import yaksok.dodream.com.yaksok_refactoring.presenter.MyPill.Presenter_MyPill;
 import yaksok.dodream.com.yaksok_refactoring.view.InsertPill.InsertPill_activity;
@@ -31,6 +33,8 @@ public class MyPill_activity extends AppCompatActivity implements MyPill_Present
     private Presenter_MyPill presenter_myPill;
     ListView lv_MyPill;
     List<String> myPillList = new ArrayList<String>();;
+    ArrayList<MyPillItem> myPillItems = new ArrayList<MyPillItem>();
+    MypillListAdapter adapter1;
     ArrayAdapter adapter;
     Button bt_Insert;
     public AlertDialog.Builder dialog;
@@ -45,8 +49,12 @@ public class MyPill_activity extends AppCompatActivity implements MyPill_Present
 
         dialog = new AlertDialog.Builder(this);
 
+        adapter1 = new MypillListAdapter();
+
         lv_MyPill = (ListView)findViewById(R.id.lv_MyPill);
         bt_Insert = (Button)findViewById(R.id.bt_Insert);
+
+        lv_MyPill.setAdapter(adapter1);
 
 
         bt_Insert.setOnClickListener(new View.OnClickListener() {
@@ -77,7 +85,10 @@ public class MyPill_activity extends AppCompatActivity implements MyPill_Present
     public void onMyPillResponce(boolean MyPillResponse) {
         if(MyPillResponse){
             adapter = new ArrayAdapter(this, android.R.layout.simple_list_item_1, myPillList);
-            lv_MyPill.setAdapter(adapter);
+            adapter1.addItem("Test",6,3,"아들, 딸");
+            adapter1.addItem("감기약",5,1,"사위");
+            adapter1.notifyDataSetChanged();
+            //lv_MyPill.setAdapter(adapter);
         }
     }
 

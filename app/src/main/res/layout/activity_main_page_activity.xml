@@ -8,176 +8,197 @@
     android:background="#ffffff"
     android:orientation="vertical">
 
-    <LinearLayout
+    <FrameLayout
         android:layout_width="match_parent"
-        android:layout_height="459dp"
-        android:layout_weight="6"
-        android:orientation="vertical">
+        android:layout_height="match_parent">
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="230dp"
-            android:background="@drawable/round_corner"
-            android:orientation="vertical">
-
+            android:layout_height="230sp">
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:layout_weight="3"
-                android:gravity="center"
-                android:orientation="horizontal">
+                android:background="@drawable/round_corner"
+                android:orientation="vertical">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_weight="3"
+                    android:gravity="center"
+                    android:orientation="horizontal">
+
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="bottom"
+                        android:layout_margin="6dp">
+
+                        <TextView
+                            android:id="@+id/tv_main_hour"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="00"
+                            android:textColor="#FFFFFF"
+                            android:textSize="60dp"
+                            android:textStyle="bold" />
+
+                        <TextView
+                            android:id="@+id/tv_main_hour_text"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="시간"
+                            android:textColor="#FFFFFF"
+                            android:textSize="60dp"
+                            android:textStyle="bold" />
+
+                        <TextView
+                            android:id="@+id/tv_main_min"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginLeft="15dp"
+                            android:text="00"
+                            android:textColor="#FFFFFF"
+                            android:textSize="60dp"
+                            android:textStyle="bold" />
+
+                        <TextView
+                            android:id="@+id/tv_main_min_text"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="분"
+                            android:textColor="#FFFFFF"
+                            android:textSize="60dp"
+                            android:textStyle="bold" />
+
+                    </LinearLayout>
+                </LinearLayout>
+
 
                 <LinearLayout
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="bottom"
-                    android:layout_margin="6dp">
+                    android:layout_height="match_parent"
+                    android:layout_gravity="center"
+                    android:layout_weight="5"
+                    android:orientation="horizontal">
 
                     <TextView
-                        android:id="@+id/tv_main_hour"
+                        android:id="@+id/tv_main_name"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="00"
+                        android:text="두드림"
                         android:textColor="#FFFFFF"
-                        android:textSize="60dp"
+                        android:textSize="20dp"
                         android:textStyle="bold" />
 
                     <TextView
-                        android:id="@+id/tv_main_hour_text"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="시간"
+                        android:text=" 님, 약 복용까지 남은 시간"
                         android:textColor="#FFFFFF"
-                        android:textSize="60dp"
-                        android:textStyle="bold" />
-
-                    <TextView
-                        android:id="@+id/tv_main_min"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginLeft="15dp"
-                        android:text="00"
-                        android:textColor="#FFFFFF"
-                        android:textSize="60dp"
-                        android:textStyle="bold" />
-
-                    <TextView
-                        android:id="@+id/tv_main_min_text"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="분"
-                        android:textColor="#FFFFFF"
-                        android:textSize="60dp"
-                        android:textStyle="bold" />
-
+                        android:textSize="20dp" />
                 </LinearLayout>
-            </LinearLayout>
-
-            <LinearLayout
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent"
-                android:layout_gravity="center"
-                android:layout_weight="5"
-                android:orientation="horizontal">
-
-                <TextView
-                    android:id="@+id/tv_main_name"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="두드림"
-                    android:textColor="#FFFFFF"
-                    android:textSize="20dp"
-                    android:textStyle="bold" />
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text=" 님, 약 복용까지 남은 시간"
-                    android:textColor="#FFFFFF"
-                    android:textSize="20dp" />
             </LinearLayout>
         </LinearLayout>
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_height="440sp"
+            android:layout_gravity="bottom"
             android:layout_marginLeft="20dp"
             android:layout_marginRight="20dp"
-            android:layout_weight="4"
             android:background="@drawable/main_trick_list"
-            android:elevation="10dp"
-            android:orientation="vertical">
+            android:elevation="10dp">
+
             <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="60dp"
-                android:layout_marginTop="15dp"
-                android:layout_marginLeft="5dp"
-                android:layout_marginRight="5dp"
-                android:layout_marginBottom="5dp"
-                android:background="@drawable/main_list_item"
-                android:elevation="3dp">
-            <Button
-                android:id="@+id/bt_Chat"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:background="@drawable/main_chat"
-                android:textSize="20dp"
-                android:textColor="#6E6E6E"
-                android:text="채팅" />
-            </LinearLayout>
+                android:layout_weight="4"
+                android:orientation="vertical">
 
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="60dp"
-                android:layout_margin="5dp"
-                android:background="@drawable/main_list_item"
-                android:elevation="3dp">
-            <Button
-                android:id="@+id/bt_InsertPill"
-                android:layout_width="match_parent"
-                android:layout_height="60dp"
-                android:background="@drawable/main_pill"
-                android:textSize="20dp"
-                android:textColor="#6E6E6E"
-                android:text="나의 약" />
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="60dp"
+                    android:layout_marginBottom="5dp"
+                    android:layout_marginLeft="5dp"
+                    android:layout_marginRight="5dp"
+                    android:layout_marginTop="15dp"
+                    android:background="@drawable/main_list_item"
+                    android:elevation="3dp">
+
+                    <Button
+                        android:id="@+id/bt_Chat"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:background="@drawable/main_chat"
+                        android:paddingRight="140dp"
+                        android:text="채팅"
+                        android:textColor="#6E6E6E"
+                        android:textSize="20dp"
+                        android:textStyle="bold" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="60dp"
+                    android:layout_margin="5dp"
+                    android:background="@drawable/main_list_item"
+                    android:elevation="3dp">
+
+                    <Button
+                        android:id="@+id/bt_InsertPill"
+                        android:layout_width="match_parent"
+                        android:layout_height="60dp"
+                        android:background="@drawable/main_pill"
+                        android:paddingRight="115dp"
+                        android:text="나의 약"
+                        android:textColor="#6E6E6E"
+                        android:textSize="20dp"
+                        android:textStyle="bold" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="60dp"
+                    android:layout_margin="5dp"
+                    android:background="@drawable/main_list_item"
+                    android:elevation="3dp">
+
+                    <Button
+                        android:id="@+id/bt_InsertFamily"
+                        android:layout_width="match_parent"
+                        android:layout_height="60dp"
+                        android:background="@drawable/main_family"
+                        android:paddingRight="55dp"
+                        android:text="나의 가족 등록"
+                        android:textColor="#6E6E6E"
+                        android:textSize="20dp"
+                        android:textStyle="bold" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="60dp"
+                    android:layout_margin="5dp"
+                    android:background="@drawable/main_list_item"
+                    android:elevation="3dp">
+
+                    <Button
+                        android:id="@+id/bt_option"
+                        android:layout_width="match_parent"
+                        android:layout_height="60dp"
+                        android:background="@drawable/main_settings"
+                        android:paddingRight="140dp"
+                        android:text="설정"
+                        android:textColor="#6E6E6E"
+                        android:textSize="20dp"
+                        android:textStyle="bold" />
+                </LinearLayout>
+
+            </LinearLayout>
         </LinearLayout>
+    </FrameLayout>
 
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="60dp"
-                android:layout_margin="5dp"
-                android:background="@drawable/main_list_item"
-                android:elevation="3dp">
-
-            <Button
-                android:id="@+id/bt_InsertFamily"
-                android:layout_width="match_parent"
-                android:layout_height="60dp"
-                android:background="@drawable/main_family"
-                android:textSize="20dp"
-                android:textColor="#6E6E6E"
-                android:text="나의 가족 등록" />
-            </LinearLayout>
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="60dp"
-                android:layout_margin="5dp"
-                android:background="@drawable/main_list_item"
-                android:elevation="3dp">
-            <Button
-                android:id="@+id/bt_option"
-                android:layout_width="match_parent"
-                android:layout_height="60dp"
-                android:background="@drawable/main_settings"
-                android:textSize="20dp"
-                android:textColor="#6E6E6E"
-                android:text="설정" />
-            </LinearLayout>
-
-        </LinearLayout>
-
-
-    </LinearLayout>
 
 </LinearLayout>

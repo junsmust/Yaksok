@@ -54,6 +54,12 @@ public class MainPage_activity extends ApplicationBase implements Main_Presenter
         tv_main_hour_text.setPaintFlags(tv_main_hour_text.getPaintFlags()  | Paint.FAKE_BOLD_TEXT_FLAG);
         tv_main_min_text.setPaintFlags(tv_main_min_text.getPaintFlags() | Paint.FAKE_BOLD_TEXT_FLAG);
 
+        bt_chat.setPaintFlags(bt_chat.getPaintFlags() | Paint.FAKE_BOLD_TEXT_FLAG);
+        bt_InsertPill.setPaintFlags(bt_InsertPill.getPaintFlags() | Paint.FAKE_BOLD_TEXT_FLAG);
+        bt_InsertFamily.setPaintFlags(bt_InsertFamily.getPaintFlags() | Paint.FAKE_BOLD_TEXT_FLAG);
+        bt_setting.setPaintFlags(bt_setting.getPaintFlags() | Paint.FAKE_BOLD_TEXT_FLAG);
+
+
         presenter_main = new Presenter_Main(this);
 
         bt_InsertPill.setOnClickListener(new View.OnClickListener() {
