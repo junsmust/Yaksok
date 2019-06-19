@@ -1,5 +1,7 @@
 package yaksok.dodream.com.yaksok_refactoring.presenter.InsertPill;
 
+import java.util.List;
+
 import yaksok.dodream.com.yaksok_refactoring.model.InsertPill.InsertPill_Model;
 import yaksok.dodream.com.yaksok_refactoring.model.InsertPill.InsertPill_PresenterToModel;
 import yaksok.dodream.com.yaksok_refactoring.view.InsertPill.InsertPill_PresenterToView;
@@ -23,5 +25,20 @@ public class Presenter_InsertPill implements InsertPillToPresenter{
     @Override
     public void onInsertResponse(boolean response) {
         view.onInsertResponse(response);
+    }
+
+    @Override
+    public void getFamilyList() {
+        model.getFamilyList();
+    }
+
+    @Override
+    public void onFamilyResponce(boolean Responce) {
+        view.onFamilyResponce(Responce);
+    }
+
+    @Override
+    public void myFamilyList(List<String> myFamilyList, List<String> myFamily_Id) {
+        view.myFamilyList(myFamilyList, myFamily_Id);
     }
 }
