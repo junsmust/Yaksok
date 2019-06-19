@@ -91,6 +91,7 @@
         </activity>
         <activity android:name=".view.Settings.MyPage"
             tools:ignore="DuplicateActivity" />
+        <activity android:name=".view.InsertPill.Temp"/>
 
         <activity android:name=".view.WetherChooseFamilyOrNot">
 

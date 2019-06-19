@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:padding="0dp"
+    android:layout_height="70dp"
+    android:layout_weight="10"
+    android:background="#00B49D">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_centerVertical="true"
+        android:orientation="horizontal">
+
+        <ImageView
+            android:id="@+id/back_layout_cancel"
+            android:layout_width="65px"
+            android:layout_height="65px"
+            android:layout_gravity="center"
+            android:layout_centerVertical="true"
+            android:src="@drawable/family_select_cancel" />
+
+
+        <TextView
+            android:id="@+id/title_txt_pill"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_margin="10dp"
+            android:gravity="center"
+            android:text="나의 약 등록"
+            android:textColor="#ffffff"
+            android:textSize="20dp"
+            android:textStyle="bold" />
+
+        <ImageView
+            android:id="@+id/back_layout_check"
+            android:layout_width="70px"
+            android:layout_height="70px"
+            android:layout_alignParentEnd="true"
+            android:layout_centerVertical="true"
+            android:layout_gravity="center|right"
+            android:src="@drawable/pill_check" />
+
+    </RelativeLayout>
+
+
+</RelativeLayout>

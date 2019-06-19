@@ -2,40 +2,42 @@ package yaksok.dodream.com.yaksok_refactoring.view.InsertPill;
 
 import android.app.TimePickerDialog;
 import android.content.Intent;
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
+import android.provider.ContactsContract;
 import android.support.annotation.Nullable;
 import android.support.v7.app.ActionBar;
-import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
+import android.view.Gravity;
 import android.view.LayoutInflater;
-import android.view.MotionEvent;
+import android.view.Menu;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.FrameLayout;
 import android.widget.ImageView;
-import android.widget.ListView;
 import android.widget.RelativeLayout;
 import android.widget.SlidingDrawer;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.TimePicker;
 import android.widget.Toast;
+import android.widget.Toolbar;
 
 import java.util.ArrayList;
 import java.util.List;
 
+import yaksok.dodream.com.yaksok_refactoring.ApplicationBase;
 import yaksok.dodream.com.yaksok_refactoring.R;
 import yaksok.dodream.com.yaksok_refactoring.model.user.User_Id;
 import yaksok.dodream.com.yaksok_refactoring.presenter.InsertPill.Presenter_InsertPill;
-import yaksok.dodream.com.yaksok_refactoring.view.InsertPill.Sel_AlarmRecive.Sel_AlarmRecive_activity;
-import yaksok.dodream.com.yaksok_refactoring.view.InsertPill.SearchPill.SearchPill_activity;
 import yaksok.dodream.com.yaksok_refactoring.vo.InsertPill_Item;
 
-public class InsertPill_activity extends AppCompatActivity implements InsertPill_PresenterToView, View.OnClickListener{
-
+public class Temp extends ApplicationBase implements View.OnClickListener{
     Button time1,time2,time3,bt_slidcalcel;
     EditText et_name;
     Spinner spinner;
@@ -49,13 +51,8 @@ public class InsertPill_activity extends AppCompatActivity implements InsertPill
     RelativeLayout rb_family;
     SlidingDrawer slidingDrawer;
     Presenter_InsertPill presenter_insertPill;
-    InsertPill_Item insertPill_item;
     List<String> time, family_id, alarm_f_list;
     Intent resultIntent;
-    private List<String> familyList = new ArrayList<String>();
-    private List<String> familyList_Id = new ArrayList<String>();
-    ListView lv_sel_family;
-    ArrayAdapter adapter;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -95,11 +92,9 @@ public class InsertPill_activity extends AppCompatActivity implements InsertPill
         resultIntent = new Intent();
         setResult(4000,resultIntent);
 
-        presenter_insertPill = new Presenter_InsertPill(this);
-        insertPill_item = new InsertPill_Item();
+       // presenter_insertPill = new Presenter_InsertPill(this);
 
-        presenter_insertPill.getFamilyList();
-
+        InsertPill_Item insertPill_item;
         family_id = new ArrayList<String>();
 
         family_id = new ArrayList<String>();
@@ -119,7 +114,6 @@ public class InsertPill_activity extends AppCompatActivity implements InsertPill
         rb_family = (RelativeLayout)findViewById(R.id.rb_IP_family);
         bt_slidcalcel = (Button)findViewById(R.id.bt_sliding_cancel);
         et_name = (EditText)findViewById(R.id.et_IP_name);
-        lv_sel_family = (ListView)findViewById(R.id.iv_sliding_family);
 
         bt_slidcalcel.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -219,13 +213,14 @@ public class InsertPill_activity extends AppCompatActivity implements InsertPill
 //                    Log.d("commElement",String.valueOf(pill_list_num.get(0)));
                     //Log.d("commAlarm",family_id.get(0));
                     Log.d("commUserId", User_Id.getUser_Id());
-                    insertPill_item.setName(et_name.getText().toString());
+                   /* insertPill_item.setName(et_DiseaseName.getText().toString());
                     insertPill_item.setDosagi(tv_dosagi.getText().toString());
                     insertPill_item.setTimeList(time);
+                    insertPill_item.setElementList(pill_list_num);
                     insertPill_item.setAlarmList(family_id);
                     insertPill_item.setUserId(User_Id.getUser_Id());
 
-                    presenter_insertPill.insertPill(insertPill_item);
+                    presenter_insertPill.insertPill(insertPill_item);*/
                 }
 
             }
@@ -372,29 +367,14 @@ public class InsertPill_activity extends AppCompatActivity implements InsertPill
         return true;
 
     }*/
-
-    @Override
+    /*@Override
     public void onInsertResponse(boolean response) {
         if(response){
             Toast.makeText(getApplicationContext(), "약이 등록되었습니다.", Toast.LENGTH_LONG).show();
             finish();
         }
     }
+*/
 
-    @Override
-    public void onFamilyResponce(boolean Responce) {
-        if(Responce){
-            adapter = new ArrayAdapter(this, android.R.layout.simple_list_item_multiple_choice, familyList);
-            lv_sel_family.setAdapter(adapter);
-        }
-    }
-
-    @Override
-    public void myFamilyList(List<String> myFamilyList, List<String> myFamily_Id) {
-        for(int i=0; i<myFamilyList.size();i++){
-            familyList.add(myFamilyList.get(i));
-            familyList_Id.add(myFamily_Id.get(i));
-        }
-    }
 
 }

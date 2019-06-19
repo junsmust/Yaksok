@@ -15,6 +15,9 @@ public class MyPillVO {
         @SerializedName("myMedicineNo")@Expose private int medicineNo;
         @SerializedName("name") @Expose private String name;
         @SerializedName("regiDate") @Expose private String regiDate;
+        @SerializedName("families") @Expose private List<String> families;
+        @SerializedName("takingOfDayNum") @Expose private int takingOfDayNum;
+        @SerializedName("dosagi")@Expose private int dosagi;
 
         public int getMedicineNo() {
             return medicineNo;
@@ -39,6 +42,18 @@ public class MyPillVO {
         public void setRegiDate(String regiDate) {
             this.regiDate = regiDate;
         }
+
+        public List<String> getFamilies() { return families; }
+
+        public void setFamilies(List<String> families) { this.families = families; }
+
+        public int getTakingOfDayNum() { return takingOfDayNum; }
+
+        public void setTakingOfDayNum(int takingOfDayNum) { this.takingOfDayNum = takingOfDayNum; }
+
+        public int getDosagi() { return dosagi; }
+
+        public void setDosagi(int dosagi) { this.dosagi = dosagi; }
     }
 
     public String getStatus() {
