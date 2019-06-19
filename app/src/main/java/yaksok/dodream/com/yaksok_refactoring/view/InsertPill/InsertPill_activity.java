@@ -27,6 +27,7 @@ import android.widget.Toast;
 import java.util.ArrayList;
 import java.util.List;
 
+import yaksok.dodream.com.yaksok_refactoring.CustomChoiceListViewAdapter;
 import yaksok.dodream.com.yaksok_refactoring.R;
 import yaksok.dodream.com.yaksok_refactoring.model.user.User_Id;
 import yaksok.dodream.com.yaksok_refactoring.presenter.InsertPill.Presenter_InsertPill;
@@ -56,6 +57,8 @@ public class InsertPill_activity extends AppCompatActivity implements InsertPill
     private List<String> familyList_Id = new ArrayList<String>();
     ListView lv_sel_family;
     ArrayAdapter adapter;
+    CustomChoiceListViewAdapter adapter1;
+    int size = 0;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -384,8 +387,17 @@ public class InsertPill_activity extends AppCompatActivity implements InsertPill
     @Override
     public void onFamilyResponce(boolean Responce) {
         if(Responce){
-            adapter = new ArrayAdapter(this, android.R.layout.simple_list_item_multiple_choice, familyList);
-            lv_sel_family.setAdapter(adapter);
+            adapter1 = new CustomChoiceListViewAdapter();
+            //adapter = new ArrayAdapter(this, android.R.layout.simple_list_item_multiple_choice, familyList);
+            for(int i=0; i<familyList.size();i++){
+                adapter1.addItem(familyList.get(i).substring(0,1),familyList.get(i));
+                size++;
+            }
+            lv_sel_family.setAdapter(adapter1);
+            ViewGroup.LayoutParams params = lv_sel_family.getLayoutParams();
+            params.height = 200 * size;
+            lv_sel_family.setLayoutParams(params);
+            lv_sel_family.setAdapter(adapter1);
         }
     }
 
