@@ -104,6 +104,11 @@ public class Presenter_Login implements ITo_Presenter {
         model.getEditor(editor);
     }
 
+    @Override
+    public void findPassword() {
+        model.findPassword();
+    }
+
 
 
     /*@Override
