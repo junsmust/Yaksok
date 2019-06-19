@@ -6,7 +6,6 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.support.annotation.Nullable;
 import android.support.v7.app.ActionBar;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -15,6 +14,9 @@ import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
 import android.widget.EditText;
+import android.widget.FrameLayout;
+import android.widget.ImageView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.kakao.auth.AuthType;
@@ -28,6 +30,8 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import retrofit2.Retrofit;
+import yaksok.dodream.com.yaksok_refactoring.ApplicationBase;
+import yaksok.dodream.com.yaksok_refactoring.view.find_pw.FindUserPassword;
 import yaksok.dodream.com.yaksok_refactoring.view.signup.GetPn;
 import yaksok.dodream.com.yaksok_refactoring.R;
 import yaksok.dodream.com.yaksok_refactoring.model.user.User_Info_Model;
@@ -39,10 +43,11 @@ import yaksok.dodream.com.yaksok_refactoring.vo.UserService;
 import com.kakao.auth.ISessionCallback;
 import com.kakao.util.exception.KakaoException;
 
-public class Login_activity extends AppCompatActivity implements IPresenterToView{
+public class Login_activity extends ApplicationBase implements IPresenterToView{
 
     private EditText id_edt, pw_edt;
-    public Button signUp_btn, login_btn;
+    public Button  login_btn;
+    private TextView signUp_tv,find_id,find_pw;
     private User_Info_Model user_info_model;
     private Presenter_Login presenter_login;
     private CheckBox checkBox;
@@ -50,6 +55,9 @@ public class Login_activity extends AppCompatActivity implements IPresenterToVie
     Retrofit retrofit;
     OAuthLoginHandler moAuthLoginHandler;
     String tocken;
+
+    FrameLayout kakao_frame,naver_frame;
+    private ImageView fake_kakao_iv,fake_naver_iv;
 
 
     //kakao
@@ -88,9 +96,39 @@ public class Login_activity extends AppCompatActivity implements IPresenterToVie
 
         id_edt = (EditText) findViewById(R.id.main_id_edt);
         pw_edt = (EditText) findViewById(R.id.main_pw_edt);
-        signUp_btn = (Button) findViewById(R.id.login_sign_up_btn);
+        signUp_tv = (TextView)findViewById(R.id.login_sign_up_tv);
         login_btn = (Button) findViewById(R.id.login_normal_btn);
         checkBox = (CheckBox)findViewById(R.id.setAutoLogin_check);
+
+        kakao_frame = (FrameLayout)findViewById(R.id.kakao_frame);
+        naver_frame = (FrameLayout)findViewById(R.id.naver_frame);
+
+        fake_kakao_iv = (ImageView)findViewById(R.id.kakao_fake_iv);
+        fake_naver_iv = (ImageView)findViewById(R.id.naver_fake_iv);
+
+        find_pw = (TextView)findViewById(R.id.login_find_pw_tv);
+
+        fake_naver_iv.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                login_naver_btn.performClick();
+            }
+        });
+
+        fake_kakao_iv.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                main_kakao_btn.performClick();
+            }
+        });
+
+
+        find_pw.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+               startActivity(new Intent(getApplicationContext(), FindUserPassword.class));
+            }
+        });
 
         loginInformation = getSharedPreferences("user",MODE_PRIVATE);
         editor = loginInformation.edit();
@@ -100,7 +138,7 @@ public class Login_activity extends AppCompatActivity implements IPresenterToVie
 
         presenter_login.sendEditor(editor);
 
-        signUp_btn.setOnClickListener(new View.OnClickListener() {
+        signUp_tv.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 startActivity(new Intent(getApplicationContext(), Signup_activity.class));
@@ -108,15 +146,18 @@ public class Login_activity extends AppCompatActivity implements IPresenterToVie
             }
         });
 
+       /* if(loginInformation.getBoolean("auto",true)){
+            checkBox.setChecked(true);
+        }*/
+
         checkBox.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
                 if(isChecked){
-
                     editor.putBoolean("auto", checkBox.isChecked());
                     editor.apply();
                     presenter_login.checkBox(loginInformation,editor,true);
-                    Log.d("aaaaa"," "+loginInformation.getBoolean("aaaau",true));
+
                 }
                 else{
 

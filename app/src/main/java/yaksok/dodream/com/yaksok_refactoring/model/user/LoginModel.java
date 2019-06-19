@@ -323,7 +323,6 @@ public class LoginModel implements IPresennterToModel {
             editor.putString("userType",user_info_model.getUserType());
             editor.apply();
 
-            presenter_login.MakeToastMessage(sharedPreferences.getString("id","")+sharedPreferences.getString("pw","")+sharedPreferences.getBoolean("auto",true)+sharedPreferences.getString("userType",""));
 
         }
 
@@ -338,13 +337,13 @@ public class LoginModel implements IPresennterToModel {
 
         this.auto = auto;
 
+        if(this.auto){
+            performLoginOperation(user_info_model);
+        }
 
 
 
 
-        Log.d("exxxx",id+" "+pw+" "+userType);
-
-        performLoginOperation(user_info_model);
     }
 
     @Override
@@ -352,14 +351,17 @@ public class LoginModel implements IPresennterToModel {
 //        user_info_model.setId(id);
 //        user_info_model.setId(userType);
 
-
-        user_info_model = new User_Info_Model(id,userType);
-
-        Log.d("autoSns2",userType);
-        Log.d("autoSns3",user_info_model.getId()+user_info_model.getUserType());
-
         this.auto  = auto;
-        performLoginOperation(user_info_model);
+
+        if(this.auto){
+            user_info_model = new User_Info_Model(id,userType);
+
+            Log.d("autoSns2",userType);
+            Log.d("autoSns3",user_info_model.getId()+user_info_model.getUserType());
+            performLoginOperation(user_info_model);
+
+        }
+
 
 
     }
@@ -369,6 +371,11 @@ public class LoginModel implements IPresennterToModel {
     @Override
     public void getEditor(SharedPreferences.Editor editor) {
         this.editor = editor;
+    }
+
+    @Override
+    public void findPassword() {
+
     }
 
 

@@ -62,7 +62,7 @@ public class Register_Fam_Model implements IRegister_Presenter_To_FamModel {
                 public void onResponse(Call<FindFamilyVO> call, Response<FindFamilyVO> response) {
                     final FindFamilyVO findFamilyVO = response.body();
 
-                    Log.e(TAG, "find"+findFamilyVO.getStatus()+findFamilyVO.getResult().getNickName()+"  "+findFamilyVO.getResult().getUserId());
+                   // Log.e(TAG, "find"+findFamilyVO.getStatus()+findFamilyVO.getResult().getNickName()+"  "+findFamilyVO.getResult().getUserId());
                     if (findFamilyVO.getStatus().equals("200")) {
                         isAddedFamily = true;
                         second_user_id = findFamilyVO.getResult().getUserId();

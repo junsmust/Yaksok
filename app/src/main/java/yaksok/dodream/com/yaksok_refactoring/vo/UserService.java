@@ -22,6 +22,7 @@ public interface UserService {
     @PUT("/users/fcmtokens")
     Call<BodyVO> putToken(@Body FcmTokenVO fcmTokenVO);
 
+    //http://15.164.163.234:8080/users/jslee7120/originpasswords/e9e9632f01/newpasswords/1q2w3e4r
     @PUT(" /users/{id}/originpasswords/{opw}/newpasswords/{npw}")
     Call<BodyVO>putChangePW(@Path("id") String id, @Path("opw") String opw, @Path("npw") String npw );
 
@@ -39,6 +40,11 @@ public interface UserService {
 
     @GET("/families/{userId}")
     Call<Connected_Family> getConnectedFamilyInfo(@Path("userId") String userId);
+
+    //findUserPassword
+    //http://15.164.163.234:8080/users/gam7325/emails/isp3087@gmail.com/passwords
+    @PUT("/users/{id}/emails/{email}/passwords")
+    Call<BodyVO>putFindUserPassword(@Path("id") String id,@Path("email") String email);
 
 
 //    @POST("/users")

@@ -25,6 +25,5 @@ public interface IPresennterToModel  {
     void getEditor(SharedPreferences.Editor editor);
 
 
-
-
+    void findPassword();
 }

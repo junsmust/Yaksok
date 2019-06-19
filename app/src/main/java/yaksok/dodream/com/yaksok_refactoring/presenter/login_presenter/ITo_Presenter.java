@@ -28,7 +28,5 @@ public interface ITo_Presenter {
      void sendEditor(SharedPreferences.Editor editor);
 
 
-
-
-
+    void findPassword();
 }
