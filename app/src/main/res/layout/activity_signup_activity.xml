@@ -65,7 +65,8 @@
                 android:id="@+id/sign_check_id_btn"
                 android:layout_width="match_parent"
                 android:layout_height="30dp"
-                android:text="확 인"
+                android:text="중복확인"
+                android:textSize="10dp"
                 android:textStyle="bold"
                 android:textColor="#ffffff"
                 android:layout_weight="8"/>
@@ -207,7 +208,8 @@
                 android:id="@+id/sign_up_pn_register_btn"
                 android:layout_width="match_parent"
                 android:layout_height="30dp"
-                android:text="인증받기"
+                android:text="중복확인"
+                android:textSize="10dp"
                 android:textStyle="bold"
                 android:textColor="#ffffff"
                 android:layout_weight="8"/>
