@@ -260,10 +260,7 @@ public class Signup_activity extends AppCompatActivity implements IPresenter_To_
     @Override
     public void isValidedId(boolean isId) {
 
-        if(isId){
-            sign_up_check_id_btn.setBackgroundColor(getApplicationContext().getResources().getColor(R.color.colorPrimaryDark2));
-        }else{
-            sign_up_check_id_btn.setBackgroundColor(getApplicationContext().getResources().getColor(R.color.main_color));
+        if(!isId){
             sign_up_id_edt.setText("");
         }
     }

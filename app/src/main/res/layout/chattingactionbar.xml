@@ -24,7 +24,7 @@
                 android:layout_height="19dp"
                 android:layout_gravity="center|left"
                 android:layout_margin="3dp"
-                android:src="@drawable/arrow" />
+                android:src="@drawable/back" />
         </FrameLayout>
 
 

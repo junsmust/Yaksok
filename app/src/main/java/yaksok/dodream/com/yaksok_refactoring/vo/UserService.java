@@ -3,6 +3,7 @@ package yaksok.dodream.com.yaksok_refactoring.vo;
 import retrofit2.Call;
 import retrofit2.http.Body;
 import retrofit2.http.GET;
+import retrofit2.http.PATCH;
 import retrofit2.http.POST;
 import retrofit2.http.PUT;
 import retrofit2.http.Path;
@@ -84,25 +85,14 @@ public interface UserService {
     @PUT("/mymedicines/takingmedicine")
     Call<BodyVO>putTakeMedicine(@Body TakeOk takeOk);
 
-
-    //=====토큰 업데이트======
-    //HTTP PUT   /users/fcmtokens
-    //Host:  http://54.180.81.180:8080
-    //
-    //request
-    //BODY{
-    //	“id” : string
-    //	“fcmToken” : string
-    //}
-    //
-    //
-    //response
-    //BODY{
-    //	“status” : “code”
-    //}
-    //
-    //code
-    //201 : OK
+    @GET("/users/{item} ? itemType=\"\" & behavior=\"\"")
+    Call<BodyVO>getOverlapId(@Path("item") String item, @Query("itemType") String itemType, @Query("behavior") String behavior);
+    //[해당 아이디가 중복된 아이디인지 검사한다.]
+    //HTTP GET /users/{item} ? itemType="" & behavior=""
+    //itemType : id
+    //behavior : confirmOverlapId
+    //200 : OK (존재하지 않음으로 회원가입가능한 아이디)
+    //400 : 잘못된 요청
+    //403 : 중복되는 아이디 존재
     //500 : Server Error
-
 }

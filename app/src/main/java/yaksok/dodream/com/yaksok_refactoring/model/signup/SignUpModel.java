@@ -55,12 +55,46 @@ public class SignUpModel implements IPresenterToSignUpModel {
 
         }
         else{
-            isValidateID = true;
-            presenterSignUp.makeToastMessage("아이디가 적합합니다");
-            presenterSignUp.isValidedId(isValidateID);
-            user_info_model.setId(id);
 
-            Log.e( "validateId: id" ,user_info_model.getId());
+            Log.e("validateId: ",id );
+            retrofit = new Retrofit.Builder()
+                    .baseUrl(userService.API_URL)
+                    .addConverterFactory(ScalarsConverterFactory.create())
+                    .addConverterFactory(GsonConverterFactory.create())
+                    .build();
+            userService = retrofit.create(UserService.class);
+
+            Call<BodyVO> call = userService.getOverlapId(id,"id","confirmOverlapId");
+            call.enqueue(new Callback<BodyVO>() {
+                @Override
+                public void onResponse(Call<BodyVO> call, Response<BodyVO> response) {
+                    BodyVO bodyVO = response.body();
+//200 : OK (존재하지 않음으로 회원가입가능한 아이디)
+//400 : 잘못된 요청
+//403 : 중복되는 아이디 존재
+//500 : Server Error
+                    if(bodyVO.getStatus().equals("200")){
+                        presenterSignUp.isValidedId(true);
+                        presenterSignUp.makeToastMessage("사용 가능한 아이디 입니다.");
+                    }else if(bodyVO.getStatus().equals("400")){
+                        presenterSignUp.isValidedId(false);
+                        presenterSignUp.makeToastMessage("질못된 아이디 입니다.");
+                    }else if(bodyVO.getStatus().equals("403")){
+                        presenterSignUp.isValidedId(false);
+                        presenterSignUp.makeToastMessage("중복된 아이디 입니다.");
+                    }else if(bodyVO.getStatus().equals("500")){
+                        presenterSignUp.isValidedId(false);
+                        presenterSignUp.makeToastMessage("서버 오류 입니다. ");
+                    }
+                }
+
+                @Override
+                public void onFailure(Call<BodyVO> call, Throwable t) {
+
+                }
+            });
+
+
         }
     }
 
