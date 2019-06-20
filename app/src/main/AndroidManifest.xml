@@ -44,7 +44,7 @@
             android:name=".view.Alarm_On"
             android:launchMode="singleInstance"
             android:screenOrientation="unspecified"
-            android:theme="@android:style/Theme.Translucent"></activity>
+            android:theme="@android:style/Theme.Translucent" />
         <activity android:name=".view.Settings.SettingActivity" />
         <activity android:name=".view.Settings.Developer" />
         <activity android:name=".view.Settings.MyPage" />
@@ -85,20 +85,13 @@
 
         <activity android:name=".view.signup.GetPn" />
         <activity android:name=".view.chat.Chatting_list" />
-        <activity android:name=".view.chat.Chat_Room"></activity>
+        <activity android:name=".view.chat.Chat_Room" />
         <activity
             android:name=".view.Settings.MyPage"
             tools:ignore="DuplicateActivity" />
-
-        <activity android:name=".view.InsertPill.Temp"/>
-
-        <activity android:name=".view.WetherChooseFamilyOrNot">
-
-        </activity>
-
-
-        <activity android:name=".view.find_pw.FindUserPassword"></activity>
-
+        <activity android:name=".view.InsertPill.Temp" />
+        <activity android:name=".view.WetherChooseFamilyOrNot"></activity>
+        <activity android:name=".view.find_pw.FindUserPassword" />
     </application>
 
 </manifest>
