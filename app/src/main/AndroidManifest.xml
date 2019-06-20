@@ -89,17 +89,18 @@
         <activity
             android:name=".view.Settings.MyPage"
             tools:ignore="DuplicateActivity" />
-<<<<<<< HEAD
+
         <activity android:name=".view.InsertPill.Temp"/>
 
         <activity android:name=".view.WetherChooseFamilyOrNot">
 
         </activity>
 
-=======
-        <activity android:name=".view.WetherChooseFamilyOrNot"></activity>
+
+       <!-- <activity android:name=".view.WetherChooseFamilyOrNot"></activity>-->
         <activity android:name=".view.find_pw.FindUserPassword"></activity>
->>>>>>> myeongjunjjang
+        <activity android:name=".New_Settings"/>
+
     </application>
 
 </manifest>

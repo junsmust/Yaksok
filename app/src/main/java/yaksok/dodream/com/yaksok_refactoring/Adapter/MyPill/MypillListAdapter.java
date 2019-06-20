@@ -69,11 +69,14 @@ public class MypillListAdapter extends BaseAdapter {
             } else if (listItem.getTime_of_day() == 2) {
                 iv_point1.setImageResource(R.drawable.mypii_point);
                 iv_point2.setImageResource(R.drawable.mypii_point);
+                iv_point2.setVisibility(View.VISIBLE);
                 iv_point3.setVisibility(View.INVISIBLE);
             } else if (listItem.getTime_of_day() == 3) {
                 iv_point1.setImageResource(R.drawable.mypii_point);
                 iv_point2.setImageResource(R.drawable.mypii_point);
+                iv_point2.setVisibility(View.VISIBLE);
                 iv_point3.setImageResource(R.drawable.mypii_point);
+                iv_point3.setVisibility(View.VISIBLE);
             }
         }
         else{
@@ -84,12 +87,15 @@ public class MypillListAdapter extends BaseAdapter {
                 iv_point3.setVisibility(View.INVISIBLE);
             } else if (listItem.getTime_of_day() == 2) {
                 iv_point1.setImageResource(R.drawable.mypii_point_pink);
+                iv_point2.setVisibility(View.VISIBLE);
                 iv_point2.setImageResource(R.drawable.mypii_point_pink);
                 iv_point3.setVisibility(View.INVISIBLE);
             } else if (listItem.getTime_of_day() == 3) {
                 iv_point1.setImageResource(R.drawable.mypii_point_pink);
                 iv_point2.setImageResource(R.drawable.mypii_point_pink);
+                iv_point2.setVisibility(View.VISIBLE);
                 iv_point3.setImageResource(R.drawable.mypii_point_pink);
+                iv_point3.setVisibility(View.VISIBLE);
             }
 
         }

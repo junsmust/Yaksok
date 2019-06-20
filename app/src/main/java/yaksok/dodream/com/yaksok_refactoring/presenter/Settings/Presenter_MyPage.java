@@ -33,4 +33,14 @@ public class Presenter_MyPage implements MyPageToPresenter {
     public void onSecOutResponse(boolean response) {
         view.onSecOutResponse(response);
     }
+
+    @Override
+    public void onChangePW(String id, String opw, String ch_pw) {
+        model.onChangePw(id,opw,ch_pw);
+    }
+
+    @Override
+    public void onChangeResponse(boolean response, int status) {
+        view.onChangeResponse(response,status);
+    }
 }

@@ -5,12 +5,21 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
+import android.support.design.widget.TextInputLayout;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.IntentCompat;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
+import android.text.Editable;
+import android.text.InputType;
+import android.text.TextUtils;
+import android.text.TextWatcher;
+import android.text.method.PasswordTransformationMethod;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
@@ -22,13 +31,14 @@ import com.kakao.usermgmt.response.model.User;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 import retrofit2.converter.scalars.ScalarsConverterFactory;
+import yaksok.dodream.com.yaksok_refactoring.ApplicationBase;
 import yaksok.dodream.com.yaksok_refactoring.R;
 import yaksok.dodream.com.yaksok_refactoring.model.user.User_Id;
 import yaksok.dodream.com.yaksok_refactoring.presenter.Settings.Presenter_MyPage;
 import yaksok.dodream.com.yaksok_refactoring.view.login.Login_activity;
 import yaksok.dodream.com.yaksok_refactoring.vo.DeleteService;
 
-public class MyPage extends AppCompatActivity implements MyPage_PresenterToView {
+public class MyPage extends ApplicationBase implements MyPage_PresenterToView {
     public Retrofit retrofit;
     private Presenter_MyPage presenter_myPage;
     TextView id,nickname,email,phone;
@@ -36,6 +46,9 @@ public class MyPage extends AppCompatActivity implements MyPage_PresenterToView 
     ToggleButton auto_cancel;
     Button bt_changePW;
     public android.app.AlertDialog.Builder dialog;
+    private TextInputLayout et_oldpw,et_newpw,et_newpw_con;
+    String oldpass, newpass, newpass_con;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -50,16 +63,95 @@ public class MyPage extends AppCompatActivity implements MyPage_PresenterToView 
 
         id = (TextView) findViewById(R.id.tv_setting_id);
         nickname = (TextView) findViewById(R.id.tv_setting_nickname);
-        email = (TextView) findViewById(R.id.tv_setting_email);
         phone = (TextView) findViewById(R.id.tv_setting_phone);
         bt_secOUT = (Button)findViewById(R.id.bt_secessionOUT);
         bt_changePW = (Button)findViewById(R.id.bt_changePW);
 
+        et_oldpw = findViewById(R.id.et_setting_oldpw);
+        et_oldpw.getEditText().setInputType(InputType.TYPE_TEXT_VARIATION_PASSWORD);
+        et_oldpw.getEditText().setTransformationMethod(PasswordTransformationMethod.getInstance());
+        et_newpw = findViewById(R.id.et_setting_newpw);
+        et_newpw.getEditText().setInputType(InputType.TYPE_TEXT_VARIATION_PASSWORD);
+        et_newpw.getEditText().setTransformationMethod(PasswordTransformationMethod.getInstance());
+        et_newpw_con = findViewById(R.id.et_setting_newpw_con);
+        et_newpw_con.getEditText().setInputType(InputType.TYPE_TEXT_VARIATION_PASSWORD);
+        et_newpw_con.getEditText().setTransformationMethod(PasswordTransformationMethod.getInstance());
 
-        id.setText("아이디 : " + User_Id.getUser_Id());
-        nickname.setText("닉네임 : " + User_Id.getNickname());
-        email.setText("이메일 : " + User_Id.getE_mail());
-        phone.setText("전화번호 : " + User_Id.getPhone_No());
+
+        id.setText(User_Id.getUser_Id());
+        nickname.setText(User_Id.getNickname());
+        phone.setText(User_Id.getPhone_No());
+
+        et_newpw.getEditText().setOnFocusChangeListener(new View.OnFocusChangeListener() {
+            @Override
+            public void onFocusChange(View v, boolean hasFocus) {
+                if(hasFocus){
+                    et_newpw.getEditText().addTextChangedListener(new TextWatcher() {
+                        @Override
+                        public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+                        }
+
+                        @Override
+                        public void onTextChanged(CharSequence s, int start, int before, int count) {
+                            newpass = et_newpw.getEditText().getText().toString().trim();
+                            if(et_newpw.getEditText().getText().toString().length()<=6){
+                                et_newpw.setError(" ");
+                            }
+                            else if(!hasSpecialCharacter(et_newpw.getEditText().getText().toString())){
+                                et_newpw.setError(" ");
+                            }
+                            else if(et_oldpw.getEditText().getText().toString().trim().equals(newpass)){
+                                et_newpw.setError("기존 비밀번호와 일치합니다!");
+                            }
+                            else{
+                                et_newpw.setError(null);
+                            }
+
+                        }
+
+                        @Override
+                        public void afterTextChanged(Editable s) {
+                        }
+                    });
+                }
+
+            }
+        });
+
+        et_newpw_con.getEditText().setOnFocusChangeListener(new View.OnFocusChangeListener() {
+            @Override
+            public void onFocusChange(View v, boolean hasFocus) {
+                if(hasFocus){
+                    et_newpw_con.getEditText().addTextChangedListener(new TextWatcher() {
+                        @Override
+                        public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+                        }
+
+                        @Override
+                        public void onTextChanged(CharSequence s, int start, int before, int count) {
+                            if(et_newpw_con.getEditText().getText().toString().equals(newpass)){
+                                et_newpw_con.setError(null);
+                            }
+                            else if(et_newpw_con.getEditText().getText().toString().equals("")){
+                                et_newpw_con.setError(" ");
+                            }
+                            else{
+                                et_newpw_con.setError(" ");
+                            }
+                        }
+
+                        @Override
+                        public void afterTextChanged(Editable s) {
+
+                        }
+                    });
+                }
+
+            }
+        });
+
 
         bt_secOUT.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -67,14 +159,15 @@ public class MyPage extends AppCompatActivity implements MyPage_PresenterToView 
                 showDialog();
             }
         });
+
         bt_changePW.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 if(User_Id.getType().equals("G")) {
-                    startActivity(new Intent(getApplicationContext(), ChangePW.class));
+                    presenter_myPage.onChangePW(User_Id.getUser_Id(),et_oldpw.getEditText().getText().toString(),et_newpw.getEditText().getText().toString());
                 }
                 else{
-                    Toast.makeText(getApplicationContext(), "SNS 회원은 변경 불가", Toast.LENGTH_LONG).show();
+                    Toast.makeText(getApplicationContext(), "SNS 회원은 변경 불가합니다.", Toast.LENGTH_LONG).show();
                 }
             }
         });
@@ -113,5 +206,32 @@ public class MyPage extends AppCompatActivity implements MyPage_PresenterToView 
             ActivityCompat.finishAffinity(this);
             startActivity(new Intent(this, Login_activity.class));
         }
+    }
+
+    @Override
+    public void onChangeResponse(boolean response, int status) {
+        if(response){
+            if(status==1){
+                Toast.makeText(getApplicationContext(), "변경 완료", Toast.LENGTH_LONG).show();
+                finish();
+            }
+            if(status==2){
+                Toast.makeText(getApplicationContext(), "기존 비밀번호가 일치하지 않습니다", Toast.LENGTH_LONG).show();
+            }
+        }
+    }
+
+    public boolean hasSpecialCharacter(String string){
+        if(TextUtils.isEmpty(string)){
+            return false;
+        }
+        else{
+            for(int i = 0; i < string.length(); i++){
+                if(!Character.isLetterOrDigit(string.charAt(i))){
+                    return true;
+                }
+            }
+        }
+        return false;
     }
 }

@@ -13,6 +13,7 @@ import android.widget.Button;
 import android.widget.TextView;
 
 import yaksok.dodream.com.yaksok_refactoring.ApplicationBase;
+import yaksok.dodream.com.yaksok_refactoring.New_Settings;
 import yaksok.dodream.com.yaksok_refactoring.R;
 import yaksok.dodream.com.yaksok_refactoring.view.Settings.SettingActivity;
 import yaksok.dodream.com.yaksok_refactoring.model.user.User_Id;
@@ -72,7 +73,7 @@ public class MainPage_activity extends ApplicationBase implements Main_Presenter
         bt_setting.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivity(new Intent(getApplicationContext(), SettingActivity.class));
+                startActivity(new Intent(getApplicationContext(), New_Settings.class));
             }
         });
 

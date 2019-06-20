@@ -7,6 +7,7 @@ import android.support.annotation.Nullable;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
+import android.util.SparseBooleanArray;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
@@ -14,6 +15,8 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.CheckBox;
+import android.widget.CompoundButton;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.ListView;
@@ -27,6 +30,7 @@ import android.widget.Toast;
 import java.util.ArrayList;
 import java.util.List;
 
+import yaksok.dodream.com.yaksok_refactoring.ApplicationBase;
 import yaksok.dodream.com.yaksok_refactoring.CustomChoiceListViewAdapter;
 import yaksok.dodream.com.yaksok_refactoring.R;
 import yaksok.dodream.com.yaksok_refactoring.model.user.User_Id;
@@ -35,16 +39,18 @@ import yaksok.dodream.com.yaksok_refactoring.view.InsertPill.Sel_AlarmRecive.Sel
 import yaksok.dodream.com.yaksok_refactoring.view.InsertPill.SearchPill.SearchPill_activity;
 import yaksok.dodream.com.yaksok_refactoring.vo.InsertPill_Item;
 
-public class InsertPill_activity extends AppCompatActivity implements InsertPill_PresenterToView, View.OnClickListener{
+public class InsertPill_activity extends ApplicationBase implements InsertPill_PresenterToView, View.OnClickListener{
 
     Button time1,time2,time3,bt_slidcalcel;
     EditText et_name;
+    CheckBox checkBox;
     Spinner spinner;
-    TextView tv_day_time,tv_dosagi;
+    TextView tv_day_time,tv_dosagi,tv_IP_family;
     ArrayList<String> sp_array;
     ArrayAdapter<String> sp_arrayAdapter;
     TimePickerDialog dialog1,dialog2,dialog3;
     String h1,m1,h2,m2,h3,m3;
+    String family_names = "";
     String day1,day2,day3;
     ImageView minus_count,plus_count,imageView,imageView1;
     RelativeLayout rb_family;
@@ -59,6 +65,7 @@ public class InsertPill_activity extends AppCompatActivity implements InsertPill
     ArrayAdapter adapter;
     CustomChoiceListViewAdapter adapter1;
     int size = 0;
+    boolean slid_Satuts=false;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -105,7 +112,6 @@ public class InsertPill_activity extends AppCompatActivity implements InsertPill
 
         family_id = new ArrayList<String>();
 
-        family_id = new ArrayList<String>();
         alarm_f_list = new ArrayList<String>();
         time =  new ArrayList<>();
 
@@ -123,10 +129,33 @@ public class InsertPill_activity extends AppCompatActivity implements InsertPill
         bt_slidcalcel = (Button)findViewById(R.id.bt_sliding_cancel);
         et_name = (EditText)findViewById(R.id.et_IP_name);
         lv_sel_family = (ListView)findViewById(R.id.iv_sliding_family);
+        checkBox = (CheckBox) findViewById(R.id.checkBox1);
+        tv_IP_family = (TextView)findViewById(R.id.tv_IP_family);
+
+        lv_sel_family.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+
+                family_names += familyList.get(position);
+            }
+        });
+
 
         bt_slidcalcel.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                slid_Satuts = false;
+                SparseBooleanArray checkedItems = lv_sel_family.getCheckedItemPositions();
+                family_names = " ";
+                family_id.clear();
+                int count = adapter1.getCount();
+                for(int i=0; i < count; i++){
+                    if(checkedItems.get(i)){
+                        family_names += familyList.get(i);
+                        family_id.add(familyList_Id.get(i));
+                    }
+                }
+                tv_IP_family.setText(family_names);
                 slidingDrawer.animateClose();
             }
         });
@@ -134,7 +163,10 @@ public class InsertPill_activity extends AppCompatActivity implements InsertPill
         rb_family.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                slidingDrawer.animateOpen();
+                if(!slid_Satuts) {
+                    slid_Satuts = true;
+                    slidingDrawer.animateOpen();
+                }
             }
         });
 
@@ -394,10 +426,10 @@ public class InsertPill_activity extends AppCompatActivity implements InsertPill
                 size++;
             }
             lv_sel_family.setAdapter(adapter1);
-            ViewGroup.LayoutParams params = lv_sel_family.getLayoutParams();
+           /* ViewGroup.LayoutParams params = lv_sel_family.getLayoutParams();
             params.height = 200 * size;
             lv_sel_family.setLayoutParams(params);
-            lv_sel_family.setAdapter(adapter1);
+            lv_sel_family.setAdapter(adapter1);*/
         }
     }
 

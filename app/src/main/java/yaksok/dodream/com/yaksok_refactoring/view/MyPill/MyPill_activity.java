@@ -130,7 +130,7 @@ public class MyPill_activity extends ApplicationBase implements MyPill_Presenter
         Log.d("test1","true");
     }
 
-    public void showDialog(String name, String regidate, final int pillNo){
+    /*public void showDialog(String name, String regidate, final int pillNo){
 
         dialog.setTitle("약 등록 정보");
         dialog.setMessage("약 이름 :"+name+"\n"+"등록날짜 : "+regidate);
@@ -156,7 +156,7 @@ public class MyPill_activity extends ApplicationBase implements MyPill_Presenter
        AlertDialog alertDialog = dialog.create();
         alertDialog.show();
 
-    }
+    }*/
 
 
 
