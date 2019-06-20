@@ -44,12 +44,13 @@
             android:name=".view.Alarm_On"
             android:launchMode="singleInstance"
             android:screenOrientation="unspecified"
-            android:theme="@android:style/Theme.Translucent"></activity>
-        <activity android:name=".view.Settings.SettingActivity" />
-        <activity android:name=".view.Settings.Developer" />
-        <activity android:name=".view.Settings.MyPage" />
-        <activity android:name=".view.Settings.ChangePW" />
-        <activity android:name=".ApplicationBase" />
+            android:theme="@android:style/Theme.Translucent" >
+        </activity>
+        <activity android:name=".view.Settings.SettingActivity"/>
+        <activity android:name=".view.Settings.Developer"/>
+        <activity android:name=".view.Settings.MyPage"/>
+        <activity android:name=".view.Settings.ChangePW"/>
+        <activity android:name=".ApplicationBase"/>
 
         <service
             android:name=".firebaseService.FirebaseMessageService"
@@ -97,9 +98,10 @@
         </activity>
 
 
-       <!-- <activity android:name=".view.WetherChooseFamilyOrNot"></activity>-->
         <activity android:name=".view.find_pw.FindUserPassword"></activity>
+
         <activity android:name=".view.Settings.New_Settings"/>
+
 
     </application>
 
