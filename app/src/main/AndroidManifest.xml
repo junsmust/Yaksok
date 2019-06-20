@@ -51,6 +51,13 @@
         <activity android:name=".view.Settings.ChangePW" />
         <activity android:name=".ApplicationBase" />
 
+        </activity>
+        <activity android:name=".view.Settings.SettingActivity"/>
+        <activity android:name=".view.Settings.Developer"/>
+        <activity android:name=".view.Settings.MyPage"/>
+        <activity android:name=".view.Settings.ChangePW"/>
+        <activity android:name=".ApplicationBase"/>
+
         <service
             android:name=".firebaseService.FirebaseMessageService"
             android:enabled="true"
@@ -89,9 +96,24 @@
         <activity
             android:name=".view.Settings.MyPage"
             tools:ignore="DuplicateActivity" />
+
         <activity android:name=".view.InsertPill.Temp" />
         <activity android:name=".view.WetherChooseFamilyOrNot"></activity>
         <activity android:name=".view.find_pw.FindUserPassword" />
+
+
+        <activity android:name=".view.InsertPill.Temp"/>
+
+        <activity android:name=".view.WetherChooseFamilyOrNot">
+
+        </activity>
+
+
+        <activity android:name=".view.find_pw.FindUserPassword"></activity>
+
+        <activity android:name=".view.Settings.New_Settings"/>
+
+
     </application>
 
 </manifest>
