@@ -6,6 +6,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.v4.app.ActivityCompat;
 import android.util.Log;
 import android.view.View;
 import android.view.Window;
@@ -22,6 +23,7 @@ import retrofit2.converter.gson.GsonConverterFactory;
 import retrofit2.converter.scalars.ScalarsConverterFactory;
 import yaksok.dodream.com.yaksok_refactoring.R;
 import yaksok.dodream.com.yaksok_refactoring.model.Main.NotificationUtil;
+import yaksok.dodream.com.yaksok_refactoring.view.login.Login_activity;
 import yaksok.dodream.com.yaksok_refactoring.vo.BodyVO;
 import yaksok.dodream.com.yaksok_refactoring.vo.TakeOk;
 import yaksok.dodream.com.yaksok_refactoring.vo.UserService;
@@ -65,7 +67,7 @@ public class Alarm_On extends Activity {
          //userId = intent.getStringExtra("TakingUser");
          //pillNo = intent.getStringExtra("TakingPill");
 
-        launchIntent = getPackageManager().getLaunchIntentForPackage("yaksok.dodream.com.yaksok_refactoring");
+        launchIntent = getPackageManager().getLaunchIntentForPackage("yaksok.dodream.com.yaksok");
         bt_Ok.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -94,8 +96,11 @@ public class Alarm_On extends Activity {
 
                 });
                 if(isAppRunning()){
+                    Intent i = new Intent(getApplicationContext()/*현재 액티비티 위치*/ , Login_activity.class/*이동 액티비티 위치*/);
+                    i.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP|Intent.FLAG_ACTIVITY_SINGLE_TOP);
+                    startActivity(i);
+                   // startActivity(launchIntent);
                     finish();
-                    startActivity(launchIntent);
                 }
                 else{
                     finish();

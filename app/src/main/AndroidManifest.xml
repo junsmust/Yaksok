@@ -15,6 +15,8 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true">
+
+
         <activity android:name=".view.Splash">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -51,12 +53,8 @@
         <activity android:name=".view.Settings.ChangePW" />
         <activity android:name=".ApplicationBase" />
 
-        </activity>
-        <activity android:name=".view.Settings.SettingActivity"/>
-        <activity android:name=".view.Settings.Developer"/>
-        <activity android:name=".view.Settings.MyPage"/>
-        <activity android:name=".view.Settings.ChangePW"/>
-        <activity android:name=".ApplicationBase"/>
+
+
 
         <service
             android:name=".firebaseService.FirebaseMessageService"
@@ -79,16 +77,8 @@
             android:name=".model.Main.NotificationUtil"
             android:enabled="true" />
 
-        <!--
-        <service
-            android:name=".firebaseService.FirebaseGetInstanceID"
-            android:enabled="true"
-            android:exported="true">
-            <intent-filter>
-                <action android:name="com.google.firebase.INSTANCE_ID_EVENT" />
-            </intent-filter>
-        </service>
-        -->
+
+
 
         <activity android:name=".view.signup.GetPn" />
         <activity android:name=".view.chat.Chatting_list" />
@@ -102,18 +92,12 @@
         <activity android:name=".view.find_pw.FindUserPassword" />
 
 
-        <activity android:name=".view.InsertPill.Temp"/>
-
-        <activity android:name=".view.WetherChooseFamilyOrNot">
-
-        </activity>
-
-
-        <activity android:name=".view.find_pw.FindUserPassword"></activity>
-
         <activity android:name=".view.Settings.New_Settings"/>
 
 
     </application>
+
+
+
 
 </manifest>

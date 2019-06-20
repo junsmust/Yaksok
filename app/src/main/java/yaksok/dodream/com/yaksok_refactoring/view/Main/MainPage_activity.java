@@ -99,7 +99,7 @@ public class MainPage_activity extends ApplicationBase implements Main_Presenter
                 tv_main_min_text.setText("분");
                // tv_main_sec_text.setText("초");
                 countSW = true;
-                countDownTimer = new CountDownTimer((myNeaeTime_sec) * 1000, 1000) {
+                countDownTimer = new CountDownTimer((myNeaeTime_sec+60) * 1000, 1000) {
                     @Override
                     public void onTick(long millisUntilFinished) {
                         Log.d("testt", String.valueOf(millisUntilFinished));
@@ -119,9 +119,9 @@ public class MainPage_activity extends ApplicationBase implements Main_Presenter
                         //분 설정 부분
                         if ((millisUntilFinished >= 60000)) {
                             if ((millisUntilFinished / 1000) % 3600 / 60 < 10) {
-                                tv_main_min.setText("0" + String.valueOf((millisUntilFinished / 1000) % 3600 / 60));
+                                tv_main_min.setText("0" + String.valueOf(((millisUntilFinished / 1000) % 3600 / 60)));
                             } else {
-                                tv_main_min.setText(String.valueOf((millisUntilFinished / 1000) % 3600 / 60));
+                                tv_main_min.setText(String.valueOf(((millisUntilFinished / 1000) % 3600 / 60)));
                             }
                         } else {
                             tv_main_min.setText("00");
