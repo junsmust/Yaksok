@@ -50,12 +50,12 @@ public class Signup_activity extends AppCompatActivity implements IPresenter_To_
 
 
         //INIT
-        confirm_email_btn = (Button)findViewById(R.id.confirm_email_btn);
+
         sign_up_yourself_address_email = (EditText)findViewById(R.id.sign_email_yourself_address_edt);
         sign_up_name_edt = (EditText)findViewById(R.id.sign_name_edt);
         sign_up_id_edt = (EditText) findViewById(R.id.sign_id_edt);
         sign_up_yourself_email = (EditText)findViewById(R.id.sign_email_yourself_edt);
-
+        sign_up_email_spin = (Spinner)findViewById(R.id.sign_email_spin);
         //email
 
 
@@ -68,7 +68,8 @@ public class Signup_activity extends AppCompatActivity implements IPresenter_To_
 
 
         sign_up_check_id_btn = (Button)findViewById(R.id.sign_check_id_btn);
-        sign_up_check_pw_btn = (Button)findViewById(R.id.sign_up_check_pw_btn);
+
+
 
         sign_up_year_spin = (Spinner)findViewById(R.id.sign_year_spin);
         String[] year_spin = getResources().getStringArray(R.array.year);
@@ -85,10 +86,10 @@ public class Signup_activity extends AppCompatActivity implements IPresenter_To_
         ArrayAdapter<String> dayAdapter = new ArrayAdapter<String>(this,R.layout.support_simple_spinner_dropdown_item,day_spin);
         sign_up_day_spin.setAdapter(dayAdapter);
 
-        sign_up_phone_conpany_spin = (Spinner)findViewById(R.id.sign_up_phone_company_spin);
-        String[] phone_company = getResources().getStringArray(R.array.phone_company);
-        ArrayAdapter<String> phoneCompanyAdapter = new ArrayAdapter<String>(this,R.layout.support_simple_spinner_dropdown_item,phone_company);
-        sign_up_phone_conpany_spin.setAdapter(phoneCompanyAdapter);
+
+        String[] email = getResources().getStringArray(R.array.email_example);
+        ArrayAdapter<String> emailAdapter = new ArrayAdapter<>(this,R.layout.support_simple_spinner_dropdown_item,email);
+        sign_up_email_spin.setAdapter(emailAdapter);
 
 
 
@@ -145,10 +146,9 @@ public class Signup_activity extends AppCompatActivity implements IPresenter_To_
 
 
        sign_up_check_id_btn.setOnClickListener(this);
-       sign_up_check_pw_btn.setOnClickListener(this);
        sign_up_compelte_btn.setOnClickListener(this);
        sign_up_check_authorization_num_btn.setOnClickListener(this);
-       confirm_email_btn.setOnClickListener(this);
+
 
 
 
@@ -189,6 +189,7 @@ public class Signup_activity extends AppCompatActivity implements IPresenter_To_
             }
         });
         textView.setText("회원가입");
+        textView.setTextColor(getResources().getColor(R.color.black));
         textView.setGravity(Gravity.CENTER);
         actionBar.setTitle(textView.getText().toString());
 
@@ -297,16 +298,8 @@ public class Signup_activity extends AppCompatActivity implements IPresenter_To_
         switch (v.getId()){
             case R.id.sign_check_id_btn:
                 presenterSignUp.validateId(sign_up_id_edt.getText().toString());
+                break;
 
-                break;
-            case R.id.sign_up_check_pw_btn:
-                presenterSignUp.validatePw(sign_up_pw_edt.getText().toString(),sign_up_re_pw_edt.getText().toString());
-               // sign_up_check_id_btn.setBackgroundColor(getApplicationContext().getResources().getColor(R.color.design_default_color_primary_dark));
-                break;
-            case R.id.confirm_email_btn:
-                presenterSignUp.validateEmail(sign_up_yourself_email.getText().toString(),sign_up_yourself_address_email.getText().toString());
-              //  sign_up_check_id_btn.setBackgroundColor(getApplicationContext().getResources().getColor(R.color.design_default_color_primary_dark));
-                break;
             case R.id.sign_up_complete_btn:
                 presenterSignUp.setName(sign_up_name_edt.getText().toString());
                 presenterSignUp.isValdiatedUser();
