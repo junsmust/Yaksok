@@ -32,6 +32,7 @@ import retrofit2.converter.scalars.ScalarsConverterFactory;
 import yaksok.dodream.com.yaksok_refactoring.model.signup.SignUpModel;
 import yaksok.dodream.com.yaksok_refactoring.presenter.login_presenter.Presenter_Login;
 import yaksok.dodream.com.yaksok_refactoring.presenter.Main.Presenter_Main;
+import yaksok.dodream.com.yaksok_refactoring.view.login.Login_activity;
 import yaksok.dodream.com.yaksok_refactoring.vo.BodyVO;
 import yaksok.dodream.com.yaksok_refactoring.vo.UserService;
 
@@ -324,8 +325,9 @@ public class LoginModel implements IPresennterToModel {
             editor.apply();
 
 
-        }
 
+
+        }
 
     }
 
@@ -359,6 +361,7 @@ public class LoginModel implements IPresennterToModel {
             Log.d("autoSns2",userType);
             Log.d("autoSns3",user_info_model.getId()+user_info_model.getUserType());
             performLoginOperation(user_info_model);
+            Login_activity.checkBox.setChecked(true);
 
         }
 

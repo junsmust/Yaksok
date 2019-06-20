@@ -50,7 +50,7 @@ public class Login_activity extends ApplicationBase implements IPresenterToView{
     private TextView signUp_tv,find_id,find_pw;
     private User_Info_Model user_info_model;
     private Presenter_Login presenter_login;
-    private CheckBox checkBox;
+    public static CheckBox checkBox;
     UserService userService;
     Retrofit retrofit;
     OAuthLoginHandler moAuthLoginHandler;
@@ -158,9 +158,11 @@ public class Login_activity extends ApplicationBase implements IPresenterToView{
                     editor.apply();
                     presenter_login.checkBox(loginInformation,editor,true);
 
+
                 }
                 else{
-
+                    editor.putBoolean("auto",false);
+                    editor.apply();
                 }
 
             }
@@ -169,7 +171,7 @@ public class Login_activity extends ApplicationBase implements IPresenterToView{
 
         Log.d("cc",loginInformation.getBoolean("auto",true)+" ");
         if(loginInformation.getBoolean("auto",true)){
-
+            //checkBox.setChecked(loginInformation.getBoolean("auto",true));
             switch (loginInformation.getString("userType","")){
                 case "G":
 

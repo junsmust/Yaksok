@@ -6,63 +6,134 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    android:layout_weight="1">
+    android:layout_weight="1"
+    android:background="#ffffff">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true">
+
+            <FrameLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+                <ImageView
+                    android:layout_width="250sp"
+                    android:layout_height="340sp"
+                    android:src="@drawable/skip_regi_logo"
+                    android:layout_toRightOf="@id/family_find_frameLayout"
+                    android:layout_gravity="end"
+                    />
+
+            </FrameLayout>
+        </RelativeLayout>
+    </LinearLayout>
+
+
 
     <FrameLayout
         android:id="@+id/family_find_frameLayout"
-        android:layout_width="110dp"
-        android:layout_height="130dp"
+        android:layout_width="wrap_content"
+        android:layout_height="400dp"
+        android:layout_centerHorizontal="true"
         android:layout_centerInParent="true">
+
+
         <RelativeLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
+            android:layout_height="match_parent"
+            android:id="@+id/parent_layout">
 
-            <ImageView
-                android:id="@+id/find_family_iv"
-                android:layout_width="100dp"
-                android:layout_height="100dp"
-                android:src="@drawable/family"
-                android:layout_centerHorizontal="true"
-                />
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="가족 찾기"
-                android:layout_below="@id/find_family_iv"
-                android:layout_centerHorizontal="true"
-                />
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:gravity="center">
+
+                <TextView
+                    android:id="@+id/welcome_ys"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Welcome"
+                    android:textStyle="bold"
+                    android:textColor="#000000"
+                    android:textSize="25sp"
+
+                    />
+                <TextView
+                    android:id="@+id/welcome_ys2"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text=" yaksok"
+                    android:textColor="#000000"
+                    android:textSize="24dp"
+                    android:layout_toRightOf="@id/welcome_ys" />
+                <TextView
+                    android:id="@+id/explain_tv"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="매번 까먹고 때를 놓치는 약,"
+                    android:layout_below="@+id/welcome_ys"
+                    android:layout_marginTop="20dp"
+                    android:textColor="#000000"/>
+                <TextView
+
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="이젠 약속이 여러분의 건강을 챙겨 드려요."
+                    android:layout_below="@+id/explain_tv"
+                    android:layout_margin="3dp"
+                    android:id="@+id/explain_tv2"
+                    android:textColor="#000000"
+                    />
+            </RelativeLayout>
+
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical"
+                android:gravity="bottom"
+                >
+                <Button
+                    android:id="@+id/register_btn"
+                    android:layout_width="300dp"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/login_btn_corner"
+                    android:text="가족 등록하기"
+                    android:textColor="#ffffff"
+                    android:textStyle="bold"
+                    android:textSize="15sp"
+                    android:layout_gravity="center"
+                    />
+
+                <Button
+                    android:id="@+id/skip_btn"
+                    android:layout_margin="7dp"
+                    android:layout_width="300dp"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/green_line_rec"
+                    android:text="스킵하기"
+                    android:textColor="@color/main_color"
+                    android:textStyle="bold"
+                    android:textSize="15sp"
+                    android:layout_gravity="center">
+
+                </Button>
+
+
+            </LinearLayout>
         </RelativeLayout>
 
 
     </FrameLayout>
 
-    <FrameLayout
-        android:id="@+id/family_find_skip_frameLayout"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true">
 
-        <RelativeLayout
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content">
 
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_centerVertical="true"
-                android:layout_toLeftOf="@+id/skip_iv"
-                android:text="스킵하기" />
-
-            <ImageView
-                android:id="@+id/skip_iv"
-                android:layout_width="60dp"
-                android:layout_height="60dp"
-                android:layout_alignParentRight="true"
-                android:layout_gravity="right"
-                android:layout_margin="20dp"
-                android:src="@drawable/next" />
-        </RelativeLayout>
-    </FrameLayout>
 
 
 </RelativeLayout>
