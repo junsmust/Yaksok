@@ -85,6 +85,7 @@
                 android:textSize="17dp"
                 android:text="자동 로그인"/>
             <Switch
+                android:id="@+id/sw_autoLog"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignParentEnd="true"

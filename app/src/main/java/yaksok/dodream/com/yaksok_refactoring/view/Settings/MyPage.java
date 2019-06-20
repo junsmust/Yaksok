@@ -4,6 +4,7 @@ import android.content.ComponentName;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
@@ -42,12 +43,15 @@ public class MyPage extends ApplicationBase implements MyPage_PresenterToView {
     public Retrofit retrofit;
     private Presenter_MyPage presenter_myPage;
     TextView id,nickname,email,phone;
-    Button bt_secOUT;
+    Button bt_secOUT,bt_logOut;
     ToggleButton auto_cancel;
     Button bt_changePW;
     public android.app.AlertDialog.Builder dialog;
+    public android.app.AlertDialog.Builder dialog2;
     private TextInputLayout et_oldpw,et_newpw,et_newpw_con;
-    String oldpass, newpass, newpass_con;
+    String oldpass, newpass, phoneNum;
+    public SharedPreferences loginInformation;
+    public  SharedPreferences.Editor editor;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -58,6 +62,7 @@ public class MyPage extends ApplicationBase implements MyPage_PresenterToView {
         actionBar.setDisplayOptions(ActionBar.DISPLAY_SHOW_HOME | ActionBar.DISPLAY_SHOW_TITLE);
         actionBar.setTitle("개인 정보");
         dialog = new android.app.AlertDialog.Builder(this);
+        dialog2 = new android.app.AlertDialog.Builder(this);
 
         presenter_myPage = new Presenter_MyPage(this);
 
@@ -66,6 +71,7 @@ public class MyPage extends ApplicationBase implements MyPage_PresenterToView {
         phone = (TextView) findViewById(R.id.tv_setting_phone);
         bt_secOUT = (Button)findViewById(R.id.bt_secessionOUT);
         bt_changePW = (Button)findViewById(R.id.bt_changePW);
+        bt_logOut = (Button)findViewById(R.id.bt_logOUT);
 
         et_oldpw = findViewById(R.id.et_setting_oldpw);
         et_oldpw.getEditText().setInputType(InputType.TYPE_TEXT_VARIATION_PASSWORD);
@@ -80,7 +86,11 @@ public class MyPage extends ApplicationBase implements MyPage_PresenterToView {
 
         id.setText(User_Id.getUser_Id());
         nickname.setText(User_Id.getNickname());
-        phone.setText(User_Id.getPhone_No());
+        phone.setText(User_Id.getPhone_No().substring(0,3) + "-" + User_Id.getPhone_No().substring(3,7)
+                + "-" + User_Id.getPhone_No().substring(7) );
+
+        loginInformation = getSharedPreferences("user",MODE_PRIVATE);
+        editor = loginInformation.edit();
 
         et_newpw.getEditText().setOnFocusChangeListener(new View.OnFocusChangeListener() {
             @Override
@@ -153,6 +163,14 @@ public class MyPage extends ApplicationBase implements MyPage_PresenterToView {
         });
 
 
+        bt_logOut.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                showLogOut();
+            }
+        });
+
+
         bt_secOUT.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -196,6 +214,38 @@ public class MyPage extends ApplicationBase implements MyPage_PresenterToView {
             }
         });
         android.app.AlertDialog alertDialog = dialog.create();
+        alertDialog.show();
+
+    }
+    public void showLogOut(){
+
+        dialog2.setTitle("로그아웃");
+        dialog2.setMessage("로그아웃 하시겠습니까?");
+        dialog2.setCancelable(false);
+
+
+
+        dialog2.setPositiveButton("로그아웃", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                editor.putString("id","");
+                editor.putString("pw","");
+                editor.putString("userType","");
+                editor.apply();
+                Login_activity.checkBox.setChecked(false);
+                Intent i = new Intent(getApplicationContext()/*현재 액티비티 위치*/ , Login_activity.class/*이동 액티비티 위치*/);
+                i.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP|Intent.FLAG_ACTIVITY_SINGLE_TOP);
+                startActivity(i);
+            }
+        });
+        dialog2.setNegativeButton("취소", new DialogInterface.OnClickListener() {
+
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                dialog.cancel();
+            }
+        });
+        android.app.AlertDialog alertDialog = dialog2.create();
         alertDialog.show();
 
     }
