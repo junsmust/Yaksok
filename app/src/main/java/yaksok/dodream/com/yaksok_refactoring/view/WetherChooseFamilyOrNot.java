@@ -19,6 +19,7 @@ import retrofit2.Response;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 import retrofit2.converter.scalars.ScalarsConverterFactory;
+import yaksok.dodream.com.yaksok_refactoring.ApplicationBase;
 import yaksok.dodream.com.yaksok_refactoring.R;
 import yaksok.dodream.com.yaksok_refactoring.model.user.User_Id;
 import yaksok.dodream.com.yaksok_refactoring.model.user.User_Info_Model;
@@ -28,10 +29,10 @@ import yaksok.dodream.com.yaksok_refactoring.vo.BodyVO;
 import yaksok.dodream.com.yaksok_refactoring.vo.FcmTokenVO;
 import yaksok.dodream.com.yaksok_refactoring.vo.UserService;
 
-public class WetherChooseFamilyOrNot extends AppCompatActivity implements View.OnClickListener{
+public class WetherChooseFamilyOrNot extends ApplicationBase implements View.OnClickListener{
 
     private FrameLayout find_familyFramelayout;
-    private ImageView find_iv,skip_iv;
+    private Button register_btn,skip_btn;
     private Intent intent;
     private User_Info_Model user_info_model = new User_Info_Model();
     private Retrofit retrofit;
@@ -41,14 +42,14 @@ public class WetherChooseFamilyOrNot extends AppCompatActivity implements View.O
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_wether_choose_family_or_not);
 
-        find_familyFramelayout = (FrameLayout)findViewById(R.id.family_find_frameLayout);
 
-        find_iv = (ImageView)findViewById(R.id.find_family_iv);
-        skip_iv = (ImageView)findViewById(R.id.skip_iv);
 
-        find_familyFramelayout.setOnClickListener(this);
-        find_iv.setOnClickListener(this);
-        skip_iv.setOnClickListener(this);
+        register_btn = (Button) findViewById(R.id.register_btn);
+        skip_btn = (Button) findViewById(R.id.skip_btn);
+
+
+        register_btn.setOnClickListener(this);
+        skip_btn.setOnClickListener(this);
 
 
         pushToken();
@@ -58,23 +59,16 @@ public class WetherChooseFamilyOrNot extends AppCompatActivity implements View.O
     }
 
 
-
-
     @Override
     public void onClick(View v) {
         switch (v.getId()){
-            case R.id.family_find_frameLayout:
-                intent = new Intent(getApplicationContext(), Register_Family.class);
-                startActivity(intent);
-                finish();
-                break;
-            case R.id.find_family_iv:
+            case R.id.register_btn:
                 intent = new Intent(getApplicationContext(), Register_Family.class);
                 startActivity(intent);
 
                 finish();
                 break;
-            case R.id.skip_iv:
+            case R.id.skip_btn:
                 intent = new Intent(getApplicationContext(), MainPage_activity.class);
                 startActivity(intent);
                 finish();
