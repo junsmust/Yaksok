@@ -97,9 +97,7 @@
         </activity>
 
 
-       <!-- <activity android:name=".view.WetherChooseFamilyOrNot"></activity>-->
         <activity android:name=".view.find_pw.FindUserPassword"></activity>
-        <activity android:name=".New_Settings"/>
 
     </application>
 
