@@ -4,8 +4,8 @@ import yaksok.dodream.com.yaksok_refactoring.model.user.User_Info_Model;
 
 public interface IPresenterToSignUpModel {
     void validateId(String id);
-    void validatePw(String pw1,String pw2);
-    void validateEmail(String email1,String email2);
+    void validatePw(String pw1);
+    void validateEmail(String email1);
 
     void completeSignUp();
     void guessAge(String currentYear, String bornYear);
@@ -20,4 +20,5 @@ public interface IPresenterToSignUpModel {
     void setUserType(String userType);
     void setGeneralUserType();
     void setPn(String pn, String usertype);
+
 }

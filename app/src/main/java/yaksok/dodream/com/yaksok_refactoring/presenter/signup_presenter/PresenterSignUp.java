@@ -20,13 +20,13 @@ public class PresenterSignUp implements ITo_Presenter_SignUp {
     }
 
     @Override
-    public void validatePw(String pw1,String pw2) {
-        model.validatePw(pw1,pw2);
+    public void validatePw(String pw1) {
+        model.validatePw(pw1);
     }
 
     @Override
-    public void validateEmail(String email1,String email2) {
-        model.validateEmail(email1,email2);
+    public void validateEmail(String email1) {
+        model.validateEmail(email1);
     }
 
 
@@ -82,7 +82,7 @@ public class PresenterSignUp implements ITo_Presenter_SignUp {
 
     @Override
     public void onSignUp() {
-
+        model.completeSignUp();
     }
 
     @Override

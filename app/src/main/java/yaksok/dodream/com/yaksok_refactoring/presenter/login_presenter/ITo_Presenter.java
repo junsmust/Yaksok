@@ -26,7 +26,9 @@ public interface ITo_Presenter {
      void autoLogin(String id,String userType,boolean auto);
      void onSnsSignUp(String userType);
      void sendEditor(SharedPreferences.Editor editor);
+     void performLoginOperation(final User_Info_Model user_info_model);
 
 
-    void findPassword();
+
+     void findPassword();
 }

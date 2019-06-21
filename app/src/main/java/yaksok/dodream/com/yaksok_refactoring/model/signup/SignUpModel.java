@@ -48,7 +48,7 @@ public class SignUpModel implements IPresenterToSignUpModel {
     }
 
     @Override
-    public void validateId(String id) {
+    public void validateId(final String id) {
         if(id.length()<6){
             presenterSignUp.nonValidatedIl();
             presenterSignUp.makeToastMessage("6글자 이상으로 아이디를 입력해주세요.");
@@ -76,6 +76,9 @@ public class SignUpModel implements IPresenterToSignUpModel {
                     if(bodyVO.getStatus().equals("200")){
                         presenterSignUp.isValidedId(true);
                         presenterSignUp.makeToastMessage("사용 가능한 아이디 입니다.");
+                        user_info_model.setId(id);
+                        presenterSignUp.isValidedId(true);
+                        Log.e("onResponse: ",user_info_model.getId());
                     }else if(bodyVO.getStatus().equals("400")){
                         presenterSignUp.isValidedId(false);
                         presenterSignUp.makeToastMessage("질못된 아이디 입니다.");
@@ -99,64 +102,31 @@ public class SignUpModel implements IPresenterToSignUpModel {
     }
 
     @Override
-    public void validatePw(String pw1,String pw2) {
-
-        if(pw1.length()<=6){
-            presenterSignUp.nonValidatedPW();
-            presenterSignUp.makeToastMessage("6글자 이상으로 비밀번호를 입력해주세요.");
-        }
-        else if(!hasSpecialCharacter(pw1)){
-            presenterSignUp.nonValidatedPW();
-            presenterSignUp.makeToastMessage("!,#,* 와 같은 특수 문자를 추가해주세요");
-
-        }
-        else if (!pw1.equals(pw2)){
-            presenterSignUp.nonValidatedPW();
-            presenterSignUp.makeToastMessage("비밀번호가 일치하지 않습니다.");
-        }
-        else{
-            presenterSignUp.makeToastMessage("비밀번호가 적절합니다.");
-            isValidatePW = true;
-            presenterSignUp.isValidedPW(isValidatePW);
+    public void validatePw(String pw1) {
             user_info_model.setPw(pw1);
-            Log.e( "validateId: pw" ,user_info_model.getPw());
+        Log.e("validatePw: ",user_info_model.getPw());
+
         }
-    }
+
 
     @Override
-    public void validateEmail(String email1,String email2) {
+    public void validateEmail(String email1) {
 
-        email = email1 + "@" + email2;
-        if(checkEmail(email)){
-           presenterSignUp.makeToastMessage("사용할 수 있는 이메일 입니다.");
-            isValidateEmial = true;
-            user_info_model.setEmail(email);
-            presenterSignUp.isValidedEmail(isValidateEmial);
-            Log.e( "validateId: email" ,user_info_model.getEmail());
+        //presenterSignUp.makeToastMessage("사용할 수 있는 이메일 입니다.");
+        user_info_model.setEmail(email1);
+        if(!email1.equals("")){
+            Log.e("validateEmail: ", "ddddd"+user_info_model.getEmail());
+
         }
-        else{
-            if(email1.equals("")){
-               presenterSignUp.makeToastMessage("메일을 입력하세요.");
-               presenterSignUp.nonValidatedEmail();
 
-            }
-            else if(email2.equals("")) {
-               presenterSignUp.nonValidatedEmail();
-               presenterSignUp.makeToastMessage("주소를 입력하세요.");
-            }
-            else {
-                presenterSignUp.nonValidatedEmail();
-                presenterSignUp.makeToastMessage("메일 형식에 맞지 않습니다.");
-
-            }
         }
-    }
+
 
 
 
     @Override
     public void completeSignUp() {
-        Log.e( "completeSignUp: ","id  "+isValidateID+"  pw   "+isValidatePW+"  email "+isValidateEmial );
+       // Log.e( "completeSignUp: ","id  "+isValidateID+"  pw   "+isValidatePW+"  email "+isValidateEmial );
        // presenterSignUp.isValidatedUser(isValidateID,isValidatePW,isValidateEmial);
         Log.d("sssssss1",
                 "\n"+"id : "+user_info_model.getId()+
@@ -164,14 +134,16 @@ public class SignUpModel implements IPresenterToSignUpModel {
                         "\n"+"pw : "+user_info_model.getPw()+"" +
                         "\n"+"nickName : "+user_info_model.getNickname()+
                         "\n"+"getPhoneNum : "+user_info_model.getPhoneNumber()+
-                        "\n"+"email : "+user_info_model.getEmail());
+                        "\n"+"email : "+user_info_model.getEmail()+
+                        "\n"+"age : "+user_info_model.getAgeRange() );
 
-        if(isValidateID&&isValidatePW&&isValidateEmial){
-            onSignUp(user_info_model);
+        onSignUp(user_info_model);
+       /* if(isValidateID&&isValidatePW&&isValidateEmial){
+
         }else{
             presenterSignUp.makeToastMessage("확인 버튼을 눌러주세요");
         }
-
+*/
 
     }
 
@@ -216,22 +188,6 @@ public class SignUpModel implements IPresenterToSignUpModel {
                 .build();
         userService = retrofit.create(UserService.class);
 
-       // "id":"dldjzhs","phoneNumber":"010","nickname":"권재환","userType":"G","pw":"031289"}
-
-      // user_info_model = LoginModel.user_info_model;
-
-       /* user_info_model.setId(user_info_model.getId());
-        user_info_model.setpw*/
-
-
-      /* final User_Info_Model user_info_model2 = new User_Info_Model();
-       user_info_model2.setId(user_info_model.getId());
-       user_info_model2.setPhoneNumber(user_info_model.getPhoneNumber());
-       user_info_model2.setNickname(user_info_model.getNickname());
-       user_info_model2.setUserType("G");
-       user_info_model2.setUserType(user_info_model2.getPw());
-       user_info_model2.setEmail(user_info_model2.getEmail());
-*/
         Call<BodyVO> call = userService.postSignUp(user_info_model);
 
         call.enqueue(new Callback<BodyVO>() {
@@ -250,9 +206,17 @@ public class SignUpModel implements IPresenterToSignUpModel {
 
 
                 if(bodyVO.getStatus().equals("201")){
+                    User_Id.setUser_Id(user_info_model.getId());
                     presenterSignUp.onSignupResponse(true);
                     presenterSignUp.makeToastMessage("가입 성공 되었습니다.");
+
+
                     User_Id.setUser_Id(user_info_model.getId());
+                    User_Id.setE_mail(user_info_model.getNickname());
+                    User_Id.setE_mail(user_info_model.getEmail());
+                    User_Id.setPhone_No(user_info_model.getPhoneNumber());
+                    User_Id.setType(user_info_model.getUserType());
+                    //performLoginOperation(user_info_model);
                     pushToken();
 
 
@@ -290,10 +254,50 @@ public class SignUpModel implements IPresenterToSignUpModel {
     }
 
     @Override
-    public void isvalidatePhone(String pn) {
-        user_info_model.setPhoneNumber(pn);
-        presenterSignUp.makeToastMessage("인증되었습니다.");
-        presenterSignUp.isValidedPn(true);
+    public void isvalidatePhone(final String pn) {
+
+
+        retrofit = new Retrofit.Builder()
+                .baseUrl(userService.API_URL)
+                .addConverterFactory(ScalarsConverterFactory.create())
+                .addConverterFactory(GsonConverterFactory.create())
+                .build();
+        userService = retrofit.create(UserService.class);
+
+        Call<BodyVO> call = userService.GetOvelapPhoneNumber(pn,"phoneNumber","confirmOverlapPhoneNum");
+        call.enqueue(new Callback<BodyVO>() {
+            @Override
+            public void onResponse(Call<BodyVO> call, Response<BodyVO> response) {
+                BodyVO vo = response.body();
+
+                //200 : OK (존재하지 않음으로 회원가입가능한 핸드폰번호)
+                //400 : 잘못된 요청
+                //403 : 중복되는 핸드폰번호 존재
+                //500 : Server Error
+                if(vo.getStatus().equals("200")){
+                    user_info_model.setPhoneNumber(pn);
+                    presenterSignUp.makeToastMessage("사용할 수 있는 전화번호입니다.");
+                    presenterSignUp.isValidedPn(true);
+                }else if(vo.getStatus().equals("400")){
+                    presenterSignUp.makeToastMessage("잘못된 휴대전화번호 입니다.");
+                    presenterSignUp.isValidedPn(false);
+                }else if(vo.getStatus().equals("403")){
+                    presenterSignUp.makeToastMessage("중복되는 휴대번호가 존재합니다.");
+                    presenterSignUp.isValidedPn(false);
+                }else if(vo.getStatus().equals("500")){
+                    presenterSignUp.makeToastMessage("서버 오류 입니다.");
+                    presenterSignUp.isValidedPn(false);
+                }
+            }
+
+            @Override
+            public void onFailure(Call<BodyVO> call, Throwable t) {
+
+            }
+        });
+
+
+
     }
 
     @Override
@@ -421,5 +425,76 @@ public class SignUpModel implements IPresenterToSignUpModel {
 
             }
         });
+    }
+
+    void performLoginOperation(final User_Info_Model user_info_model) {
+
+        Log.d("maybe_perform","maybe_perform");
+        Retrofit retrofit = new Retrofit.Builder()
+                .baseUrl(userService.API_URL)
+                .addConverterFactory(ScalarsConverterFactory.create())
+                .addConverterFactory(GsonConverterFactory.create())
+                .build();
+        userService = retrofit.create(UserService.class);
+
+        Log.d("ddd",user_info_model.getId()+"userinfo"+user_info_model.getUserType());
+
+
+        //Log.d("check",user_info_model+" ");
+        Call<BodyVO> bodyVOCall = userService.postGneralLogin(user_info_model);
+        bodyVOCall.enqueue(new Callback<BodyVO>() {
+            @Override
+            public void onResponse(Call<BodyVO> call, Response<BodyVO> response) {
+
+                BodyVO bodyVO = response.body();
+
+                assert bodyVO != null;
+                Log.d("body",""+ bodyVO.getStatus());
+
+                if(bodyVO.getStatus().equals("200")){
+
+                    presenterSignUp.onSignupResponse(true);
+                    presenterSignUp.makeToastMessage("가입 성공 되었습니다.");
+
+
+                    User_Id.setUser_Id(user_info_model.getId());
+                    User_Id.setE_mail(user_info_model.getNickname());
+                    User_Id.setE_mail(user_info_model.getEmail());
+                    User_Id.setPhone_No(user_info_model.getPhoneNumber());
+                    User_Id.setType(user_info_model.getUserType());
+
+
+                    Log.e( "onResponse: name ",User_Id.getNickname() );
+
+                    Log.d("tag_a",""+User_Id.getUser_Id());
+
+
+
+                }
+                else if (bodyVO.getStatus().equals("024")) {
+
+                    if(user_info_model.getUserType().equals("N")||user_info_model.getUserType().equals("K")){
+
+
+                    }
+
+                }
+                else if (bodyVO.getStatus().equals("400")) {
+
+
+                }
+
+                else if (bodyVO.getStatus().equals("500")) {
+
+                }
+            }
+
+            @Override
+            public void onFailure(Call<BodyVO> call, Throwable t) {
+                Log.d("test",t.getMessage());
+
+            }
+        });
+
     }
 }
