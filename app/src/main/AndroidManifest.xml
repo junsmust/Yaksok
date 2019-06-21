@@ -56,6 +56,7 @@
 
 
 
+
         <service
             android:name=".firebaseService.FirebaseMessageService"
             android:enabled="true"
@@ -73,30 +74,53 @@
             </intent-filter>
         </service>
 
-        <receiver
-            android:name=".model.Main.NotificationUtil"
-            android:enabled="true" />
 
+    <service
+        android:name=".firebaseService.FirebaseMessageService"
+        android:enabled="true"
+        android:exported="true">
+        <intent-filter>
+            <action android:name="com.google.firebase.MESSAGING_EVENT" />
+        </intent-filter>
+    </service>
+    <service
+        android:name=".firebaseService.FirebaseGetInstanceID"
+        android:enabled="true"
+        android:exported="true">
+        <intent-filter>
+            <action android:name="com.google.firebase.INSTANCE_ID_EVENT" />
+        </intent-filter>
+    </service>
 
+    <receiver
+        android:name=".model.Main.NotificationUtil"
+        android:enabled="true" />
 
-
-        <activity android:name=".view.signup.GetPn" />
-        <activity android:name=".view.chat.Chatting_list" />
-        <activity android:name=".view.chat.Chat_Room" />
-        <activity
-            android:name=".view.Settings.MyPage"
-            tools:ignore="DuplicateActivity" />
-
-        <activity android:name=".view.InsertPill.Temp" />
-        <activity android:name=".view.WetherChooseFamilyOrNot"></activity>
-        <activity android:name=".view.find_pw.FindUserPassword" />
 
 
         <activity android:name=".view.Settings.New_Settings"/>
 
 
-    </application>
+        
 
+    <activity android:name=".view.signup.GetPn" />
+    <activity android:name=".view.chat.Chatting_list" />
+    <activity android:name=".view.chat.Chat_Room" />
+    <activity
+        android:name=".view.Settings.MyPage"
+        tools:ignore="DuplicateActivity" />
+
+    <activity android:name=".view.InsertPill.Temp" />
+    <activity android:name=".view.WetherChooseFamilyOrNot">
+
+    </activity>
+    <activity android:name=".view.find_pw.FindUserPassword" />
+
+
+
+
+
+</application>
 
 
 
