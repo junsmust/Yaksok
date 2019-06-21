@@ -105,6 +105,11 @@ public class Presenter_Login implements ITo_Presenter {
     }
 
     @Override
+    public void performLoginOperation(User_Info_Model user_info_model) {
+        model.performLoginOperation(user_info_model);
+    }
+
+    @Override
     public void findPassword() {
         model.findPassword();
     }

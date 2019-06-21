@@ -95,4 +95,14 @@ public interface UserService {
     //400 : 잘못된 요청
     //403 : 중복되는 아이디 존재
     //500 : Server Error
+    @GET("/users/{item} ? itemType=\"\" & behavior=\"\"")
+    Call<BodyVO>GetOvelapPhoneNumber(@Path("item") String pn,@Query("itemType") String phoneNumber,@Query("behavior") String  confirmOverlapPhoneNum);
+    //[전화번호를 사용하여 해당 핸드폰번호가 중복인지 값을 반환한다.]
+    //HTTP GET /users/{item} ? itemType="" & behavior=""
+    //itemType : phoneNumber
+    //behavior : confirmOverlapPhoneNum
+    //200 : OK (존재하지 않음으로 회원가입가능한 핸드폰번호)
+    //400 : 잘못된 요청
+    //403 : 중복되는 핸드폰번호 존재
+    //500 : Server Error
 }

@@ -68,6 +68,8 @@ public class LoginModel implements IPresennterToModel {
     public static final Pattern VALID_PASSWOLD_REGEX_ALPHA_NUM = Pattern.compile("^[a-zA-Z0-9!@.#$%^&*?_~]{4,10}$"); // 4자리 ~ 10자리까지 가능
 
 
+    public LoginModel() {
+    }
 
     public LoginModel(Presenter_Login presenter_login) {
         this.presenter_login = presenter_login;
@@ -99,7 +101,7 @@ public class LoginModel implements IPresennterToModel {
            // presenter_login.OnErrorMessage("아이디 또는 비밀번호가 일치하지 않습니다.");
 //        }
     }
-    void performLoginOperation(final User_Info_Model user_info_model) {
+     public void performLoginOperation(final User_Info_Model user_info_model) {
 
         Log.d("maybe_perform","maybe_perform");
         Retrofit retrofit = new Retrofit.Builder()
@@ -110,7 +112,6 @@ public class LoginModel implements IPresennterToModel {
         userService = retrofit.create(UserService.class);
 
         Log.d("ddd",user_info_model.getId()+"userinfo"+user_info_model.getUserType());
-
 
         //Log.d("check",user_info_model+" ");
         Call<BodyVO> bodyVOCall = userService.postGneralLogin(user_info_model);
@@ -341,6 +342,8 @@ public class LoginModel implements IPresennterToModel {
 
         if(this.auto){
             performLoginOperation(user_info_model);
+            Login_activity.checkBox.setChecked(true);
+
         }
 
 
@@ -362,7 +365,6 @@ public class LoginModel implements IPresennterToModel {
             Log.d("autoSns3",user_info_model.getId()+user_info_model.getUserType());
             performLoginOperation(user_info_model);
             Login_activity.checkBox.setChecked(true);
-
         }
 
 

@@ -4,8 +4,8 @@ import yaksok.dodream.com.yaksok_refactoring.model.user.User_Info_Model;
 
 public interface ITo_Presenter_SignUp {
     void validateId(String id);
-    void validatePw(String pw1,String pw2);
-    void validateEmail(String email1,String email2);
+    void validatePw(String pw1);
+    void validateEmail(String email1);
     void isValidatedUser(boolean isValidatedID, boolean isValidatedPW, boolean isValidatedEmail);
     void isValdiatedUser();
     void makeToastMessage(String message);

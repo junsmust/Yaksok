@@ -23,6 +23,7 @@ public interface IPresennterToModel  {
     void autoLogin(String id, String pw,String userType,boolean auto);
     void autoLogin(String id,String userType,boolean auto);
     void getEditor(SharedPreferences.Editor editor);
+    void performLoginOperation(final User_Info_Model user_info_model);
 
 
     void findPassword();

@@ -7,6 +7,8 @@ import android.content.SharedPreferences;
 import android.support.annotation.Nullable;
 import android.support.v7.app.ActionBar;
 import android.os.Bundle;
+import android.text.InputType;
+import android.text.method.PasswordTransformationMethod;
 import android.util.Log;
 import android.view.View;
 import android.view.WindowManager;
@@ -96,6 +98,8 @@ public class Login_activity extends ApplicationBase implements IPresenterToView{
 
         id_edt = (EditText) findViewById(R.id.main_id_edt);
         pw_edt = (EditText) findViewById(R.id.main_pw_edt);
+        pw_edt.setInputType(InputType.TYPE_CLASS_TEXT | InputType.TYPE_TEXT_VARIATION_PASSWORD);
+        pw_edt.setTransformationMethod(PasswordTransformationMethod.getInstance());
         signUp_tv = (TextView)findViewById(R.id.login_sign_up_tv);
         login_btn = (Button) findViewById(R.id.login_normal_btn);
         checkBox = (CheckBox)findViewById(R.id.setAutoLogin_check);
@@ -221,6 +225,13 @@ public class Login_activity extends ApplicationBase implements IPresenterToView{
                  editor.putString("userType","G");
                  editor.apply();
                  }
+                 else{
+                    User_Info_Model user_info_model = new User_Info_Model();
+                    user_info_model.setId(id_edt.getText().toString());
+                    user_info_model.setPw(pw_edt.getText().toString());
+                    user_info_model.setUserType("G");
+                    presenter_login.performLoginOperation(user_info_model);
+                }
             }
         });
 
