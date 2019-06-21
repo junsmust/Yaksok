@@ -21,8 +21,10 @@ import android.text.InputType;
 import android.text.TextUtils;
 import android.text.TextWatcher;
 import android.text.method.PasswordTransformationMethod;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 import android.widget.ToggleButton;
@@ -42,7 +44,8 @@ import yaksok.dodream.com.yaksok_refactoring.vo.DeleteService;
 public class MyPage extends ApplicationBase implements MyPage_PresenterToView {
     public Retrofit retrofit;
     private Presenter_MyPage presenter_myPage;
-    TextView id,nickname,email,phone;
+    TextView id,nickname,email,phone,tv_acton_name;
+    ImageView imageView;
     Button bt_secOUT,bt_logOut;
     ToggleButton auto_cancel;
     Button bt_changePW;
@@ -59,8 +62,35 @@ public class MyPage extends ApplicationBase implements MyPage_PresenterToView {
         setContentView(R.layout.activity_setting_mypage);
 
         ActionBar actionBar = getSupportActionBar();
-        actionBar.setDisplayOptions(ActionBar.DISPLAY_SHOW_HOME | ActionBar.DISPLAY_SHOW_TITLE);
-        actionBar.setTitle("개인 정보");
+
+        actionBar.setDisplayShowCustomEnabled(true);
+        actionBar.setDisplayShowHomeEnabled(false);
+        actionBar.setDisplayShowTitleEnabled(false);
+        actionBar.setDisplayHomeAsUpEnabled(false);
+        actionBar.setElevation(0);
+        actionBar.setBackgroundDrawable(getResources().getDrawable(R.drawable.action_bar_under_line));
+
+        LayoutInflater inflater = (LayoutInflater)getSystemService(LAYOUT_INFLATER_SERVICE);
+
+        View view= inflater.inflate(R.layout.action_bar_develop, null);
+
+        imageView = view.findViewById(R.id.back_layout_back_devel);
+        tv_acton_name = view.findViewById(R.id.back_layout_name_delvel);
+
+        tv_acton_name.setText("내 정보 관리");
+
+        imageView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                finish();
+            }
+        });
+
+
+        ActionBar.LayoutParams layoutParams = new ActionBar.LayoutParams(ActionBar.LayoutParams.MATCH_PARENT,ActionBar.LayoutParams.MATCH_PARENT);
+        actionBar.setCustomView(view,layoutParams);
+
+
         dialog = new android.app.AlertDialog.Builder(this);
         dialog2 = new android.app.AlertDialog.Builder(this);
 

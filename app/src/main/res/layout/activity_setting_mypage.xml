@@ -121,18 +121,11 @@
             android:layout_marginRight="25dp"
             android:background="#ffffff">
 
-            <TextView
-                android:id="@+id/pass_1"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginBottom="5dp"
-                android:text="비밀번호" />
-
             <android.support.design.widget.TextInputLayout
                 android:id="@+id/et_setting_oldpw"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_below="@+id/pass_1">
+                app:passwordToggleEnabled="true">
 
                 <android.support.design.widget.TextInputEditText
                     android:layout_width="match_parent"
@@ -157,12 +150,13 @@
                 android:id="@+id/et_setting_newpw"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                app:passwordToggleEnabled="true"
                 app:errorEnabled="true">
 
                 <android.support.design.widget.TextInputEditText
                     android:layout_width="200dp"
                     android:layout_height="wrap_content"
-                    android:hint="새로운 비밀번호"
+                    android:hint="새로운 비밀번호(특수문자"
                     android:inputType="textPassword"
                     android:textColor="#000000" />
             </android.support.design.widget.TextInputLayout>
@@ -181,6 +175,7 @@
                 android:id="@+id/et_setting_newpw_con"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                app:passwordToggleEnabled="true"
                 app:errorEnabled="true">
 
                 <android.support.design.widget.TextInputEditText
@@ -198,7 +193,7 @@
                 android:layout_centerVertical="true"
                 android:background="@drawable/pill_delete_bt_cancel"
                 android:text="비밀번호 변경"
-                android:textColor="#00B49D"
+                android:textColor="#50B19D"
                 android:textSize="12dp" />
         </RelativeLayout>
 
@@ -218,7 +213,7 @@
             android:layout_marginRight="20dp"
             android:background="@drawable/pill_delete_bt_cancel"
             android:text="로그아웃"
-            android:textColor="#00B49D" />
+            android:textColor="#50B19D" />
 
         <Button
             android:id="@+id/bt_secessionOUT"
@@ -228,7 +223,7 @@
             android:layout_toEndOf="@+id/bt_logOUT"
             android:background="@drawable/pill_delete_bt_cancel"
             android:text="회원탈퇴"
-            android:textColor="#00B49D" />
+            android:textColor="#50B19D" />
     </RelativeLayout>
 
 

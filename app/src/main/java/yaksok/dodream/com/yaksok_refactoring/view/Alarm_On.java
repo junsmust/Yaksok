@@ -99,7 +99,6 @@ public class Alarm_On extends Activity {
                     Intent i = new Intent(getApplicationContext()/*현재 액티비티 위치*/ , Login_activity.class/*이동 액티비티 위치*/);
                     i.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP|Intent.FLAG_ACTIVITY_SINGLE_TOP);
                     startActivity(i);
-                   // startActivity(launchIntent);
                     finish();
                 }
                 else{

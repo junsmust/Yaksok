@@ -6,12 +6,16 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.v7.app.ActionBar;
 import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.ListView;
+import android.widget.TextView;
 
 
 import java.util.ArrayList;
@@ -29,11 +33,13 @@ public class MyPill_activity extends ApplicationBase implements MyPill_Presenter
 
     private Presenter_MyPill presenter_myPill;
     ListView lv_MyPill;
+    ImageView imageView;
     ArrayList<MyPillVO> myPillList = new ArrayList<MyPillVO>();;
     ArrayList<MyPillItem> myPillItems = new ArrayList<MyPillItem>();
     MypillListAdapter adapter1;
     ArrayAdapter adapter;
     Button bt_Insert;
+    TextView tv_acton_name;
     public AlertDialog.Builder dialog;
     MyPillVO mypill = null;
 
@@ -43,6 +49,35 @@ public class MyPill_activity extends ApplicationBase implements MyPill_Presenter
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_mypill);
+
+        ActionBar actionBar = getSupportActionBar();
+
+        actionBar.setDisplayShowCustomEnabled(true);
+        actionBar.setDisplayShowHomeEnabled(false);
+        actionBar.setDisplayShowTitleEnabled(false);
+        actionBar.setDisplayHomeAsUpEnabled(false);
+        actionBar.setElevation(0);
+        actionBar.setBackgroundDrawable(getResources().getDrawable(R.drawable.action_bar_under_line));
+
+        LayoutInflater inflater = (LayoutInflater)getSystemService(LAYOUT_INFLATER_SERVICE);
+
+        View view= inflater.inflate(R.layout.action_bar_develop, null);
+
+        imageView = view.findViewById(R.id.back_layout_back_devel);
+        tv_acton_name = view.findViewById(R.id.back_layout_name_delvel);
+
+        tv_acton_name.setText("나의 약");
+
+        imageView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                finish();
+            }
+        });
+
+
+        ActionBar.LayoutParams layoutParams = new ActionBar.LayoutParams(ActionBar.LayoutParams.MATCH_PARENT,ActionBar.LayoutParams.MATCH_PARENT);
+        actionBar.setCustomView(view,layoutParams);
 
         dialog = new AlertDialog.Builder(this);
 
@@ -91,6 +126,9 @@ public class MyPill_activity extends ApplicationBase implements MyPill_Presenter
             lv_MyPill.setAdapter(adapter1);
             for(int i=0;i<mypill.getResult().size();i++) {
                 String family = "";
+                for(int j=0; j<mypill.getResult().get(i).getFamilies().size(); j++){
+                    family += mypill.getResult().get(i).getFamilies().get(j) + " ";
+                }
                     /*for (int j = 0; j <= mypill.getResult().get(i).getFamilies().size(); j++) {
                         family += mypill.getResult().get(i).getFamilies().get(j) + ", ";
                     }*/

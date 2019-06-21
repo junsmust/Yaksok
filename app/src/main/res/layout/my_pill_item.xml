@@ -14,12 +14,13 @@
             android:id="@+id/tv_name_mypill_item"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_margin="10sp"
-            android:gravity="left|center"
+            android:gravity="left|bottom"
+            android:paddingBottom="10dp"
+            android:paddingLeft="10sp"
             android:text="감기약"
             android:textStyle="bold"
-            android:textSize="30dp"
-            android:textColor="#00B49D"/>
+            android:textSize="25dp"
+            android:textColor="#50B19D"/>
     </LinearLayout>
     <LinearLayout
         android:layout_width="match_parent"
@@ -36,7 +37,7 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:textSize="20dp"
+                android:textSize="17dp"
                 android:textColor="#000000"
                 android:text="하루에 "
                 />
@@ -44,22 +45,22 @@
                 android:id="@+id/tv_timeOfDay_mypill_item"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:textSize="20dp"
+                android:textSize="17dp"
                 android:textColor="#000000"
                 android:text="3번  "/>
             <ImageView
                 android:id="@+id/iv_point1_mypill"
-                android:layout_width="wrap_content"
+                android:layout_width="30dp"
                 android:layout_height="15dp"
                 android:src="@drawable/mypii_point"/>
             <ImageView
                 android:id="@+id/iv_point2_mypill"
-                android:layout_width="wrap_content"
+                android:layout_width="20dp"
                 android:layout_height="15dp"
                 android:src="@drawable/mypii_point"/>
             <ImageView
                 android:id="@+id/iv_point3_mypill"
-                android:layout_width="wrap_content"
+                android:layout_width="20dp"
                 android:layout_height="15dp"
                 android:src="@drawable/mypii_point"/>
 
@@ -73,16 +74,15 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:textSize="20dp"
+                android:textSize="17dp"
                 android:textColor="#000000"
                 android:text="알림받을 가족 : "/>
             <TextView
                 android:id="@+id/tv_family_mypill_item"
-                android:layout_width="wrap_content"
+                android:layout_width="200dp"
                 android:layout_height="wrap_content"
-                android:textSize="20dp"
-                android:singleLine="true"
-                android:text="아들, 딸"/>
+                android:textSize="17dp"
+                android:singleLine="true"/>
         </LinearLayout>
 
         <LinearLayout
@@ -90,19 +90,19 @@
             android:layout_height="wrap_content"
             android:gravity="left|center"
             android:paddingTop="3dp"
-            android:layout_marginBottom="10dp"
+            android:layout_marginBottom="30dp"
             android:paddingLeft="10sp">
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:textSize="20dp"
+                android:textSize="17dp"
                 android:textColor="#000000"
                 android:text="남은 복용 횟수 : "/>
             <TextView
                 android:id="@+id/tv_dosagi_mypill_item"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:textSize="20dp"
+                android:textSize="17dp"
                 android:singleLine="true"
                 android:text="6"/>
         </LinearLayout>

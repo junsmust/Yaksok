@@ -7,7 +7,7 @@
         android:id="@+id/rl1"
         android:layout_width="match_parent"
         android:layout_height="290px"
-        android:background="#00B49D">
+        android:background="#50B19D">
         <FrameLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content">

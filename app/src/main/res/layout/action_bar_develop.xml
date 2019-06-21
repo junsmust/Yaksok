@@ -5,7 +5,7 @@
     android:padding="0dp"
     android:layout_height="70dp"
     android:layout_weight="10"
-    android:background="#50B19D">
+    android:background="@drawable/action_bar_under_line">
 
     <RelativeLayout
         android:layout_width="match_parent"
@@ -15,34 +15,27 @@
         android:orientation="horizontal">
 
         <ImageView
-            android:id="@+id/back_layout_cancel"
+            android:id="@+id/back_layout_back_devel"
             android:layout_width="65px"
             android:layout_height="65px"
             android:layout_gravity="center"
             android:layout_centerVertical="true"
-            android:src="@drawable/family_select_cancel" />
+            android:src="@drawable/r_arrow"
+            android:rotation="180"/>
 
 
         <TextView
-            android:id="@+id/title_txt_pill"
+            android:id="@+id/back_layout_name_delvel"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:layout_margin="10dp"
             android:gravity="center"
-            android:text="나의 약 등록"
-            android:textColor="#ffffff"
+            android:text="나의 약"
+            android:textColor="#000000"
             android:textSize="20dp"
             android:textStyle="bold" />
 
-        <ImageView
-            android:id="@+id/back_layout_check"
-            android:layout_width="70px"
-            android:layout_height="70px"
-            android:layout_alignParentEnd="true"
-            android:layout_centerVertical="true"
-            android:layout_gravity="center|right"
-            android:src="@drawable/pill_check" />
 
     </RelativeLayout>
 

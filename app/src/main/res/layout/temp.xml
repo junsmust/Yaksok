@@ -9,7 +9,7 @@
         android:id="@+id/rr1"
         android:layout_width="match_parent"
         android:layout_height="300px"
-        android:background="#00B49D">
+        android:background="#50B19D">
 
         <EditText
             android:id="@+id/et_IP_name"
@@ -209,7 +209,7 @@
                     android:layout_marginRight="40px"
                     android:background="@drawable/insertpill_time_bt"
                     android:text="오전 12:00"
-                    android:textColor="#00B49D" />
+                    android:textColor="#50B19D" />
 
                 <Button
                     android:id="@+id/bt_IP_time2"
@@ -218,7 +218,7 @@
                     android:layout_marginRight="40px"
                     android:background="@drawable/insertpill_time_bt"
                     android:text="오전 12:00"
-                    android:textColor="#00B49D" />
+                    android:textColor="#50B19D" />
 
                 <Button
                     android:id="@+id/bt_IP_time3"
@@ -226,7 +226,7 @@
                     android:layout_height="90px"
                     android:background="@drawable/insertpill_time_bt"
                     android:text="오전 12:00"
-                    android:textColor="#00B49D" />
+                    android:textColor="#50B19D" />
             </LinearLayout>
 
         </RelativeLayout>
@@ -263,7 +263,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_weight="4"
-                android:background="#00B49D"
+                android:background="#50B19D"
                 android:gravity="center"
                 android:orientation="horizontal">
 

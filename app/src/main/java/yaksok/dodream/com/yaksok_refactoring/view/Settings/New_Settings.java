@@ -2,12 +2,16 @@ package yaksok.dodream.com.yaksok_refactoring.view.Settings;
 
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.media.Image;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.v7.app.ActionBar;
 import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.Button;
 import android.widget.CompoundButton;
+import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.Switch;
 import android.widget.TextView;
@@ -22,7 +26,8 @@ import yaksok.dodream.com.yaksok_refactoring.view.login.Login_activity;
 
 public class New_Settings extends ApplicationBase {
 
-    TextView tv_name;
+    TextView tv_name,tv_acton_name;
+    ImageView imageView;
     Button bt_mypage;
     RelativeLayout rb_develop;
     Switch sw;
@@ -33,6 +38,35 @@ public class New_Settings extends ApplicationBase {
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.new_settings);
+
+        ActionBar actionBar = getSupportActionBar();
+
+        actionBar.setDisplayShowCustomEnabled(true);
+        actionBar.setDisplayShowHomeEnabled(false);
+        actionBar.setDisplayShowTitleEnabled(false);
+        actionBar.setDisplayHomeAsUpEnabled(false);
+        actionBar.setElevation(0);
+        actionBar.setBackgroundDrawable(getResources().getDrawable(R.drawable.action_bar_white));
+
+        LayoutInflater inflater = (LayoutInflater)getSystemService(LAYOUT_INFLATER_SERVICE);
+
+        View view= inflater.inflate(R.layout.action_bar_st, null);
+
+        imageView = view.findViewById(R.id.back_layout_back);
+        tv_acton_name = view.findViewById(R.id.back_layout_name);
+
+        tv_acton_name.setText("설 정");
+
+        imageView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                finish();
+            }
+        });
+
+
+        ActionBar.LayoutParams layoutParams = new ActionBar.LayoutParams(ActionBar.LayoutParams.MATCH_PARENT,ActionBar.LayoutParams.MATCH_PARENT);
+        actionBar.setCustomView(view,layoutParams);
 
         tv_name = (TextView)findViewById(R.id.tv_settings_name);
         bt_mypage = (Button)findViewById(R.id.bt_settings_mypage);
@@ -65,6 +99,13 @@ public class New_Settings extends ApplicationBase {
             @Override
             public void onClick(View v) {
                 startActivity(new Intent(getApplicationContext(), MyPage.class));
+            }
+        });
+
+        rb_develop.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(getApplicationContext(), Developer.class));
             }
         });
 

@@ -65,6 +65,8 @@ public class InsertPill_activity extends ApplicationBase implements InsertPill_P
     ArrayAdapter adapter;
     CustomChoiceListViewAdapter adapter1;
     int size = 0;
+    String time_1,time_2,time_3;
+    int status = 0;
     boolean slid_Satuts=false;
 
     @Override
@@ -194,16 +196,19 @@ public class InsertPill_activity extends ApplicationBase implements InsertPill_P
                 tv_day_time.setText(String.valueOf(position+1));
                 if(position == 0){
                     Log.d("visi","1번");
+                    status = 1;
                     time1.setVisibility(View.VISIBLE);
                     time2.setVisibility(View.INVISIBLE);
                     time3.setVisibility(View.INVISIBLE);
                 }
                 else if(position == 1){
+                    status = 2;
                     time1.setVisibility(View.VISIBLE);
                     time2.setVisibility(View.VISIBLE);
                     time3.setVisibility(View.INVISIBLE);
                 }
                 else{
+                    status = 3;
                     time1.setVisibility(View.VISIBLE);
                     time2.setVisibility(View.VISIBLE);
                     time3.setVisibility(View.VISIBLE);
@@ -245,9 +250,20 @@ public class InsertPill_activity extends ApplicationBase implements InsertPill_P
                     Toast.makeText(getApplicationContext(), "약 이름을 입력하세요", Toast.LENGTH_LONG).show();
                 }else if(tv_dosagi.getText().toString().equals("0")){
                     Toast.makeText(getApplicationContext(), "복용횟수를 설정하세요", Toast.LENGTH_LONG).show();
-                }else if(time.size() == 0){
+                }else if(status < 1){
                     Toast.makeText(getApplicationContext(), "시간을 입력하세요", Toast.LENGTH_LONG).show();
                 }else {
+                    for(int i=0; i<status; i++){
+                        if(i == 0){
+                            time.add(time_1);
+                        }
+                        if(i == 1){
+                            time.add(time_2);
+                        }
+                        if(i == 2){
+                            time.add(time_3);
+                        }
+                    }
                     Log.d("commName",et_name.getText().toString());
                     Log.d("commDosagi",tv_dosagi.getText().toString());
                     Log.d("commTIme",time.get(0));
@@ -301,7 +317,7 @@ public class InsertPill_activity extends ApplicationBase implements InsertPill_P
                 day1 = "오후";
             }
             time1.setText(day1+" "+h1 + ":" + m1);
-            time.add(h1+m1);
+            time_1 = h1+m1;
         }
     };
     private TimePickerDialog.OnTimeSetListener listener2 = new TimePickerDialog.OnTimeSetListener() {//시간설정 다이얼로그 2
@@ -336,7 +352,7 @@ public class InsertPill_activity extends ApplicationBase implements InsertPill_P
                 day2 = "오후";
             }
             time2.setText(day2+" "+h2 + ":" + m2);
-            time.add(h2+m2);
+            time_2 = h2+m2;
         }
     };
     private TimePickerDialog.OnTimeSetListener listener3 = new TimePickerDialog.OnTimeSetListener() {//시간설정 다이얼로그 3
@@ -371,7 +387,7 @@ public class InsertPill_activity extends ApplicationBase implements InsertPill_P
                 day3 = "오후";
             }
             time3.setText(day3+" "+h3 + ":" + m3);
-            time.add(h3+m3);
+            time_3 = h3+m3;
         }
     };
 
