@@ -6,12 +6,13 @@ import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.support.v7.app.ActionBar;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.DisplayMetrics;
 import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.FrameLayout;
@@ -29,6 +30,8 @@ import java.util.ArrayList;
 import retrofit2.Retrofit;
 import yaksok.dodream.com.yaksok_refactoring.Adapter.family.FamilyFindAdapter;
 import yaksok.dodream.com.yaksok_refactoring.Adapter.family.FamilyItem;
+import yaksok.dodream.com.yaksok_refactoring.ApplicationBase;
+import yaksok.dodream.com.yaksok_refactoring.CustomDialog;
 import yaksok.dodream.com.yaksok_refactoring.R;
 import yaksok.dodream.com.yaksok_refactoring.presenter.family_register.Register_Fam_Presenter;
 import yaksok.dodream.com.yaksok_refactoring.view.Main.MainPage_activity;
@@ -36,7 +39,7 @@ import yaksok.dodream.com.yaksok_refactoring.vo.DeleteService;
 import yaksok.dodream.com.yaksok_refactoring.vo.FamilyVO;
 import yaksok.dodream.com.yaksok_refactoring.vo.UserService;
 
-public class Register_Family extends AppCompatActivity implements IRegister_Presenter_Family_To_View ,View.OnClickListener{
+public class Register_Family extends ApplicationBase implements IRegister_Presenter_Family_To_View ,View.OnClickListener{
 
     public EditText fmaily_number_edt;
     public Button family_find_btn, family_find_skip_btn,complete_btn,deleteFamilyBtn;
@@ -54,7 +57,8 @@ public class Register_Family extends AppCompatActivity implements IRegister_Pres
     Intent intent;
     String itForSignUp;
     Register_Fam_Presenter presenter;
-
+    CustomDialog customDialog;
+    int width,height;
 
 
     @Override
@@ -64,6 +68,27 @@ public class Register_Family extends AppCompatActivity implements IRegister_Pres
         intent = new Intent(getIntent());
                 //itForSignUp = intent.getStringExtra("itForSignUp");
                 //Log.d("aaaaaaaaaaaaa",itForSignUp);
+
+
+
+        DisplayMetrics dm = getApplicationContext().getResources().getDisplayMetrics(); //디바이스 화면크기를 구하기위해
+     /*   width = dm.widthPixels/2+300; //디바이스 화면 너비
+        height = dm.heightPixels/3+100; //디바이스 화면 높이*/
+
+
+
+        customDialog = new CustomDialog(this);
+        WindowManager.LayoutParams wm = customDialog.getWindow().getAttributes();  //다이얼로그의 높이 너비 설정하기위해
+       /* wm.copyFrom(customDialog.getWindow().getAttributes());  //여기서 설정한값을 그대로 다이얼로그에 넣겠다는의미
+
+        wm.copyFrom(customDialog.getWindow().getAttributes());  //여기서 설정한값을 그대로 다이얼로그에 넣겠다는의미
+        wm.width = width;  //화면 너비의 절반
+        wm.height = height;  //화면 높이의 절반
+*/
+
+
+
+
 
         presenter = new Register_Fam_Presenter(this);
 
@@ -145,8 +170,8 @@ public class Register_Family extends AppCompatActivity implements IRegister_Pres
                         int index1 = ((FamilyItem)adapter.getItem(position)).getName().indexOf('(');
                         int index2 = ((FamilyItem)adapter.getItem(position)).getName().indexOf(')');
 
-                        String id = ((FamilyItem)adapter.getItem(position)).getName().substring(index1+1,index2);
-                        makeDialog(id,position);
+                        String id = ((FamilyItem)adapter.getItem(position)).getName();
+                        makeDialog(id,position,index1,index2);
                         break;
                 }
                 // false : close the menu; true : not close the menu
@@ -233,12 +258,16 @@ public class Register_Family extends AppCompatActivity implements IRegister_Pres
             familyItemss2 = (ArrayList<FamilyItem>) familyItemss.clone();
     }
 
+
+
+
+
+    //등록
     @Override
     public void makeDialog(final String name, final String id) {
 
-        dialog.setTitle("가족찾기");
-        dialog.setMessage(name+"을 가족으로 등록 하시겠습니까?");
-        dialog.setCancelable(false);
+
+
         String user_id = "";
 
         Log.d("@@@@!!!",id);
@@ -247,50 +276,63 @@ public class Register_Family extends AppCompatActivity implements IRegister_Pres
 
         final String id2 = name.substring(index1+1,index2);
 
+        customDialog.message_tv.setText(name+"님을 "+"\n"+"가족으로 등록 하시겠습니까?");
 
-        dialog.setPositiveButton("네", new DialogInterface.OnClickListener() {
+        customDialog.show();
+
+
+        customDialog.ok_btn.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(DialogInterface dialog, int which) {
+            public void onClick(View v) {
+
                 presenter.setYesRegisterFam(true,name);
+                customDialog.dismiss();
 
             }
         });
-        dialog.setNegativeButton("아니요", new DialogInterface.OnClickListener() {
+
+        customDialog.no_btn.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(DialogInterface dialog, int which) {
-
+            public void onClick(View v) {
+                customDialog.dismiss();
             }
         });
-        AlertDialog alertDialog = dialog.create();
-        alertDialog.show();
+
 
 
     }
 
+
+    //삭제
     @Override
-    public void makeDialog(final String id, final int index) {
-        dialog.setTitle("가족삭제");
+    public void makeDialog(final String name, final int index,int index1,int index2) {
+        /*dialog.setTitle("가족삭제");
         dialog.setMessage(id+"님을 삭제 하시겠습니까?");
-        dialog.setCancelable(false);
+        dialog.setCancelable(false);*/
 
 
+        final String id = name.substring(index1+1,index2);
+        customDialog.title_tv.setText("가족삭제");
+        customDialog.message_tv.setText(name+"님을"+"\n"+"삭제 하시겠습니까?\"");
 
-        dialog.setPositiveButton("네", new DialogInterface.OnClickListener() {
+        customDialog.show();
+
+        customDialog.ok_btn.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(DialogInterface dialog, int which) {
+            public void onClick(View v) {
                 presenter.deleteFam(true,id,index);
-                //adapter.notifyDataSetChanged();
+                customDialog.dismiss();
+            }
+        });
 
-            }
-        });
-        dialog.setNegativeButton("아니요", new DialogInterface.OnClickListener() {
+        customDialog.no_btn.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(DialogInterface dialog, int which) {
-               makeToastMessage("취소 되었습니다. ");
+            public void onClick(View v) {
+                makeToastMessage("취소 되었습니다. ");
+                customDialog.dismiss();
             }
         });
-        AlertDialog alertDialog = dialog.create();
-        alertDialog.show();
+
     }
 
     @Override
@@ -310,7 +352,7 @@ public class Register_Family extends AppCompatActivity implements IRegister_Pres
             for(int i=0;i<familyItemss.size();i++){
                // Log.d("ffffff1"," "+familyItemss.size());
 
-                adapter.addItem(familyItemss.get(i).getName());
+                adapter.addItem(familyItemss.get(i).getFirst_name(),familyItemss.get(i).getName(),familyItemss.get(i).getUser_pn());
                 adapter.notifyDataSetChanged();
                 family_list_view.setAdapter(adapter);
                 Log.d("i",i+familyItemss.get(i).getName());
@@ -326,7 +368,7 @@ public class Register_Family extends AppCompatActivity implements IRegister_Pres
     @Override
     public void onResponse2(boolean response2, FamilyItem familyItem) {
         if(response2){
-            adapter.addItem(familyItem.getName());
+            adapter.addItem(familyItem.getFirst_name(),familyItem.getName(),familyItem.getUser_pn());
             adapter.notifyDataSetChanged();
             family_list_view.setAdapter(adapter);
         }
@@ -343,7 +385,7 @@ public class Register_Family extends AppCompatActivity implements IRegister_Pres
             adapter = new FamilyFindAdapter(this,familyItemss2,R.layout.family_list_item);
             for(int i=0;i<familyItemss.size();i++){
 
-                adapter.addItem(familyItemss2.get(i).getName());
+                adapter.addItem(familyItemss2.get(i).getFirst_name(),familyItemss2.get(i).getName(),familyItemss2.get(i).getUser_pn());
                 adapter.notifyDataSetChanged();
                 Log.d("basic3 size ", " "+familyItemss2.size());
             }
@@ -355,7 +397,7 @@ public class Register_Family extends AppCompatActivity implements IRegister_Pres
 
             }
 
-            //family_list_view.setAdapter(adapter);
+
 
         }
 

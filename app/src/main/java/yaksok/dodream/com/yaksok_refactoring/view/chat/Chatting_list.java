@@ -128,7 +128,7 @@ public class Chatting_list extends AppCompatActivity implements I_chat_list{
             for(int i=0;i<familyItemss.size();i++){
                 // Log.d("ffffff1"," "+familyItemss.size());
 
-                adapter.addItem(familyItemss.get(i).getName());
+                adapter.addItem(familyItemss.get(i).getFirst_name(),familyItemss.get(i).getName(),familyItemss.get(i).getUser_pn());
                 adapter.notifyDataSetChanged();
                 chat_list.setAdapter(adapter);
 
