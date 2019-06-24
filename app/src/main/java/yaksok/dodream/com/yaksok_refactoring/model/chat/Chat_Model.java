@@ -15,6 +15,7 @@ import retrofit2.Response;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 import retrofit2.converter.scalars.ScalarsConverterFactory;
+import yaksok.dodream.com.yaksok_refactoring.Adapter.chat.ChatItem;
 import yaksok.dodream.com.yaksok_refactoring.Adapter.family.FamilyItem;
 import yaksok.dodream.com.yaksok_refactoring.model.user.LoginModel;
 import yaksok.dodream.com.yaksok_refactoring.model.user.User_Id;
@@ -34,9 +35,13 @@ public class Chat_Model implements I_chat_model {
     private Chat_Presenter chat_presenter;
     private Retrofit retrofit;
     UserService userService;
-    ArrayList<FamilyItem> familyItems = new ArrayList<>();
+    ArrayList<ChatItem> familyItems = new ArrayList<>();
     MessageService messageService;
     ArrayList<SendMessageVO> albumList = new ArrayList<>();
+    ArrayList<String> id_list = new ArrayList<>();
+    ChatItem familyItem = new ChatItem();
+
+    int index;
     public Chat_Model(Chat_Presenter chat_presenter) {
         this.chat_presenter = chat_presenter;
 
@@ -63,9 +68,27 @@ public class Chat_Model implements I_chat_model {
                 if (findFamilyVO.getStatus().equals("200")) {
 
 
+
                     for(int i = 0; i < findFamilyVO.getResult().size();i++){
-                        familyItems.add(new FamilyItem(findFamilyVO.getResult().get(i).getNickName()+"("+findFamilyVO.getResult().get(i).getUserId()+")"));
+
+
+                       /* ArrayList<String> ids = new ArrayList<>();
+                        ids.add(findFamilyVO.getResult().get(i).getUserId());
+                        familyItem.setIds(ids);*/
+
+                        familyItem =  new ChatItem(findFamilyVO.getResult().get(i).getNickName(),
+                               findFamilyVO.getResult().get(i).getNickName().substring(0,1),"last message","2시간 전");
+
+                         id_list.add(findFamilyVO.getResult().get(i).getUserId());
+
+                        familyItems.add(familyItem);
+
+
                     }
+                    familyItem.setIds(id_list);
+                   for(int i = 0; i < familyItem.getIds().size(); i++){
+                       Log.e( "id_array ",familyItem.getIds().get(i));
+                   }
                    Log.e("onResponse: chat"," "  +familyItems.size() );
                     chat_presenter.sendArrayList(familyItems);
                     chat_presenter.onResponse(true);
@@ -178,6 +201,8 @@ public class Chat_Model implements I_chat_model {
                                 bodyVO.getResult().get(i).getReceivingUser(),
                                 bodyVO.getResult().get(i).getRegiDate().substring(11,16));
 
+
+
                         albumList.add(sendMessageVO);
 
 
@@ -210,6 +235,13 @@ public class Chat_Model implements I_chat_model {
 
             }
         });
+    }
+
+    @Override
+    public void getIdIndex(int index) {
+        this.index = index;
+        chat_presenter.makeToastMessage(id_list.get(index));
+        chat_presenter.sendId(id_list.get(index));
     }
 
 }

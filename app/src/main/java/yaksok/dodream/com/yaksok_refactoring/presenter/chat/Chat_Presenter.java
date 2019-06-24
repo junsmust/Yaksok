@@ -2,6 +2,7 @@ package yaksok.dodream.com.yaksok_refactoring.presenter.chat;
 
 import java.util.ArrayList;
 
+import yaksok.dodream.com.yaksok_refactoring.Adapter.chat.ChatItem;
 import yaksok.dodream.com.yaksok_refactoring.Adapter.family.FamilyItem;
 import yaksok.dodream.com.yaksok_refactoring.firebaseService.FirebaseMessageService;
 import yaksok.dodream.com.yaksok_refactoring.firebaseService.I_Connect_To_Presenter_with_FCM;
@@ -42,7 +43,7 @@ public class Chat_Presenter implements I_chat_presenter{
     }
 
     @Override
-    public void sendArrayList(ArrayList<FamilyItem> familyItems) {
+    public void sendArrayList(ArrayList<ChatItem> familyItems) {
         view.getArrayList(familyItems);
     }
 
@@ -69,5 +70,15 @@ public class Chat_Presenter implements I_chat_presenter{
     @Override
     public void getPreviouseConversation(String u_id, String y_id) {
         model.getPreviouseConversation(u_id,y_id);
+    }
+
+    @Override
+    public void sendIdIndex(int index) {
+        model.getIdIndex(index);
+    }
+
+    @Override
+    public void sendId(String s) {
+        view.getId(s);
     }
 }
