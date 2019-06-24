@@ -116,7 +116,7 @@ public class MyPill_activity extends ApplicationBase implements MyPill_Presenter
                         if(isOk){
                             Toast.makeText(MyPill_activity.this, "삭제되었습니다.", Toast.LENGTH_SHORT).show();
                             myPillList.clear();
-                            onMyPillDeleteRespoce(true);
+                            presenter_myPill.getMyPill();
                         }
                     }
 

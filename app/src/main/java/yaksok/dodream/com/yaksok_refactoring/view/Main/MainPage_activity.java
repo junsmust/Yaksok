@@ -84,7 +84,8 @@ public class MainPage_activity extends ApplicationBase implements Main_Presenter
         if(MyNearPillResponse) {
             if(status == 204){
                 tv_main_min.setText("등록된 약이 없습니다");
-                tv_main_min.setTextSize(25);
+                tv_main_min.setPaintFlags(tv_main_min.getPaintFlags() | Paint.FAKE_BOLD_TEXT_FLAG);
+                tv_main_min.setTextSize(30);
                 tv_main_min.setTextColor(Color.WHITE);
                 tv_main_hour.setText("");
                // tv_main_sec.setText("");
@@ -103,7 +104,6 @@ public class MainPage_activity extends ApplicationBase implements Main_Presenter
                 countDownTimer = new CountDownTimer((myNeaeTime_sec+60) * 1000, 1000) {
                     @Override
                     public void onTick(long millisUntilFinished) {
-                        Log.d("testt", String.valueOf(millisUntilFinished));
                         //시간 설정 부분
                         if (millisUntilFinished >= 3600000) {
                             if ((millisUntilFinished / 60000L) / 60 < 10) {
@@ -130,10 +130,10 @@ public class MainPage_activity extends ApplicationBase implements Main_Presenter
                         tv_main_min.setTextSize(60);
                         tv_main_min.setPaintFlags(tv_main_min.getPaintFlags() | Paint.FAKE_BOLD_TEXT_FLAG);
 
-                        tv_main_min_text.setShadowLayer(50,2,2,Color.GRAY);
-                        tv_main_min.setShadowLayer(50,2,2,Color.GRAY);
-                        tv_main_hour.setShadowLayer(50,2,2,Color.GRAY);
-                        tv_main_hour_text.setShadowLayer(50,2,2,Color.GRAY);
+                        tv_main_min_text.setShadowLayer(30,2,7,Color.GRAY);
+                        tv_main_min.setShadowLayer(30,2,7,Color.GRAY);
+                        tv_main_hour.setShadowLayer(30,2,7,Color.GRAY);
+                        tv_main_hour_text.setShadowLayer(30,2,7,Color.GRAY);
                         //초 설정 부분
                        /* if ((millisUntilFinished >= 1000)) {
                             if ((millisUntilFinished / 1000) % 3600 % 60 < 10) {

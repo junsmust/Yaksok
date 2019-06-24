@@ -14,8 +14,6 @@ public class Delete_Dialog extends Dialog implements View.OnClickListener,Dialog
 
     private Button positiveButton;
     private Button negativeButton;
-    private TextView tv_name;
-    private TextView tv_date;
     private Context context;
     String p_name, p_data;
     int p_pill_no;
@@ -53,12 +51,6 @@ public class Delete_Dialog extends Dialog implements View.OnClickListener,Dialog
         //init
         positiveButton = (Button)findViewById(R.id.cd_add_category_submit_bt);
         negativeButton = (Button)findViewById(R.id.cd_add_category_cancel_bt);
-        tv_name = (TextView)findViewById(R.id.cd_add_category1_tv);
-        tv_date = (TextView)findViewById(R.id.cd_add_category2_tv);
-
-        tv_name.setText("약 이름 : "+p_name);
-        tv_date.setText("등록날짜 : "+p_data);
-
 
         //버튼 클릭 리스너 등록
         positiveButton.setOnClickListener(this);

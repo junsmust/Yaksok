@@ -2,111 +2,136 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
     android:background="@drawable/my_pill_list_item"
+    android:orientation="vertical"
     android:padding="5sp">
+
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_weight="3"
-        android:orientation="vertical">
-        <TextView
-            android:id="@+id/tv_name_mypill_item"
+        android:orientation="vertical"
+        android:elevation="3dp"
+        android:layout_marginRight="20dp"
+        android:layout_marginLeft="20dp"
+        android:layout_marginBottom="3dp"
+        android:layout_marginTop="3dp"
+        android:padding="5sp"
+        android:background="@drawable/my_pill_list_item">
+
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:gravity="left|bottom"
-            android:paddingBottom="10dp"
-            android:paddingLeft="10sp"
-            android:text="감기약"
-            android:textStyle="bold"
-            android:textSize="25dp"
-            android:textColor="#50B19D"/>
+            android:layout_weight="3"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/tv_name_mypill_item"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:gravity="left|bottom"
+                android:paddingBottom="10dp"
+                android:paddingLeft="10sp"
+                android:text="감기약"
+                android:textColor="#50B19D"
+                android:textSize="25dp"
+                android:textStyle="bold" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:orientation="vertical">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="left|center"
+                android:orientation="horizontal"
+                android:paddingLeft="10sp"
+                android:paddingTop="3dp">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="하루에 "
+                    android:textColor="#000000"
+                    android:textSize="17dp" />
+
+                <TextView
+                    android:id="@+id/tv_timeOfDay_mypill_item"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="3번  "
+                    android:textColor="#000000"
+                    android:textSize="17dp" />
+
+                <ImageView
+                    android:id="@+id/iv_point1_mypill"
+                    android:layout_width="30dp"
+                    android:layout_height="15dp"
+                    android:src="@drawable/mypii_point" />
+
+                <ImageView
+                    android:id="@+id/iv_point2_mypill"
+                    android:layout_width="20dp"
+                    android:layout_height="15dp"
+                    android:src="@drawable/mypii_point" />
+
+                <ImageView
+                    android:id="@+id/iv_point3_mypill"
+                    android:layout_width="20dp"
+                    android:layout_height="15dp"
+                    android:src="@drawable/mypii_point" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="left|center"
+                android:paddingLeft="10sp"
+                android:paddingTop="3dp">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="알림받을 가족 : "
+                    android:textColor="#000000"
+                    android:textSize="17dp" />
+
+                <TextView
+                    android:id="@+id/tv_family_mypill_item"
+                    android:layout_width="200dp"
+                    android:layout_height="wrap_content"
+                    android:singleLine="true"
+                    android:textSize="17dp" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="30dp"
+                android:gravity="left|center"
+                android:paddingLeft="10sp"
+                android:paddingTop="3dp">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="남은 복용 횟수 : "
+                    android:textColor="#000000"
+                    android:textSize="17dp" />
+
+                <TextView
+                    android:id="@+id/tv_dosagi_mypill_item"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:singleLine="true"
+                    android:text="6"
+                    android:textSize="17dp" />
+            </LinearLayout>
+        </LinearLayout>
     </LinearLayout>
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_weight="1"
-        android:orientation="vertical">
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:paddingLeft="10sp"
-            android:paddingTop="3dp"
-            android:orientation="horizontal"
-            android:gravity="left|center">
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:textSize="17dp"
-                android:textColor="#000000"
-                android:text="하루에 "
-                />
-            <TextView
-                android:id="@+id/tv_timeOfDay_mypill_item"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:textSize="17dp"
-                android:textColor="#000000"
-                android:text="3번  "/>
-            <ImageView
-                android:id="@+id/iv_point1_mypill"
-                android:layout_width="30dp"
-                android:layout_height="15dp"
-                android:src="@drawable/mypii_point"/>
-            <ImageView
-                android:id="@+id/iv_point2_mypill"
-                android:layout_width="20dp"
-                android:layout_height="15dp"
-                android:src="@drawable/mypii_point"/>
-            <ImageView
-                android:id="@+id/iv_point3_mypill"
-                android:layout_width="20dp"
-                android:layout_height="15dp"
-                android:src="@drawable/mypii_point"/>
-
-        </LinearLayout>
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:gravity="left|center"
-            android:paddingTop="3dp"
-            android:paddingLeft="10sp">
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:textSize="17dp"
-                android:textColor="#000000"
-                android:text="알림받을 가족 : "/>
-            <TextView
-                android:id="@+id/tv_family_mypill_item"
-                android:layout_width="200dp"
-                android:layout_height="wrap_content"
-                android:textSize="17dp"
-                android:singleLine="true"/>
-        </LinearLayout>
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:gravity="left|center"
-            android:paddingTop="3dp"
-            android:layout_marginBottom="30dp"
-            android:paddingLeft="10sp">
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:textSize="17dp"
-                android:textColor="#000000"
-                android:text="남은 복용 횟수 : "/>
-            <TextView
-                android:id="@+id/tv_dosagi_mypill_item"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:textSize="17dp"
-                android:singleLine="true"
-                android:text="6"/>
-        </LinearLayout>
-    </LinearLayout>
-
 
 </LinearLayout>

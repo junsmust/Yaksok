@@ -1,22 +1,20 @@
 package yaksok.dodream.com.yaksok_refactoring.view.InsertPill;
 
+import android.app.AlertDialog;
 import android.app.TimePickerDialog;
 import android.content.Intent;
+import android.graphics.Paint;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.app.ActionBar;
-import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.util.SparseBooleanArray;
 import android.view.LayoutInflater;
-import android.view.MotionEvent;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.CheckBox;
-import android.widget.CompoundButton;
 import android.widget.EditText;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
@@ -32,12 +30,12 @@ import java.util.ArrayList;
 import java.util.List;
 
 import yaksok.dodream.com.yaksok_refactoring.ApplicationBase;
+import yaksok.dodream.com.yaksok_refactoring.C_Dialog;
 import yaksok.dodream.com.yaksok_refactoring.CustomChoiceListViewAdapter;
+import yaksok.dodream.com.yaksok_refactoring.CustomDialog;
 import yaksok.dodream.com.yaksok_refactoring.R;
 import yaksok.dodream.com.yaksok_refactoring.model.user.User_Id;
 import yaksok.dodream.com.yaksok_refactoring.presenter.InsertPill.Presenter_InsertPill;
-import yaksok.dodream.com.yaksok_refactoring.view.InsertPill.Sel_AlarmRecive.Sel_AlarmRecive_activity;
-import yaksok.dodream.com.yaksok_refactoring.view.InsertPill.SearchPill.SearchPill_activity;
 import yaksok.dodream.com.yaksok_refactoring.vo.InsertPill_Item;
 
 public class InsertPill_activity extends ApplicationBase implements InsertPill_PresenterToView, View.OnClickListener{
@@ -54,13 +52,14 @@ public class InsertPill_activity extends ApplicationBase implements InsertPill_P
     String h1,m1,h2,m2,h3,m3;
     String family_names = "";
     String day1,day2,day3;
-    ImageView minus_count,plus_count,imageView,imageView1;
+    ImageView minus_count,plus_count,imageView,imageView1,time_m,time_p;
     RelativeLayout rb_family;
     SlidingDrawer slidingDrawer;
     Presenter_InsertPill presenter_insertPill;
     InsertPill_Item insertPill_item;
     List<String> time, family_id, alarm_f_list;
     Intent resultIntent;
+    public  AlertDialog.Builder dialog;
     private List<String> familyList = new ArrayList<String>();
     private List<String> familyList_Id = new ArrayList<String>();
     ListView lv_sel_family;
@@ -68,8 +67,9 @@ public class InsertPill_activity extends ApplicationBase implements InsertPill_P
     CustomChoiceListViewAdapter adapter1;
     int size = 0;
     String time_1,time_2,time_3;
-    int status = 0;
+    int status = 1;
     boolean slid_Satuts=false;
+    C_Dialog customDialog;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -123,10 +123,12 @@ public class InsertPill_activity extends ApplicationBase implements InsertPill_P
         time1 = (Button)findViewById(R.id.bt_IP_time1);
         time2 = (Button)findViewById(R.id.bt_IP_time2);
         time3 = (Button)findViewById(R.id.bt_IP_time3);
-        spinner = (Spinner)findViewById(R.id.sp_IP_day_time);
+        //spinner = (Spinner)findViewById(R.id.sp_IP_day_time);
         tv_day_time = (TextView)findViewById(R.id.tv_IP_day_time);
         minus_count = (ImageView) findViewById(R.id.iv_IP_m);
         plus_count = (ImageView) findViewById(R.id.iv_IP_p);
+        time_m = (ImageView)findViewById(R.id.iv_IP_time_m);
+        time_p = (ImageView)findViewById(R.id.iv_IP_time_p);
         tv_dosagi = (TextView)findViewById(R.id.tv_IP_dosagi);
         rb_family = (RelativeLayout)findViewById(R.id.rb_IP_family);
         bt_slidcalcel = (Button)findViewById(R.id.bt_sliding_cancel);
@@ -134,6 +136,10 @@ public class InsertPill_activity extends ApplicationBase implements InsertPill_P
         lv_sel_family = (ListView)findViewById(R.id.iv_sliding_family);
         checkBox = (CheckBox) findViewById(R.id.checkBox1);
         tv_IP_family = (TextView)findViewById(R.id.tv_IP_family);
+
+        customDialog = new C_Dialog(this);
+
+        et_name.setPaintFlags(et_name.getPaintFlags() | Paint.FAKE_BOLD_TEXT_FLAG);
 
         lv_sel_family.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
@@ -175,6 +181,8 @@ public class InsertPill_activity extends ApplicationBase implements InsertPill_P
 
         minus_count.setOnClickListener(this);
         plus_count.setOnClickListener(this);
+        time_m.setOnClickListener(this);
+        time_p.setOnClickListener(this);
 
         sp_array = new ArrayList<>();
         sp_array.add("1번");
@@ -185,13 +193,12 @@ public class InsertPill_activity extends ApplicationBase implements InsertPill_P
                 android.R.layout.simple_spinner_dropdown_item,
                 sp_array);
 
-        spinner.setAdapter(sp_arrayAdapter);
+//        spinner.setAdapter(sp_arrayAdapter);
 
-        time1.setVisibility(View.INVISIBLE);
         time2.setVisibility(View.INVISIBLE);
         time3.setVisibility(View.INVISIBLE);
 
-        spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+       /* spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 tv_day_time.setText(String.valueOf(position+1));
@@ -220,7 +227,7 @@ public class InsertPill_activity extends ApplicationBase implements InsertPill_P
             public void onNothingSelected(AdapterView<?> parent) {
 
             }
-        });
+        });*/
 
         dialog1 = new TimePickerDialog(this, listener1, 00, 00, true);
         time1.setOnClickListener(new View.OnClickListener() {
@@ -244,7 +251,7 @@ public class InsertPill_activity extends ApplicationBase implements InsertPill_P
             }
         });
 
-        fb2.setOnClickListener(new View.OnClickListener() {
+        imageView1.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 if(et_name.getText().toString().equals("")) {
@@ -253,7 +260,12 @@ public class InsertPill_activity extends ApplicationBase implements InsertPill_P
                     Toast.makeText(getApplicationContext(), "복용횟수를 설정하세요", Toast.LENGTH_LONG).show();
                 }else if(time1.getText().toString().equals("시간설정1")){
                     Toast.makeText(getApplicationContext(), "시간을 입력하세요", Toast.LENGTH_LONG).show();
-                }else {
+                }else if(time2.getText().toString().equals("시간설정2")&&tv_day_time.getText().toString().equals("2")){
+                    Toast.makeText(getApplicationContext(), "시간을 입력하세요", Toast.LENGTH_LONG).show();
+                }else if(time3.getText().toString().equals("시간설정3")&&tv_day_time.getText().toString().equals("3")){
+                    Toast.makeText(getApplicationContext(), "시간을 입력하세요", Toast.LENGTH_LONG).show();
+                }
+                else {
                     for(int i=0; i<status+1; i++){
                         if(i == 1){
                             time.add(time_1);
@@ -318,7 +330,11 @@ public class InsertPill_activity extends ApplicationBase implements InsertPill_P
                 day1 = "오후";
             }
             time1.setText(day1+" "+h1 + ":" + m1);
-            time_1 = String.valueOf(hourOfDay)+String.valueOf(minute);
+            if(String.valueOf(hourOfDay).length()<2) {
+                time_1 = "0"+String.valueOf(hourOfDay) + m1;
+            }else{
+                time_1 = String.valueOf(hourOfDay) + m1;
+            }
             Log.d("time1",time_1);
         }
     };
@@ -354,7 +370,12 @@ public class InsertPill_activity extends ApplicationBase implements InsertPill_P
                 day2 = "오후";
             }
             time2.setText(day2+" "+h2 + ":" + m2);
-            time_2 = String.valueOf(hourOfDay)+String.valueOf(minute);
+            if(String.valueOf(hourOfDay).length()<2){
+                time_2 = "0"+String.valueOf(hourOfDay)+m2;
+            }
+            else {
+                time_2 = String.valueOf(hourOfDay) + m2;
+            }
         }
     };
     private TimePickerDialog.OnTimeSetListener listener3 = new TimePickerDialog.OnTimeSetListener() {//시간설정 다이얼로그 3
@@ -389,7 +410,11 @@ public class InsertPill_activity extends ApplicationBase implements InsertPill_P
                 day3 = "오후";
             }
             time3.setText(day3+" "+h3 + ":" + m3);
-            time_3 = String.valueOf(hourOfDay)+String.valueOf(minute);
+            if(String.valueOf(hourOfDay).length()<2) {
+                time_3 = "0"+String.valueOf(hourOfDay) + m3;
+            }else{
+                time_3 = String.valueOf(hourOfDay) + m3;
+            }
         }
     };
 
@@ -403,18 +428,73 @@ public class InsertPill_activity extends ApplicationBase implements InsertPill_P
                 else{ // 복용횟수 뻬기
                     int count = Integer.parseInt(tv_dosagi.getText().toString());
                     count--;
-                    System.out.print(count);
                     tv_dosagi.setText(String.valueOf(count));
                     //e_dosagi.setText(et_dosagi.getText().toString().substring(0,1)+String.valueOf(count)+et_dosagi.getText().toString().substring(2));
                 }
                 break;
-            case R.id.iv_IP_p: //복용 횟수 플러
+            case R.id.iv_IP_p: //복용시기 횟수 플러
                 int count = Integer.parseInt(tv_dosagi.getText().toString());
                 count++;
-                System.out.print(count);
                 tv_dosagi.setText(String.valueOf(count));
                 break;
+            case R.id.iv_IP_time_m:
+                if(Integer.parseInt(tv_day_time.getText().toString())<=1){
 
+                }
+                else{ // 복용시기 뻬기
+                    int count_t = Integer.parseInt(tv_day_time.getText().toString());
+                    count_t--;
+                    if(count_t == 1){
+                        Log.d("visi","1번");
+                        status = 1;
+                        time1.setVisibility(View.VISIBLE);
+                        time2.setVisibility(View.INVISIBLE);
+                        time3.setVisibility(View.INVISIBLE);
+                    }
+                    else if(count_t == 2){
+                        status = 2;
+                        time1.setVisibility(View.VISIBLE);
+                        time2.setVisibility(View.VISIBLE);
+                        time3.setVisibility(View.INVISIBLE);
+                    }
+                    else{
+                        status = 3;
+                        time1.setVisibility(View.VISIBLE);
+                        time2.setVisibility(View.VISIBLE);
+                        time3.setVisibility(View.VISIBLE);
+                    }
+                    tv_day_time.setText(String.valueOf(count_t));
+                    break;
+                    //e_dosagi.setText(et_dosagi.getText().toString().substring(0,1)+String.valueOf(count)+et_dosagi.getText().toString().substring(2));
+                }
+            case R.id.iv_IP_time_p:
+                if(Integer.parseInt(tv_day_time.getText().toString())>=3){
+
+                }
+                else {
+                    int count_t = Integer.parseInt(tv_day_time.getText().toString());
+                    count_t++;
+                    if (count_t == 1) {
+                        Log.d("visi", "1번");
+                        status = 1;
+                        time1.setVisibility(View.VISIBLE);
+                        time2.setVisibility(View.INVISIBLE);
+                        time3.setVisibility(View.INVISIBLE);
+                    } else if (count_t == 2) {
+                        status = 2;
+                        time1.setVisibility(View.VISIBLE);
+                        time2.setVisibility(View.VISIBLE);
+                        time3.setVisibility(View.INVISIBLE);
+                    } else {
+                        status = 3;
+                        time1.setVisibility(View.VISIBLE);
+                        time2.setVisibility(View.VISIBLE);
+                        time3.setVisibility(View.VISIBLE);
+                    }
+
+                    tv_day_time.setText(String.valueOf(count_t));
+                    break;
+                }
         }
     }
 
@@ -429,9 +509,25 @@ public class InsertPill_activity extends ApplicationBase implements InsertPill_P
     @Override
     public void onInsertResponse(boolean response) {
         if(response){
-            Toast.makeText(getApplicationContext(), "약이 등록되었습니다.", Toast.LENGTH_LONG).show();
-            finish();
+            makeDialog();
         }
+    }
+
+    private void makeDialog(){
+
+
+        customDialog.text_tv.setText("약이 등록되었습니다.");
+
+        customDialog.show();
+
+
+        customDialog.ok_btn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                customDialog.dismiss();
+                finish();
+            }
+        });
     }
 
     @Override

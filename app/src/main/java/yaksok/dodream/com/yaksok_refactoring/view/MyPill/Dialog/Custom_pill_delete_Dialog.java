@@ -57,14 +57,9 @@ public class Custom_pill_delete_Dialog implements Dialog_PresenterToView{
         dlg.show();
 
         // 커스텀 다이얼로그의 각 위젯들을 정의한다.
-        final TextView title = (TextView)dlg.findViewById(R.id.cd_add_category_title_tv);
-        final TextView name1 = (TextView)dlg.findViewById(R.id.cd_add_category1_tv);
-        final TextView date = (TextView)dlg.findViewById(R.id.cd_add_category2_tv);
         final Button delete = (Button)dlg.findViewById(R.id.cd_add_category_submit_bt);
         final Button cancel = (Button)dlg.findViewById(R.id.cd_add_category_cancel_bt);
 
-        name1.setText("약 이름 : "+pill_name);
-        date.setText("등록날짜 : "+pill_data);
 
         myPill_activity = new MyPill_activity();
         delete.setOnClickListener(new View.OnClickListener() {

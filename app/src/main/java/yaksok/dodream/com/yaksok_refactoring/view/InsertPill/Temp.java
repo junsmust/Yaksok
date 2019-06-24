@@ -106,7 +106,7 @@ public class Temp extends ApplicationBase implements View.OnClickListener{
         time1 = (Button)findViewById(R.id.bt_IP_time1);
         time2 = (Button)findViewById(R.id.bt_IP_time2);
         time3 = (Button)findViewById(R.id.bt_IP_time3);
-        spinner = (Spinner)findViewById(R.id.sp_IP_day_time);
+        //spinner = (Spinner)findViewById(R.id.sp_IP_day_time);
         tv_day_time = (TextView)findViewById(R.id.tv_IP_day_time);
         minus_count = (ImageView) findViewById(R.id.iv_IP_m);
         plus_count = (ImageView) findViewById(R.id.iv_IP_p);

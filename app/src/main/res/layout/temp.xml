@@ -20,6 +20,7 @@
             android:background="@null"
             android:gravity="center"
             android:hint="이름을 입력하세요"
+            android:inputType="textNoSuggestions"
             android:textColor="#ffffff"
             android:textSize="90px"
             android:textStyle="bold" />
@@ -136,8 +137,19 @@
             android:layout_marginLeft="30px"
             android:layout_marginRight="30px"
             android:layout_marginTop="530px"
+            android:gravity="center_vertical"
             android:background="@drawable/insertpill_list_layout"
             android:paddingBottom="70px">
+
+            <ImageView
+                android:layout_marginRight="50px"
+                android:id="@+id/iv_IP_time_m"
+                android:layout_width="80px"
+                android:layout_height="80px"
+                android:layout_alignParentTop="true"
+                android:layout_gravity="center"
+                android:layout_toStartOf="@+id/qwer"
+                android:src="@drawable/dosagi_m" />
 
             <TextView
                 android:layout_width="wrap_content"
@@ -149,6 +161,7 @@
                 android:textSize="80px" />
 
             <TextView
+                android:id="@+id/qwer"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignParentTop="true"
@@ -163,7 +176,7 @@
                 android:layout_height="wrap_content"
                 android:layout_alignParentTop="true"
                 android:layout_toStartOf="@+id/testeee"
-                android:text="3"
+                android:text="1"
                 android:textColor="#000000"
                 android:textSize="70px" />
 
@@ -171,14 +184,23 @@
                 android:id="@+id/testeee"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_alignParentEnd="true"
                 android:layout_alignParentTop="true"
-                android:layout_marginEnd="44dp"
+                android:layout_toStartOf="@+id/iv_IP_time_p"
                 android:text="번"
                 android:textColor="#000000"
                 android:textSize="70px" />
 
-            <Spinner
+            <ImageView
+                android:layout_marginLeft="50px"
+                android:id="@+id/iv_IP_time_p"
+                android:layout_width="80px"
+                android:layout_height="28dp"
+                android:layout_alignParentEnd="true"
+                android:layout_alignParentTop="true"
+                android:layout_gravity="center"
+                android:src="@drawable/dosagi_p" />
+
+           <!-- <Spinner
                 android:id="@+id/sp_IP_day_time"
                 android:layout_width="50px"
                 android:layout_height="80px"
@@ -186,7 +208,7 @@
                 android:layout_alignParentTop="true"
                 android:layout_marginRight="9px"
                 android:layout_marginTop="5px"
-                android:background="@drawable/r_arrow"></Spinner>
+                android:background="@drawable/r_arrow"></Spinner>-->
         </RelativeLayout>
 
         <RelativeLayout
