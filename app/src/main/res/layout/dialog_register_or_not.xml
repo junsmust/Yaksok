@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="300dp"
+    android:layout_height="250dp"
+    android:gravity="center"
+    android:layout_gravity="center"
+    android:orientation="vertical"
+    android:background="@drawable/white_rect_radius">
+
+    <LinearLayout
+        android:layout_width="400dp"
+        android:layout_height="250dp"
+        android:gravity="center"
+        android:orientation="vertical"
+        android:layout_gravity="center">
+
+        <TextView
+            android:id="@+id/title_tv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="가족찾기"
+            android:textSize="20dp"
+            android:textColor="@color/main_color"
+            android:textStyle="bold"
+            android:layout_weight="1"
+            android:layout_marginTop="25dp"
+            />
+
+        <TextView
+            android:id="@+id/message_tv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="30dp"
+            android:text="@string/dialog_message"
+            android:textSize="20dp"
+            android:textColor="@color/black"
+            android:layout_margin="10dp"
+            android:layout_weight="3"
+           />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:gravity="center"
+            android:layout_weight="2"
+            android:layout_marginBottom="10dp">
+
+            <Button
+                android:id="@+id/ok_btn"
+                android:layout_width="130dp"
+                android:layout_height="40dp"
+                android:text="네"
+                android:textStyle="bold"
+                android:textColor="#ffffff"
+                android:background="@drawable/green_btn"
+                android:layout_gravity="center"
+                android:layout_margin="5dp"/>
+
+            <Button
+                android:id="@+id/no_btn"
+                android:layout_width="130dp"
+                android:layout_height="40dp"
+                android:text="아니오"
+                android:textColor="@color/main_color"
+                android:textStyle="bold"
+                android:background="@drawable/green_line_rec"
+                android:layout_margin="5dp"
+                />
+        </LinearLayout>
+
+    </LinearLayout>
+
+
+</LinearLayout>
+
+

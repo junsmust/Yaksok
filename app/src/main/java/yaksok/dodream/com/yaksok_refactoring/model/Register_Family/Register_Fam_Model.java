@@ -36,6 +36,7 @@ public class Register_Fam_Model implements IRegister_Presenter_To_FamModel {
     private ArrayList<FamilyItem> registered_Fam = new ArrayList<>();
     public Retrofit retrofit;
     public DeleteService deleteService;
+    private String user_last_name,user_name,user_pn;
 
 
     public Register_Fam_Model(Register_Fam_Presenter presenter) {
@@ -69,9 +70,12 @@ public class Register_Fam_Model implements IRegister_Presenter_To_FamModel {
 
                         Log.e(TAG, "oncccccccc "+findFamilyVO.getResult().getNickName()+"("+findFamilyVO.getResult().getUserId()+")" +second_user_id);
                             presenter.makeDialog(findFamilyVO.getResult().getNickName()+"("+findFamilyVO.getResult().getUserId()+")",second_user_id);
-                            familyItems.add(new FamilyItem(findFamilyVO.getResult().getNickName()+"("+findFamilyVO.getResult().getUserId()));
+                            familyItems.add(new FamilyItem(findFamilyVO.getResult().getNickName()+"("+findFamilyVO.getResult().getUserId()+")",findFamilyVO.getResult().getNickName().substring(0,1),findFamilyVO.getResult().getPhoneNumber()));
+                            user_last_name = findFamilyVO.getResult().getNickName().substring(0,1);
+                            user_name = findFamilyVO.getResult().getNickName()+"("+findFamilyVO.getResult().getUserId()+")";
+                            user_pn = findFamilyVO.getResult().getPhoneNumber().substring(0,3)+"-"+findFamilyVO.getResult().getPhoneNumber().substring(3,7)+"-"+findFamilyVO.getResult().getPhoneNumber().substring(7);
 
-                            Log.d("ddddddd",findFamilyVO.getResult().getNickName()+findFamilyVO.getResult().getUserId());
+                        Log.d("ddddddd",findFamilyVO.getResult().getNickName()+findFamilyVO.getResult().getUserId());
                         }
                     else if (findFamilyVO.getStatus().equals("204")) {
                         presenter.makeToastMessage( "상대의 계정이 존재하지 않습니다.");
@@ -117,7 +121,9 @@ public class Register_Fam_Model implements IRegister_Presenter_To_FamModel {
 
                         switch (bodyVO.getStatus()) {
                             case "201":
+                                familyItem.setFirst_name(user_last_name);
                                 familyItem.setName(finalUser2_id);
+                                familyItem.setUser_pn(user_pn);
                                 Log.d("setName",familyItem.getName());
                                 presenter.onResponse2(true,familyItem);
                                 presenter.makeToastMessage( "가족 추가가 되었습니다.");
@@ -168,7 +174,9 @@ public class Register_Fam_Model implements IRegister_Presenter_To_FamModel {
                 if (findFamilyVO.getStatus().equals("200")) {
 
                     for(int i = 0; i < findFamilyVO.getResult().size();i++){
-                        familyItems.add(new FamilyItem(findFamilyVO.getResult().get(i).getNickName()+"("+findFamilyVO.getResult().get(i).getUserId()+")"));
+                        FamilyItem item = new FamilyItem(findFamilyVO.getResult().get(i).getNickName()+"("+findFamilyVO.getResult().get(i).getUserId()+")",findFamilyVO.getResult().get(i).getNickName().substring(0,1),
+                                findFamilyVO.getResult().get(i).getPhoneNumber().substring(0,3)+"-"+findFamilyVO.getResult().get(i).getPhoneNumber().substring(3,7)+"-"+findFamilyVO.getResult().get(i).getPhoneNumber().substring(7));
+                        familyItems.add(item);
 
                     }
                     Log.e(TAG, "onResponse: "+ familyItems.size() );

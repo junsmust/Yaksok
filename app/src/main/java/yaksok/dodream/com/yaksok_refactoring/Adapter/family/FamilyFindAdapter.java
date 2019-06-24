@@ -52,20 +52,26 @@ public class FamilyFindAdapter extends BaseAdapter {
                 convertView = layoutInflater.inflate(layout,parent,false);
             }
 
+            TextView f_name = (TextView)convertView.findViewById(R.id.family_first_tv);
             TextView name = (TextView)convertView.findViewById(R.id.family_list_item_name);
+            TextView f_pn = (TextView)convertView.findViewById(R.id.family_list_item_pn);
 
             FamilyItem familyItem = familyItems.get(position);
+            f_name.setText(familyItem.getFirst_name());
             name.setText(familyItem.getName());
+            f_pn.setText(familyItem.getUser_pn());
+
 
             return convertView;
         }
 
-        public void addItem(String name){
+        public void addItem(String first_name,String name,String pn){
 
             FamilyItem familyItem = new FamilyItem();
 
+            familyItem.setFirst_name(first_name);
             familyItem.setName(name);
-
+            familyItem.setUser_pn(pn);
             /*if(isplay==false) {
              familyItems.clear();
             }*/
