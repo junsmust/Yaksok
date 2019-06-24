@@ -85,11 +85,12 @@ public class MainPage_activity extends ApplicationBase implements Main_Presenter
             if(status == 204){
                 tv_main_min.setText("등록된 약이 없습니다");
                 tv_main_min.setTextSize(25);
-                tv_main_min.setTextColor(Color.GRAY);
+                tv_main_min.setTextColor(Color.WHITE);
                 tv_main_hour.setText("");
                // tv_main_sec.setText("");
                 tv_main_hour_text.setText("");
                 tv_main_min_text.setText("");
+                tv_main_min_text.setElevation(20);
                 //tv_main_sec_text.setText("");
             }
             else if(status == 200) {
@@ -128,6 +129,11 @@ public class MainPage_activity extends ApplicationBase implements Main_Presenter
                         }
                         tv_main_min.setTextSize(60);
                         tv_main_min.setPaintFlags(tv_main_min.getPaintFlags() | Paint.FAKE_BOLD_TEXT_FLAG);
+
+                        tv_main_min_text.setShadowLayer(50,2,2,Color.GRAY);
+                        tv_main_min.setShadowLayer(50,2,2,Color.GRAY);
+                        tv_main_hour.setShadowLayer(50,2,2,Color.GRAY);
+                        tv_main_hour_text.setShadowLayer(50,2,2,Color.GRAY);
                         //초 설정 부분
                        /* if ((millisUntilFinished >= 1000)) {
                             if ((millisUntilFinished / 1000) % 3600 % 60 < 10) {

@@ -98,7 +98,6 @@ public class InsertPill_activity extends ApplicationBase implements InsertPill_P
             }
         });
 
-
         ActionBar.LayoutParams layoutParams = new ActionBar.LayoutParams(ActionBar.LayoutParams.MATCH_PARENT,ActionBar.LayoutParams.MATCH_PARENT);
         actionBar.setCustomView(view,layoutParams);
 
@@ -116,8 +115,6 @@ public class InsertPill_activity extends ApplicationBase implements InsertPill_P
 
         alarm_f_list = new ArrayList<String>();
         time =  new ArrayList<>();
-
-
 
         time1 = (Button)findViewById(R.id.bt_IP_time1);
         time2 = (Button)findViewById(R.id.bt_IP_time2);
@@ -250,17 +247,17 @@ public class InsertPill_activity extends ApplicationBase implements InsertPill_P
                     Toast.makeText(getApplicationContext(), "약 이름을 입력하세요", Toast.LENGTH_LONG).show();
                 }else if(tv_dosagi.getText().toString().equals("0")){
                     Toast.makeText(getApplicationContext(), "복용횟수를 설정하세요", Toast.LENGTH_LONG).show();
-                }else if(status < 1){
+                }else if(time1.getText().toString().equals("시간설정1")){
                     Toast.makeText(getApplicationContext(), "시간을 입력하세요", Toast.LENGTH_LONG).show();
                 }else {
-                    for(int i=0; i<status; i++){
-                        if(i == 0){
+                    for(int i=0; i<status+1; i++){
+                        if(i == 1){
                             time.add(time_1);
                         }
-                        if(i == 1){
+                        if(i == 2){
                             time.add(time_2);
                         }
-                        if(i == 2){
+                        if(i == 3){
                             time.add(time_3);
                         }
                     }
