@@ -83,6 +83,8 @@ public class Login_activity extends ApplicationBase implements IPresenterToView{
     private static String OAUTH_CLIENT_NAME = "gam7325";
     private OAuthLoginButton login_naver_btn;
 
+    private FrameLayout id_find_frame,pw_find_prame,signup_find_frame;
+
 
     @SuppressLint("HandlerLeak")
     @Override
@@ -111,6 +113,12 @@ public class Login_activity extends ApplicationBase implements IPresenterToView{
         fake_naver_iv = (ImageView)findViewById(R.id.naver_fake_iv);
 
         find_pw = (TextView)findViewById(R.id.login_find_pw_tv);
+
+        id_find_frame = (FrameLayout)findViewById(R.id.frame_id_find);
+        pw_find_prame = (FrameLayout)findViewById(R.id.frame_pw_find);
+        signup_find_frame = (FrameLayout)findViewById(R.id.frame_signup);
+
+
 
         fake_naver_iv.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -303,6 +311,29 @@ public class Login_activity extends ApplicationBase implements IPresenterToView{
             }
         });
 
+        id_find_frame.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+               // find_id.performLongClick();
+
+            }
+        });
+
+        pw_find_prame.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(getApplicationContext(), FindUserPassword.class));
+                Log.e("pw_find ","눌림" );
+
+            }
+        });
+
+        signup_find_frame.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(getApplicationContext(), Signup_activity.class));
+            }
+        });
     }
     public void init() {
         oAuthLogin = OAuthLogin.getInstance();

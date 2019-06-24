@@ -3,8 +3,10 @@ package yaksok.dodream.com.yaksok_refactoring.model.user;
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.SharedPreferences;
+import android.support.annotation.NonNull;
 import android.util.Log;
 
+import com.google.firebase.iid.FirebaseInstanceId;
 import com.kakao.network.ErrorResult;
 import com.kakao.usermgmt.UserManagement;
 import com.kakao.usermgmt.callback.MeV2ResponseCallback;
@@ -34,6 +36,7 @@ import yaksok.dodream.com.yaksok_refactoring.presenter.login_presenter.Presenter
 import yaksok.dodream.com.yaksok_refactoring.presenter.Main.Presenter_Main;
 import yaksok.dodream.com.yaksok_refactoring.view.login.Login_activity;
 import yaksok.dodream.com.yaksok_refactoring.vo.BodyVO;
+import yaksok.dodream.com.yaksok_refactoring.vo.FcmTokenVO;
 import yaksok.dodream.com.yaksok_refactoring.vo.UserService;
 
 public class LoginModel implements IPresennterToModel {
@@ -137,6 +140,7 @@ public class LoginModel implements IPresennterToModel {
 
                     Log.d("tag_a",""+User_Id.getUser_Id());
 
+                    pushToken();
 
                     presenter_login.MakeToastMessage("ee"+auto);
                 }
@@ -381,6 +385,35 @@ public class LoginModel implements IPresennterToModel {
     @Override
     public void findPassword() {
 
+    }
+
+    public void pushToken(){
+
+        Retrofit retrofit = new Retrofit.Builder()
+                .baseUrl(userService.API_URL)
+                .addConverterFactory(ScalarsConverterFactory.create())
+                .addConverterFactory(GsonConverterFactory.create())
+                .build();
+        userService = retrofit.create(UserService.class);
+
+
+        final FcmTokenVO fcmTokenVO = new FcmTokenVO();
+        fcmTokenVO.setId(User_Id.getUser_Id());
+        fcmTokenVO.setFcmToken(FirebaseInstanceId.getInstance().getToken());
+
+        Call<BodyVO> bodyVOCall = userService.putToken(fcmTokenVO);
+        bodyVOCall.enqueue(new Callback<BodyVO>() {
+            @Override
+            public void onResponse(@NonNull Call<BodyVO> call, @NonNull Response<BodyVO> response) {
+                BodyVO bodyVO = response.body();
+
+            }
+
+            @Override
+            public void onFailure(Call<BodyVO> call, Throwable t) {
+
+            }
+        });
     }
 
 
