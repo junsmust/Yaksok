@@ -136,24 +136,34 @@
             android:layout_height="wrap_content"
             android:orientation="horizontal"
             android:layout_gravity="center">
-            <TextView
-                android:id="@+id/login_find_id_tv"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:layout_margin="5dp"
-                android:background="#ffffff"
-                android:text="아이디 찾기"
-                android:textStyle="bold"
-                android:layout_weight="1"
-                android:textSize="12sp"
-                android:gravity="center"/>
+            <FrameLayout
+                android:layout_width="80dp"
+                android:layout_height="40dp"
+                android:id="@+id/frame_id_find">
+                <TextView
+                    android:id="@+id/login_find_id_tv"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:layout_margin="5dp"
+                    android:background="#ffffff"
+                    android:text="아이디 찾기"
+                    android:textStyle="bold"
+                    android:layout_weight="1"
+                    android:textSize="12sp"
+                    android:gravity="center"/>
+            </FrameLayout>
+
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="|"
                 android:layout_gravity="center"
                 android:textStyle="bold"/>
+            <FrameLayout
+                android:layout_width="80dp"
+                android:layout_height="40dp"
+                android:id="@+id/frame_pw_find">
             <TextView
                 android:id="@+id/login_find_pw_tv"
                 android:layout_width="wrap_content"
@@ -161,29 +171,35 @@
                 android:layout_gravity="center"
                 android:layout_margin="5dp"
                 android:background="#ffffff"
-                android:text="비밀번호 재설정"
+                android:text="비밀번호 \n재설정"
                 android:textSize="12sp"
                 android:layout_weight="1"
                 android:gravity="center"
-                android:textStyle="bold"/>
+                android:textStyle="bold"/></FrameLayout>
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="|"
                 android:layout_gravity="center"
                 android:textStyle="bold"/>
-            <TextView
-                android:id="@+id/login_sign_up_tv"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:layout_margin="5dp"
-                android:background="#ffffff"
-                android:text="회원가입"
-                android:textSize="12sp"
-                android:layout_weight="1"
-                android:gravity="center"
-                android:textStyle="bold"/>
+            <FrameLayout
+                android:id="@+id/frame_signup"
+                android:layout_width="80dp"
+                android:layout_height="40dp">
+                <TextView
+                    android:id="@+id/login_sign_up_tv"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:layout_margin="5dp"
+                    android:background="#ffffff"
+                    android:text="회원가입"
+                    android:textSize="12sp"
+                    android:layout_weight="1"
+                    android:gravity="center"
+                    android:textStyle="bold"/>
+            </FrameLayout>
+
 
         </LinearLayout>
 
