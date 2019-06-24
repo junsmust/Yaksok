@@ -14,6 +14,10 @@
         android:layout_centerVertical="true"
         android:orientation="horizontal">
 
+        <FrameLayout
+            android:id="@+id/fb_back_layout_cancel"
+            android:layout_width="150px"
+            android:layout_height="150px">
         <ImageView
             android:id="@+id/back_layout_cancel"
             android:layout_width="65px"
@@ -21,6 +25,8 @@
             android:layout_gravity="center"
             android:layout_centerVertical="true"
             android:src="@drawable/family_select_cancel" />
+        </FrameLayout>
+
 
 
         <TextView
@@ -35,14 +41,21 @@
             android:textSize="20dp"
             android:textStyle="bold" />
 
-        <ImageView
-            android:id="@+id/back_layout_check"
-            android:layout_width="70px"
-            android:layout_height="70px"
+        <FrameLayout
+            android:id="@+id/fb_back_layout_check"
+            android:layout_width="150px"
+            android:layout_height="150px"
             android:layout_alignParentEnd="true"
             android:layout_centerVertical="true"
-            android:layout_gravity="center|right"
+            android:layout_gravity="center|right">
+
+        <ImageView
+            android:id="@+id/back_layout_check"
+            android:layout_gravity="center_vertical|center_horizontal"
+            android:layout_width="70px"
+            android:layout_height="70px"
             android:src="@drawable/pill_check" />
+        </FrameLayout>
 
     </RelativeLayout>
 

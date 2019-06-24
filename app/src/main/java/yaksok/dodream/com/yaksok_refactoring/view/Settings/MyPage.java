@@ -24,6 +24,7 @@ import android.text.method.PasswordTransformationMethod;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.Button;
+import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -44,6 +45,7 @@ import yaksok.dodream.com.yaksok_refactoring.vo.DeleteService;
 public class MyPage extends ApplicationBase implements MyPage_PresenterToView {
     public Retrofit retrofit;
     private Presenter_MyPage presenter_myPage;
+    FrameLayout fb;
     TextView id,nickname,email,phone,tv_acton_name;
     ImageView imageView;
     Button bt_secOUT,bt_logOut;
@@ -76,10 +78,11 @@ public class MyPage extends ApplicationBase implements MyPage_PresenterToView {
 
         imageView = view.findViewById(R.id.back_layout_back_devel);
         tv_acton_name = view.findViewById(R.id.back_layout_name_delvel);
+        fb = view.findViewById(R.id.fb_back_layout_back_devel);
 
         tv_acton_name.setText("내 정보 관리");
 
-        imageView.setOnClickListener(new View.OnClickListener() {
+        fb.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 finish();

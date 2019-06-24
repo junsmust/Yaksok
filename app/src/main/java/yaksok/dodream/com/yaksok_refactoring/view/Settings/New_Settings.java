@@ -11,6 +11,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.Button;
 import android.widget.CompoundButton;
+import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.Switch;
@@ -29,6 +30,7 @@ public class New_Settings extends ApplicationBase {
     TextView tv_name,tv_acton_name;
     ImageView imageView;
     Button bt_mypage;
+    FrameLayout fb;
     RelativeLayout rb_develop;
     Switch sw;
 
@@ -54,10 +56,11 @@ public class New_Settings extends ApplicationBase {
 
         imageView = view.findViewById(R.id.back_layout_back);
         tv_acton_name = view.findViewById(R.id.back_layout_name);
+        fb = view.findViewById(R.id.fb_back_layout_back);
 
         tv_acton_name.setText("설 정");
 
-        imageView.setOnClickListener(new View.OnClickListener() {
+        fb.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 finish();

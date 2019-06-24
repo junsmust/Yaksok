@@ -8,6 +8,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Adapter;
+import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
@@ -40,6 +41,7 @@ public class Developer extends ApplicationBase{
 
     ImageView imageView;
     TextView tv_acton_name;
+    FrameLayout fb;
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -60,10 +62,11 @@ public class Developer extends ApplicationBase{
 
         imageView = view.findViewById(R.id.back_layout_back_devel);
         tv_acton_name = view.findViewById(R.id.back_layout_name_delvel);
+        fb = view.findViewById(R.id.fb_back_layout_back_devel);
 
         tv_acton_name.setText("개발자 정보");
 
-        imageView.setOnClickListener(new View.OnClickListener() {
+        fb.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 finish();

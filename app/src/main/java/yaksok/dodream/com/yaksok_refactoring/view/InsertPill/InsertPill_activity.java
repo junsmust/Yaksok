@@ -18,6 +18,7 @@ import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
 import android.widget.EditText;
+import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.RelativeLayout;
@@ -49,6 +50,7 @@ public class InsertPill_activity extends ApplicationBase implements InsertPill_P
     ArrayList<String> sp_array;
     ArrayAdapter<String> sp_arrayAdapter;
     TimePickerDialog dialog1,dialog2,dialog3;
+    FrameLayout fb1, fb2;
     String h1,m1,h2,m2,h3,m3;
     String family_names = "";
     String day1,day2,day3;
@@ -89,8 +91,10 @@ public class InsertPill_activity extends ApplicationBase implements InsertPill_P
 
         imageView = view.findViewById(R.id.back_layout_cancel);
         imageView1 = view.findViewById(R.id.back_layout_check);
+        fb1 = view.findViewById(R.id.fb_back_layout_cancel);
+        fb2 = view.findViewById(R.id.fb_back_layout_check);
 
-        imageView.setOnClickListener(new View.OnClickListener() {
+        fb1.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 finish();
@@ -240,7 +244,7 @@ public class InsertPill_activity extends ApplicationBase implements InsertPill_P
             }
         });
 
-        imageView1.setOnClickListener(new View.OnClickListener() {
+        fb2.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 if(et_name.getText().toString().equals("")) {

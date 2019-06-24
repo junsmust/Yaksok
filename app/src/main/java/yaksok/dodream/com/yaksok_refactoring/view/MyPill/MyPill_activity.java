@@ -12,6 +12,7 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
@@ -37,6 +38,7 @@ public class MyPill_activity extends ApplicationBase implements MyPill_Presenter
     ImageView imageView;
     ArrayList<MyPillVO> myPillList = new ArrayList<MyPillVO>();;
     ArrayList<MyPillItem> myPillItems = new ArrayList<MyPillItem>();
+    FrameLayout fb;
     MypillListAdapter adapter1;
     ArrayAdapter adapter;
     Button bt_Insert;
@@ -66,10 +68,11 @@ public class MyPill_activity extends ApplicationBase implements MyPill_Presenter
 
         imageView = view.findViewById(R.id.back_layout_back_devel);
         tv_acton_name = view.findViewById(R.id.back_layout_name_delvel);
+        fb = view.findViewById(R.id.fb_back_layout_back_devel);
 
         tv_acton_name.setText("나의 약");
 
-        imageView.setOnClickListener(new View.OnClickListener() {
+        fb.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 finish();
