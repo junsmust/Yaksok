@@ -1,6 +1,8 @@
 package yaksok.dodream.com.yaksok_refactoring.view.chat;
 
+import android.annotation.SuppressLint;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -49,7 +51,7 @@ public class Chat_Room extends AppCompatActivity{
     Button bt_send;
     EditText ed_context;
     public static ChatAdapter chatAdapter;
-    private SendMessageVO sendMessageVO;
+
 
 
     public static boolean iInTheChattingRoom;
@@ -65,6 +67,11 @@ public class Chat_Room extends AppCompatActivity{
     String u_id;
     String y_id;
 
+    public SharedPreferences lastime_sharepfreference;
+    public  SharedPreferences.Editor time_editor;
+
+    SendMessageVO sendMessageVO;
+
 
 
 
@@ -73,6 +80,7 @@ public class Chat_Room extends AppCompatActivity{
     public static LinearLayoutManager linearLayoutManager;
     private Chat_Presenter presenter,presenter2;
 
+    @SuppressLint("CommitPrefEdits")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -80,6 +88,13 @@ public class Chat_Room extends AppCompatActivity{
 
         Intent intent = new Intent(getIntent());
         user2_id = Chatting_list.user_id;
+
+        Log.e("user2_id ",user2_id);
+
+        lastime_sharepfreference = getSharedPreferences(user2_id,MODE_PRIVATE);
+        time_editor = lastime_sharepfreference.edit();
+
+        Log.e( "받을 사람 아이디 ",user2_id );
         connectedName = intent.getStringExtra("user_name");
 
 
@@ -225,17 +240,34 @@ public class Chat_Room extends AppCompatActivity{
                     for(int i = 0; i < bodyVO.getResult().size(); i++){
                         Log.d("실행","실행 됨");
 
-                        SendMessageVO sendMessageVO = new SendMessageVO();
+                        sendMessageVO = new SendMessageVO();
                         sendMessageVO.setGivingUser(bodyVO.getResult().get(i).getGivingUser());
                         sendMessageVO.setContent(bodyVO.getResult().get(i).getContent());
                         sendMessageVO.setReceivingUser(bodyVO.getResult().get(i).getReceivingUser());
                         sendMessageVO.setRegidate(bodyVO.getResult().get(i).getRegiDate().substring(11,16));
+
                         //Collections.reverse(albumList);//역순으로
                         Log.d("list_test", sendMessageVO.getContent() + "," + i);
                         albumList.add(sendMessageVO);
                         Log.d("album_test", albumList.get(i).getContent());
                         name = bodyVO.getResult().get(i).getGivingUser();
+
+
                     }
+
+                    long now = System.currentTimeMillis();
+                    Date date = new Date(now);
+
+                    SimpleDateFormat sdf = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
+
+                    String getTime = sdf.format(date);
+
+                    Log.e( "right now time ", getTime);
+                    //sendMessageVO.setRegidate(bodyVO.getResult().get(bodyVO.getResult().size()-1).getRegiDate().substring(11,16));
+                    Log.e( "registed now time ", bodyVO.getResult().get(bodyVO.getResult().size()-1).getRegiDate());
+
+
+
                     Collections.reverse(albumList);
                     chat_recycler_list.setAdapter(new ChatAdapter(albumList,R.layout.chat_item));
                     linearLayoutManager.setStackFromEnd(true);

@@ -1,9 +1,30 @@
 package yaksok.dodream.com.yaksok_refactoring.Adapter.family;
 
 public class FamilyItem {
-    public String name,id;
+    public String name,first_name,user_pn;
     public int user_img,gotoright;
 
+    public FamilyItem(String name, String first_name, String user_pn) {
+        this.name = name;
+        this.first_name = first_name;
+        this.user_pn = user_pn;
+    }
+
+    public String getFirst_name() {
+        return first_name;
+    }
+
+    public void setFirst_name(String first_name) {
+        this.first_name = first_name;
+    }
+
+    public String getUser_pn() {
+        return user_pn;
+    }
+
+    public void setUser_pn(String user_pn) {
+        this.user_pn = user_pn;
+    }
 
     public FamilyItem(String name) {
         this.name = name;

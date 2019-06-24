@@ -6,4 +6,5 @@ public interface I_chat_model {
     void sendMessage(String message,String user2_id);
     void getPreviouseConversation(String u_id,String y_id);
 
+    void getIdIndex(int index);
 }

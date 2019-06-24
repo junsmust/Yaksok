@@ -17,6 +17,8 @@ import android.widget.Toast;
 
 import java.util.ArrayList;
 
+import yaksok.dodream.com.yaksok_refactoring.Adapter.chat.ChatItem;
+import yaksok.dodream.com.yaksok_refactoring.Adapter.chat.Chat_list_adater;
 import yaksok.dodream.com.yaksok_refactoring.Adapter.family.FamilyFindAdapter;
 import yaksok.dodream.com.yaksok_refactoring.Adapter.family.FamilyItem;
 import yaksok.dodream.com.yaksok_refactoring.R;
@@ -27,12 +29,13 @@ import yaksok.dodream.com.yaksok_refactoring.vo.SendMessageVO;
 
 public class Chatting_list extends AppCompatActivity implements I_chat_list{
     private ListView chat_list;
-    private ArrayList<FamilyItem> familyItemss = new ArrayList<>();
-    private FamilyFindAdapter adapter;
+    private ArrayList<ChatItem> familyItemss = new ArrayList<>();
+    private Chat_list_adater adapter;
     private Chat_Presenter presenter;
     public static String user2_id;
     public static String user_id;
     public static String user;
+    String id;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -46,26 +49,29 @@ public class Chatting_list extends AppCompatActivity implements I_chat_list{
         presenter.setPreviousRegistered();
 
 
-        adapter = new FamilyFindAdapter(this,familyItemss,R.layout.family_list_item);
+        adapter = new Chat_list_adater(this,familyItemss,R.layout.chat_list_item);
 
 
         chat_list.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                int index1 = ((FamilyItem)adapter.getItem(position)).getName().indexOf('(');
-                int index2 = ((FamilyItem)adapter.getItem(position)).getName().indexOf(')');
 
-                Log.e( "onItemClick:2 ", (((FamilyItem) adapter.getItem(position)).getName().substring(index1+1,index2)));
+
+                presenter.sendIdIndex(position);
+
+               /* Log.e( "onItemClick:2 ", (((FamilyItem) adapter.getItem(position)).getName().substring(index1+1,index2)));
                 String user_name = (((FamilyItem) adapter.getItem(position)).getName().substring(0,index1));
-                user_id = (((FamilyItem) adapter.getItem(position)).getName().substring(index1+1,index2));
+                user_id = (((FamilyItem) adapter.getItem(position)).getName().substring(index1+1,index2));*/
                 user = User_Id.getUser_Id();
-
+                String user_name = (((ChatItem) adapter.getItem(position)).getName());
                 Intent intent = new Intent(getApplicationContext(),Chat_Room.class);
                 intent.putExtra("user_name",user_name);
                 intent.putExtra("user_id",user_id);
 
 
                 startActivity(intent);
+
+
             }
         });
 
@@ -106,9 +112,8 @@ public class Chatting_list extends AppCompatActivity implements I_chat_list{
                 finish();
             }
         });
-        textView.setText("채팅");
+        textView.setText("채팅방 목록");
         textView.setGravity(Gravity.CENTER);
-//        textView.setGravity(Gravity.CENTER);
         actionBar.setTitle(textView.getText().toString());
 
 
@@ -128,7 +133,7 @@ public class Chatting_list extends AppCompatActivity implements I_chat_list{
             for(int i=0;i<familyItemss.size();i++){
                 // Log.d("ffffff1"," "+familyItemss.size());
 
-                adapter.addItem(familyItemss.get(i).getFirst_name(),familyItemss.get(i).getName(),familyItemss.get(i).getUser_pn());
+                adapter.addItem(familyItemss.get(i).getFirst_name(),familyItemss.get(i).getName(),familyItemss.get(i).last_message,familyItemss.get(i).last_messge_time);
                 adapter.notifyDataSetChanged();
                 chat_list.setAdapter(adapter);
 
@@ -137,7 +142,7 @@ public class Chatting_list extends AppCompatActivity implements I_chat_list{
     }
 
     @Override
-    public void getArrayList(ArrayList<FamilyItem> familyItems) {
+    public void getArrayList(ArrayList<ChatItem> familyItems) {
         this.familyItemss = familyItems;
     }
 
@@ -149,6 +154,11 @@ public class Chatting_list extends AppCompatActivity implements I_chat_list{
     @Override
     public void getSendVO(SendMessageVO sendVO) {
 
+    }
+
+    @Override
+    public void getId(String s) {
+        user_id = s;
     }
 
     @Override
