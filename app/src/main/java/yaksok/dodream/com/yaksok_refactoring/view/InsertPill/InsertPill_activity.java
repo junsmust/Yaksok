@@ -314,7 +314,8 @@ public class InsertPill_activity extends ApplicationBase implements InsertPill_P
                 day1 = "오후";
             }
             time1.setText(day1+" "+h1 + ":" + m1);
-            time_1 = h1+m1;
+            time_1 = String.valueOf(hourOfDay)+String.valueOf(minute);
+            Log.d("time1",time_1);
         }
     };
     private TimePickerDialog.OnTimeSetListener listener2 = new TimePickerDialog.OnTimeSetListener() {//시간설정 다이얼로그 2
@@ -349,7 +350,7 @@ public class InsertPill_activity extends ApplicationBase implements InsertPill_P
                 day2 = "오후";
             }
             time2.setText(day2+" "+h2 + ":" + m2);
-            time_2 = h2+m2;
+            time_2 = String.valueOf(hourOfDay)+String.valueOf(minute);
         }
     };
     private TimePickerDialog.OnTimeSetListener listener3 = new TimePickerDialog.OnTimeSetListener() {//시간설정 다이얼로그 3
@@ -384,7 +385,7 @@ public class InsertPill_activity extends ApplicationBase implements InsertPill_P
                 day3 = "오후";
             }
             time3.setText(day3+" "+h3 + ":" + m3);
-            time_3 = h3+m3;
+            time_3 = String.valueOf(hourOfDay)+String.valueOf(minute);
         }
     };
 

@@ -2,7 +2,6 @@ package yaksok.dodream.com.yaksok_refactoring.view.MyPill;
 
 import android.app.AlertDialog;
 import android.content.Context;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -16,6 +15,7 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 
 import java.util.ArrayList;
@@ -23,13 +23,14 @@ import java.util.ArrayList;
 import yaksok.dodream.com.yaksok_refactoring.Adapter.MyPill.MyPillItem;
 import yaksok.dodream.com.yaksok_refactoring.Adapter.MyPill.MypillListAdapter;
 import yaksok.dodream.com.yaksok_refactoring.ApplicationBase;
-import yaksok.dodream.com.yaksok_refactoring.Custom_pill_delete_Dialog;
+import yaksok.dodream.com.yaksok_refactoring.view.MyPill.Dialog.Custom_pill_delete_Dialog;
 import yaksok.dodream.com.yaksok_refactoring.R;
 import yaksok.dodream.com.yaksok_refactoring.presenter.MyPill.Presenter_MyPill;
 import yaksok.dodream.com.yaksok_refactoring.view.InsertPill.InsertPill_activity;
+import yaksok.dodream.com.yaksok_refactoring.view.MyPill.Dialog.Delete_Dialog;
 import yaksok.dodream.com.yaksok_refactoring.vo.MyPillVO;
 
-public class MyPill_activity extends ApplicationBase implements MyPill_PresenterToView {
+public class MyPill_activity extends ApplicationBase implements MyPill_PresenterToView,View.OnClickListener {
 
     private Presenter_MyPill presenter_myPill;
     ListView lv_MyPill;
@@ -103,15 +104,38 @@ public class MyPill_activity extends ApplicationBase implements MyPill_Presenter
         lv_MyPill.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                Custom_pill_delete_Dialog dialog = new Custom_pill_delete_Dialog(context);
+                Delete_Dialog dialog1 = new Delete_Dialog(MyPill_activity.this);
+                dialog1.setDialogListener(mypill.getResult().get(position).getName(),
+                        mypill.getResult().get(position).getRegiDate().substring(0,10),
+                        mypill.getResult().get(position).getMedicineNo(),new Delete_Dialog.CustomDialogListener() {
+                    @Override
+                    public void onPositiveClicked(boolean isOk) {
+                        if(isOk){
+                            Toast.makeText(MyPill_activity.this, "삭제되었습니다.", Toast.LENGTH_SHORT).show();
+                            myPillList.clear();
+                            onMyPillDeleteRespoce(true);
+                        }
+                    }
+
+                    @Override
+                    public void onNegativeClicked() {
+
+                    }
+                });
+                dialog1.show();
+
+
+
+                /*Custom_pill_delete_Dialog dialog = new Custom_pill_delete_Dialog(context);
                 dialog.callFunction(mypill.getResult().get(position).getName(),
                         mypill.getResult().get(position).getRegiDate().substring(0,10),
-                        mypill.getResult().get(position).getMedicineNo());
+                        mypill.getResult().get(position).getMedicineNo());*/
+
 
                 /*showDialog(mypill.getResult().get(position).getName(),
                         mypill.getResult().get(position).getRegiDate().substring(0,10),
                         mypill.getResult().get(position).getMedicineNo());*/
-                Log.d("처음 약 번호",String.valueOf(mypill.getResult().get(position).getMedicineNo()));
+                        Log.d("처음 약 번호", String.valueOf(mypill.getResult().get(position).getMedicineNo()));
             }
         });
 
@@ -168,6 +192,11 @@ public class MyPill_activity extends ApplicationBase implements MyPill_Presenter
         Log.d("test1","true");
     }
 
+    @Override
+    public void onClick(View v) {
+
+    }
+
     /*public void showDialog(String name, String regidate, final int pillNo){
 
         dialog.setTitle("약 등록 정보");
@@ -195,6 +224,7 @@ public class MyPill_activity extends ApplicationBase implements MyPill_Presenter
         alertDialog.show();
 
     }*/
+
 
 
 

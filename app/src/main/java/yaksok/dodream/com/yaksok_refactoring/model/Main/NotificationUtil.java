@@ -9,12 +9,15 @@ import android.content.Intent;
 import android.util.Log;
 
 import yaksok.dodream.com.yaksok_refactoring.R;
+import yaksok.dodream.com.yaksok_refactoring.model.user.User_Id;
 import yaksok.dodream.com.yaksok_refactoring.view.Alarm_On;
 import yaksok.dodream.com.yaksok_refactoring.view.login.Login_activity;
 
 public class NotificationUtil extends BroadcastReceiver{
     public static String pillNo;
     public static String userId;
+    public static String userName;
+    public static String pillName;
     @Override
     public void onReceive(Context context, Intent intent) {
         Log.d("알람여부", "리시브 들어옴");
@@ -31,10 +34,14 @@ public class NotificationUtil extends BroadcastReceiver{
         String title = "알림";
         String text = "약 복용시간 입니다";
 
-        Log.d("약 번호",pillNo);
+
 
          userId = intent.getStringExtra("takingUser");
          pillNo = intent.getStringExtra("PillNo");
+         userName = intent.getStringExtra("a_name");
+         pillName = intent.getStringExtra("pill_Names");
+
+        Log.d("약 번호",pillNo+userId+userName);
 
         Notification.Builder builder = new Notification.Builder(context)
                 .setContentIntent(pendingIntent)

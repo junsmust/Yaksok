@@ -12,6 +12,7 @@ import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
 import android.widget.Button;
+import android.widget.TextView;
 
 import java.util.List;
 
@@ -44,10 +45,11 @@ public class Alarm_On extends Activity {
         layoutParams.flags = WindowManager.LayoutParams.FLAG_DIM_BEHIND;
         layoutParams.dimAmount = 0.7f;
         getWindow().setAttributes(layoutParams);
-        setContentView(R.layout.alarm_on);
+        setContentView(R.layout.a_dialog);
 
         Button bt_Ok = (Button) findViewById(R.id.bt_D_Ok);
         Button bt_Cancle = (Button)findViewById(R.id.bt_D_Cancel);
+        TextView text = (TextView)findViewById(R.id.tv_D_text);
 
         retrofit = new Retrofit.Builder()
                 .baseUrl(userService.API_URL)
@@ -58,6 +60,8 @@ public class Alarm_On extends Activity {
         takeOk = new TakeOk();
         takeOk.setGivingUser(NotificationUtil.userId);
         takeOk.setMyMedicineNo(NotificationUtil.pillNo);
+
+        text.setText(NotificationUtil.userName+"("+NotificationUtil.userId+")님"+"\n"+NotificationUtil.pillName+"(약) 복용시간입니다.");
 
 
         Log.d("다이얼로그","약 먹으세요 들어옴");

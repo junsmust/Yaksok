@@ -24,7 +24,7 @@ import yaksok.dodream.com.yaksok_refactoring.vo.UserService;
 public class Main_Model implements Main_PresenterToModel{
 
     Date now;
-    String curTime;
+    String curTime,pillName;
     Presenter_Main presenter_main;
     int pilltime_h,pilltime_m,ptime,times,pilltime_sec,pillNo;
     boolean pillTime_day = true;
@@ -55,6 +55,7 @@ public class Main_Model implements Main_PresenterToModel{
                 System.out.println("############" + nearTimePillVO.getStatus());
                 if (nearTimePillVO.getStatus().equals("200")) {
                     pillNo = nearTimePillVO.getResult().getMyMedicineNo();
+                    pillName = nearTimePillVO.getResult().getName();
                     //    TakeMedicineVO.setGivingUser(LoginActivity.userVO.getId());
                     //    TakeMedicineVO.setMedicineNO(String.valueOf(nearTimeMedicineVO.getResult().getMyMedicineNo()));
                     now = new Date();
@@ -108,7 +109,11 @@ public class Main_Model implements Main_PresenterToModel{
         Intent intent = new Intent(context, NotificationUtil.class);
 
         intent.putExtra("PillNo",String.valueOf(pillNo));
-        intent.putExtra("takingUser",User_Id.getUser_Id());
+        intent.putExtra("takingUser1",User_Id.getUser_Id());
+        intent.putExtra("pill_Names",String.valueOf(pillName));
+        intent.putExtra("a_name",User_Id.getNickname());
+
+        Log.d("uuuuu",User_Id.getNickname());
         PendingIntent pendingIntent = PendingIntent.getBroadcast(context, 0, intent, PendingIntent.FLAG_CANCEL_CURRENT);
         Calendar calendar = Calendar.getInstance();
         //알람시간 calendar에 set해주기
