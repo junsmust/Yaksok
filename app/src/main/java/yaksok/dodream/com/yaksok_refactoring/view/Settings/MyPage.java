@@ -36,6 +36,8 @@ import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 import retrofit2.converter.scalars.ScalarsConverterFactory;
 import yaksok.dodream.com.yaksok_refactoring.ApplicationBase;
+import yaksok.dodream.com.yaksok_refactoring.C_Dialog;
+import yaksok.dodream.com.yaksok_refactoring.CustomDialog;
 import yaksok.dodream.com.yaksok_refactoring.R;
 import yaksok.dodream.com.yaksok_refactoring.model.user.User_Id;
 import yaksok.dodream.com.yaksok_refactoring.presenter.Settings.Presenter_MyPage;
@@ -57,11 +59,17 @@ public class MyPage extends ApplicationBase implements MyPage_PresenterToView {
     String oldpass, newpass, phoneNum;
     public SharedPreferences loginInformation;
     public  SharedPreferences.Editor editor;
+    CustomDialog customDialog,customDialog2;
+    C_Dialog pw_Dialog;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_setting_mypage);
+
+        customDialog = new CustomDialog(this);
+        customDialog2 = new CustomDialog(this);
+        pw_Dialog = new C_Dialog(this);
 
         ActionBar actionBar = getSupportActionBar();
 
@@ -96,6 +104,7 @@ public class MyPage extends ApplicationBase implements MyPage_PresenterToView {
 
         dialog = new android.app.AlertDialog.Builder(this);
         dialog2 = new android.app.AlertDialog.Builder(this);
+
 
         presenter_myPage = new Presenter_MyPage(this);
 
@@ -199,7 +208,7 @@ public class MyPage extends ApplicationBase implements MyPage_PresenterToView {
         bt_logOut.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                showLogOut();
+                makeDialog_log();
             }
         });
 
@@ -207,14 +216,15 @@ public class MyPage extends ApplicationBase implements MyPage_PresenterToView {
         bt_secOUT.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                showDialog();
+                makeDialog_sec();
             }
         });
 
         bt_changePW.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(User_Id.getType().equals("G")) {
+                if(et_newpw.getEditText().getText().toString().equals("")||et_oldpw.getEditText().getText().toString().equals("")){}
+                else if(User_Id.getType().equals("G")) {
                     presenter_myPage.onChangePW(User_Id.getUser_Id(),et_oldpw.getEditText().getText().toString(),et_newpw.getEditText().getText().toString());
                 }
                 else{
@@ -225,42 +235,41 @@ public class MyPage extends ApplicationBase implements MyPage_PresenterToView {
 
     }
 
-    public void showDialog(){
+    private void makeDialog_sec() {
+        customDialog2.title_tv.setText("알림");
+        customDialog2.message_tv.setText("회원 탈퇴를 하시면"+"\n"+"모든 정보가 삭제 됩니다.");
 
-        dialog.setTitle("알림");
-        dialog.setMessage("회원 탈퇴를 하시면 모든 정보가 삭제 됩니다.");
-        dialog.setCancelable(false);
+        customDialog2.show();
+        customDialog2.ok_btn.setText("탈퇴하기");
 
 
-
-        dialog.setPositiveButton("삭제하기", new DialogInterface.OnClickListener() {
+        customDialog2.ok_btn.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(DialogInterface dialog, int which) {
+            public void onClick(View v) {
                 presenter_myPage.onSecOut();
+                customDialog2.dismiss();
+
             }
         });
-        dialog.setNegativeButton("취소", new DialogInterface.OnClickListener() {
 
+        customDialog2.no_btn.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(DialogInterface dialog, int which) {
-                dialog.cancel();
+            public void onClick(View v) {
+                customDialog2.dismiss();
             }
         });
-        android.app.AlertDialog alertDialog = dialog.create();
-        alertDialog.show();
-
     }
-    public void showLogOut(){
 
-        dialog2.setTitle("로그아웃");
-        dialog2.setMessage("로그아웃 하시겠습니까?");
-        dialog2.setCancelable(false);
+    private void makeDialog_log() {
+        customDialog.message_tv.setText("\n"+"로그아웃을 하시겠습니까?");
+
+        customDialog.show();
+        customDialog.ok_btn.setText("로그아웃");
 
 
-
-        dialog2.setPositiveButton("로그아웃", new DialogInterface.OnClickListener() {
+        customDialog.ok_btn.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(DialogInterface dialog, int which) {
+            public void onClick(View v) {
                 editor.putString("id","");
                 editor.putString("pw","");
                 editor.putString("userType","");
@@ -269,19 +278,19 @@ public class MyPage extends ApplicationBase implements MyPage_PresenterToView {
                 Intent i = new Intent(getApplicationContext()/*현재 액티비티 위치*/ , Login_activity.class/*이동 액티비티 위치*/);
                 i.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP|Intent.FLAG_ACTIVITY_SINGLE_TOP);
                 startActivity(i);
+                customDialog.dismiss();
+
             }
         });
-        dialog2.setNegativeButton("취소", new DialogInterface.OnClickListener() {
 
+        customDialog.no_btn.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(DialogInterface dialog, int which) {
-                dialog.cancel();
+            public void onClick(View v) {
+                customDialog.dismiss();
             }
         });
-        android.app.AlertDialog alertDialog = dialog2.create();
-        alertDialog.show();
-
     }
+
 
     @Override
     public void onSecOutResponse(boolean response) {
@@ -295,13 +304,43 @@ public class MyPage extends ApplicationBase implements MyPage_PresenterToView {
     public void onChangeResponse(boolean response, int status) {
         if(response){
             if(status==1){
-                Toast.makeText(getApplicationContext(), "변경 완료", Toast.LENGTH_LONG).show();
-                finish();
+                pwOk();
+                //Toast.makeText(getApplicationContext(), "변경 완료", Toast.LENGTH_LONG).show();
             }
             if(status==2){
-                Toast.makeText(getApplicationContext(), "기존 비밀번호가 일치하지 않습니다", Toast.LENGTH_LONG).show();
+                pwNo();
+                //Toast.makeText(getApplicationContext(), "기존 비밀번호가 일치하지 않습니다", Toast.LENGTH_LONG).show();
             }
         }
+    }
+
+    private void pwNo() {
+        pw_Dialog.text_tv.setText("기존 비밀번호가"+"\n"+"일치하지 않습니다.");
+
+        pw_Dialog.show();
+
+
+        pw_Dialog.ok_btn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                pw_Dialog.dismiss();
+                finish();
+            }
+        });
+    }
+
+    private void pwOk() {
+        pw_Dialog.text_tv.setText("\n"+"비밀번호가 변경되었습니다.");
+
+        pw_Dialog.show();
+
+
+        pw_Dialog.ok_btn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                pw_Dialog.dismiss();
+            }
+        });
     }
 
     public boolean hasSpecialCharacter(String string){

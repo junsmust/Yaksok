@@ -13,10 +13,11 @@ import android.widget.ListView;
 import java.util.ArrayList;
 import java.util.List;
 
+import yaksok.dodream.com.yaksok_refactoring.ApplicationBase;
 import yaksok.dodream.com.yaksok_refactoring.R;
 import yaksok.dodream.com.yaksok_refactoring.presenter.InsertPill.Sel_AlarmRecive.Presenter_Sel_AlarmRecive;
 
-public class Sel_AlarmRecive_activity extends AppCompatActivity implements Sel_AlarmRecive_PresenterToView {
+public class Sel_AlarmRecive_activity extends ApplicationBase implements Sel_AlarmRecive_PresenterToView {
 
     private Presenter_Sel_AlarmRecive presenter_alarmRecive;
     private List<String> familyList = new ArrayList<String>();
