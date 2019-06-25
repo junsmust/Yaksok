@@ -51,7 +51,7 @@ public class SignUpModel implements IPresenterToSignUpModel {
     public void validateId(final String id) {
         if(id.length()<6){
             presenterSignUp.nonValidatedIl();
-            presenterSignUp.makeToastMessage("6글자 이상으로 아이디를 입력해주세요.");
+            presenterSignUp.makeToastMessage("6글자 이상으로 \n아이디를 입력해주세요.");
 
         }
         else{
@@ -255,7 +255,7 @@ public class SignUpModel implements IPresenterToSignUpModel {
 
     @Override
     public void isvalidatePhone(final String pn) {
-
+        Log.d("Sssss",pn);
 
         retrofit = new Retrofit.Builder()
                 .baseUrl(userService.API_URL)
@@ -276,13 +276,13 @@ public class SignUpModel implements IPresenterToSignUpModel {
                 //500 : Server Error
                 if(vo.getStatus().equals("200")){
                     user_info_model.setPhoneNumber(pn);
-                    presenterSignUp.makeToastMessage("사용할 수 있는 전화번호입니다.");
+                    presenterSignUp.makeToastMessage("사용가능한 전화번호입니다.");
                     presenterSignUp.isValidedPn(true);
                 }else if(vo.getStatus().equals("400")){
-                    presenterSignUp.makeToastMessage("잘못된 휴대전화번호 입니다.");
+                    presenterSignUp.makeToastMessage("잘못된 전화번호 입니다.");
                     presenterSignUp.isValidedPn(false);
                 }else if(vo.getStatus().equals("403")){
-                    presenterSignUp.makeToastMessage("중복되는 휴대번호가 존재합니다.");
+                    presenterSignUp.makeToastMessage("중복되는 전화번호가 존재합니다.");
                     presenterSignUp.isValidedPn(false);
                 }else if(vo.getStatus().equals("500")){
                     presenterSignUp.makeToastMessage("서버 오류 입니다.");

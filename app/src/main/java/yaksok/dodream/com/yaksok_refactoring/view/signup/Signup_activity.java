@@ -32,6 +32,7 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import yaksok.dodream.com.yaksok_refactoring.ApplicationBase;
+import yaksok.dodream.com.yaksok_refactoring.C_Dialog;
 import yaksok.dodream.com.yaksok_refactoring.view.WetherChooseFamilyOrNot;
 import yaksok.dodream.com.yaksok_refactoring.view.addFamily.Register_Family;
 import yaksok.dodream.com.yaksok_refactoring.R;
@@ -44,9 +45,13 @@ public class Signup_activity extends ApplicationBase implements IPresenter_To_Si
 
 
     public  EditText sign_up_name_edt,sign_up_id_edt,sign_up_phone_number_edt,sign_authorization_number,sign_up_email_edt,sign_up_yourself_email,sign_up_yourself_address_email;
+    public  EditText sign_up_phone_number_edt_2,sign_up_phone_number_edt_3;
     private Spinner sign_up_year_spin,sign_up_month_spin,sign_up_day_spin,sign_up_phone_conpany_spin,sign_up_phone_first_spin,sign_up_email_spin;
-    private Button sign_up_check_id_btn,sign_up_check_pw_btn,sign_up_check_authorization_num_btn,sign_up_compelte_btn,confirm_email_btn;
+    private Button sign_up_check_id_btn,sign_up_check_pw_btn,sign_up_check_authorization_num_btn,sign_up_compelte_btn,confirm_email_btn,btn;
     String nowDate,month,day,email_final;
+    FrameLayout fb;
+    TextView tv_acton_name;
+    C_Dialog log_D;
 
     private TextInputLayout sign_up_pw_edt,sign_up_re_pw_edt;
 
@@ -59,10 +64,40 @@ public class Signup_activity extends ApplicationBase implements IPresenter_To_Si
 
         presenterSignUp = new PresenterSignUp(this);
 
+        log_D = new C_Dialog(this);
+
 
         presenterSignUp.setGeneralUserType();
+        ActionBar actionBar = getSupportActionBar();
+
+        actionBar.setDisplayShowCustomEnabled(true);
+        actionBar.setDisplayShowHomeEnabled(false);
+        actionBar.setDisplayShowTitleEnabled(false);
+        actionBar.setDisplayHomeAsUpEnabled(false);
+        actionBar.setElevation(0);
+        actionBar.setBackgroundDrawable(getResources().getDrawable(R.drawable.action_bar_under_line));
+
+        LayoutInflater inflater = (LayoutInflater)getSystemService(LAYOUT_INFLATER_SERVICE);
+
+        View view= inflater.inflate(R.layout.action_bar_develop, null);
+
+        tv_acton_name = view.findViewById(R.id.back_layout_name_delvel);
+        fb = view.findViewById(R.id.fb_back_layout_back_devel);
+
+        tv_acton_name.setText("회원가입");
+
+        fb.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                finish();
+            }
+        });
 
 
+        ActionBar.LayoutParams layoutParams = new ActionBar.LayoutParams(ActionBar.LayoutParams.MATCH_PARENT,ActionBar.LayoutParams.MATCH_PARENT);
+        actionBar.setCustomView(view,layoutParams);
+
+        email_final = null;
         //INIT
 
         sign_up_yourself_address_email = (EditText)findViewById(R.id.sign_email_yourself_address_edt);
@@ -76,6 +111,9 @@ public class Signup_activity extends ApplicationBase implements IPresenter_To_Si
         //회원 가입 완료 버튼
         sign_up_compelte_btn = (Button) findViewById(R.id.sign_up_complete_btn);
         sign_up_phone_number_edt = (EditText)findViewById(R.id.sign_phone_number_edt);//전화번호 보내줘야 함
+        sign_up_phone_number_edt_2 = (EditText)findViewById(R.id.sign_phone_number_edt_2);
+        sign_up_phone_number_edt_3 = (EditText)findViewById(R.id.sign_phone_number_edt_3);
+
         sign_up_pw_edt = findViewById(R.id.sign_pw_edt);
         sign_up_pw_edt.getEditText().setInputType(InputType.TYPE_TEXT_VARIATION_PASSWORD);
         sign_up_pw_edt.getEditText().setTransformationMethod(PasswordTransformationMethod.getInstance());
@@ -84,9 +122,14 @@ public class Signup_activity extends ApplicationBase implements IPresenter_To_Si
         sign_up_re_pw_edt.getEditText().setTransformationMethod(PasswordTransformationMethod.getInstance());
         sign_up_check_authorization_num_btn = (Button)findViewById(R.id.sign_up_pn_register_btn);
 
+        sign_up_check_authorization_num_btn.setElevation(0);
+
+
+
 
         sign_up_check_id_btn = (Button)findViewById(R.id.sign_check_id_btn);
 
+        sign_up_check_id_btn.setElevation(0);
 
 
         sign_up_year_spin = (Spinner)findViewById(R.id.sign_year_spin);
@@ -240,13 +283,13 @@ public class Signup_activity extends ApplicationBase implements IPresenter_To_Si
 
                            String newpass = sign_up_re_pw_edt.getEditText().getText().toString().trim();
                                                         if(sign_up_re_pw_edt.getEditText().getText().toString().length()<=6){
-                                                            sign_up_re_pw_edt.setError("문자의 길이가 다릅니다.");
+                                                           // sign_up_re_pw_edt.setError("문자의 길이가 다릅니다.");
                                                         }
                                                         else if(!hasSpecialCharacter(sign_up_re_pw_edt.getEditText().getText().toString())){
-                                                            sign_up_re_pw_edt.setError("특수 문자가 들어가지 않았습니다.");
+                                                            //sign_up_re_pw_edt.setError("특수 문자가 들어가지 않았습니다.");
                                                         }
                                                         else if(sign_up_pw_edt.getEditText().getText().toString().trim().equals(newpass)){
-                                                            sign_up_re_pw_edt.setError("기존 비밀번호와 일치합니다!");
+                                                            //sign_up_re_pw_edt.setError("기존 비밀번호와 일치합니다!");
                                                             presenterSignUp.validatePw(newpass);
                                                         }
                                                         else{
@@ -279,7 +322,7 @@ public class Signup_activity extends ApplicationBase implements IPresenter_To_Si
     protected void onStart() {
         super.onStart();
 
-        ActionBar actionBar = getSupportActionBar();
+       /* ActionBar actionBar = getSupportActionBar();
 
         assert actionBar != null;
         actionBar.setDisplayShowCustomEnabled(true);
@@ -287,6 +330,7 @@ public class Signup_activity extends ApplicationBase implements IPresenter_To_Si
         actionBar.setDisplayShowTitleEnabled(false);
 
         View view = LayoutInflater.from(this).inflate(R.layout.chattingactionbar,null);
+        view.setElevation(-1);
         ImageView imageView = view.findViewById(R.id.back_layout_imv);
         TextView textView = view.findViewById(R.id.title_txt);
 
@@ -314,7 +358,7 @@ public class Signup_activity extends ApplicationBase implements IPresenter_To_Si
 
 
         ActionBar.LayoutParams layoutParams = new ActionBar.LayoutParams(ActionBar.LayoutParams.MATCH_PARENT,ActionBar.LayoutParams.MATCH_PARENT,Gravity.CENTER_VERTICAL|Gravity.CENTER_HORIZONTAL);
-        actionBar.setCustomView(view,layoutParams);
+        actionBar.setCustomView(view,layoutParams);*/
     }
 
     @Override
@@ -325,7 +369,7 @@ public class Signup_activity extends ApplicationBase implements IPresenter_To_Si
 
     @Override
     public void makeToastMessage(String message) {
-        Toast.makeText(getApplicationContext(),message,Toast.LENGTH_LONG).show();
+        phoneResult(message);
     }
 
     @Override
@@ -386,7 +430,12 @@ public class Signup_activity extends ApplicationBase implements IPresenter_To_Si
     public void isValidedPn(boolean isPn) {
        if(!isPn){
             sign_up_phone_number_edt.setText("");
-        }else avaliablePn = true;
+           sign_up_phone_number_edt_2.setText("");
+           sign_up_phone_number_edt_3.setText("");
+        }else {
+
+           avaliablePn = true;
+       }
     }
 
 
@@ -401,7 +450,6 @@ public class Signup_activity extends ApplicationBase implements IPresenter_To_Si
                 String regex = "^[_a-zA-Z0-9-\\.]+@[\\.a-zA-Z0-9-]+\\.[a-zA-Z]+$";
                 Pattern p = Pattern.compile(regex);
                 Matcher m = p.matcher(email_final);
-                Log.e("onClick: ", email_final);
                 if(availableId && avaliablePn){
                     if (m.matches() && !sign_up_name_edt.getText().equals(""))  {
                         Log.e("onClick: ", "맞음"+email_final);
@@ -421,7 +469,7 @@ public class Signup_activity extends ApplicationBase implements IPresenter_To_Si
                         sign_up_name_edt.setFocusable(true);
                     }
                 }else{
-                    makeToastMessage("아이디 및 전화번호 중복체크 부탁드립니다.");
+                    makeToastMessage("아이디 및 전화번호\n중복확인 안됨");
                 }
 
 
@@ -429,7 +477,15 @@ public class Signup_activity extends ApplicationBase implements IPresenter_To_Si
 
                 break;
             case R.id.sign_up_pn_register_btn:
-                presenterSignUp.isvalidatePhone(sign_up_phone_number_edt.getText().toString());
+                if(sign_up_phone_number_edt.getText().toString().equals("")||sign_up_phone_number_edt_2.getText().toString().equals("")||sign_up_phone_number_edt_3.getText().toString().equals("")){
+                    phoneNull();
+                }
+                else if((sign_up_phone_number_edt.getText().toString() + sign_up_phone_number_edt_2.getText().toString() + sign_up_phone_number_edt_3.getText().toString()).length()<11){
+                    phoneShort();
+                }
+                else {
+                    presenterSignUp.isvalidatePhone(sign_up_phone_number_edt.getText().toString() + sign_up_phone_number_edt_2.getText().toString() + sign_up_phone_number_edt_3.getText().toString());
+                }
                 break;
 
         }
@@ -446,6 +502,47 @@ public class Signup_activity extends ApplicationBase implements IPresenter_To_Si
             }
         }
         return false;
+    }
+
+    private void phoneNull() {
+        log_D.text_tv.setText("전화번호를 입력하세요");
+
+        log_D.show();
+
+
+        log_D.ok_btn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                log_D.dismiss();
+            }
+        });
+    }
+    private void phoneShort() {
+        log_D.text_tv.setText("전화번호가 너무 짧습니다");
+
+        log_D.show();
+
+
+        log_D.ok_btn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                log_D.dismiss();
+            }
+        });
+    }
+
+    private void phoneResult(String text) {
+        log_D.text_tv.setText(text);
+
+        log_D.show();
+
+
+        log_D.ok_btn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                log_D.dismiss();
+            }
+        });
     }
 
 }
