@@ -7,4 +7,5 @@ public interface I_chat_model {
     void getPreviouseConversation(String u_id,String y_id);
 
     void getIdIndex(int index);
+
 }

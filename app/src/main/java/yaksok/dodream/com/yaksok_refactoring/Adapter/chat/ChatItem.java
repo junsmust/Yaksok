@@ -9,6 +9,11 @@ public class ChatItem {
     public ChatItem() {
     }
 
+    public ChatItem(String name, String first_name) {
+        this.name = name;
+        this.first_name = first_name;
+    }
+
     public ChatItem(String name, String first_name, String last_message, String last_messge_time){
         this.name = name;
         this.first_name = first_name;
