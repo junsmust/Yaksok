@@ -1,5 +1,6 @@
 package yaksok.dodream.com.yaksok_refactoring.view.chat;
 
+import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
@@ -15,8 +16,18 @@ import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Date;
 
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
+import retrofit2.Retrofit;
+import retrofit2.converter.gson.GsonConverterFactory;
+import retrofit2.converter.scalars.ScalarsConverterFactory;
+import yaksok.dodream.com.yaksok_refactoring.Adapter.chat.ChatAdapter;
 import yaksok.dodream.com.yaksok_refactoring.Adapter.chat.ChatItem;
 import yaksok.dodream.com.yaksok_refactoring.Adapter.chat.Chat_list_adater;
 import yaksok.dodream.com.yaksok_refactoring.Adapter.family.FamilyFindAdapter;
@@ -24,6 +35,8 @@ import yaksok.dodream.com.yaksok_refactoring.Adapter.family.FamilyItem;
 import yaksok.dodream.com.yaksok_refactoring.R;
 import yaksok.dodream.com.yaksok_refactoring.model.user.User_Id;
 import yaksok.dodream.com.yaksok_refactoring.presenter.chat.Chat_Presenter;
+import yaksok.dodream.com.yaksok_refactoring.vo.MessageBodyVO;
+import yaksok.dodream.com.yaksok_refactoring.vo.MessageService;
 import yaksok.dodream.com.yaksok_refactoring.vo.SendMessageVO;
 
 
@@ -35,7 +48,10 @@ public class Chatting_list extends AppCompatActivity implements I_chat_list{
     public static String user2_id;
     public static String user_id;
     public static String user;
+    MessageService messageService;
     String id;
+    public ArrayList<String> ids = new ArrayList<>();
+    SendMessageVO sendMessageVO;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -132,7 +148,7 @@ public class Chatting_list extends AppCompatActivity implements I_chat_list{
         if(response){
             for(int i=0;i<familyItemss.size();i++){
                 // Log.d("ffffff1"," "+familyItemss.size());
-
+                Log.e( "familyitemssize",familyItemss.size()+"   "+familyItemss.get(i).getFirst_name()+ familyItemss.get(i).getName()+familyItemss.get(i).last_message+familyItemss.get(i).last_messge_time);
                 adapter.addItem(familyItemss.get(i).getFirst_name(),familyItemss.get(i).getName(),familyItemss.get(i).last_message,familyItemss.get(i).last_messge_time);
                 adapter.notifyDataSetChanged();
                 chat_list.setAdapter(adapter);
@@ -162,8 +178,21 @@ public class Chatting_list extends AppCompatActivity implements I_chat_list{
     }
 
     @Override
+    public void getArrayIds(ArrayList<String> ids) {
+        this.ids.addAll(ids);
+        for(int i = 0; i < ids.size(); i++){
+            Log.e( "getArrayIds: ", ids.get(i));
+        }
+
+    }
+
+    @Override
     protected void onResume() {
         super.onResume();
 
     }
-}
+
+
+
+    }
+

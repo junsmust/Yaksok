@@ -11,7 +11,7 @@ import yaksok.dodream.com.yaksok_refactoring.model.chat.I_chat_model;
 import yaksok.dodream.com.yaksok_refactoring.view.chat.I_chat_list;
 import yaksok.dodream.com.yaksok_refactoring.vo.SendMessageVO;
 
-public class Chat_Presenter implements I_chat_presenter{
+public class Chat_Presenter implements I_chat_presenter {
     I_chat_list view;
     I_chat_model model;
     I_Connect_To_Presenter_with_FCM service;
@@ -54,12 +54,12 @@ public class Chat_Presenter implements I_chat_presenter{
 
     @Override
     public void setChatUserInfo(String user_name, String user_id) {
-        model.setChatUserInfo(user_name,user_id);
+        model.setChatUserInfo(user_name, user_id);
     }
 
     @Override
-    public void sendMessage(String message,String user2_id) {
-        model.sendMessage(message,user2_id);
+    public void sendMessage(String message, String user2_id) {
+        model.sendMessage(message, user2_id);
     }
 
     @Override
@@ -69,7 +69,7 @@ public class Chat_Presenter implements I_chat_presenter{
 
     @Override
     public void getPreviouseConversation(String u_id, String y_id) {
-        model.getPreviouseConversation(u_id,y_id);
+        model.getPreviouseConversation(u_id, y_id);
     }
 
     @Override
@@ -81,4 +81,12 @@ public class Chat_Presenter implements I_chat_presenter{
     public void sendId(String s) {
         view.getId(s);
     }
+
+    @Override
+    public void getArrayId(ArrayList<String> ids) {
+        view.getArrayIds(ids);
+    }
+
+
+
 }

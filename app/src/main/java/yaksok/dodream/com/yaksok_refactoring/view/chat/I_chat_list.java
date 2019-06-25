@@ -14,4 +14,6 @@ public interface I_chat_list {
     void getSendVO(SendMessageVO sendVO);
 
     void getId(String s);
+
+    void getArrayIds(ArrayList<String> ids);
 }

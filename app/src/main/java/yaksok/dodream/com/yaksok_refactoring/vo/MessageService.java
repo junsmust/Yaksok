@@ -5,15 +5,19 @@ import retrofit2.http.Body;
 import retrofit2.http.GET;
 import retrofit2.http.POST;
 import retrofit2.http.Path;
+import retrofit2.http.Query;
 
 
 public interface MessageService {
     public static final String API_URL = "http://15.164.163.234:8080";
 
 
-    @GET("/messages/{user1}/{user2}")
-    Call<MessageBodyVO> getTheChatting(@Path("user1") String userId, @Path("user2") String user2);
-
+    //messages/934294895/52416853?limit=10&offset=1
+    //@GET("/users/{item} ? itemType=\"\" & behavior=\"\"")
+    //    Call<BodyVO>GetOvelapPhoneNumber(@Path("item") String pn,@Query("itemType") String phoneNumber,@Query("behavior") String  confirmOverlapPhoneNum);
+    @GET("/messages/{user1}/{user2}?")
+    Call<MessageBodyVO>getTheChatting(@Path("user1") String userId,@Path("user2") String user2,@Query("limit") int limit, @Query("offset") int offset);
+    //Call<SearchPillListVO>getSearchPillList(@Path("item") String item, @Query("itemType") String itemtype);
     @POST("/messages")
     Call<MessageResultBodyVO>sendAmeesage(@Body SendMessageVO messageVO);
     //===두아이디를 사용해 채팅메세지를 최신순으로 가져온다. (정렬순은 얘기해주면 바꿔드림)=====

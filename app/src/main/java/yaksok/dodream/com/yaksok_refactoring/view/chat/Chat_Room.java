@@ -89,7 +89,10 @@ public class Chat_Room extends AppCompatActivity{
         Intent intent = new Intent(getIntent());
         user2_id = Chatting_list.user_id;
 
+        Log.e("id1 ", User_Id.getUser_Id());
         Log.e("user2_id ",user2_id);
+
+
 
         lastime_sharepfreference = getSharedPreferences(user2_id,MODE_PRIVATE);
         time_editor = lastime_sharepfreference.edit();
@@ -221,12 +224,20 @@ public class Chat_Room extends AppCompatActivity{
 
     }
 
-    public void getPreviouseConversation(String u_id,String y_id) {
-        Call<MessageBodyVO> call = messageService.getTheChatting(u_id,y_id);
+    @SuppressLint("LongLogTag")
+    public void getPreviouseConversation(String u_id, String y_id) {
+
+        Log.e( "getPreviouseConversation: ",u_id+" "+y_id );
+
+
+        Log.e("onResponse: ",u_id+y_id+"  dadddaad" );
+        Call<MessageBodyVO> call = messageService.getTheChatting(u_id,y_id,10,0);
         call.enqueue(new Callback<MessageBodyVO>() {
             @Override
             public void onResponse(Call<MessageBodyVO> call, Response<MessageBodyVO> response) {
                 MessageBodyVO bodyVO = response.body();
+
+                Log.e( "ostatus: ", bodyVO.getStatus());
                 String name ="" ;
                 //200 : OK
                 //204 : 값없음(null반환)
@@ -235,16 +246,18 @@ public class Chat_Room extends AppCompatActivity{
                 // Log.d("@@@@@@@@@@@@@@@@@@",bodyVO.getResult().get(0).getContent()+"id"+bodyVO.getResult().get(0).getGivingUser()+"id2"+bodyVO.getResult().get(0).getReceivingUser());
                 //Toast.makeText(getApplicationContext(),"body"+bodyVO.getStatus()+"result"+bodyVO.getResult().size(),Toast.LENGTH_SHORT).show();
 
-                assert bodyVO != null;
                 if(bodyVO.getStatus().equals("200")){
                     for(int i = 0; i < bodyVO.getResult().size(); i++){
                         Log.d("실행","실행 됨");
 
+                        Log.e( "onResponse: ", bodyVO.getResult().get(i).getContent());
                         sendMessageVO = new SendMessageVO();
                         sendMessageVO.setGivingUser(bodyVO.getResult().get(i).getGivingUser());
                         sendMessageVO.setContent(bodyVO.getResult().get(i).getContent());
                         sendMessageVO.setReceivingUser(bodyVO.getResult().get(i).getReceivingUser());
                         sendMessageVO.setRegidate(bodyVO.getResult().get(i).getRegiDate().substring(11,16));
+
+
 
                         //Collections.reverse(albumList);//역순으로
                         Log.d("list_test", sendMessageVO.getContent() + "," + i);
