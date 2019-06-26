@@ -240,14 +240,14 @@ public class ChatAdapter extends RecyclerView.Adapter<ChatAdapter.ViewHolder>
             viewHolder1.textTitle.setLayoutParams(layoutParams);
             viewHolder1.textTitle.setText(albumList.get(position).getContent());
             viewHolder1.textTitle.setBackgroundResource(R.drawable.patch_right);
-            viewHolder1.user2.setText(item.getGivingUser());
-            viewHolder1.user2.setVisibility(View.INVISIBLE);
+          /*  viewHolder1.user2.setText(item.getGivingUser());
+            viewHolder1.user2.setVisibility(View.INVISIBLE);*/
             viewHolder1.user1.setText(item.getReceivingUser());
             viewHolder1.user1.setVisibility(View.INVISIBLE);
             viewHolder1.user1.setLayoutParams(layoutParams2);
             viewHolder1.time.setText(albumList.get(position).getRegidate());
             viewHolder1.time.setLayoutParams(layoutParams3);
-            viewHolder1.user_lv.setImageResource(R.drawable.user_pic);
+            viewHolder1.user_lv.setText(" ");
             //viewHolder1.user_lv.setLayoutParams(layoutParams9);
             viewHolder1.user_lv.setLayoutParams(layoutParams5);
             viewHolder1.user_lv.setVisibility(View.GONE);
@@ -274,8 +274,9 @@ public class ChatAdapter extends RecyclerView.Adapter<ChatAdapter.ViewHolder>
                     RelativeLayout.LayoutParams.WRAP_CONTENT,
                     RelativeLayout.LayoutParams.WRAP_CONTENT);
             RelativeLayout.LayoutParams layoutParams5 = new RelativeLayout.LayoutParams(
-                    100,
-                    100);
+                    140,
+                    140);
+            layoutParams5.setMarginStart(20);
             layoutParams5.addRule(RelativeLayout.ALIGN_PARENT_BOTTOM);
             RelativeLayout.LayoutParams layoutParams6 = new RelativeLayout.LayoutParams(
                     RelativeLayout.LayoutParams.WRAP_CONTENT,
@@ -293,12 +294,13 @@ public class ChatAdapter extends RecyclerView.Adapter<ChatAdapter.ViewHolder>
 
 
 
-            layoutParams.addRule(RelativeLayout.BELOW,R.id.user2_txt);
+            //layoutParams.addRule(RelativeLayout.BELOW,R.id.user2_txt);
             layoutParams.addRule(RelativeLayout.END_OF,R.id.user_iv);
+            layoutParams.setMarginStart(15);
             layoutParams2.addRule(RelativeLayout.ALIGN_BASELINE,R.id.user_context);
             layoutParams7.addRule(RelativeLayout.ALIGN_TOP,R.id.user_context);
             layoutParams3.addRule(RelativeLayout.END_OF,R.id.user_context);
-            layoutParams3.addRule(RelativeLayout.BELOW,R.id.user2_txt);
+            //layoutParams3.addRule(RelativeLayout.BELOW,R.id.user2_txt);
             layoutParams3.addRule(RelativeLayout.ALIGN_PARENT_BOTTOM);
             layoutParams8.addRule(RelativeLayout.END_OF,R.id.user_iv);
             //layoutParams8.addRule(RelativeLayout.ABOVE,R.id.user_iv);
@@ -314,16 +316,18 @@ public class ChatAdapter extends RecyclerView.Adapter<ChatAdapter.ViewHolder>
 
             viewHolder1.user1.setText(item.getReceivingUser());
             viewHolder1.user1.setVisibility(View.INVISIBLE);
-            viewHolder1.user2.setText(Chat_Room.connectedName);
+            /*viewHolder1.user2.setText(Chat_Room.connectedName);
             viewHolder1.user2.setVisibility(View.VISIBLE);
             viewHolder1.user2.setTextSize(13);
-            viewHolder1.user2.setLayoutParams(layoutParams8);
+            viewHolder1.user2.setLayoutParams(layoutParams8);*/
 
 
             viewHolder1.time.setText(albumList.get(position).getRegidate());
             viewHolder1.time.setLayoutParams(layoutParams3);
-            viewHolder1.user_lv.setImageResource(R.drawable.user_pic);
+            viewHolder1.user_lv.setText(albumList.get(position).getName().substring(0,1));
             viewHolder1.user_lv.setVisibility(View.VISIBLE);
+           // viewHolder1.user_lv.
+            //layoutParams5.setMargins(10,10,10,10);
             viewHolder1.user_lv.setLayoutParams(layoutParams5);
 
 
@@ -351,17 +355,16 @@ public class ChatAdapter extends RecyclerView.Adapter<ChatAdapter.ViewHolder>
     public static class ViewHolder extends RecyclerView.ViewHolder{
 
         private TextView user1, textTitle,user2,time;
-        private ImageView user_lv;
+        private TextView user_lv;
 
 
         public ViewHolder(View itemView){
             super(itemView);
 
             user1 = (TextView) itemView.findViewById(R.id.user1_txt);
-            user2 = (TextView) itemView.findViewById(R.id.user2_txt);
             textTitle = (TextView) itemView.findViewById(R.id.user_context);
             time = (TextView) itemView.findViewById(R.id.receiving_time);
-            user_lv = (ImageView) itemView.findViewById(R.id.user_iv);
+            user_lv = (TextView) itemView.findViewById(R.id.user_iv);
 
 
 

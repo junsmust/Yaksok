@@ -4,7 +4,8 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    android:layout_weight="10">
+    android:layout_weight="10"
+    android:background="@color/chatting_room_bg">
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -27,31 +28,37 @@
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_weight="1">
+        android:layout_weight="1"
+        android:background="@color/white"
+        android:layout_marginTop="10dp">
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal">
+            android:layout_height="90dp"
+            android:orientation="horizontal"
+            android:gravity="center">
             <EditText
                 android:id="@+id/user_context_edt"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="50dp"
+                android:layout_margin="10dp"
+                android:padding="14dp"
                 android:layout_alignParentBottom="true"
-                android:layout_weight="0.8"/>
+                android:background="@drawable/register_fam_edit_custom"
+                android:layout_weight="0.2"
+                android:hint="메세지를 입력하세요."/>
 
             <Button
                 android:id="@+id/send_btn"
-                android:layout_width="90dp"
-                android:layout_height="50dp"
-                android:background="@drawable/ok"
+                android:layout_width="match_parent"
+                android:layout_height="55dp"
+                android:background="@drawable/send_btn_pic"
                 android:layout_margin="5dp"
                 android:layout_alignParentBottom="true"
                 android:layout_toRightOf="@+id/user_context_edt"
-                android:text="전송"
                 android:textStyle="bold"
                 android:textColor="#ffffff"
-                android:layout_weight="0.2"/>
+                android:layout_weight="0.8"/>
 
         </LinearLayout>
 

@@ -29,9 +29,11 @@ import retrofit2.converter.gson.GsonConverterFactory;
 import retrofit2.converter.scalars.ScalarsConverterFactory;
 import yaksok.dodream.com.yaksok_refactoring.Adapter.chat.ChatAdapter;
 import yaksok.dodream.com.yaksok_refactoring.Adapter.chat.ChatItem;
+import yaksok.dodream.com.yaksok_refactoring.Adapter.chat.Chat_List_Model;
 import yaksok.dodream.com.yaksok_refactoring.Adapter.chat.Chat_list_adater;
 import yaksok.dodream.com.yaksok_refactoring.Adapter.family.FamilyFindAdapter;
 import yaksok.dodream.com.yaksok_refactoring.Adapter.family.FamilyItem;
+import yaksok.dodream.com.yaksok_refactoring.ApplicationBase;
 import yaksok.dodream.com.yaksok_refactoring.R;
 import yaksok.dodream.com.yaksok_refactoring.model.user.User_Id;
 import yaksok.dodream.com.yaksok_refactoring.presenter.chat.Chat_Presenter;
@@ -40,7 +42,7 @@ import yaksok.dodream.com.yaksok_refactoring.vo.MessageService;
 import yaksok.dodream.com.yaksok_refactoring.vo.SendMessageVO;
 
 
-public class Chatting_list extends AppCompatActivity implements I_chat_list{
+public class Chatting_list extends ApplicationBase implements I_chat_list{
     private ListView chat_list;
     private ArrayList<ChatItem> familyItemss = new ArrayList<>();
     private Chat_list_adater adapter;
@@ -51,6 +53,7 @@ public class Chatting_list extends AppCompatActivity implements I_chat_list{
     MessageService messageService;
     String id;
     public ArrayList<String> ids = new ArrayList<>();
+    public ArrayList<Chat_List_Model> chat_list_model = new ArrayList<>();
     SendMessageVO sendMessageVO;
 
     @Override
@@ -146,10 +149,14 @@ public class Chatting_list extends AppCompatActivity implements I_chat_list{
     @Override
     public void onResponse(boolean response) {
         if(response){
-            for(int i=0;i<familyItemss.size();i++){
+            Log.e( "onResponse: ", chat_list_model.size()+" ");
+            for(int i=0;i<chat_list_model.size();i++){
                 // Log.d("ffffff1"," "+familyItemss.size());
-                Log.e( "familyitemssize",familyItemss.size()+"   "+familyItemss.get(i).getFirst_name()+ familyItemss.get(i).getName()+familyItemss.get(i).last_message+familyItemss.get(i).last_messge_time);
-                adapter.addItem(familyItemss.get(i).getFirst_name(),familyItemss.get(i).getName(),familyItemss.get(i).last_message,familyItemss.get(i).last_messge_time);
+               // Log.e( "familyitemssize",familyItemss.size()+"   "+familyItemss.get(i).getFirst_name()+ familyItemss.get(i).getName()+familyItemss.get(i).last_message+familyItemss.get(i).last_messge_time);
+                /*Log.e( "test", "\n"+"id :"+chat_list_model.get(i).getId()+" \n"+"name :"+chat_list_model.get(i).getName()+"\n"+"lastname : "+chat_list_model.get(i).getLastName()+"\n"+"message :"+ chat_list_model.get(i).getLastMessage()+"\n"+"messagetime :"+
+                        chat_list_model.get(i).getLastTime()+"\n");*/
+
+                adapter.addItem(chat_list_model.get(i).getLastName(),chat_list_model.get(i).getName(),chat_list_model.get(i).getLastMessage(),chat_list_model.get(i).getLastTime());
                 adapter.notifyDataSetChanged();
                 chat_list.setAdapter(adapter);
 
@@ -184,6 +191,11 @@ public class Chatting_list extends AppCompatActivity implements I_chat_list{
             Log.e( "getArrayIds: ", ids.get(i));
         }
 
+    }
+
+    @Override
+    public void sendChatList2(ArrayList<Chat_List_Model> chat_list_model) {
+        this.chat_list_model = chat_list_model;
     }
 
     @Override

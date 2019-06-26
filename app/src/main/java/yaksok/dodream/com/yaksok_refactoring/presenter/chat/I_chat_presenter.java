@@ -3,6 +3,7 @@ package yaksok.dodream.com.yaksok_refactoring.presenter.chat;
 import java.util.ArrayList;
 
 import yaksok.dodream.com.yaksok_refactoring.Adapter.chat.ChatItem;
+import yaksok.dodream.com.yaksok_refactoring.Adapter.chat.Chat_List_Model;
 import yaksok.dodream.com.yaksok_refactoring.Adapter.family.FamilyItem;
 import yaksok.dodream.com.yaksok_refactoring.vo.SendMessageVO;
 
@@ -14,7 +15,7 @@ public interface I_chat_presenter {
     void sendChatArrayList(ArrayList<SendMessageVO> albumList);
     void setChatUserInfo(String user_name,String user_id);
     void sendMessage(String message,String user2_id);
-
+    void sendArrayList2(ArrayList<Chat_List_Model> chat_list_model);
 
     void sendSendVO(SendMessageVO sendVO);
     void getPreviouseConversation(String u_id,String y_id);
