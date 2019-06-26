@@ -225,6 +225,7 @@
                 android:layout_centerHorizontal="true">
 
                 <Button
+                    style="?android:attr/borderlessButtonStyle"
                     android:elevation="0dp"
                     android:id="@+id/bt_IP_time1"
                     android:layout_width="wrap_content"
@@ -235,6 +236,7 @@
                     android:textColor="#50B19D" />
 
                 <Button
+                    style="?android:attr/borderlessButtonStyle"
                     android:elevation="0dp"
                     android:id="@+id/bt_IP_time2"
                     android:layout_width="wrap_content"
@@ -245,6 +247,7 @@
                     android:textColor="#50B19D" />
 
                 <Button
+                    style="?android:attr/borderlessButtonStyle"
                     android:elevation="0dp"
                     android:id="@+id/bt_IP_time3"
                     android:layout_width="wrap_content"

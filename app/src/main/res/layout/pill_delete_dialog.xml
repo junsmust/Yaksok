@@ -48,21 +48,25 @@
             android:layout_marginBottom="10dp">
 
             <Button
+                style="?android:attr/borderlessButtonStyle"
                 android:id="@+id/cd_add_category_submit_bt"
                 android:layout_width="130dp"
                 android:layout_height="40dp"
                 android:text="삭제하기"
                 android:textStyle="bold"
                 android:textColor="#ffffff"
+                android:elevation="0dp"
                 android:background="@drawable/green_btn"
                 android:layout_gravity="center"
                 android:layout_margin="5dp"/>
 
             <Button
+                style="?android:attr/borderlessButtonStyle"
                 android:id="@+id/cd_add_category_cancel_bt"
                 android:layout_width="130dp"
                 android:layout_height="40dp"
                 android:text="취소"
+                android:elevation="0dp"
                 android:textColor="@color/main_color"
                 android:textStyle="bold"
                 android:background="@drawable/green_line_rec"

@@ -7,6 +7,7 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.graphics.Color;
+import android.graphics.Paint;
 import android.graphics.drawable.ColorDrawable;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
@@ -237,9 +238,10 @@ public class MyPage extends ApplicationBase implements MyPage_PresenterToView {
 
     private void makeDialog_sec() {
         customDialog2.title_tv.setText("알림");
-        customDialog2.message_tv.setText("회원 탈퇴를 하시면"+"\n"+"모든 정보가 삭제 됩니다.");
+        customDialog2.message_tv.setText("\n"+"회원 탈퇴를 하시면"+"\n"+"모든 정보가 삭제 됩니다.");
 
         customDialog2.show();
+        customDialog2.no_btn.setElevation(0);
         customDialog2.ok_btn.setText("탈퇴하기");
 
 
@@ -264,6 +266,7 @@ public class MyPage extends ApplicationBase implements MyPage_PresenterToView {
         customDialog.message_tv.setText("\n"+"로그아웃을 하시겠습니까?");
 
         customDialog.show();
+        customDialog.no_btn.setElevation(0);
         customDialog.ok_btn.setText("로그아웃");
 
 

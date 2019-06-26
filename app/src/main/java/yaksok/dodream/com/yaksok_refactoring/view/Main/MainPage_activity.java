@@ -83,15 +83,16 @@ public class MainPage_activity extends ApplicationBase implements Main_Presenter
     public void onMyNearPillResponce(boolean MyNearPillResponse, int status) {
         if(MyNearPillResponse) {
             if(status == 204){
-                tv_main_min.setText("등록된 약이 없습니다");
-                tv_main_min.setPaintFlags(tv_main_min.getPaintFlags() | Paint.FAKE_BOLD_TEXT_FLAG);
-                tv_main_min.setTextSize(30);
-                tv_main_min.setTextColor(Color.WHITE);
-                tv_main_hour.setText("");
+                tv_main_hour.setText(""+" "+"등록된 약이 없습니다");
+                tv_main_hour.setPaintFlags(tv_main_min.getPaintFlags() | Paint.FAKE_BOLD_TEXT_FLAG);
+                tv_main_hour.setTextSize(30);
+                tv_main_hour.setTextColor(Color.WHITE);
+                //tv_main_hour.setText("");
                // tv_main_sec.setText("");
+                tv_main_min.setText("");
                 tv_main_hour_text.setText("");
                 tv_main_min_text.setText("");
-                tv_main_min_text.setElevation(20);
+                //tv_main_min_text.setElevation(20);
                 //tv_main_sec_text.setText("");
             }
             else if(status == 200) {

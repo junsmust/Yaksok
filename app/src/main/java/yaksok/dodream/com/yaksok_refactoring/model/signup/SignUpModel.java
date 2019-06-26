@@ -208,7 +208,7 @@ public class SignUpModel implements IPresenterToSignUpModel {
                 if(bodyVO.getStatus().equals("201")){
                     User_Id.setUser_Id(user_info_model.getId());
                     presenterSignUp.onSignupResponse(true);
-                    presenterSignUp.makeToastMessage("가입 성공 되었습니다.");
+                   // presenterSignUp.makeToastMessage("가입 성공 되었습니다.");
 
 
                     User_Id.setUser_Id(user_info_model.getId());
@@ -454,7 +454,7 @@ public class SignUpModel implements IPresenterToSignUpModel {
                 if(bodyVO.getStatus().equals("200")){
 
                     presenterSignUp.onSignupResponse(true);
-                    presenterSignUp.makeToastMessage("가입 성공 되었습니다.");
+                   // presenterSignUp.makeToastMessage("가입 성공 되었습니다.");
 
 
                     User_Id.setUser_Id(user_info_model.getId());

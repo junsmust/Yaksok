@@ -155,16 +155,18 @@ public class InsertPill_activity extends ApplicationBase implements InsertPill_P
             public void onClick(View v) {
                 slid_Satuts = false;
                 SparseBooleanArray checkedItems = lv_sel_family.getCheckedItemPositions();
-                family_names = " ";
-                family_id.clear();
-                int count = adapter1.getCount();
-                for(int i=0; i < count; i++){
-                    if(checkedItems.get(i)){
-                        family_names += familyList.get(i);
-                        family_id.add(familyList_Id.get(i));
+                if(checkedItems.size()>0) {
+                    family_names = " ";
+                    family_id.clear();
+                    int count = adapter1.getCount();
+                    for (int i = 0; i < count; i++) {
+                        if (checkedItems.get(i)) {
+                            family_names += familyList.get(i);
+                            family_id.add(familyList_Id.get(i));
+                        }
                     }
+                    tv_IP_family.setText(family_names);
                 }
-                tv_IP_family.setText(family_names);
                 slidingDrawer.animateClose();
             }
         });

@@ -98,11 +98,11 @@ public class InsertPill_Model implements InsertPill_PresenterToModel {
 
                     //  adapter.notifyDataSetChanged();
                 } else if (findFamilyVO.getStatus().equals("204")) {
-                    presenter_alarmRecive.onFamilyResponce((false));
+                    presenter_insertPill.onFamilyResponce((false));
                 } else if (findFamilyVO.getStatus().equals("400")) {
-                    presenter_alarmRecive.onFamilyResponce((false));
+                    presenter_insertPill.onFamilyResponce((false));
                 } else if (findFamilyVO.getStatus().equals("500")) {
-                    presenter_alarmRecive.onFamilyResponce((false));
+                    presenter_insertPill.onFamilyResponce((false));
                 }
 
             }

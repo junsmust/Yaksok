@@ -393,8 +393,7 @@ public class Signup_activity extends ApplicationBase implements IPresenter_To_Si
     @Override
     public void onSignUoResponse(boolean loginResponse) {
             if(loginResponse){
-                startActivity(new Intent(getApplicationContext(), WetherChooseFamilyOrNot.class));
-                finish();
+                signOk();
             }
     }
 
@@ -541,6 +540,22 @@ public class Signup_activity extends ApplicationBase implements IPresenter_To_Si
             @Override
             public void onClick(View v) {
                 log_D.dismiss();
+            }
+        });
+    }
+
+    private void signOk(){
+        log_D.text_tv.setText("가입이 완료되었습니다.");
+
+        log_D.show();
+
+
+        log_D.ok_btn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(getApplicationContext(), WetherChooseFamilyOrNot.class));
+                log_D.dismiss();
+                finish();
             }
         });
     }

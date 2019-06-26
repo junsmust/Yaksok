@@ -22,6 +22,7 @@ import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 import retrofit2.converter.scalars.ScalarsConverterFactory;
 import yaksok.dodream.com.yaksok_refactoring.ApplicationBase;
+import yaksok.dodream.com.yaksok_refactoring.C_Dialog;
 import yaksok.dodream.com.yaksok_refactoring.R;
 import yaksok.dodream.com.yaksok_refactoring.presenter.find_pw.Find_pw_presenter;
 import yaksok.dodream.com.yaksok_refactoring.vo.BodyVO;
@@ -33,7 +34,10 @@ public class FindUserPassword extends ApplicationBase implements I_find_pw{
     String id,email;
     EditText id_edt,email_edt;
     Button find_btn;
+    TextView tv_acton_name;
+    FrameLayout fb;
     UserService userService;
+    C_Dialog dialog;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -47,14 +51,22 @@ public class FindUserPassword extends ApplicationBase implements I_find_pw{
         actionBar.setDisplayShowCustomEnabled(true);
         actionBar.setDisplayShowHomeEnabled(false);
         actionBar.setDisplayShowTitleEnabled(false);
+        actionBar.setDisplayHomeAsUpEnabled(false);
+        actionBar.setElevation(0);
+        actionBar.setBackgroundDrawable(getResources().getDrawable(R.drawable.action_bar_under_line));
 
-        View view = LayoutInflater.from(this).inflate(R.layout.chattingactionbar,null);
-        ImageView imageView = view.findViewById(R.id.back_layout_imv);
-        TextView textView = view.findViewById(R.id.title_txt);
+        LayoutInflater inflater = (LayoutInflater)getSystemService(LAYOUT_INFLATER_SERVICE);
 
-        FrameLayout frameLayout = view.findViewById(R.id.frame_layout);
+        View view= inflater.inflate(R.layout.action_bar_develop, null);
 
-        frameLayout.setOnClickListener(new View.OnClickListener() {
+        tv_acton_name = view.findViewById(R.id.back_layout_name_delvel);
+        fb = view.findViewById(R.id.fb_back_layout_back_devel);
+
+        tv_acton_name.setText("비밀번호 재설정");
+
+        dialog = new C_Dialog(this);
+
+        fb.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 finish();
@@ -62,24 +74,7 @@ public class FindUserPassword extends ApplicationBase implements I_find_pw{
         });
 
 
-        Intent resultIntent = new Intent();
-        setResult(4000,resultIntent);
-
-        imageView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                finish();
-
-            }
-        });
-        textView.setText("비밀번호 찾기");
-        textView.setGravity(Gravity.CENTER);
-//        textView.setGravity(Gravity.CENTER);
-        actionBar.setTitle(textView.getText().toString());
-
-
-
-        ActionBar.LayoutParams layoutParams = new ActionBar.LayoutParams(ActionBar.LayoutParams.MATCH_PARENT,ActionBar.LayoutParams.MATCH_PARENT,Gravity.CENTER_VERTICAL|Gravity.CENTER_HORIZONTAL);
+        ActionBar.LayoutParams layoutParams = new ActionBar.LayoutParams(ActionBar.LayoutParams.MATCH_PARENT,ActionBar.LayoutParams.MATCH_PARENT);
         actionBar.setCustomView(view,layoutParams);
 
 
@@ -95,7 +90,15 @@ public class FindUserPassword extends ApplicationBase implements I_find_pw{
         find_btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-               pw_presenter.findPW(id_edt.getText().toString(),email_edt.getText().toString());
+                if(id_edt.getText().toString().equals("")){
+                    D_error("아이디를");
+                }
+                else if(email_edt.getText().toString().equals("")){
+                    D_error("이메일을");
+                }
+                else {
+                    pw_presenter.findPW(id_edt.getText().toString(), email_edt.getText().toString());
+                }
             }
         });
 
@@ -108,12 +111,60 @@ public class FindUserPassword extends ApplicationBase implements I_find_pw{
     public void onResponse(boolean onSuccess) {
 
         if(onSuccess){
-            Toast.makeText(getApplicationContext(),"임시 비밀번호가 전송 되었습니다.",Toast.LENGTH_SHORT).show();
+            //Toast.makeText(getApplicationContext(),"임시 비밀번호가 전송 되었습니다.",Toast.LENGTH_SHORT).show();
+            D_ok();
         }else{
-            Toast.makeText(getApplicationContext(),"아이디 및 이메일을 확인해주세요",Toast.LENGTH_SHORT).show();
+            //Toast.makeText(getApplicationContext(),"아이디 및 이메일을 확인해주세요",Toast.LENGTH_SHORT).show();
+            D_no();
 
         }
     }
+
+    private void D_ok() {
+        dialog.text_tv.setText("임시 비밀번호가"+"\n"+"전송 되었습니다.");
+
+        dialog.show();
+
+
+        dialog.ok_btn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                dialog.dismiss();
+                finish();
+            }
+        });
+    }
+
+    private void D_no() {
+        dialog.text_tv.setText("아이디 및 이메일을"+"\n"+"확인해주세요");
+
+        dialog.show();
+
+
+        dialog.ok_btn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                dialog.dismiss();
+            }
+        });
+    }
+
+    private void D_error(String text) {
+        dialog.text_tv.setText(text+" 입력해주세요");
+
+        dialog.show();
+
+
+        dialog.ok_btn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                dialog.dismiss();
+            }
+        });
+    }
+
+
+
 
 
 }
