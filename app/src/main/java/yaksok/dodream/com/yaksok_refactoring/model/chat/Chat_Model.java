@@ -9,6 +9,7 @@ import com.google.firebase.iid.FirebaseInstanceId;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.logging.Handler;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -18,6 +19,7 @@ import retrofit2.converter.gson.GsonConverterFactory;
 import retrofit2.converter.scalars.ScalarsConverterFactory;
 import yaksok.dodream.com.yaksok_refactoring.Adapter.chat.CalculateTime;
 import yaksok.dodream.com.yaksok_refactoring.Adapter.chat.ChatItem;
+import yaksok.dodream.com.yaksok_refactoring.Adapter.chat.Chat_List_Model;
 import yaksok.dodream.com.yaksok_refactoring.Adapter.family.FamilyItem;
 import yaksok.dodream.com.yaksok_refactoring.model.user.LoginModel;
 import yaksok.dodream.com.yaksok_refactoring.model.user.User_Id;
@@ -38,13 +40,20 @@ public class Chat_Model implements I_chat_model {
     private Retrofit retrofit;
     UserService userService;
     ArrayList<ChatItem> familyItems = new ArrayList<>();
-    MessageService messageService;
+    MessageService messageService,messageService2;
     ArrayList<SendMessageVO> albumList = new ArrayList<>();
     ArrayList<String> id_list = new ArrayList<>();
-    ArrayList<String> name_list = new ArrayList<>();
+   /* ArrayList<String> name_list = new ArrayList<>();
     ArrayList<String> last_nam_list = new ArrayList<>();
     ArrayList<String> last_message_list = new ArrayList<>();
     ArrayList<String> last_message_time_list = new ArrayList<>();
+*/
+
+   String name_list,last_nam_list,last_message_list,last_message_time_list;
+
+   ArrayList<Chat_List_Model> chat_list_models = new ArrayList<>();
+    Chat_List_Model chat_list_model;
+
 
     ChatItem familyItem = new ChatItem();
     String message;
@@ -78,7 +87,7 @@ public class Chat_Model implements I_chat_model {
         findFamilyVOCall.enqueue(new Callback<Connected_Family>() {
             @Override
             public void onResponse(Call<Connected_Family> call, Response<Connected_Family> response) {
-                Connected_Family findFamilyVO = response.body();
+                final Connected_Family findFamilyVO = response.body();
 
                 Log.e("onResponse:55555 ", findFamilyVO.getStatus());
 
@@ -91,14 +100,104 @@ public class Chat_Model implements I_chat_model {
 
                         Log.e("size: ", findFamilyVO.getResult().size() + " " + id_list.size());
                         id_list.add(findFamilyVO.getResult().get(i).getUserId());
-                        name_list.add(findFamilyVO.getResult().get(i).getNickName());
-                        last_nam_list.add(findFamilyVO.getResult().get(i).getNickName().substring(0, 1));
+                        //name_list.add(findFamilyVO.getResult().get(i).getNickName());
+
+
+
+
+                        final String id = findFamilyVO.getResult().get(i).getUserId();
+                        Log.e("id_user ",id);
+
+                       Retrofit retrofit2 = new Retrofit.Builder()
+                                .baseUrl(messageService.API_URL)
+                                .addConverterFactory(ScalarsConverterFactory.create())
+                                .addConverterFactory(GsonConverterFactory.create())
+                                .build();
+                        messageService2 = retrofit2.create(MessageService.class);
+
+                        Call<MessageBodyVO> call2 = messageService2.getTheChatting(User_Id.getUser_Id(),id, 1, 0);
+                        final int finalI = i;
+                        final int finalI1 = i;
+                        final int finalI2 = i;
+                        final int finalI3 = i;
+                        call2.enqueue(new Callback<MessageBodyVO>() {
+                            @Override
+                            public void onResponse(Call<MessageBodyVO> call, Response<MessageBodyVO> response) {
+                                MessageBodyVO bodyVO = response.body();
+                                String name = "";
+
+                                //200 : OK
+                                //204 : 값없음(null반환)
+                                //500 : Server Error
+
+
+                                assert bodyVO != null;
+                                if (bodyVO.getStatus().equals("200")) {
+
+                                    Log.d("실행", "실행 됨");
+
+
+                                    for(int i = 0; i < bodyVO.getResult().size(); i++){
+                                        CalculateTime calculateTime = new CalculateTime();
+                                        String lastTime = calculateTime.formatTimeString((bodyVO.getResult().get(0).getRegiDate().replaceAll("-", "").replaceAll(":", "").replaceAll(" ", "").substring(0, 14)));
+
+                                        Log.e( "user_id2: ", id);
+                                        //last_message_list.add(bodyVO.getResult().get(0).getContent());
+                                        name_list = findFamilyVO.getResult().get(finalI2).getNickName();
+                                        last_nam_list = findFamilyVO.getResult().get(finalI2).getNickName().substring(0,1);
+                                        last_message_list = bodyVO.getResult().get(0).getContent();
+                                        //last_message_time_list.add(lastTime);
+                                        last_message_time_list = lastTime;
+
+                                        chat_list_model = new Chat_List_Model(id_list.get(finalI3),name_list,last_nam_list,last_message_list,last_message_time_list);
+                                        //chat_list_models.add(chat_list_model);
+                                        makeList(chat_list_model);
+                                    }
+
+
+
+
+                                    Log.e( "chat_list_modelsSize:1 ", chat_list_models.size()+" ");
+
+                                    Log.e( "test", "\n"+"id :"+chat_list_model.getId()+" \n"+"name :"+name_list+"\n"+"lastname : "+last_nam_list+"\n"+"message :"+ last_message_list+"\n"+"messagetime :"+last_message_time_list+"\n");
+
+
+
+                                    Log.d("name111", "aaa" + name);
+                                } else if (bodyVO.getStatus().equals("204")) {
+
+                                    last_message_list = " ";
+                                    //last_message_time_list.add(lastTime);
+                                    last_message_time_list = " ";
+                                    name_list = findFamilyVO.getResult().get(finalI2).getNickName();
+                                    last_nam_list = findFamilyVO.getResult().get(finalI2).getNickName().substring(0,1);
+
+                                    chat_list_model = new Chat_List_Model(id_list.get(finalI3),name_list,last_nam_list,last_message_list,last_message_time_list);
+                                    makeList(chat_list_model);
+
+                                    Log.e( "chat_list_modelsSize:2 ", chat_list_models.size()+" ");
+
+                                    Log.e( "test", "\n"+"id :"+chat_list_model.getId()+" \n"+"name :"+name_list+"\n"+"lastname : "+last_nam_list+"\n"+"message :"+ last_message_list+"\n"+"messagetime :"+last_message_time_list+"\n");
+
+
+
+                                } else if (bodyVO.getStatus().equals("500")) {
+
+                                }
+
+                            }
+
+                            @Override
+                            public void onFailure(Call<MessageBodyVO> call, Throwable t) {
+
+                            }
+                        });
+
+
+
                     }
 
 
-                    Log.e("setPreviousRegistered: ", last_nam_list.size() + " " + last_nam_list.size() + "  ");
-
-                    getLast();
 
 
                 } else if (findFamilyVO.getStatus().equals("204")) {
@@ -109,7 +208,10 @@ public class Chat_Model implements I_chat_model {
                     chat_presenter.makeToastMessage("서버 오루 입니다..");
                 }
 
+
+
             }
+
 
 
             @Override
@@ -118,6 +220,26 @@ public class Chat_Model implements I_chat_model {
             }
         });
 
+
+
+    }
+
+    private void makeList(Chat_List_Model chat_list_model) {
+      //  for (int i = 0; i < id_list.size(); i++) {
+
+           // chat_list_model = new Chat_List_Model(id_list.get(i),name_list,last_nam_list,last_message_list,last_message_time_list);
+
+            chat_list_models.add(chat_list_model);
+            if(chat_list_models.size() == id_list.size()){
+                chat_presenter.sendArrayList2(chat_list_models);
+                chat_presenter.onResponse(true);
+            }
+
+
+
+            //Log.e( "test", "\n"+"id :"+chat_list_model.getId()+" \n"+"name :"+name_list+"\n"+"lastname : "+last_nam_list+"\n"+"message :"+ last_message_list+"\n"+"messagetime :"+last_message_time_list+"\n");
+
+        //}
 
     }
 
@@ -244,92 +366,6 @@ public class Chat_Model implements I_chat_model {
         });
     }
 
-    public void getLast() {
-
-
-        retrofit = new Retrofit.Builder()
-                .baseUrl(messageService.API_URL)
-                .addConverterFactory(ScalarsConverterFactory.create())
-                .addConverterFactory(GsonConverterFactory.create())
-                .build();
-        messageService = retrofit.create(MessageService.class);
-
-        final ChatItem chatItem = new ChatItem();
-
-
-        for (int i = 0; i < id_list.size(); i++) {
-
-            Log.e("id: ", id_list.size() + "  ");
-
-            Call<MessageBodyVO> call = messageService.getTheChatting(User_Id.getUser_Id(), id_list.get(i), 1, 0);
-            final int finalI = i;
-            final int finalI1 = i;
-            call.enqueue(new Callback<MessageBodyVO>() {
-                @Override
-                public void onResponse(Call<MessageBodyVO> call, Response<MessageBodyVO> response) {
-                    MessageBodyVO bodyVO = response.body();
-                    String name = "";
-
-                    //200 : OK
-                    //204 : 값없음(null반환)
-                    //500 : Server Error
-
-
-                    assert bodyVO != null;
-                    if (bodyVO.getStatus().equals("200")) {
-
-                        Log.d("실행", "실행 됨");
-
-                        CalculateTime calculateTime = new CalculateTime();
-                        String lastTime = calculateTime.formatTimeString((bodyVO.getResult().get(0).getRegiDate().replaceAll("-", "").replaceAll(":", "").replaceAll(" ", "").substring(0, 14)));
-
-                        last_message_list.add(bodyVO.getResult().get(0).getContent());
-                        last_message_time_list.add(lastTime);
-
-
-                        if (last_message_time_list.size() == 2 && last_message_time_list.size() == 2) {
-                            Log.e("first if ", last_message_list.size() + " " + last_message_time_list.size() + "  ");
-                            Log.e("first if2: ", last_message_list.get(0) + " " + last_message_list.get(1));
-                            makeList();
-                        }
-
-
-                        Log.d("name111", "aaa" + name);
-                    } else if (bodyVO.getStatus().equals("204")) {
-                        //  user_contextEdt.setFocusable(true);
-                    } else if (bodyVO.getStatus().equals("500")) {
-                        //  Toast.makeText(getApplicationContext(),"서버 오류입니다.",Toast.LENGTH_SHORT).show();
-                    }
-
-                }
-
-                @Override
-                public void onFailure(Call<MessageBodyVO> call, Throwable t) {
-
-                }
-            });
-
-            Log.e("name", name_list.get(i));
-
-//            Log.e( "getLast: ", chatItem.getName());
-
-
-/*
-            chat_presenter.sendArrayList(familyItems);
-            chat_presenter.onResponse(true);*/
-
-               /* Log.e("m_l ",last_message_list.get(i));
-                Log.e("t_l ",last_message_time_list.get(i));*/
-
-
-            Log.e("i_big for: ", last_message_list.size() + " " + last_message_time_list.size() + "  ");
-
-        }
-
-        Log.e("i_out for: ", last_message_list.size() + " " + last_message_time_list.size() + "  ");
-
-
-    }
 
     private void sendFamiyItem(ChatItem familyItem) {
         this.familyItem = familyItem;
@@ -344,16 +380,12 @@ public class Chat_Model implements I_chat_model {
     }
 
     public void makeList() {
-
-
-        for (int i = 0; i < id_list.size(); i++) {
-
-            familyItem = new ChatItem(name_list.get(i), last_nam_list.get(i), last_message_list.get(i), last_message_time_list.get(i));
-            familyItems.add(familyItem);
-
+        
+        if(chat_list_models.size() == id_list.size()){
+            chat_presenter.sendArrayList2(chat_list_models);
+            chat_presenter.onResponse(true);
         }
-        chat_presenter.sendArrayList(familyItems);
-        chat_presenter.onResponse(true);
+
 
     }
 }

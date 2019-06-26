@@ -5,8 +5,16 @@ public class SendMessageVO {
     //givingUser”:string
     //         “receivingUser”:string
     //	“content”: string
-    private String givingUser,receivingUser,content,regidate;
+    private String givingUser,receivingUser,content,regidate,name;
     private int user_img;
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
 
     public SendMessageVO() {
     }
