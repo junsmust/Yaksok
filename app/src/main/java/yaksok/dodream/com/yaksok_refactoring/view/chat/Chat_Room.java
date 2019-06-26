@@ -3,6 +3,7 @@ package yaksok.dodream.com.yaksok_refactoring.view.chat;
 import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.graphics.drawable.Drawable;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -407,11 +408,11 @@ public class Chat_Room extends AppCompatActivity{
         actionBar.setDisplayShowHomeEnabled(false);
         actionBar.setDisplayShowTitleEnabled(false);
 
-        View view = LayoutInflater.from(this).inflate(R.layout.chattingactionbar,null);
-        ImageView imageView = view.findViewById(R.id.back_layout_imv);
-        TextView textView = view.findViewById(R.id.title_txt);
-
-        FrameLayout frameLayout = view.findViewById(R.id.frame_layout);
+        View view = LayoutInflater.from(this).inflate(R.layout.chatting_green_actinbar,null);
+        view.setBackground(getResources().getDrawable(R.drawable.green_background));
+        ImageView imageView = view.findViewById(R.id.back_layout_cancel);
+        TextView textView = view.findViewById(R.id.title_txt_pill);
+        FrameLayout frameLayout = view.findViewById(R.id.fb_back_layout_cancel);
 
         frameLayout.setOnClickListener(new View.OnClickListener() {
             @Override

@@ -280,9 +280,11 @@ public class Chat_Model implements I_chat_model {
 
                         Log.d("실행", "실행 됨");
 
+                        CalculateTime calculateTime = new CalculateTime();
+                        String lastTime = calculateTime.formatTimeString((bodyVO.getResult().get(0).getRegiDate().replaceAll("-", "").replaceAll(":", "").replaceAll(" ", "").substring(0, 14)));
 
                         last_message_list.add(bodyVO.getResult().get(0).getContent());
-                        last_message_time_list.add((bodyVO.getResult().get(0).getRegiDate().replaceAll("-", "").replaceAll(":", "").replaceAll(" ", "").substring(0, 14)));
+                        last_message_time_list.add(lastTime);
 
 
                         if (last_message_time_list.size() == 2 && last_message_time_list.size() == 2) {
