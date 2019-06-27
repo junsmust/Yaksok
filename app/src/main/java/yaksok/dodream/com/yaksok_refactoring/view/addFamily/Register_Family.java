@@ -194,6 +194,7 @@ public class Register_Family extends ApplicationBase implements IRegister_Presen
         actionBar.setDisplayShowHomeEnabled(false);
         actionBar.setElevation(0);
         actionBar.setDisplayShowTitleEnabled(false);
+        actionBar.setBackgroundDrawable(getResources().getDrawable(R.drawable.action_bar_under_line));
 
         View view = LayoutInflater.from(this).inflate(R.layout.chattingactionbar,null);
         ImageView imageView = view.findViewById(R.id.back_layout_imv);

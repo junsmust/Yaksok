@@ -6,7 +6,7 @@
     android:orientation="vertical"
     android:layout_weight="1"
     android:layout_margin="15dp"
-    android:background="@drawable/shadow_to_do"
+    android:background="#ffffff"
     >
    <!-- <ImageView
         android:id="@+id/pn_user"
@@ -19,10 +19,14 @@
         <LinearLayout
             xmlns:android="http://schemas.android.com/apk/res/android"
             android:layout_width="match_parent"
-            android:layout_height="95dp"
+            android:layout_height="80dp"
             android:orientation="horizontal"
-            android:layout_margin="5dp"
-            android:background="#ffffff">
+            android:elevation="3dp"
+            android:layout_marginTop="5dp"
+            android:layout_marginBottom="5dp"
+            android:layout_marginRight="15dp"
+            android:layout_marginLeft="15dp"
+            android:background="@drawable/family_item_back">
             <TextView
                 android:id="@+id/family_first_tv"
                 android:layout_width="50dp"

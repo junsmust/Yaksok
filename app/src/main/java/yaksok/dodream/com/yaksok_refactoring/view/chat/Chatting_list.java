@@ -105,6 +105,8 @@ public class Chatting_list extends ApplicationBase implements I_chat_list{
         actionBar.setDisplayShowCustomEnabled(true);
         actionBar.setDisplayShowHomeEnabled(false);
         actionBar.setDisplayShowTitleEnabled(false);
+        actionBar.setElevation(0);
+        actionBar.setBackgroundDrawable(getResources().getDrawable(R.drawable.action_bar_under_line));
 
         View view = LayoutInflater.from(this).inflate(R.layout.chattingactionbar,null);
         ImageView imageView = view.findViewById(R.id.back_layout_imv);

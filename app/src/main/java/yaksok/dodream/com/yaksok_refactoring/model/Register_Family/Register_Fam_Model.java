@@ -174,7 +174,7 @@ public class Register_Fam_Model implements IRegister_Presenter_To_FamModel {
                 if (findFamilyVO.getStatus().equals("200")) {
 
                     for(int i = 0; i < findFamilyVO.getResult().size();i++){
-                        FamilyItem item = new FamilyItem(findFamilyVO.getResult().get(i).getNickName()+"("+findFamilyVO.getResult().get(i).getUserId()+")",findFamilyVO.getResult().get(i).getNickName().substring(0,1),
+                        FamilyItem item = new FamilyItem(findFamilyVO.getResult().get(i).getNickName(),findFamilyVO.getResult().get(i).getNickName().substring(0,1),
                                 findFamilyVO.getResult().get(i).getPhoneNumber().substring(0,3)+"-"+findFamilyVO.getResult().get(i).getPhoneNumber().substring(3,7)+"-"+findFamilyVO.getResult().get(i).getPhoneNumber().substring(7));
                         familyItems.add(item);
 
