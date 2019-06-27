@@ -13,7 +13,7 @@ public interface IRegister_Presenter_Family_To_View {
     void onResponse3(boolean response3);
     void getArrayList(ArrayList<FamilyItem> familyItems);
     void makeDialog(String name,String id);
-    void makeDialog(String id,int position,int index1,int index2);
+    void deleteMakeDialog(String name,  int index);
     void getFromModelAdapter(FamilyFindAdapter adapter);
 
 

@@ -58,8 +58,8 @@ public class Register_Fam_Presenter implements IRegister_fam_presenter {
     }
 
     @Override
-    public void setYesRegisterFam(boolean isOkay,String id) {
-        model.setYesRegisterFam(isOkay,id);
+    public void setYesRegisterFam(boolean isOkay,String id,String name) {
+        model.setYesRegisterFam(isOkay,id,name);
     }
 
     @Override
@@ -92,6 +92,8 @@ public class Register_Fam_Presenter implements IRegister_fam_presenter {
     public void sendToViewAdapter(FamilyFindAdapter adapter) {
         view.getFromModelAdapter(adapter);
     }
+
+
 
 
 }
