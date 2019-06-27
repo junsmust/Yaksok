@@ -36,6 +36,7 @@ import retrofit2.converter.gson.GsonConverterFactory;
 import retrofit2.converter.scalars.ScalarsConverterFactory;
 import yaksok.dodream.com.yaksok_refactoring.Adapter.chat.ChatAdapter;
 import yaksok.dodream.com.yaksok_refactoring.Adapter.family.FamilyItem;
+import yaksok.dodream.com.yaksok_refactoring.ApplicationBase;
 import yaksok.dodream.com.yaksok_refactoring.R;
 import yaksok.dodream.com.yaksok_refactoring.model.user.User_Id;
 import yaksok.dodream.com.yaksok_refactoring.presenter.chat.Chat_Presenter;
@@ -44,7 +45,7 @@ import yaksok.dodream.com.yaksok_refactoring.vo.MessageResultBodyVO;
 import yaksok.dodream.com.yaksok_refactoring.vo.MessageService;
 import yaksok.dodream.com.yaksok_refactoring.vo.SendMessageVO;
 
-public class Chat_Room extends AppCompatActivity{
+public class Chat_Room extends ApplicationBase{
 
     private Intent intent;
     public static String user2_name,user2_id,my_id;
@@ -257,6 +258,8 @@ public class Chat_Room extends AppCompatActivity{
                         sendMessageVO.setContent(bodyVO.getResult().get(i).getContent());
                         sendMessageVO.setReceivingUser(bodyVO.getResult().get(i).getReceivingUser());
                         sendMessageVO.setRegidate(bodyVO.getResult().get(i).getRegiDate().substring(11,16));
+                        sendMessageVO.setName(connectedName);
+
 
 
 
@@ -407,9 +410,11 @@ public class Chat_Room extends AppCompatActivity{
         actionBar.setDisplayShowCustomEnabled(true);
         actionBar.setDisplayShowHomeEnabled(false);
         actionBar.setDisplayShowTitleEnabled(false);
+        actionBar.setDisplayHomeAsUpEnabled(false);
+        actionBar.setElevation(0);
+        actionBar.setBackgroundDrawable(getResources().getDrawable(R.drawable.actionbar_bg));
 
         View view = LayoutInflater.from(this).inflate(R.layout.chatting_green_actinbar,null);
-        view.setBackground(getResources().getDrawable(R.drawable.green_background));
         ImageView imageView = view.findViewById(R.id.back_layout_cancel);
         TextView textView = view.findViewById(R.id.title_txt_pill);
         FrameLayout frameLayout = view.findViewById(R.id.fb_back_layout_cancel);

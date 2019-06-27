@@ -3,6 +3,7 @@ package yaksok.dodream.com.yaksok_refactoring.view.chat;
 import java.util.ArrayList;
 
 import yaksok.dodream.com.yaksok_refactoring.Adapter.chat.ChatItem;
+import yaksok.dodream.com.yaksok_refactoring.Adapter.chat.Chat_List_Model;
 import yaksok.dodream.com.yaksok_refactoring.Adapter.family.FamilyItem;
 import yaksok.dodream.com.yaksok_refactoring.vo.SendMessageVO;
 
@@ -16,4 +17,6 @@ public interface I_chat_list {
     void getId(String s);
 
     void getArrayIds(ArrayList<String> ids);
+
+    void sendChatList2(ArrayList<Chat_List_Model> chat_list_model);
 }

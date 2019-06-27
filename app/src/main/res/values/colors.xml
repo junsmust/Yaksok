@@ -8,4 +8,5 @@
     <color name="main_color">#50B19D</color>
     <color name="edit_underline">#cecece</color>
     <color name="black">#000000</color>
+    <color name="chatting_room_bg">#EEEEEE</color>
 </resources>
