@@ -25,4 +25,5 @@ public interface I_chat_presenter {
     void sendId(String s);
     void getArrayId(ArrayList<String> ids);
 
+    void sendIdIndex(String id);
 }
