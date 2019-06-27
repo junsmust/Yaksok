@@ -224,7 +224,9 @@ public class MyPage extends ApplicationBase implements MyPage_PresenterToView {
         bt_changePW.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(et_newpw.getEditText().getText().toString().equals("")||et_oldpw.getEditText().getText().toString().equals("")){}
+                if(et_newpw.getEditText().getText().toString().equals("")||et_oldpw.getEditText().getText().toString().equals("")){
+                    pwNull();
+                }
                 else if(User_Id.getType().equals("G")) {
                     presenter_myPage.onChangePW(User_Id.getUser_Id(),et_oldpw.getEditText().getText().toString(),et_newpw.getEditText().getText().toString());
                 }
@@ -334,6 +336,20 @@ public class MyPage extends ApplicationBase implements MyPage_PresenterToView {
 
     private void pwOk() {
         pw_Dialog.text_tv.setText("\n"+"비밀번호가 변경되었습니다.");
+
+        pw_Dialog.show();
+
+
+        pw_Dialog.ok_btn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                pw_Dialog.dismiss();
+            }
+        });
+    }
+
+    private void pwNull(){
+        pw_Dialog.text_tv.setText("\n"+"비밀번호를 입력하세요");
 
         pw_Dialog.show();
 
