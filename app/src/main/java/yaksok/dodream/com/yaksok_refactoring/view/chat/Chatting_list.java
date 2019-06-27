@@ -89,6 +89,8 @@ public class Chatting_list extends ApplicationBase implements I_chat_list{
 
 
                 startActivity(intent);
+                overridePendingTransition(R.anim.pull_out_left, R.anim.pull_in_right);
+
 
 
             }

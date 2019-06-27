@@ -76,6 +76,8 @@ public class Chat_Room extends ApplicationBase implements I_chat_list{
 
     SendMessageVO sendMessageVO;
 
+    public static String last_name ;
+
 
 
 
@@ -104,6 +106,8 @@ public class Chat_Room extends ApplicationBase implements I_chat_list{
 
         Log.e( "받을 사람 아이디 ",user2_id );
         connectedName = intent.getStringExtra("user_name");
+
+        last_name = connectedName.substring(0,1);
 
 
 

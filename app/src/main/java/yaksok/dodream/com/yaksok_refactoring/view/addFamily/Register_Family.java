@@ -189,7 +189,10 @@ public class Register_Family extends ApplicationBase implements IRegister_Presen
         frameLayout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+
+
                 finish();
+
             }
         });
 
@@ -203,6 +206,7 @@ public class Register_Family extends ApplicationBase implements IRegister_Presen
 //                Intent intent = new Intent(getApplicationContext(),MainPageActivity.class);
 //                startActivityForResult(intent,7777);
                 finish();
+               // overridePendingTransition( R.anim.pull_in_right,R.anim.pull_out_left);
             }
         });
         textView.setText("나의 가족 등록");
@@ -386,6 +390,13 @@ public class Register_Family extends ApplicationBase implements IRegister_Presen
         super.onResume();
         adapter.notifyDataSetChanged();
         Log.d("ddd111","실행됨");
+
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        //startActivity(new Intent(getApplicationContext(),MainPage_activity.class));
 
     }
 }

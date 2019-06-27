@@ -140,6 +140,7 @@ public class Login_activity extends ApplicationBase implements IPresenterToView{
             @Override
             public void onClick(View v) {
                startActivity(new Intent(getApplicationContext(), FindUserPassword.class));
+                overridePendingTransition(R.anim.pull_out_left, R.anim.pull_in_right);
             }
         });
 
@@ -155,6 +156,7 @@ public class Login_activity extends ApplicationBase implements IPresenterToView{
             @Override
             public void onClick(View v) {
                 startActivity(new Intent(getApplicationContext(), Signup_activity.class));
+                overridePendingTransition(R.anim.pull_out_left, R.anim.pull_in_right);
 
             }
         });
@@ -324,6 +326,7 @@ public class Login_activity extends ApplicationBase implements IPresenterToView{
             @Override
             public void onClick(View v) {
                 startActivity(new Intent(getApplicationContext(), FindUserPassword.class));
+                overridePendingTransition(R.anim.pull_out_left, R.anim.pull_in_right);
                 Log.e("pw_find ","눌림" );
 
             }
@@ -333,6 +336,7 @@ public class Login_activity extends ApplicationBase implements IPresenterToView{
             @Override
             public void onClick(View v) {
                 startActivity(new Intent(getApplicationContext(), Signup_activity.class));
+                overridePendingTransition(R.anim.pull_out_left, R.anim.pull_in_right);
             }
         });
     }
@@ -351,6 +355,7 @@ public class Login_activity extends ApplicationBase implements IPresenterToView{
     public void onLoginResponse(boolean loginResponse) {
         if (loginResponse) {
             startActivity(new Intent(getApplicationContext(), MainPage_activity.class));
+            overridePendingTransition(R.anim.pull_out_left, R.anim.pull_in_right);
         }
     }
     //----------------------------------------------------------------------------------------------
@@ -387,6 +392,7 @@ public class Login_activity extends ApplicationBase implements IPresenterToView{
         Intent intent = new Intent(getApplicationContext(),GetPn.class);
         intent.putExtra("userType",userType);
         startActivity(intent);
+        overridePendingTransition(R.anim.pull_out_left, R.anim.pull_in_right);
 
         finish();
     }
