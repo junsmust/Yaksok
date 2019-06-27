@@ -66,7 +66,17 @@ public class Chat_Model implements I_chat_model {
         this.familyItem = familyItem;
     }
 
-    int index;
+    private int index = 0;
+
+    Retrofit retrofit2 = new Retrofit.Builder()
+            .baseUrl(messageService.API_URL)
+            .addConverterFactory(ScalarsConverterFactory.create())
+            .addConverterFactory(GsonConverterFactory.create())
+            .build();
+
+
+    public Chat_Model() {
+    }
 
     public Chat_Model(Chat_Presenter chat_presenter) {
         this.chat_presenter = chat_presenter;
@@ -98,33 +108,27 @@ public class Chat_Model implements I_chat_model {
 
                     for (int i = 0; i < findFamilyVO.getResult().size(); i++) {
 
+
                         Log.e("size: ", findFamilyVO.getResult().size() + " " + id_list.size());
                         id_list.add(findFamilyVO.getResult().get(i).getUserId());
-                        //name_list.add(findFamilyVO.getResult().get(i).getNickName());
 
-
+                        Log.e("id1 ", findFamilyVO.getResult().get(i).getUserId());
 
 
                         final String id = findFamilyVO.getResult().get(i).getUserId();
-                        Log.e("id_user ",id);
+                        String last_name,last_message,last_time;
+                        final int index = i;
 
-                       Retrofit retrofit2 = new Retrofit.Builder()
-                                .baseUrl(messageService.API_URL)
-                                .addConverterFactory(ScalarsConverterFactory.create())
-                                .addConverterFactory(GsonConverterFactory.create())
-                                .build();
                         messageService2 = retrofit2.create(MessageService.class);
-
                         Call<MessageBodyVO> call2 = messageService2.getTheChatting(User_Id.getUser_Id(),id, 1, 0);
-                        final int finalI = i;
-                        final int finalI1 = i;
-                        final int finalI2 = i;
-                        final int finalI3 = i;
+
                         call2.enqueue(new Callback<MessageBodyVO>() {
                             @Override
                             public void onResponse(Call<MessageBodyVO> call, Response<MessageBodyVO> response) {
                                 MessageBodyVO bodyVO = response.body();
                                 String name = "";
+
+                                Log.e("id2 ","i "+ index + "   "+findFamilyVO.getResult().get(index).getUserId());
 
                                 //200 : OK
                                 //204 : 값없음(null반환)
@@ -137,29 +141,41 @@ public class Chat_Model implements I_chat_model {
                                     Log.d("실행", "실행 됨");
 
 
-                                    for(int i = 0; i < bodyVO.getResult().size(); i++){
+
                                         CalculateTime calculateTime = new CalculateTime();
                                         String lastTime = calculateTime.formatTimeString((bodyVO.getResult().get(0).getRegiDate().replaceAll("-", "").replaceAll(":", "").replaceAll(" ", "").substring(0, 14)));
 
-                                        Log.e( "user_id2: ", id);
-                                        //last_message_list.add(bodyVO.getResult().get(0).getContent());
-                                        name_list = findFamilyVO.getResult().get(finalI2).getNickName();
-                                        last_nam_list = findFamilyVO.getResult().get(finalI2).getNickName().substring(0,1);
+                                        name_list = findFamilyVO.getResult().get(index).getNickName();
+                                        last_nam_list = findFamilyVO.getResult().get(index).getNickName().substring(0,1);
                                         last_message_list = bodyVO.getResult().get(0).getContent();
-                                        //last_message_time_list.add(lastTime);
                                         last_message_time_list = lastTime;
 
-                                        chat_list_model = new Chat_List_Model(id_list.get(finalI3),name_list,last_nam_list,last_message_list,last_message_time_list);
-                                        //chat_list_models.add(chat_list_model);
-                                        makeList(chat_list_model);
+                                        chat_list_model = new Chat_List_Model(id,name_list,last_nam_list,last_message_list,last_message_time_list);
+                                        chat_list_models.add(chat_list_model);
+
+                                    if(chat_list_models.size() == findFamilyVO.getResult().size()){
+                                        chat_presenter.sendArrayList2(chat_list_models);
+                                        chat_presenter.onResponse(true);
+
                                     }
+
+                                        //chat_list_models.add(chat_list_model);
+                                       //chat_presenter.sendArrayList2(chat_list_models);
+
+                                        /*if(chat_list_models.size() == findFamilyVO.getResult().size()){
+                                            chat_presenter.onResponse(true);
+
+
+                                        }
+*/
+
 
 
 
 
                                     Log.e( "chat_list_modelsSize:1 ", chat_list_models.size()+" ");
 
-                                    Log.e( "test", "\n"+"id :"+chat_list_model.getId()+" \n"+"name :"+name_list+"\n"+"lastname : "+last_nam_list+"\n"+"message :"+ last_message_list+"\n"+"messagetime :"+last_message_time_list+"\n");
+                                    //Log.e( "test", "\n"+"id :"+chat_list_model.getId()+" \n"+"name :"+name_list+"\n"+"lastname : "+last_nam_list+"\n"+"message :"+ last_message_list+"\n"+"messagetime :"+last_message_time_list+"\n");
 
 
 
@@ -167,17 +183,20 @@ public class Chat_Model implements I_chat_model {
                                 } else if (bodyVO.getStatus().equals("204")) {
 
                                     last_message_list = " ";
-                                    //last_message_time_list.add(lastTime);
                                     last_message_time_list = " ";
-                                    name_list = findFamilyVO.getResult().get(finalI2).getNickName();
-                                    last_nam_list = findFamilyVO.getResult().get(finalI2).getNickName().substring(0,1);
+                                    name_list = findFamilyVO.getResult().get(index).getNickName();
+                                    last_nam_list = findFamilyVO.getResult().get(index).getNickName().substring(0,1);
 
-                                    chat_list_model = new Chat_List_Model(id_list.get(finalI3),name_list,last_nam_list,last_message_list,last_message_time_list);
-                                    makeList(chat_list_model);
+                                    chat_list_model = new Chat_List_Model(id,name_list,last_nam_list,last_message_list,last_message_time_list);
+                                    chat_list_models.add(chat_list_model);
 
-                                    Log.e( "chat_list_modelsSize:2 ", chat_list_models.size()+" ");
 
-                                    Log.e( "test", "\n"+"id :"+chat_list_model.getId()+" \n"+"name :"+name_list+"\n"+"lastname : "+last_nam_list+"\n"+"message :"+ last_message_list+"\n"+"messagetime :"+last_message_time_list+"\n");
+                                    if(chat_list_models.size() == findFamilyVO.getResult().size()){
+                                        chat_presenter.sendArrayList2(chat_list_models);
+                                        chat_presenter.onResponse(true);
+
+                                    }
+
 
 
 
@@ -224,22 +243,31 @@ public class Chat_Model implements I_chat_model {
 
     }
 
-    private void makeList(Chat_List_Model chat_list_model) {
-      //  for (int i = 0; i < id_list.size(); i++) {
+    private void makeList(ArrayList<Chat_List_Model> chat_list_model) {
 
-           // chat_list_model = new Chat_List_Model(id_list.get(i),name_list,last_nam_list,last_message_list,last_message_time_list);
+        this.chat_list_models = chat_list_model;
+
+        Log.e( "makeList4: ",this.chat_list_models.size()+" " );
+
+
+
+
+
+
+
+
+    }
+
+    private void makeList(Chat_List_Model chat_list_model) {
 
             chat_list_models.add(chat_list_model);
+            chat_presenter.sendArrayList2(chat_list_models);
             if(chat_list_models.size() == id_list.size()){
-                chat_presenter.sendArrayList2(chat_list_models);
                 chat_presenter.onResponse(true);
+
             }
 
 
-
-            //Log.e( "test", "\n"+"id :"+chat_list_model.getId()+" \n"+"name :"+name_list+"\n"+"lastname : "+last_nam_list+"\n"+"message :"+ last_message_list+"\n"+"messagetime :"+last_message_time_list+"\n");
-
-        //}
 
     }
 
@@ -375,17 +403,18 @@ public class Chat_Model implements I_chat_model {
     @Override
     public void getIdIndex(int index) {
         this.index = index;
-        chat_presenter.makeToastMessage(id_list.get(index));
+       // chat_presenter.makeToastMessage(id_list.get(index));
         chat_presenter.sendId(id_list.get(index));
     }
 
-    public void makeList() {
-        
-        if(chat_list_models.size() == id_list.size()){
-            chat_presenter.sendArrayList2(chat_list_models);
-            chat_presenter.onResponse(true);
-        }
+    @Override
+    public void getID(String id) {
+        chat_presenter.sendId(id);
+    }
 
+    public void makeList() {
 
     }
+
+
 }

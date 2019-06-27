@@ -46,7 +46,7 @@ public class Chatting_list extends ApplicationBase implements I_chat_list{
     private ListView chat_list;
     private ArrayList<ChatItem> familyItemss = new ArrayList<>();
     private Chat_list_adater adapter;
-    private Chat_Presenter presenter;
+    public static Chat_Presenter presenter;
     public static String user2_id;
     public static String user_id;
     public static String user;
@@ -65,7 +65,7 @@ public class Chatting_list extends ApplicationBase implements I_chat_list{
 
         presenter = new Chat_Presenter(this);
 
-        presenter.setPreviousRegistered();
+
 
 
         adapter = new Chat_list_adater(this,familyItemss,R.layout.chat_list_item);
@@ -76,7 +76,7 @@ public class Chatting_list extends ApplicationBase implements I_chat_list{
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
 
 
-                presenter.sendIdIndex(position);
+                presenter.sendIdIndex(chat_list_model.get(position).getId());
 
                /* Log.e( "onItemClick:2 ", (((FamilyItem) adapter.getItem(position)).getName().substring(index1+1,index2)));
                 String user_name = (((FamilyItem) adapter.getItem(position)).getName().substring(0,index1));
@@ -153,9 +153,10 @@ public class Chatting_list extends ApplicationBase implements I_chat_list{
             for(int i=0;i<chat_list_model.size();i++){
                 // Log.d("ffffff1"," "+familyItemss.size());
                // Log.e( "familyitemssize",familyItemss.size()+"   "+familyItemss.get(i).getFirst_name()+ familyItemss.get(i).getName()+familyItemss.get(i).last_message+familyItemss.get(i).last_messge_time);
-                /*Log.e( "test", "\n"+"id :"+chat_list_model.get(i).getId()+" \n"+"name :"+chat_list_model.get(i).getName()+"\n"+"lastname : "+chat_list_model.get(i).getLastName()+"\n"+"message :"+ chat_list_model.get(i).getLastMessage()+"\n"+"messagetime :"+
-                        chat_list_model.get(i).getLastTime()+"\n");*/
+                Log.e( "test","i "+i+  "\n"+"id :"+chat_list_model.get(i).getId()+" \n"+"name :"+chat_list_model.get(i).getName()+"\n"+"lastname : "+chat_list_model.get(i).getLastName()+"\n"+"message :"+ chat_list_model.get(i).getLastMessage()+"\n"+"messagetime :"+
+                        chat_list_model.get(i).getLastTime()+"\n");
 
+                //Log.e( "test", "\n"+"id :"+chat_list_model+" \n"+"name :"+name_list+"\n"+"lastname : "+last_nam_list+"\n"+"message :"+ last_message_list+"\n"+"messagetime :"+last_message_time_list+"\n");
                 adapter.addItem(chat_list_model.get(i).getLastName(),chat_list_model.get(i).getName(),chat_list_model.get(i).getLastMessage(),chat_list_model.get(i).getLastTime());
                 adapter.notifyDataSetChanged();
                 chat_list.setAdapter(adapter);
@@ -201,10 +202,25 @@ public class Chatting_list extends ApplicationBase implements I_chat_list{
     @Override
     protected void onResume() {
         super.onResume();
-
+        presenter.setPreviousRegistered();
     }
 
-
-
+    @Override
+    protected void onRestart() {
+        super.onRestart();
+        //presenter.setPreviousRegistered();
     }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        this.chat_list_model.clear();
+
+        Log.e( "onDestroy","onDestroy@@@@" );
+    }
+    public void setUpdate(){
+        presenter.setPreviousRegistered();
+    }
+
+}
 
