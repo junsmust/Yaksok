@@ -192,6 +192,7 @@ public class Register_Family extends ApplicationBase implements IRegister_Presen
 
         actionBar.setDisplayShowCustomEnabled(true);
         actionBar.setDisplayShowHomeEnabled(false);
+        actionBar.setElevation(0);
         actionBar.setDisplayShowTitleEnabled(false);
 
         View view = LayoutInflater.from(this).inflate(R.layout.chattingactionbar,null);

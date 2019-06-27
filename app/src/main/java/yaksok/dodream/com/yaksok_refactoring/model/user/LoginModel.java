@@ -142,7 +142,7 @@ public class LoginModel implements IPresennterToModel {
 
                     pushToken();
 
-                    presenter_login.MakeToastMessage("ee"+auto);
+                    //presenter_login.MakeToastMessage("ee"+auto);
                 }
                 else if (bodyVO.getStatus().equals("024")) {
                     presenter_login.OnLoginResponse(false);

@@ -24,6 +24,7 @@ import java.util.ArrayList;
 import yaksok.dodream.com.yaksok_refactoring.Adapter.MyPill.MyPillItem;
 import yaksok.dodream.com.yaksok_refactoring.Adapter.MyPill.MypillListAdapter;
 import yaksok.dodream.com.yaksok_refactoring.ApplicationBase;
+import yaksok.dodream.com.yaksok_refactoring.C_Dialog;
 import yaksok.dodream.com.yaksok_refactoring.view.MyPill.Dialog.Custom_pill_delete_Dialog;
 import yaksok.dodream.com.yaksok_refactoring.R;
 import yaksok.dodream.com.yaksok_refactoring.presenter.MyPill.Presenter_MyPill;
@@ -45,6 +46,7 @@ public class MyPill_activity extends ApplicationBase implements MyPill_Presenter
     TextView tv_acton_name;
     public AlertDialog.Builder dialog;
     MyPillVO mypill = null;
+    C_Dialog delete_D;
 
 
 
@@ -78,6 +80,7 @@ public class MyPill_activity extends ApplicationBase implements MyPill_Presenter
                 finish();
             }
         });
+        delete_D = new C_Dialog(this);
 
 
         ActionBar.LayoutParams layoutParams = new ActionBar.LayoutParams(ActionBar.LayoutParams.MATCH_PARENT,ActionBar.LayoutParams.MATCH_PARENT);
@@ -114,7 +117,8 @@ public class MyPill_activity extends ApplicationBase implements MyPill_Presenter
                     @Override
                     public void onPositiveClicked(boolean isOk) {
                         if(isOk){
-                            Toast.makeText(MyPill_activity.this, "삭제되었습니다.", Toast.LENGTH_SHORT).show();
+                            //Toast.makeText(MyPill_activity.this, "삭제되었습니다.", Toast.LENGTH_SHORT).show();
+                            delete();
                             myPillList.clear();
                             presenter_myPill.getMyPill();
                         }
@@ -164,6 +168,11 @@ public class MyPill_activity extends ApplicationBase implements MyPill_Presenter
             }
             adapter1.notifyDataSetChanged();
             //lv_MyPill.setAdapter(adapter);
+        }
+        else{
+            adapter1 = new MypillListAdapter();
+            lv_MyPill.setAdapter(adapter1);
+            adapter1.notifyDataSetChanged();
         }
     }
 
@@ -227,6 +236,21 @@ public class MyPill_activity extends ApplicationBase implements MyPill_Presenter
         alertDialog.show();
 
     }*/
+
+    private void delete(){
+        delete_D.text_tv.setText("\n"+"삭제되었습니다.");
+
+        delete_D.show();
+
+
+        delete_D.ok_btn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                delete_D.dismiss();
+            }
+        });
+    }
 
 
 
