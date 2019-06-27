@@ -33,6 +33,7 @@ import org.json.JSONObject;
 
 import retrofit2.Retrofit;
 import yaksok.dodream.com.yaksok_refactoring.ApplicationBase;
+import yaksok.dodream.com.yaksok_refactoring.ID_find_layout;
 import yaksok.dodream.com.yaksok_refactoring.view.find_pw.FindUserPassword;
 import yaksok.dodream.com.yaksok_refactoring.view.signup.GetPn;
 import yaksok.dodream.com.yaksok_refactoring.R;
@@ -314,7 +315,7 @@ public class Login_activity extends ApplicationBase implements IPresenterToView{
         id_find_frame.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-               // find_id.performLongClick();
+                startActivity(new Intent(getApplicationContext(), ID_find_layout.class));
 
             }
         });
