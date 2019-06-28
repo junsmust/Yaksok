@@ -283,10 +283,20 @@ public class InsertPill_activity extends ApplicationBase implements InsertPill_P
                             time.add(time_1);
                         }
                         if(i == 2){
-                            time.add(time_2);
+                            if(time_1.equals(time_2)) {
+                                errorMSG("복용시간이 중복됩니다.");
+                            }
+                            else{
+                                time.add(time_2);
+                            }
                         }
                         if(i == 3){
-                            time.add(time_3);
+                            if(time_1.equals(time_2)||time2.equals(time_3)||time_1.equals(time_3)){
+                                errorMSG("복용시간이 중복됩니다.");
+                            }
+                            else {
+                                time.add(time_3);
+                            }
                         }
                     }
                     Log.d("commName",et_name.getText().toString());
