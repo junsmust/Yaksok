@@ -21,6 +21,7 @@ import com.kakao.usermgmt.response.model.User;
 
 import yaksok.dodream.com.yaksok_refactoring.ApplicationBase;
 import yaksok.dodream.com.yaksok_refactoring.R;
+import yaksok.dodream.com.yaksok_refactoring.model.user.LoginModel;
 import yaksok.dodream.com.yaksok_refactoring.model.user.User_Id;
 import yaksok.dodream.com.yaksok_refactoring.view.Settings.MyPage;
 import yaksok.dodream.com.yaksok_refactoring.view.login.Login_activity;
@@ -33,6 +34,7 @@ public class New_Settings extends ApplicationBase {
     FrameLayout fb;
     RelativeLayout rb_develop;
     Switch sw;
+    LoginModel loginModel;
 
     public SharedPreferences loginInformation;
     public  SharedPreferences.Editor editor;
@@ -75,6 +77,7 @@ public class New_Settings extends ApplicationBase {
         bt_mypage = (Button)findViewById(R.id.bt_settings_mypage);
         rb_develop = (RelativeLayout)findViewById(R.id.rb_de_info);
         sw = (Switch)findViewById(R.id.sw_autoLog);
+        loginModel = new LoginModel();
 
         tv_name.setText(User_Id.getNickname() + " (" + User_Id.getUser_Id() + ") 님");
 
@@ -94,6 +97,30 @@ public class New_Settings extends ApplicationBase {
                     editor.putString("userType","");
                     editor.apply();
                     Login_activity.checkBox.setChecked(false);
+                }
+                if(isChecked){
+                    if(User_Id.getType().equals("G")) {
+                        editor.putString("id", User_Id.getUser_Id());
+                        editor.putString("pw", User_Id.getPass());
+                        editor.putString("userType", "G");
+                        editor.apply();
+                        //loginModel.autoLogin(User_Id.getUser_Id(),User_Id.getPass(),"G",true);
+                        Login_activity.checkBox.setChecked(true);
+                    }
+                    else if(User_Id.getType().equals("K")){
+                        editor.putString("id", User_Id.getUser_Id());
+                        editor.putString("pw", "");
+                        editor.putString("userType", "K");
+                        editor.apply();
+                        Login_activity.checkBox.setChecked(true);
+                    }
+                    else if(User_Id.getType().equals("N")){
+                        editor.putString("id", User_Id.getUser_Id());
+                        editor.putString("pw", "");
+                        editor.putString("userType", "N");
+                        editor.apply();
+                        Login_activity.checkBox.setChecked(true);
+                    }
                 }
             }
         });

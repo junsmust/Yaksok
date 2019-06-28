@@ -56,6 +56,7 @@ public class Signup_activity extends ApplicationBase implements IPresenter_To_Si
     FrameLayout fb;
     TextView tv_acton_name;
     C_Dialog log_D;
+    boolean self_email = false;
 
     User_Info_Model user_info_model;
 
@@ -165,6 +166,7 @@ public class Signup_activity extends ApplicationBase implements IPresenter_To_Si
             public void onItemSelected(AdapterView<?> parent, View view, final int position, long id) {
                 if(String.valueOf(sign_up_email_spin.getItemAtPosition(position)).equals("직접입력")){
                     sign_up_yourself_address_email.setVisibility(View.VISIBLE);
+                    self_email = true;
                 }
                 else{
                     sign_up_yourself_address_email.setVisibility(View.GONE);
@@ -176,6 +178,7 @@ public class Signup_activity extends ApplicationBase implements IPresenter_To_Si
 
                         @Override
                         public void onTextChanged(CharSequence s, int start, int before, int count) {
+                            self_email = false;
                             email_final = sign_up_yourself_email.getText().toString()+"@"+String.valueOf(sign_up_email_spin.getItemAtPosition(position));
                             Log.e("onItemSelected: ", email_final);
                         }
@@ -454,6 +457,7 @@ public class Signup_activity extends ApplicationBase implements IPresenter_To_Si
                 String regex = "^[_a-zA-Z0-9-\\.]+@[\\.a-zA-Z0-9-]+\\.[a-zA-Z]+$";
                 Pattern p = Pattern.compile(regex);
                 Matcher m = p.matcher(email_final);
+                String pattern = "^[ㄱ-ㅎ가-힣a-zA-Z0-9]*$";
                 //아이디->비빌번호->이름->전화번호->이메일->생년월일->중복확인
                 if(sign_up_id_edt.getText().toString().equals("")){
                     phoneResult("아이디를 입력하세요");
@@ -470,13 +474,24 @@ public class Signup_activity extends ApplicationBase implements IPresenter_To_Si
                 else if(sign_up_name_edt.getText().toString().equals("")) {
                     phoneResult("이름을 입력하세요");
                 }
+                else if (sign_up_pw_edt.getEditText().getText().toString().matches("[0-9|a-z|A-Z|ㄱ-ㅎ|ㅏ-ㅣ|가-힝]*")){
+                    phoneResult("비밀번호에"+"\n"+"특수문자를 입력하세요");
+                }
+                else if(sign_up_pw_edt.getEditText().getText().toString().length()<6){
+                    phoneResult("비밀번호를"+"\n"+"6자리 이상 입력하세요");
+                }
                 else if(sign_up_phone_number_edt.getText().toString().equals("")||
                         sign_up_phone_number_edt_2.getText().toString().equals("")||
                         sign_up_phone_number_edt_3.getText().toString().equals("")){
                     phoneResult("전화번호를 확인하세요");
                 }
-                else if(sign_up_yourself_email.getText().toString().equals("")||sign_up_yourself_address_email.getText().toString().equals("")){
+                else if(sign_up_yourself_email.getText().toString().equals("")){
                     phoneResult("이메일을 입력하세요");
+                }
+                else if(self_email){
+                    if(sign_up_yourself_address_email.getText().toString().equals("")){
+                        phoneResult("이메일 주소를 입력하세요");
+                    }
                 }
                 else if(!availableId){
                     phoneResult("아이디 중복을 확인하세요");

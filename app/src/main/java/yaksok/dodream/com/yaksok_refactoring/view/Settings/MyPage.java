@@ -227,11 +227,14 @@ public class MyPage extends ApplicationBase implements MyPage_PresenterToView {
                 if(et_newpw.getEditText().getText().toString().equals("")||et_oldpw.getEditText().getText().toString().equals("")){
                     pwNull();
                 }
+                else if(!et_newpw.getEditText().getText().toString().equals(et_newpw_con.getEditText().getText().toString())){
+                    pwError("비밀번호가"+"\n"+"일치하지 않습니다.");
+                }
                 else if(User_Id.getType().equals("G")) {
                     presenter_myPage.onChangePW(User_Id.getUser_Id(),et_oldpw.getEditText().getText().toString(),et_newpw.getEditText().getText().toString());
                 }
                 else{
-                    Toast.makeText(getApplicationContext(), "SNS 회원은 변경 불가합니다.", Toast.LENGTH_LONG).show();
+                   pwError("SNS회원은 변경 불가합니다.");
                 }
             }
         });
@@ -329,7 +332,6 @@ public class MyPage extends ApplicationBase implements MyPage_PresenterToView {
             @Override
             public void onClick(View v) {
                 pw_Dialog.dismiss();
-                finish();
             }
         });
     }
@@ -344,12 +346,27 @@ public class MyPage extends ApplicationBase implements MyPage_PresenterToView {
             @Override
             public void onClick(View v) {
                 pw_Dialog.dismiss();
+                finish();
             }
         });
     }
 
     private void pwNull(){
         pw_Dialog.text_tv.setText("\n"+"비밀번호를 입력하세요");
+
+        pw_Dialog.show();
+
+
+        pw_Dialog.ok_btn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                pw_Dialog.dismiss();
+            }
+        });
+    }
+
+    private void pwError(String text){
+        pw_Dialog.text_tv.setText(text);
 
         pw_Dialog.show();
 

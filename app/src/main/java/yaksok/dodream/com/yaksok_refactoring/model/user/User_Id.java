@@ -6,6 +6,7 @@ public class User_Id {
     public static String e_mail;
     public static String phone_No;
     public static String type;
+    public static String pass;
 
     public static String getUser_Id() {
         return user_Id;
@@ -42,4 +43,8 @@ public class User_Id {
     public static String getType() { return type; }
 
     public static void setType(String type) { User_Id.type = type; }
+
+    public static String getPass() { return pass; }
+
+    public static void setPass(String pass) { User_Id.pass = pass; }
 }
