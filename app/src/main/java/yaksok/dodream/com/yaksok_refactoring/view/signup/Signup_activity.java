@@ -26,6 +26,8 @@ import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.kakao.usermgmt.response.model.User;
+
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.regex.Matcher;
@@ -33,6 +35,7 @@ import java.util.regex.Pattern;
 
 import yaksok.dodream.com.yaksok_refactoring.ApplicationBase;
 import yaksok.dodream.com.yaksok_refactoring.C_Dialog;
+import yaksok.dodream.com.yaksok_refactoring.model.user.User_Id;
 import yaksok.dodream.com.yaksok_refactoring.view.WetherChooseFamilyOrNot;
 import yaksok.dodream.com.yaksok_refactoring.view.addFamily.Register_Family;
 import yaksok.dodream.com.yaksok_refactoring.R;
@@ -550,6 +553,11 @@ public class Signup_activity extends ApplicationBase implements IPresenter_To_Si
         log_D.ok_btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                User_Id.setUser_Id(sign_up_id_edt.getText().toString());
+                User_Id.setType("G");
+                User_Id.setNickname(sign_up_name_edt.getText().toString());
+                User_Id.setE_mail(email_final);
+                User_Id.setPhone_No(sign_up_phone_number_edt.getText().toString());
                 startActivity(new Intent(getApplicationContext(), WetherChooseFamilyOrNot.class));
                 log_D.dismiss();
                 finish();

@@ -71,7 +71,6 @@ public class WetherChooseFamilyOrNot extends ApplicationBase implements View.OnC
             case R.id.register_btn:
                 intent = new Intent(getApplicationContext(), Register_Family.class);
                 startActivity(intent);
-
                 finish();
                 break;
             case R.id.skip_btn:
