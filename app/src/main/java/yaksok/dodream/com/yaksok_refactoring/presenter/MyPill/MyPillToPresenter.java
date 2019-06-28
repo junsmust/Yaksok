@@ -6,7 +6,7 @@ import yaksok.dodream.com.yaksok_refactoring.vo.MyPillVO;
 
 public interface MyPillToPresenter {
     void getMyPill();
-    void onMyPillResponce(boolean MyPillResponse);
+    void onMyPillResponce(boolean MyPillResponse, int status);
     void myPillList(MyPillVO pillList);
     void myPillDelete(int pillNo);
     void onMyPillDeleteRespoce(boolean MyPillResponse);

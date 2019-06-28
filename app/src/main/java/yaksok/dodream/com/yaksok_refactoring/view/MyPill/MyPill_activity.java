@@ -14,6 +14,7 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -49,6 +50,7 @@ public class MyPill_activity extends ApplicationBase implements MyPill_Presenter
     MyPillVO mypill = null;
     C_Dialog delete_D;
     t_Dialog t_dialog;
+    LinearLayout linearLayout;
 
 
     @Override
@@ -95,7 +97,7 @@ public class MyPill_activity extends ApplicationBase implements MyPill_Presenter
         lv_MyPill = (ListView)findViewById(R.id.lv_MyPill);
         bt_Insert = (Button)findViewById(R.id.bt_Insert);
 
-
+        linearLayout = (LinearLayout)findViewById(R.id.linear_none_register);
 
         bt_Insert.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -154,8 +156,9 @@ public class MyPill_activity extends ApplicationBase implements MyPill_Presenter
 
 
     @Override
-    public void onMyPillResponce(boolean MyPillResponse) {
+    public void onMyPillResponce(boolean MyPillResponse,int status) {
         if(MyPillResponse){
+            linearLayout.setVisibility(View.INVISIBLE);
             adapter1 = new MypillListAdapter();
             lv_MyPill.setAdapter(adapter1);
             for(int i=0;i<mypill.getResult().size();i++) {
@@ -171,6 +174,12 @@ public class MyPill_activity extends ApplicationBase implements MyPill_Presenter
             }
             adapter1.notifyDataSetChanged();
             //lv_MyPill.setAdapter(adapter);
+        }
+        else if(status==204){
+            adapter1 = new MypillListAdapter();
+            lv_MyPill.setAdapter(adapter1);
+            adapter1.notifyDataSetChanged();
+            linearLayout.setVisibility(View.VISIBLE);
         }
         else{
             adapter1 = new MypillListAdapter();

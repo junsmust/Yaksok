@@ -62,14 +62,14 @@ public class MyPill_Model implements MyPill_PresenterToModel {
 
                     }
                     presenter_myPill.myPillList(myPillVO);
-                    presenter_myPill.onMyPillResponce(true);
+                    presenter_myPill.onMyPillResponce(true,200);
 
                 } else if (myPillVO.getStatus().equals("204")){
-                    presenter_myPill.onMyPillResponce(false);
+                    presenter_myPill.onMyPillResponce(false,204);
                     Log.d("status",String.valueOf(myPillVO.getStatus()));}
 
                 else if (myPillVO.getStatus().equals("500")){
-                    presenter_myPill.onMyPillResponce(false);
+                    presenter_myPill.onMyPillResponce(false,500);
                     Log.d("status",String.valueOf(myPillVO.getStatus()));}
 
             }
