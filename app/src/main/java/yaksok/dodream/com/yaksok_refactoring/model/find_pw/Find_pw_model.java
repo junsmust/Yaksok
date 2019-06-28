@@ -21,7 +21,7 @@ public class Find_pw_model implements I_Find_pw_model {
     }
 
     @Override
-    public void findPw(String id, String email) {
+    public void findPw(String id, final String email) {
         Retrofit retrofit = new Retrofit.Builder()
                 .baseUrl(userService.API_URL)
                 .addConverterFactory(ScalarsConverterFactory.create())
@@ -29,17 +29,19 @@ public class Find_pw_model implements I_Find_pw_model {
                 .build();
         userService = retrofit.create(UserService.class);
 
+        Log.e( "findPw: ", id+email);
+
         Call<BodyVO> bodyVOCall = userService.putFindUserPassword(id,email);
         bodyVOCall.enqueue(new Callback<BodyVO>() {
             @Override
             public void onResponse(Call<BodyVO> call, Response<BodyVO> response) {
                 BodyVO bodyVO = response.body();
                 if(bodyVO.getStatus().equals("200")){
-                    pw_presenter.onResponse(true);
+                    pw_presenter.onResponse(true,"임시 비밀번호가 전송되었습니다.");
                 }else if(bodyVO.getStatus().equals("403")){
-                    pw_presenter.onResponse(false);
+                    pw_presenter.onResponse(false,"가입되지 않은 회원입니다.");
                 }else{
-                    Log.e( "error", "서버에러");
+                   pw_presenter.onResponse(false,"서버에러 입니다.");
                 }
 
             }

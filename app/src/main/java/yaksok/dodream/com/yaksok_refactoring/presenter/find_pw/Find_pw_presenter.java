@@ -14,8 +14,8 @@ public class Find_pw_presenter implements I_Find_pw_presenter {
     }
 
     @Override
-    public void onResponse(boolean onSuccess) {
-        view.onResponse(onSuccess);
+    public void onResponse(boolean onSuccess,String message) {
+        view.onResponse(onSuccess,message);
     }
 
     @Override
