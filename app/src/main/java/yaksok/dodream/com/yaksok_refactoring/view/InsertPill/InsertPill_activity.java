@@ -261,17 +261,23 @@ public class InsertPill_activity extends ApplicationBase implements InsertPill_P
             @Override
             public void onClick(View v) {
                 if(et_name.getText().toString().equals("")) {
-                    Toast.makeText(getApplicationContext(), "약 이름을 입력하세요", Toast.LENGTH_LONG).show();
+                   errorMSG("약 이름을 입력하세요");
+                    // Toast.makeText(getApplicationContext(), "약 이름을 입력하세요", Toast.LENGTH_LONG).show();
                 }else if(tv_dosagi.getText().toString().equals("0")){
-                    Toast.makeText(getApplicationContext(), "복용횟수를 설정하세요", Toast.LENGTH_LONG).show();
+                    errorMSG("복용횟수를 입력하세요");
+                    // Toast.makeText(getApplicationContext(), "복용횟수를 설정하세요", Toast.LENGTH_LONG).show();
                 }else if(time1.getText().toString().equals("시간설정1")){
-                    Toast.makeText(getApplicationContext(), "시간을 입력하세요", Toast.LENGTH_LONG).show();
+                    errorMSG("시간을 입력하세요");
+                    //Toast.makeText(getApplicationContext(), "시간을 입력하세요", Toast.LENGTH_LONG).show();
                 }else if(time2.getText().toString().equals("시간설정2")&&tv_day_time.getText().toString().equals("2")){
-                    Toast.makeText(getApplicationContext(), "시간을 입력하세요", Toast.LENGTH_LONG).show();
+                    errorMSG("시간을 입력하세요");
+                    //Toast.makeText(getApplicationContext(), "시간을 입력하세요", Toast.LENGTH_LONG).show();
                 }else if(time3.getText().toString().equals("시간설정3")&&tv_day_time.getText().toString().equals("3")){
-                    Toast.makeText(getApplicationContext(), "시간을 입력하세요", Toast.LENGTH_LONG).show();
+                    errorMSG("시간을 입력하세요");
+                    //Toast.makeText(getApplicationContext(), "시간을 입력하세요", Toast.LENGTH_LONG).show();
                 }
                 else {
+                    time.clear();
                     for(int i=0; i<status+1; i++){
                         if(i == 1){
                             time.add(time_1);
@@ -429,7 +435,8 @@ public class InsertPill_activity extends ApplicationBase implements InsertPill_P
         switch (v.getId()){
             case R.id.iv_IP_m:
                 if(Integer.parseInt(tv_dosagi.getText().toString())<=0){
-                    Toast.makeText(getApplicationContext(),"복용횟수를 차감할 수 없습니다.",Toast.LENGTH_LONG).show();
+                    //Toast.makeText(getApplicationContext(),"복용횟수를 차감할 수 없습니다.",Toast.LENGTH_LONG).show();
+                    break;
                 }
                 else{ // 복용횟수 뻬기
                     int count = Integer.parseInt(tv_dosagi.getText().toString());
@@ -444,8 +451,9 @@ public class InsertPill_activity extends ApplicationBase implements InsertPill_P
                 tv_dosagi.setText(String.valueOf(count));
                 break;
             case R.id.iv_IP_time_m:
-                if(Integer.parseInt(tv_day_time.getText().toString())<=1){
-
+                if(tv_day_time.getText().toString().equals("1")){
+                    Log.d("마이너스?","네네");
+                    break;
                 }
                 else{ // 복용시기 뻬기
                     int count_t = Integer.parseInt(tv_day_time.getText().toString());
@@ -513,14 +521,22 @@ public class InsertPill_activity extends ApplicationBase implements InsertPill_P
     }*/
 
     @Override
-    public void onInsertResponse(boolean response) {
+    public void onInsertResponse(boolean response, int status) {
         if(response){
             makeDialog();
+        }
+        else if(status == 402){
+            errorMSG("약 이름이 중복됩니다");
+        }
+        else if(status == 403){
+            errorMSG("기존 복용시간과"+"\n"+"중복됩니다.");
+        }
+        else if(status == 500){
+            errorMSG("서버오류");
         }
     }
 
     private void makeDialog(){
-
 
         customDialog.text_tv.setText("약이 등록되었습니다.");
 
@@ -559,6 +575,20 @@ public class InsertPill_activity extends ApplicationBase implements InsertPill_P
             familyList.add(myFamilyList.get(i));
             familyList_Id.add(myFamily_Id.get(i));
         }
+    }
+
+    private void errorMSG(String text){
+        customDialog.text_tv.setText(text);
+
+        customDialog.show();
+
+
+        customDialog.ok_btn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                customDialog.dismiss();
+            }
+        });
     }
 
 }

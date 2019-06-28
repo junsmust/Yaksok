@@ -47,17 +47,17 @@ public class InsertPill_Model implements InsertPill_PresenterToModel {
             @Override
             public void onResponse(Call<BodyVO> call, Response<BodyVO> response) {
                 BodyVO statusVO = response.body();
-                System.out.println("############" + statusVO.getStatus());
+                //System.out.println("############" + statusVO.getStatus());
                 if (statusVO.getStatus().equals("201")) {
-                    presenter_insertPill.onInsertResponse(true);
+                    presenter_insertPill.onInsertResponse(true,201);
                 } else if (statusVO.getStatus().equals("402")) {
-                    presenter_insertPill.onInsertResponse(false);
+                    presenter_insertPill.onInsertResponse(false,402);
                 }
                 else if(statusVO.getStatus().equals("403")){
-                    presenter_insertPill.onInsertResponse(false);
+                    presenter_insertPill.onInsertResponse(false,403);
                 }
                 else if (statusVO.getStatus().equals("500")){
-                    presenter_insertPill.onInsertResponse(false);
+                    presenter_insertPill.onInsertResponse(false,500);
                 }
             }
 
@@ -110,7 +110,7 @@ public class InsertPill_Model implements InsertPill_PresenterToModel {
 
             @Override
             public void onFailure(Call<Connected_Family> call, Throwable t) {
-                System.out.println(t.getMessage());
+               // System.out.println(t.getMessage());
             }
         });
     }
