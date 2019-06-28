@@ -36,7 +36,7 @@ public class NotificationUtil extends BroadcastReceiver{
 
 
 
-         userId = intent.getStringExtra("takingUser");
+         userId = intent.getStringExtra("takingUser1");
          pillNo = intent.getStringExtra("PillNo");
          userName = intent.getStringExtra("a_name");
          pillName = intent.getStringExtra("pill_Names");
