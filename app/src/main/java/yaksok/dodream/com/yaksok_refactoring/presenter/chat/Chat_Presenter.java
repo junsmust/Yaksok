@@ -98,5 +98,10 @@ public class Chat_Presenter implements I_chat_presenter {
         model.getID(id);
     }
 
+    @Override
+    public void sendUpdate(ArrayList<Chat_List_Model> chat_list_model) {
+        model.sendUpdate(chat_list_model);
+    }
+
 
 }

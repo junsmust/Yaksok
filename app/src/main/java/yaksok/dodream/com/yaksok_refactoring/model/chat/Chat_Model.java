@@ -85,6 +85,8 @@ public class Chat_Model implements I_chat_model {
 
     @Override
     public void setPreviousRegistered() {
+
+        Log.e("setPreviousRegistered: ",chat_list_models.size()+"   " );
         retrofit = new Retrofit.Builder()
                 .baseUrl(userService.API_URL)
                 .addConverterFactory(ScalarsConverterFactory.create())
@@ -109,10 +111,9 @@ public class Chat_Model implements I_chat_model {
                     for (int i = 0; i < findFamilyVO.getResult().size(); i++) {
 
 
-                        Log.e("size: ", findFamilyVO.getResult().size() + " " + id_list.size());
+
                         id_list.add(findFamilyVO.getResult().get(i).getUserId());
 
-                        Log.e("id1 ", findFamilyVO.getResult().get(i).getUserId());
 
 
                         final String id = findFamilyVO.getResult().get(i).getUserId();
@@ -410,6 +411,15 @@ public class Chat_Model implements I_chat_model {
     @Override
     public void getID(String id) {
         chat_presenter.sendId(id);
+    }
+
+    @Override
+    public void sendUpdate(ArrayList<Chat_List_Model> chat_list_model) {
+        this.chat_list_models = chat_list_model;
+       // chat_list_models.clear();
+        //Log.e( "sendUpdate: ",chat_list_models.size()+"' " );
+
+        setPreviousRegistered();
     }
 
     public void makeList() {

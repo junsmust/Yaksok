@@ -66,6 +66,7 @@ public class Chatting_list extends ApplicationBase implements I_chat_list{
         presenter = new Chat_Presenter(this);
 
 
+        presenter.setPreviousRegistered();
 
 
         adapter = new Chat_list_adater(this,familyItemss,R.layout.chat_list_item);
@@ -206,7 +207,18 @@ public class Chatting_list extends ApplicationBase implements I_chat_list{
     @Override
     protected void onResume() {
         super.onResume();
-        presenter.setPreviousRegistered();
+       // this.chat_list_model.clear();
+        //presenter.setPreviousRegistered();
+        //Log.e("onResume: ",chat_list_model.size()+"   " );
+        presenter.sendUpdate(chat_list_model);
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        chat_list_model.clear();
+        familyItemss.clear();
+       // presenter.sendUpdate(chat_list_model);
     }
 
     @Override
@@ -219,12 +231,12 @@ public class Chatting_list extends ApplicationBase implements I_chat_list{
     protected void onDestroy() {
         super.onDestroy();
         this.chat_list_model.clear();
+        familyItemss.clear();
+        Log.e("onDestroy: ", chat_list_model.size()+" chat_list_model ");
 
         Log.e( "onDestroy","onDestroy@@@@" );
     }
-    public void setUpdate(){
-        presenter.setPreviousRegistered();
-    }
+
 
 }
 

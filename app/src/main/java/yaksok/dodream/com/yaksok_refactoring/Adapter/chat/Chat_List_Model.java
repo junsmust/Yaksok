@@ -12,6 +12,10 @@ public class Chat_List_Model {
    private String id,name,lastName,lastMessage,lastTime;
    //private ArrayList<String> name;
 
+
+    public Chat_List_Model() {
+    }
+
     public Chat_List_Model(String id, String name, String lastName, String lastMessage, String lastTime) {
         this.id = id;
         this.name = name;
