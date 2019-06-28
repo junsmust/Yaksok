@@ -316,6 +316,72 @@ public class SignUpModel implements IPresenterToSignUpModel {
             onSignUp(LoginModel.user_info_model);
     }
 
+    @Override
+    public void setSignUp(final User_Info_Model user_info_model) {
+
+        this.user_info_model = user_info_model;
+        retrofit = new Retrofit.Builder()
+                .baseUrl(userService.API_URL)
+                .addConverterFactory(ScalarsConverterFactory.create())
+                .addConverterFactory(GsonConverterFactory.create())
+                .build();
+        userService = retrofit.create(UserService.class);
+
+        Call<BodyVO> call = userService.postSignUp(user_info_model);
+
+        call.enqueue(new Callback<BodyVO>() {
+            @Override
+            public void onResponse(Call<BodyVO> call, Response<BodyVO> response) {
+                BodyVO bodyVO = response.body();
+                Log.d("server","server");
+                Log.d("server_before","sssssssss");
+
+
+                if(bodyVO.getStatus().equals("201")){
+
+                    presenterSignUp.onSignupResponse(true);
+                    // presenterSignUp.makeToastMessage("가입 성공 되었습니다.");
+
+                    /*User_Id.setUser_Id(user_info_model.getId());
+                    User_Id.setUser_Id(user_info_model.getId());
+                    User_Id.setE_mail(user_info_model.getNickname());
+                    User_Id.setE_mail(user_info_model.getEmail());
+                    User_Id.setPhone_No(user_info_model.getPhoneNumber());
+                    User_Id.setType(user_info_model.getUserType());*/
+                    performLoginOperation(user_info_model);
+                    User_Id.setUser_Id(user_info_model.getId());
+                    User_Id.setE_mail(user_info_model.getNickname());
+                    User_Id.setE_mail(user_info_model.getEmail());
+                    User_Id.setPhone_No(user_info_model.getPhoneNumber());
+                    User_Id.setType(user_info_model.getUserType());
+                    pushToken();
+
+                }
+                else if (bodyVO.getStatus().equals("400")) {
+                    presenterSignUp.makeToastMessage( "잘못된 요청");
+                }
+                else if (bodyVO.getStatus().equals("403")) {
+                    presenterSignUp.makeToastMessage( "아이디 중복");
+                    presenterSignUp.isValidedId(false);
+                }else if (bodyVO.getStatus().equals("409")) {
+                    presenterSignUp.makeToastMessage("입력된 핸드폰 계정 아이디 존재");
+                    presenterSignUp.isValidedPn(false);
+
+                } else if (bodyVO.getStatus().equals("500")) {
+                    presenterSignUp.makeToastMessage("서버 오류");
+                }
+
+
+            }
+
+            @Override
+            public void onFailure(Call<BodyVO> call, Throwable t) {
+                presenterSignUp.makeToastMessage("이상있음");
+                Log.d("ttttttttt",t.getMessage());
+            }
+        });
+    }
+
 
     @Override
     public void setPn(String pn) {
@@ -458,7 +524,7 @@ public class SignUpModel implements IPresenterToSignUpModel {
 
 
                     User_Id.setUser_Id(user_info_model.getId());
-                    User_Id.setE_mail(user_info_model.getNickname());
+                    User_Id.setNickname(user_info_model.getNickname());
                     User_Id.setE_mail(user_info_model.getEmail());
                     User_Id.setPhone_No(user_info_model.getPhoneNumber());
                     User_Id.setType(user_info_model.getUserType());

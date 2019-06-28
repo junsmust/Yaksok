@@ -36,6 +36,7 @@ import java.util.regex.Pattern;
 import yaksok.dodream.com.yaksok_refactoring.ApplicationBase;
 import yaksok.dodream.com.yaksok_refactoring.C_Dialog;
 import yaksok.dodream.com.yaksok_refactoring.model.user.User_Id;
+import yaksok.dodream.com.yaksok_refactoring.model.user.User_Info_Model;
 import yaksok.dodream.com.yaksok_refactoring.view.WetherChooseFamilyOrNot;
 import yaksok.dodream.com.yaksok_refactoring.view.addFamily.Register_Family;
 import yaksok.dodream.com.yaksok_refactoring.R;
@@ -51,10 +52,12 @@ public class Signup_activity extends ApplicationBase implements IPresenter_To_Si
     public  EditText sign_up_phone_number_edt_2,sign_up_phone_number_edt_3;
     private Spinner sign_up_year_spin,sign_up_month_spin,sign_up_day_spin,sign_up_phone_conpany_spin,sign_up_phone_first_spin,sign_up_email_spin;
     private Button sign_up_check_id_btn,sign_up_check_pw_btn,sign_up_check_authorization_num_btn,sign_up_compelte_btn,confirm_email_btn,btn;
-    String nowDate,month,day,email_final;
+    String nowDate,month,day,email_final,birth;
     FrameLayout fb;
     TextView tv_acton_name;
     C_Dialog log_D;
+
+    User_Info_Model user_info_model;
 
     private TextInputLayout sign_up_pw_edt,sign_up_re_pw_edt;
 
@@ -100,7 +103,9 @@ public class Signup_activity extends ApplicationBase implements IPresenter_To_Si
         ActionBar.LayoutParams layoutParams = new ActionBar.LayoutParams(ActionBar.LayoutParams.MATCH_PARENT,ActionBar.LayoutParams.MATCH_PARENT);
         actionBar.setCustomView(view,layoutParams);
 
-        email_final = null;
+        user_info_model = new User_Info_Model();
+
+        email_final = "";
         //INIT
 
         sign_up_yourself_address_email = (EditText)findViewById(R.id.sign_email_yourself_address_edt);
@@ -130,6 +135,7 @@ public class Signup_activity extends ApplicationBase implements IPresenter_To_Si
         sign_up_check_id_btn = (Button)findViewById(R.id.sign_check_id_btn);
 
         sign_up_check_id_btn.setElevation(0);
+        sign_up_check_authorization_num_btn.setElevation(0);
 
 
         sign_up_year_spin = (Spinner)findViewById(R.id.sign_year_spin);
@@ -256,7 +262,7 @@ public class Signup_activity extends ApplicationBase implements IPresenter_To_Si
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 day =  sign_up_day_spin.getItemAtPosition(position).toString();
                 presenterSignUp.setBirth(month,day);
-
+                birth = String.valueOf(month)+"-"+String.valueOf(day);
 
 
             }
@@ -432,7 +438,6 @@ public class Signup_activity extends ApplicationBase implements IPresenter_To_Si
            sign_up_phone_number_edt_2.setText("");
            sign_up_phone_number_edt_3.setText("");
         }else {
-
            avaliablePn = true;
        }
     }
@@ -449,7 +454,49 @@ public class Signup_activity extends ApplicationBase implements IPresenter_To_Si
                 String regex = "^[_a-zA-Z0-9-\\.]+@[\\.a-zA-Z0-9-]+\\.[a-zA-Z]+$";
                 Pattern p = Pattern.compile(regex);
                 Matcher m = p.matcher(email_final);
-                if(availableId && avaliablePn){
+                //아이디->비빌번호->이름->전화번호->이메일->생년월일->중복확인
+                if(sign_up_id_edt.getText().toString().equals("")){
+                    phoneResult("아이디를 입력하세요");
+                }
+                else if(sign_up_pw_edt.getEditText().getText().toString().equals("")){
+                    phoneResult("비밀번호를 입력하세요");
+                }
+                else if(sign_up_re_pw_edt.getEditText().getText().toString().equals("")){
+                    phoneResult("비밀번호확인을 입력하세요");
+                }
+                else if(!sign_up_pw_edt.getEditText().getText().toString().equals(sign_up_re_pw_edt.getEditText().getText().toString())){
+                    phoneResult("비밀번호가 같지 않습니다");
+                }
+                else if(sign_up_name_edt.getText().toString().equals("")) {
+                    phoneResult("이름을 입력하세요");
+                }
+                else if(sign_up_phone_number_edt.getText().toString().equals("")||
+                        sign_up_phone_number_edt_2.getText().toString().equals("")||
+                        sign_up_phone_number_edt_3.getText().toString().equals("")){
+                    phoneResult("전화번호를 확인하세요");
+                }
+                else if(sign_up_yourself_email.getText().toString().equals("")||sign_up_yourself_address_email.getText().toString().equals("")){
+                    phoneResult("이메일을 입력하세요");
+                }
+                else if(!availableId){
+                    phoneResult("아이디 중복을 확인하세요");
+                }
+                else if(!avaliablePn){
+                    phoneResult("전화번호 중복을 확인하세요");
+                }
+                else if(m.matches()){
+                    presenterSignUp.validateEmail(email_final);
+                    user_info_model.setId(sign_up_id_edt.getText().toString());
+                    user_info_model.setPw(sign_up_pw_edt.getEditText().getText().toString());
+                    user_info_model.setNickname(sign_up_name_edt.getText().toString());
+                    user_info_model.setPhoneNumber(sign_up_phone_number_edt.getText().toString() + sign_up_phone_number_edt_2.getText().toString() +
+                            sign_up_phone_number_edt_3.getText().toString());
+                    user_info_model.setEmail(email_final);
+                    user_info_model.setBirthday(birth);
+                    user_info_model.setUserType("G");
+                    presenterSignUp.setSignUp(user_info_model);
+                }
+               /* if(availableId && avaliablePn){
                     if (m.matches() && !sign_up_name_edt.getText().equals(""))  {
                         Log.e("onClick: ", "맞음"+email_final);
                         presenterSignUp.validateEmail(email_final);
@@ -469,10 +516,7 @@ public class Signup_activity extends ApplicationBase implements IPresenter_To_Si
                     }
                 }else{
                     makeToastMessage("아이디 및 전화번호\n중복확인 안됨");
-                }
-
-
-
+                }*/
 
                 break;
             case R.id.sign_up_pn_register_btn:

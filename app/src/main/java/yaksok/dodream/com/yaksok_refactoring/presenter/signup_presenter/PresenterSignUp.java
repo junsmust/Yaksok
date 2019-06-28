@@ -136,5 +136,10 @@ public class PresenterSignUp implements ITo_Presenter_SignUp {
         view.isValidedPn(isPn);
     }
 
+    @Override
+    public void setSignUp(User_Info_Model user_info_model) {
+        model.setSignUp(user_info_model);
+    }
+
 
 }

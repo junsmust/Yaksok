@@ -21,4 +21,6 @@ public interface IPresenterToSignUpModel {
     void setGeneralUserType();
     void setPn(String pn, String usertype);
 
+    void setSignUp(User_Info_Model user_info_model);
+
 }

@@ -28,6 +28,8 @@ public interface ITo_Presenter_SignUp {
     void isValidedEmail(boolean isEmail);
     void isValidedPn(boolean isPn);
 
+    void setSignUp(User_Info_Model user_info_model);
+
 
 
 }
