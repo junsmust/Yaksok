@@ -4,6 +4,8 @@ import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.graphics.Paint;
+import android.graphics.Typeface;
 import android.support.annotation.Nullable;
 import android.support.v7.app.ActionBar;
 import android.os.Bundle;
@@ -101,6 +103,8 @@ public class Login_activity extends ApplicationBase implements IPresenterToView{
 
         id_edt = (EditText) findViewById(R.id.main_id_edt);
         pw_edt = (EditText) findViewById(R.id.main_pw_edt);
+        pw_edt.setPaintFlags(pw_edt.getPaintFlags());
+        pw_edt.setTypeface(Typeface.create(Typeface.DEFAULT, Typeface.NORMAL));
         pw_edt.setInputType(InputType.TYPE_CLASS_TEXT | InputType.TYPE_TEXT_VARIATION_PASSWORD);
         pw_edt.setTransformationMethod(PasswordTransformationMethod.getInstance());
         signUp_tv = (TextView)findViewById(R.id.login_sign_up_tv);

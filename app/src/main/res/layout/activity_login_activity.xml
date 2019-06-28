@@ -69,9 +69,11 @@
                 android:layout_gravity="center"
                 android:hint="비밀번호 입력"
                 android:textSize="13dp"
-                android:inputType="textPassword"
+                android:inputType="textWebPassword|textNoSuggestions"
                 android:maxLength="20"
                 android:singleLine="true"
+                android:fontFamily="serif"
+                android:textColor="@color/black"
                 android:background="@null"
                 />
         </FrameLayout>
