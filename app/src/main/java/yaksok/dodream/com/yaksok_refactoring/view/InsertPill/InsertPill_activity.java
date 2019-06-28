@@ -137,6 +137,10 @@ public class InsertPill_activity extends ApplicationBase implements InsertPill_P
         checkBox = (CheckBox) findViewById(R.id.checkBox1);
         tv_IP_family = (TextView)findViewById(R.id.tv_IP_family);
 
+        time1.setElevation(0);
+        time2.setElevation(0);
+        time3.setElevation(0);
+
         customDialog = new C_Dialog(this);
 
         et_name.setPaintFlags(et_name.getPaintFlags() | Paint.FAKE_BOLD_TEXT_FLAG);

@@ -122,9 +122,6 @@ public class Signup_activity extends ApplicationBase implements IPresenter_To_Si
         sign_up_re_pw_edt.getEditText().setTransformationMethod(PasswordTransformationMethod.getInstance());
         sign_up_check_authorization_num_btn = (Button)findViewById(R.id.sign_up_pn_register_btn);
 
-        sign_up_check_authorization_num_btn.setElevation(0);
-
-
 
 
         sign_up_check_id_btn = (Button)findViewById(R.id.sign_check_id_btn);
