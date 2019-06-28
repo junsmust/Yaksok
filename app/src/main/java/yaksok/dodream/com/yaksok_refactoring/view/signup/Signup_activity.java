@@ -557,7 +557,8 @@ public class Signup_activity extends ApplicationBase implements IPresenter_To_Si
                 User_Id.setType("G");
                 User_Id.setNickname(sign_up_name_edt.getText().toString());
                 User_Id.setE_mail(email_final);
-                User_Id.setPhone_No(sign_up_phone_number_edt.getText().toString());
+                User_Id.setPhone_No(sign_up_phone_number_edt.getText().toString() + sign_up_phone_number_edt_2.getText().toString() + sign_up_phone_number_edt_3.getText().toString());
+                Log.d("SignPhone",sign_up_phone_number_edt.getText().toString());
                 startActivity(new Intent(getApplicationContext(), WetherChooseFamilyOrNot.class));
                 log_D.dismiss();
                 finish();
