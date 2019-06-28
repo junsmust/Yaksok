@@ -64,6 +64,8 @@ public class MainPage_activity extends ApplicationBase implements Main_Presenter
             @Override
             public void onClick(View v) {
                 startActivity(new Intent(getApplicationContext(), MyPill_activity.class));
+                overridePendingTransition(R.anim.pull_out_left, R.anim.pull_in_right);
+
             }
         });
 
@@ -71,6 +73,8 @@ public class MainPage_activity extends ApplicationBase implements Main_Presenter
             @Override
             public void onClick(View v) {
                 startActivity(new Intent(getApplicationContext(), New_Settings.class));
+                overridePendingTransition(R.anim.pull_out_left, R.anim.pull_in_right);
+
             }
         });
 
@@ -208,9 +212,13 @@ public class MainPage_activity extends ApplicationBase implements Main_Presenter
         switch (v.getId()){
             case R.id.bt_InsertFamily:
                 startActivity(new Intent(getApplicationContext(), Register_Family.class));
+                overridePendingTransition(R.anim.pull_out_left, R.anim.pull_in_right);
+
                 break;
             case R.id.bt_Chat:
                 startActivity(new Intent(getApplicationContext(), Chatting_list.class));
+                overridePendingTransition(R.anim.pull_out_left, R.anim.pull_in_right);
+
                 break;
         }
     }

@@ -324,7 +324,9 @@ public class ChatAdapter extends RecyclerView.Adapter<ChatAdapter.ViewHolder>
 
             viewHolder1.time.setText(albumList.get(position).getRegidate());
             viewHolder1.time.setLayoutParams(layoutParams3);
-            viewHolder1.user_lv.setText(albumList.get(position).getName().substring(0,1));
+            Log.e( "onBindViewHolder: ",albumList.get(position).getName()+"  "+"12313kkad" );
+           // viewHolder1.user_lv.setText(albumList.get(position).getName().substring(0,1));
+            viewHolder1.user_lv.setText(Chat_Room.last_name);
             viewHolder1.user_lv.setVisibility(View.VISIBLE);
            // viewHolder1.user_lv.
             //layoutParams5.setMargins(10,10,10,10);

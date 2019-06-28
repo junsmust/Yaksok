@@ -8,4 +8,5 @@ public interface I_chat_model {
 
     void getIdIndex(int index);
 
+    void getID(String id);
 }

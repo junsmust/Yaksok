@@ -121,21 +121,8 @@ public class Register_Family extends ApplicationBase implements IRegister_Presen
             @Override
             public void create(SwipeMenu menu) {
                 // create "open" item
-                SwipeMenuItem openItem = new SwipeMenuItem(
-                        getApplicationContext());
+
                 // set item background
-                openItem.setBackground(new ColorDrawable(Color.rgb(0x00, 0x66,
-                        0xff)));
-                // set item width
-                openItem.setWidth(120);
-                // set item title
-                openItem.setTitle("Open");
-                // set item title fontsize
-                openItem.setTitleSize(10);
-                // set item title font color
-                openItem.setTitleColor(Color.WHITE);
-                // add to menu
-                menu.addMenuItem(openItem);
 
                 // create "delete" item
                 SwipeMenuItem deleteItem = new SwipeMenuItem(
@@ -144,10 +131,12 @@ public class Register_Family extends ApplicationBase implements IRegister_Presen
                 deleteItem.setBackground(new ColorDrawable(Color.rgb(0xF9,
                         0x3F, 0x25)));
                 // set item width
-                deleteItem.setWidth(120);
+                deleteItem.setWidth(140);
+                // set item height
                 // set a icon
                  deleteItem.setIcon(R.drawable.delete6);
                 // add to menu
+
                 menu.addMenuItem(deleteItem);
             }
         };
@@ -164,14 +153,9 @@ public class Register_Family extends ApplicationBase implements IRegister_Presen
             public boolean onMenuItemClick(int position, SwipeMenu menu, int index) {
                 switch (index) {
                     case 0:
-                        makeToastMessage("눌림");
-                        break;
-                    case 1:
-                        int index1 = ((FamilyItem)adapter.getItem(position)).getName().indexOf('(');
-                        int index2 = ((FamilyItem)adapter.getItem(position)).getName().indexOf(')');
 
-                        String id = ((FamilyItem)adapter.getItem(position)).getName();
-                        makeDialog(id,position,index1,index2);
+                        String name = ((FamilyItem)adapter.getItem(position)).getName();
+                        deleteMakeDialog(name,position);
                         break;
                 }
                 // false : close the menu; true : not close the menu
@@ -205,7 +189,10 @@ public class Register_Family extends ApplicationBase implements IRegister_Presen
         frameLayout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+
+
                 finish();
+
             }
         });
 
@@ -219,6 +206,7 @@ public class Register_Family extends ApplicationBase implements IRegister_Presen
 //                Intent intent = new Intent(getApplicationContext(),MainPageActivity.class);
 //                startActivityForResult(intent,7777);
                 finish();
+               // overridePendingTransition( R.anim.pull_in_right,R.anim.pull_out_left);
             }
         });
         textView.setText("나의 가족 등록");
@@ -270,14 +258,6 @@ public class Register_Family extends ApplicationBase implements IRegister_Presen
 
 
 
-        String user_id = "";
-
-        Log.d("@@@@!!!",id);
-        int index1 = name.indexOf('(');
-        int index2 = name.indexOf(')');
-
-        final String id2 = name.substring(index1+1,index2);
-
         customDialog.message_tv.setText(name+"님을 "+"\n"+"가족으로 등록 하시겠습니까?");
 
         customDialog.show();
@@ -287,7 +267,7 @@ public class Register_Family extends ApplicationBase implements IRegister_Presen
             @Override
             public void onClick(View v) {
 
-                presenter.setYesRegisterFam(true,name);
+                presenter.setYesRegisterFam(true,id,name);
                 customDialog.dismiss();
 
             }
@@ -307,23 +287,24 @@ public class Register_Family extends ApplicationBase implements IRegister_Presen
 
     //삭제
     @Override
-    public void makeDialog(final String name, final int index,int index1,int index2) {
+    public void deleteMakeDialog(final String name, final int index) {
         /*dialog.setTitle("가족삭제");
         dialog.setMessage(id+"님을 삭제 하시겠습니까?");
         dialog.setCancelable(false);*/
 
 
-        final String id = name.substring(index1+1,index2);
+
         customDialog.title_tv.setText("가족삭제");
-        customDialog.message_tv.setText(name+"님을"+"\n"+"삭제 하시겠습니까?\"");
+        customDialog.message_tv.setText(name+"님을"+"\n"+"삭제 하시겠습니까?\n");
 
         customDialog.show();
 
         customDialog.ok_btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                presenter.deleteFam(true,id,index);
-                customDialog.dismiss();
+               presenter.deleteFam(true,name,index);
+                Log.e("delete: ", "delete : "+index);
+               customDialog.dismiss();
             }
         });
 
@@ -353,6 +334,7 @@ public class Register_Family extends ApplicationBase implements IRegister_Presen
 
             for(int i=0;i<familyItemss.size();i++){
                // Log.d("ffffff1"," "+familyItemss.size());
+
 
                 adapter.addItem(familyItemss.get(i).getFirst_name(),familyItemss.get(i).getName(),familyItemss.get(i).getUser_pn());
                 adapter.notifyDataSetChanged();
@@ -408,6 +390,13 @@ public class Register_Family extends ApplicationBase implements IRegister_Presen
         super.onResume();
         adapter.notifyDataSetChanged();
         Log.d("ddd111","실행됨");
+
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        //startActivity(new Intent(getApplicationContext(),MainPage_activity.class));
 
     }
 }

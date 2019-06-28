@@ -80,7 +80,7 @@ public class CalculateTime {
                 return lastTime;
 
             }if(!min.equals(min2)){
-                min_f = Integer.parseInt(min)-Integer.parseInt(min2);
+                min_f = Math.abs(Integer.parseInt(min)-Integer.parseInt(min2));
                 System.out.println("min"+min_f);
                 lastTime = min_f+"분 전";
                 return lastTime;

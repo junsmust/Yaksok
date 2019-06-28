@@ -34,10 +34,14 @@ import retrofit2.Response;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 import retrofit2.converter.scalars.ScalarsConverterFactory;
+import yaksok.dodream.com.yaksok_refactoring.Adapter.chat.CalculateTime;
 import yaksok.dodream.com.yaksok_refactoring.Adapter.chat.ChatAdapter;
+import yaksok.dodream.com.yaksok_refactoring.Adapter.chat.ChatItem;
+import yaksok.dodream.com.yaksok_refactoring.Adapter.chat.Chat_List_Model;
 import yaksok.dodream.com.yaksok_refactoring.Adapter.family.FamilyItem;
 import yaksok.dodream.com.yaksok_refactoring.ApplicationBase;
 import yaksok.dodream.com.yaksok_refactoring.R;
+import yaksok.dodream.com.yaksok_refactoring.model.chat.Chat_Model;
 import yaksok.dodream.com.yaksok_refactoring.model.user.User_Id;
 import yaksok.dodream.com.yaksok_refactoring.presenter.chat.Chat_Presenter;
 import yaksok.dodream.com.yaksok_refactoring.vo.MessageBodyVO;
@@ -45,7 +49,7 @@ import yaksok.dodream.com.yaksok_refactoring.vo.MessageResultBodyVO;
 import yaksok.dodream.com.yaksok_refactoring.vo.MessageService;
 import yaksok.dodream.com.yaksok_refactoring.vo.SendMessageVO;
 
-public class Chat_Room extends ApplicationBase{
+public class Chat_Room extends ApplicationBase implements I_chat_list{
 
     private Intent intent;
     public static String user2_name,user2_id,my_id;
@@ -53,8 +57,6 @@ public class Chat_Room extends ApplicationBase{
     Button bt_send;
     EditText ed_context;
     public static ChatAdapter chatAdapter;
-
-
 
     public static boolean iInTheChattingRoom;
     public static boolean msgStatus=true;
@@ -73,6 +75,8 @@ public class Chat_Room extends ApplicationBase{
     public  SharedPreferences.Editor time_editor;
 
     SendMessageVO sendMessageVO;
+
+    public static String last_name ;
 
 
 
@@ -96,11 +100,14 @@ public class Chat_Room extends ApplicationBase{
 
 
 
+
         lastime_sharepfreference = getSharedPreferences(user2_id,MODE_PRIVATE);
         time_editor = lastime_sharepfreference.edit();
 
         Log.e( "받을 사람 아이디 ",user2_id );
         connectedName = intent.getStringExtra("user_name");
+
+        last_name = connectedName.substring(0,1);
 
 
 
@@ -197,6 +204,7 @@ public class Chat_Room extends ApplicationBase{
                             chat_recycler_list.setLayoutManager(linearLayoutManager);
                             ed_context.setText("");
                             linearLayoutManager.setStackFromEnd(true);
+                            //Chatting_list.presenter.setPreviousRegistered();
 
 
                         }
@@ -218,6 +226,10 @@ public class Chat_Room extends ApplicationBase{
 
 
     }
+
+
+
+
 
 
     private void initLayout() {
@@ -318,6 +330,8 @@ public class Chat_Room extends ApplicationBase{
     protected void onPause() {
         super.onPause();
         iInTheChattingRoom = false;
+        finish();
+        //Chatting_list.presenter.setPreviousRegistered();
     }
 
     @Override
@@ -330,6 +344,11 @@ public class Chat_Room extends ApplicationBase{
     protected void onDestroy() {
         super.onDestroy();
         iInTheChattingRoom = false;
+        finish();
+
+
+        Log.e( "onDestroy: ","ccccc1" );
+
     }
     @Override
     protected void onNewIntent(Intent intent) {
@@ -352,55 +371,6 @@ public class Chat_Room extends ApplicationBase{
 
 
 
-    /*    public void whenGenNoticification(String u_id,String y_id){
-            Call<MessageBodyVO> call = messageService.getTheChatting(u_id,y_id);
-            call.enqueue(new Callback<MessageBodyVO>() {
-                @Override
-                public void onResponse(Call<MessageBodyVO> call, Response<MessageBodyVO> response) {
-                    MessageBodyVO bodyVO = response.body();
-                    //200 : OK
-                    //204 : 값없음(null반환)
-                    //500 : Server Error
-                    assert bodyVO != null;
-                    // Log.d("@@@@@@@@@@@@@@@@@@",bodyVO.getResult().get(0).getContent()+"id"+bodyVO.getResult().get(0).getGivingUser()+"id2"+bodyVO.getResult().get(0).getReceivingUser());
-                    //Toast.makeText(getApplicationContext(),"body"+bodyVO.getStatus()+"result"+bodyVO.getResult().size(),Toast.LENGTH_SHORT).show();
-
-                    assert bodyVO != null;
-                    if(bodyVO.getStatus().equals("200")){
-                        for(int i = 0; i < bodyVO.getResult().size(); i++){
-                            Log.d("실행","실행 됨");
-
-                            SendMessageVO sendMessageVO = new SendMessageVO();
-                            sendMessageVO.setGivingUser(bodyVO.getResult().get(i).getGivingUser());
-                            sendMessageVO.setContent(bodyVO.getResult().get(i).getContent());
-                            sendMessageVO.setReceivingUser(bodyVO.getResult().get(i).getReceivingUser());
-                            sendMessageVO.setRegidate(bodyVO.getResult().get(i).getRegiDate().substring(11,16));
-
-                            //Collections.reverse(albumList);//역순으로
-                            albumList.add(sendMessageVO);
-                        }
-                        Collections.reverse(albumList);
-                        linearLayoutManager.setStackFromEnd(true);
-                        mRecyclerView.setAdapter(new MyRecyclerAdapter(albumList,R.layout.recycleritem));
-                        mRecyclerView.setLayoutManager(linearLayoutManager);
-                       // mRecyclerView.setItemAnimator(new DefaultItemAnimator());
-                    }else if(bodyVO.getStatus().equals("204")){
-                        user_contextEdt.setFocusable(true);
-                    }
-                    else if(bodyVO.getStatus().equals("500")){
-                        Toast.makeText(getApplicationContext(),"서버 오류입니다.",Toast.LENGTH_SHORT).show();
-                    }
-
-                }
-
-                @Override
-                public void onFailure(Call<MessageBodyVO> call, Throwable t) {
-
-                }
-            });
-
-
-        }*/
     @Override
     protected void onStart() {
         super.onStart();
@@ -439,7 +409,6 @@ public class Chat_Room extends ApplicationBase{
         });
         textView.setText(connectedName);
         textView.setGravity(Gravity.CENTER);
-//        textView.setGravity(Gravity.CENTER);
         actionBar.setTitle(textView.getText().toString());
 
 
@@ -448,167 +417,45 @@ public class Chat_Room extends ApplicationBase{
         actionBar.setCustomView(view,layoutParams);
     }
 
-
-
-}
-/*
-
-        iInTheChattingRoom = true;
-        intent = new Intent(getIntent());
-
-        my_id = User_Id.getUser_Id();
-
-        Log.e("onCreate: ",my_id+"!!!!" );
-        user2_name = intent.getStringExtra("user_name");
-        user2_id = Chatting_list.user2_id;
-
-
-
-
-        presenter = new Chat_Presenter(this);
-        presenter2 = new Chat_Presenter(this,"s");
-
-
-        presenter.getPreviouseConversation(my_id,user2_id);
-
-
-
-        chat_recycler_list = (RecyclerView)findViewById(R.id.chat_recycler_list);
-        bt_send = (Button)findViewById(R.id.send_btn);
-        ed_context = (EditText)findViewById(R.id.user_context_edt);
-
-
-        linearLayoutManager = new LinearLayoutManager(this);
-
-        chatAdapter = new ChatAdapter(albumList,R.layout.chat_item);
-
-
-
-
-
-        bt_send.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if(!ed_context.getText().toString().equals("")){
-                    presenter.sendMessage(user2_id,ed_context.getText().toString());
-                    Log.e("onClick:ff ",albumList.size()+"");
-                }
-            }
-        });
-
-
-
-    }
-    @Override
-    protected void onStart() {
-        super.onStart();
-
-        ActionBar actionBar = getSupportActionBar();
-
-        actionBar.setDisplayShowCustomEnabled(true);
-        actionBar.setDisplayShowHomeEnabled(false);
-        actionBar.setDisplayShowTitleEnabled(false);
-
-        View view = LayoutInflater.from(this).inflate(R.layout.chattingactionbar,null);
-        ImageView imageView = view.findViewById(R.id.back_layout_imv);
-        TextView textView = view.findViewById(R.id.title_txt);
-
-        FrameLayout frameLayout = view.findViewById(R.id.frame_layout);
-
-        frameLayout.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                finish();
-            }
-        });
-
-
-        Intent resultIntent = new Intent();
-        setResult(4000,resultIntent);
-
-        imageView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-//                Intent intent = new Intent(getApplicationContext(),MainPageActivity.class);
-//                startActivityForResult(intent,7777);
-                finish();
-            }
-        });
-        textView.setText(user2_name);
-        textView.setGravity(Gravity.CENTER);
-        actionBar.setTitle(textView.getText().toString());
-
-
-
-        ActionBar.LayoutParams layoutParams = new ActionBar.LayoutParams(ActionBar.LayoutParams.MATCH_PARENT,ActionBar.LayoutParams.MATCH_PARENT,Gravity.CENTER_VERTICAL|Gravity.CENTER_HORIZONTAL);
-        actionBar.setCustomView(view,layoutParams);
-    }
 
     @Override
     public void makeToastMessage(String message) {
-        Toast.makeText(getApplicationContext(),message,Toast.LENGTH_LONG).show();
+
     }
 
     @Override
     public void onResponse(boolean response) {
 
-        if(response){
-                //albumList.add(sendMessageVO);
-                chatAdapter.addItem(sendMessageVO);
-                chatAdapter.notifyDataSetChanged();
-                linearLayoutManager.setStackFromEnd(true);
-                chat_recycler_list.setLayoutManager(linearLayoutManager);
-                chat_recycler_list.setAdapter(chatAdapter);
-
-
-            Log.e( "11111onResponse: ", "실행 됨");
-
-            //mRecyclerView.setItemAnimator(new DefaultItemAnimator());
-            ed_context.setText("");
-            linearLayoutManager.setStackFromEnd(true);
-
-        }
     }
 
     @Override
-    public void getArrayList(ArrayList<FamilyItem> familyItems) {
+    public void getArrayList(ArrayList<ChatItem> familyItems) {
 
     }
 
     @Override
     public void sendChatArrayList(ArrayList<SendMessageVO> albumList) {
-        this.albumList = albumList;
 
-        Log.e( "sendChatArrayList: ",albumList.size()+"");
-        for(int i = 0; i < this.albumList.size(); i++){
-            SendMessageVO sendMessageVO = new SendMessageVO(albumList.get(i).getGivingUser(),
-                    albumList.get(i).getContent(),
-                    albumList.get(i).getReceivingUser(),
-                    albumList.get(i).getRegidate());
-                     chatAdapter.addItem(sendMessageVO);
-
-        }
-
-
-
-
-        chat_recycler_list.setAdapter(chatAdapter);
-        linearLayoutManager.setStackFromEnd(true);
-        chat_recycler_list.setLayoutManager(linearLayoutManager);
-        }
-
+    }
 
     @Override
     public void getSendVO(SendMessageVO sendVO) {
-        sendMessageVO = sendVO;
+
     }
 
     @Override
-    protected void onResume() {
-        super.onResume();
+    public void getId(String s) {
 
+    }
 
+    @Override
+    public void getArrayIds(ArrayList<String> ids) {
+
+    }
+
+    @Override
+    public void sendChatList2(ArrayList<Chat_List_Model> chat_list_model) {
 
     }
 }
-*/
+

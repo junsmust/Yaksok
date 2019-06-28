@@ -93,8 +93,10 @@ public class Chat_Presenter implements I_chat_presenter {
         view.getArrayIds(ids);
     }
 
-
-
+    @Override
+    public void sendIdIndex(String id) {
+        model.getID(id);
+    }
 
 
 }

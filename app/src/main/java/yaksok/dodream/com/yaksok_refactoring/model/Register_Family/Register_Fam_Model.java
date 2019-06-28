@@ -37,6 +37,9 @@ public class Register_Fam_Model implements IRegister_Presenter_To_FamModel {
     public Retrofit retrofit;
     public DeleteService deleteService;
     private String user_last_name,user_name,user_pn;
+    private ArrayList<String> id_list = new ArrayList<>();
+    private ArrayList<String> regi_list = new ArrayList<>();
+    private int index;
 
 
     public Register_Fam_Model(Register_Fam_Presenter presenter) {
@@ -69,7 +72,7 @@ public class Register_Fam_Model implements IRegister_Presenter_To_FamModel {
                         second_user_id = findFamilyVO.getResult().getUserId();
 
                         Log.e(TAG, "oncccccccc "+findFamilyVO.getResult().getNickName()+"("+findFamilyVO.getResult().getUserId()+")" +second_user_id);
-                            presenter.makeDialog(findFamilyVO.getResult().getNickName()+"("+findFamilyVO.getResult().getUserId()+")",second_user_id);
+                            presenter.makeDialog(findFamilyVO.getResult().getNickName(),second_user_id);
                             familyItems.add(new FamilyItem(findFamilyVO.getResult().getNickName()+"("+findFamilyVO.getResult().getUserId()+")",findFamilyVO.getResult().getNickName().substring(0,1),findFamilyVO.getResult().getPhoneNumber()));
                             user_last_name = findFamilyVO.getResult().getNickName().substring(0,1);
                             user_name = findFamilyVO.getResult().getNickName()+"("+findFamilyVO.getResult().getUserId()+")";
@@ -95,16 +98,14 @@ public class Register_Fam_Model implements IRegister_Presenter_To_FamModel {
             });
     }
     }
-    private void onRegisterFamily(final String finalUser2_id){
+    private void onRegisterFamily(final String finalUser2_id, final String name){
 
         Log.d("@@@@@@@@",finalUser2_id);
-        int index1 = finalUser2_id.indexOf('(');
-        int index2 = finalUser2_id.indexOf(')');
 
-        final String id2 = finalUser2_id.substring(index1+1,index2);
+
                 final FamilyVO familyVO = new FamilyVO();
                 familyVO.setUser_1(User_Id.getUser_Id());
-                familyVO.setUser_2(id2);
+                familyVO.setUser_2(finalUser2_id);
 
                 final FamilyItem familyItem = new FamilyItem();
                 //code
@@ -122,8 +123,10 @@ public class Register_Fam_Model implements IRegister_Presenter_To_FamModel {
                         switch (bodyVO.getStatus()) {
                             case "201":
                                 familyItem.setFirst_name(user_last_name);
-                                familyItem.setName(finalUser2_id);
+                                familyItem.setName(name);
                                 familyItem.setUser_pn(user_pn);
+                                id_list.add(finalUser2_id);
+                                //id_list.add()
                                 Log.d("setName",familyItem.getName());
                                 presenter.onResponse2(true,familyItem);
                                 presenter.makeToastMessage( "가족 추가가 되었습니다.");
@@ -149,9 +152,9 @@ public class Register_Fam_Model implements IRegister_Presenter_To_FamModel {
 
 
     @Override
-    public void setYesRegisterFam(boolean isOkay,String id) {
+    public void setYesRegisterFam(boolean isOkay,String id,String name) {
         isOkayForFamily = isOkay;
-        onRegisterFamily(id);
+        onRegisterFamily(id,name);
     }
 
     @Override
@@ -176,8 +179,8 @@ public class Register_Fam_Model implements IRegister_Presenter_To_FamModel {
                     for(int i = 0; i < findFamilyVO.getResult().size();i++){
                         FamilyItem item = new FamilyItem(findFamilyVO.getResult().get(i).getNickName(),findFamilyVO.getResult().get(i).getNickName().substring(0,1),
                                 findFamilyVO.getResult().get(i).getPhoneNumber().substring(0,3)+"-"+findFamilyVO.getResult().get(i).getPhoneNumber().substring(3,7)+"-"+findFamilyVO.getResult().get(i).getPhoneNumber().substring(7));
+                        id_list.add(findFamilyVO.getResult().get(i).getUserId());
                         familyItems.add(item);
-
                     }
                     Log.e(TAG, "onResponse: "+ familyItems.size() );
                     presenter.sendArrayList(familyItems);
@@ -212,7 +215,7 @@ public class Register_Fam_Model implements IRegister_Presenter_To_FamModel {
 
         FamilyDelVO familyDelVO = new FamilyDelVO();
         familyDelVO.setUser_1(User_Id.getUser_Id());
-        familyDelVO.setUser_2(id);
+        familyDelVO.setUser_2(id_list.get(position));
 
         Log.d("dddddd5",familyDelVO.getUser_1()+" "+familyDelVO.getUser_2());
 
@@ -231,6 +234,8 @@ public class Register_Fam_Model implements IRegister_Presenter_To_FamModel {
 
                     Log.d("aaaaa1",""+position+"ff"+familyItems.get(position).getName());
                     familyItems.remove(position);
+                    Log.e(TAG, "delete "+id_list.size());
+                    id_list.remove(position);
                     presenter.sendArrayList(familyItems);
                     Log.d("aaaaa",""+familyItems.size());
                    presenter.onResponse3(true);
@@ -270,6 +275,8 @@ public class Register_Fam_Model implements IRegister_Presenter_To_FamModel {
     public void getArrayList(ArrayList<FamilyItem> familyItems) {
         this.familyItems = familyItems;
     }
+
+
 
 
 }
