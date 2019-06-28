@@ -35,6 +35,7 @@ import org.json.JSONObject;
 
 import retrofit2.Retrofit;
 import yaksok.dodream.com.yaksok_refactoring.ApplicationBase;
+import yaksok.dodream.com.yaksok_refactoring.C_Dialog;
 import yaksok.dodream.com.yaksok_refactoring.view.Find_Id.ID_find_layout;
 import yaksok.dodream.com.yaksok_refactoring.view.find_pw.FindUserPassword;
 import yaksok.dodream.com.yaksok_refactoring.view.signup.GetPn;
@@ -63,6 +64,8 @@ public class Login_activity extends ApplicationBase implements IPresenterToView{
 
     FrameLayout kakao_frame,naver_frame;
     private ImageView fake_kakao_iv,fake_naver_iv;
+
+    C_Dialog delete_D;
 
 
     //kakao
@@ -100,6 +103,7 @@ public class Login_activity extends ApplicationBase implements IPresenterToView{
         actionBar.hide();
 
 
+        delete_D = new C_Dialog(this);
 
         id_edt = (EditText) findViewById(R.id.main_id_edt);
         pw_edt = (EditText) findViewById(R.id.main_pw_edt);
@@ -377,7 +381,20 @@ public class Login_activity extends ApplicationBase implements IPresenterToView{
 
     @Override
     public void onMakeToastMessage(String message) {
-        Toast.makeText(getApplicationContext(), message, Toast.LENGTH_LONG).show();
+
+        delete_D.text_tv.setText(message);
+
+        delete_D.show();
+
+
+        delete_D.ok_btn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                delete_D.dismiss();
+            }
+        });
+
     }
 
 

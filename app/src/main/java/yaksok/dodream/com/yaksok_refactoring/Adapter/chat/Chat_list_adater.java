@@ -68,6 +68,7 @@ public class Chat_list_adater extends BaseAdapter {
 
 
 
+
             return convertView;
         }
 
@@ -97,4 +98,7 @@ public class Chat_list_adater extends BaseAdapter {
         public void setNameToId(String id){
             this.id = id;
         }
+
+
+
     }

@@ -26,4 +26,6 @@ public interface I_chat_presenter {
     void getArrayId(ArrayList<String> ids);
 
     void sendIdIndex(String id);
+
+    void sendUpdate(ArrayList<Chat_List_Model> chat_list_model);
 }
