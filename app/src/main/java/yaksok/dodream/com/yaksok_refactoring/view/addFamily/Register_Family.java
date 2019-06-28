@@ -17,6 +17,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -59,6 +60,7 @@ public class Register_Family extends ApplicationBase implements IRegister_Presen
     Register_Fam_Presenter presenter;
     CustomDialog customDialog;
     int width,height;
+    public static LinearLayout none_register;
 
 
     @Override
@@ -68,6 +70,8 @@ public class Register_Family extends ApplicationBase implements IRegister_Presen
         intent = new Intent(getIntent());
                 //itForSignUp = intent.getStringExtra("itForSignUp");
                 //Log.d("aaaaaaaaaaaaa",itForSignUp);
+
+        none_register = (LinearLayout)findViewById(R.id.linear_none_registered);
 
 
 
@@ -237,7 +241,10 @@ public class Register_Family extends ApplicationBase implements IRegister_Presen
 
     @Override
     public void makeToastMessage(String message) {
-        Toast.makeText(getApplicationContext(),message,Toast.LENGTH_LONG).show();
+        if(message.equals("상대의 계정이 존재하지 않습니다.")){
+            none_register.setVisibility(View.VISIBLE);
+        }
+       // Toast.makeText(getApplicationContext(),message,Toast.LENGTH_LONG).show();
     }
 
     @Override

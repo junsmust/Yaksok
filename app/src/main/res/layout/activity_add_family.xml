@@ -61,18 +61,35 @@
             android:text="등록된 가족 목록"
             android:textColor="#8D8E8F" />
 
+<FrameLayout
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+    <com.baoyz.swipemenulistview.SwipeMenuListView
+        android:id="@+id/family_list"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:elevation="0dp"
+        android:background="#ffffff"
+        android:dividerHeight="-1dp"
+        android:divider="#ffffff"
+        android:choiceMode="singleChoice">
 
-        <com.baoyz.swipemenulistview.SwipeMenuListView
-            android:id="@+id/family_list"
+    </com.baoyz.swipemenulistview.SwipeMenuListView>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:visibility="gone"
+        android:id="@+id/linear_none_registered">
+
+        <TextView
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:elevation="0dp"
-            android:background="#ffffff"
-            android:dividerHeight="-1dp"
-            android:divider="#ffffff"
-            android:choiceMode="singleChoice">
+            android:gravity="center"
+            android:text="매칭된 가족이 없습니다. " />
+    </LinearLayout>
+</FrameLayout>
 
-        </com.baoyz.swipemenulistview.SwipeMenuListView>
 
 
     </LinearLayout>

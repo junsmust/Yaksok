@@ -1,6 +1,7 @@
 package yaksok.dodream.com.yaksok_refactoring.model.Register_Family;
 
 import android.util.Log;
+import android.view.View;
 
 import java.util.ArrayList;
 
@@ -14,6 +15,7 @@ import yaksok.dodream.com.yaksok_refactoring.Adapter.family.FamilyFindAdapter;
 import yaksok.dodream.com.yaksok_refactoring.Adapter.family.FamilyItem;
 import yaksok.dodream.com.yaksok_refactoring.model.user.User_Id;
 import yaksok.dodream.com.yaksok_refactoring.presenter.family_register.Register_Fam_Presenter;
+import yaksok.dodream.com.yaksok_refactoring.view.addFamily.Register_Family;
 import yaksok.dodream.com.yaksok_refactoring.vo.BodyVO;
 import yaksok.dodream.com.yaksok_refactoring.vo.Connected_Family;
 import yaksok.dodream.com.yaksok_refactoring.vo.DeleteService;
@@ -122,6 +124,7 @@ public class Register_Fam_Model implements IRegister_Presenter_To_FamModel {
 
                         switch (bodyVO.getStatus()) {
                             case "201":
+                                Register_Family.none_register.setVisibility(View.GONE);
                                 familyItem.setFirst_name(user_last_name);
                                 familyItem.setName(name);
                                 familyItem.setUser_pn(user_pn);
@@ -175,10 +178,11 @@ public class Register_Fam_Model implements IRegister_Presenter_To_FamModel {
                 Connected_Family findFamilyVO = response.body();
 
                 if (findFamilyVO.getStatus().equals("200")) {
-
+                    Register_Family.none_register.setVisibility(View.GONE);
                     for(int i = 0; i < findFamilyVO.getResult().size();i++){
                         FamilyItem item = new FamilyItem(findFamilyVO.getResult().get(i).getNickName(),findFamilyVO.getResult().get(i).getNickName().substring(0,1),
                                 findFamilyVO.getResult().get(i).getPhoneNumber().substring(0,3)+"-"+findFamilyVO.getResult().get(i).getPhoneNumber().substring(3,7)+"-"+findFamilyVO.getResult().get(i).getPhoneNumber().substring(7));
+
                         id_list.add(findFamilyVO.getResult().get(i).getUserId());
                         familyItems.add(item);
                     }
@@ -240,6 +244,10 @@ public class Register_Fam_Model implements IRegister_Presenter_To_FamModel {
                     Log.d("aaaaa",""+familyItems.size());
                    presenter.onResponse3(true);
                     Log.d("aaaaa3",""+familyItems.size());
+
+                    if (id_list.size() == 0){
+                        Register_Family.none_register.setVisibility(View.VISIBLE);
+                    }
 //                    adapter.notifyDataSetInvalidated();
 
 
