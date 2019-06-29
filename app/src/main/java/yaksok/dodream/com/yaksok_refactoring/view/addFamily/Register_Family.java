@@ -32,6 +32,7 @@ import retrofit2.Retrofit;
 import yaksok.dodream.com.yaksok_refactoring.Adapter.family.FamilyFindAdapter;
 import yaksok.dodream.com.yaksok_refactoring.Adapter.family.FamilyItem;
 import yaksok.dodream.com.yaksok_refactoring.ApplicationBase;
+import yaksok.dodream.com.yaksok_refactoring.C_Dialog;
 import yaksok.dodream.com.yaksok_refactoring.CustomDialog;
 import yaksok.dodream.com.yaksok_refactoring.R;
 import yaksok.dodream.com.yaksok_refactoring.presenter.family_register.Register_Fam_Presenter;
@@ -61,6 +62,7 @@ public class Register_Family extends ApplicationBase implements IRegister_Presen
     CustomDialog customDialog;
     int width,height;
     public static LinearLayout none_register;
+    C_Dialog c_dialog;
 
 
     @Override
@@ -82,6 +84,8 @@ public class Register_Family extends ApplicationBase implements IRegister_Presen
 
 
         customDialog = new CustomDialog(this);
+        c_dialog = new C_Dialog(this);
+
         WindowManager.LayoutParams wm = customDialog.getWindow().getAttributes();  //다이얼로그의 높이 너비 설정하기위해
        /* wm.copyFrom(customDialog.getWindow().getAttributes());  //여기서 설정한값을 그대로 다이얼로그에 넣겠다는의미
 
@@ -334,6 +338,24 @@ public class Register_Family extends ApplicationBase implements IRegister_Presen
     }
 
     @Override
+    public void makeErrorDialog(String s) {
+
+        c_dialog.text_tv.setText(s);
+
+        c_dialog.show();
+
+
+        c_dialog.ok_btn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                c_dialog.dismiss();
+                fmaily_number_edt.setText("");
+                //finish();
+            }
+        });
+    }
+
+    @Override
     public void onResponse(boolean response) {
         if(response){
 
@@ -406,6 +428,8 @@ public class Register_Family extends ApplicationBase implements IRegister_Presen
         //startActivity(new Intent(getApplicationContext(),MainPage_activity.class));
 
     }
+
+
 }
 
 

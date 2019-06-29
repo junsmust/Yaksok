@@ -37,9 +37,9 @@ public class Find_pw_model implements I_Find_pw_model {
             public void onResponse(Call<BodyVO> call, Response<BodyVO> response) {
                 BodyVO bodyVO = response.body();
                 if(bodyVO.getStatus().equals("200")){
-                    pw_presenter.onResponse(true,"임시 비밀번호가 전송되었습니다.");
+                    pw_presenter.onResponse(true,"임시 비밀번호가 "+"\n"+"전송되었습니다.");
                 }else if(bodyVO.getStatus().equals("403")){
-                    pw_presenter.onResponse(false,"가입되지 않은 회원입니다.");
+                    pw_presenter.onResponse(false,"가입되지 않은 회원입ㅇ니다.");
                 }else{
                    pw_presenter.onResponse(false,"서버에러 입니다.");
                 }

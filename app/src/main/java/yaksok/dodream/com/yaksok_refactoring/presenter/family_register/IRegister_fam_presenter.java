@@ -20,4 +20,5 @@ public interface IRegister_fam_presenter {
     void sendAdapter(FamilyFindAdapter adapter);
     void sendToViewAdapter(FamilyFindAdapter adapter);
 
+    void makeErrorDialog(String s);
 }

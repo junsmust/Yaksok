@@ -1,5 +1,6 @@
 package yaksok.dodream.com.yaksok_refactoring.view.find_pw;
 
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
@@ -41,7 +42,7 @@ public class FindUserPassword extends ApplicationBase implements I_find_pw,View.
     FrameLayout fb;
     UserService userService;
     C_Dialog dialog;
-
+    ProgressDialog progressDialog;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -65,7 +66,7 @@ public class FindUserPassword extends ApplicationBase implements I_find_pw,View.
         tv_acton_name = view.findViewById(R.id.back_layout_name_delvel);
         fb = view.findViewById(R.id.fb_back_layout_back_devel);
 
-        tv_acton_name.setText("비밀번호 재설정");
+        tv_acton_name.setText("비밀번호 찾기");
 
 
         fb.setOnClickListener(new View.OnClickListener() {
@@ -91,6 +92,10 @@ public class FindUserPassword extends ApplicationBase implements I_find_pw,View.
 
 
         dialog = new C_Dialog(this);
+        progressDialog = new ProgressDialog(this);
+        progressDialog.setMessage("임시 비밀번호 전송중입니다.");
+        progressDialog.setCancelable(true);
+        progressDialog.setProgressStyle(android.R.style.Widget_ProgressBar_Horizontal);
 
         WindowManager.LayoutParams wm = dialog.getWindow().getAttributes();  //다이얼로그의 높이 너비 설정하기위해
        wm.copyFrom(dialog.getWindow().getAttributes());  //여기서 설정한값을 그대로 다이얼로그에 넣겠다는의미
@@ -136,12 +141,13 @@ public class FindUserPassword extends ApplicationBase implements I_find_pw,View.
 
     @Override
     public void onResponse(boolean onSuccess, String message) {
-
+        progressDialog.dismiss();
         if (onSuccess) {
             D_ok(message);
         } else {
             D_no(message);
         }
+
     }
 
     private void D_ok(String message) {
@@ -214,5 +220,6 @@ public class FindUserPassword extends ApplicationBase implements I_find_pw,View.
                     break;
 
         }
+        progressDialog.show();
     }
 }

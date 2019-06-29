@@ -17,4 +17,5 @@ public interface IRegister_Presenter_Family_To_View {
     void getFromModelAdapter(FamilyFindAdapter adapter);
 
 
+    void makeErrorDialog(String s);
 }

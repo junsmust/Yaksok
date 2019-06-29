@@ -93,7 +93,10 @@ public class Register_Fam_Presenter implements IRegister_fam_presenter {
         view.getFromModelAdapter(adapter);
     }
 
-
+    @Override
+    public void makeErrorDialog(String s) {
+        view.makeErrorDialog(s);
+    }
 
 
 }

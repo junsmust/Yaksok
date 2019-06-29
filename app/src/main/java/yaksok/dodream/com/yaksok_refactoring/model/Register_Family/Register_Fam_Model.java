@@ -42,6 +42,7 @@ public class Register_Fam_Model implements IRegister_Presenter_To_FamModel {
     private ArrayList<String> id_list = new ArrayList<>();
     private ArrayList<String> regi_list = new ArrayList<>();
     private int index;
+    private boolean isAlreadyAdded = false;
 
 
     public Register_Fam_Model(Register_Fam_Presenter presenter) {
@@ -69,25 +70,42 @@ public class Register_Fam_Model implements IRegister_Presenter_To_FamModel {
                     final FindFamilyVO findFamilyVO = response.body();
 
                    // Log.e(TAG, "find"+findFamilyVO.getStatus()+findFamilyVO.getResult().getNickName()+"  "+findFamilyVO.getResult().getUserId());
+
+
+
                     if (findFamilyVO.getStatus().equals("200")) {
                         isAddedFamily = true;
                         second_user_id = findFamilyVO.getResult().getUserId();
 
-                        Log.e(TAG, "oncccccccc "+findFamilyVO.getResult().getNickName()+"("+findFamilyVO.getResult().getUserId()+")" +second_user_id);
+                        if(findFamilyVO.getResult().getPhoneNumber().equals(User_Id.getPhone_No())){
+                            presenter.makeErrorDialog("자신의 번호는"+"\n"+"등록할 수 없습니다.");
+                            return;
+                        }
+                        /*else if(setPreviousRegistered2(User_Id.getUser_Id(),pn)){
+
+                        }*/
+
+                        else{
+                            Log.e(TAG, "oncccccccc "+findFamilyVO.getResult().getNickName()+"("+findFamilyVO.getResult().getUserId()+")" +second_user_id);
+
                             presenter.makeDialog(findFamilyVO.getResult().getNickName(),second_user_id);
-                            familyItems.add(new FamilyItem(findFamilyVO.getResult().getNickName()+"("+findFamilyVO.getResult().getUserId()+")",findFamilyVO.getResult().getNickName().substring(0,1),findFamilyVO.getResult().getPhoneNumber()));
+                            //familyItems.add(new FamilyItem(findFamilyVO.getResult().getNickName(),findFamilyVO.getResult().getNickName().substring(0,1),findFamilyVO.getResult().getPhoneNumber()));
                             user_last_name = findFamilyVO.getResult().getNickName().substring(0,1);
-                            user_name = findFamilyVO.getResult().getNickName()+"("+findFamilyVO.getResult().getUserId()+")";
+                            user_name = findFamilyVO.getResult().getNickName();
                             user_pn = findFamilyVO.getResult().getPhoneNumber().substring(0,3)+"-"+findFamilyVO.getResult().getPhoneNumber().substring(3,7)+"-"+findFamilyVO.getResult().getPhoneNumber().substring(7);
 
-                        Log.d("ddddddd",findFamilyVO.getResult().getNickName()+findFamilyVO.getResult().getUserId());
+
+                            Log.d("ddddddd",findFamilyVO.getResult().getNickName()+findFamilyVO.getResult().getUserId());
+                        }
+
+
                         }
                     else if (findFamilyVO.getStatus().equals("204")) {
-                        presenter.makeToastMessage( "상대의 계정이 존재하지 않습니다.");
+                        presenter.makeErrorDialog( "상대의 계정이 "+"\n"+"존재하지 않습니다.");
                     } else if (findFamilyVO.getStatus().equals("400")) {
-                        presenter.makeToastMessage( "잘못된 요청입니다.");
+                        presenter.makeErrorDialog( "잘못된 번호입니다.");
                     } else if (findFamilyVO.getStatus().equals("500")) {
-                        presenter.makeToastMessage( "서버 오루 입니다..");
+                        presenter.makeErrorDialog( "서버 오류 입니다..");
                     }
 
                     }
@@ -114,6 +132,7 @@ public class Register_Fam_Model implements IRegister_Presenter_To_FamModel {
                 //201 : OK
                 //403 : 삽입시 중복
                 //500 : Server Error
+
                 Log.d("eeeeee",familyVO.getUser_1()+familyVO.getUser_2());
                 Call<BodyVO> call = userService.postRegisterFamily(familyVO);
                 call.enqueue(new Callback<BodyVO>() {
@@ -124,21 +143,26 @@ public class Register_Fam_Model implements IRegister_Presenter_To_FamModel {
 
                         switch (bodyVO.getStatus()) {
                             case "201":
+
                                 Register_Family.none_register.setVisibility(View.GONE);
                                 familyItem.setFirst_name(user_last_name);
                                 familyItem.setName(name);
                                 familyItem.setUser_pn(user_pn);
+
                                 id_list.add(finalUser2_id);
-                                //id_list.add()
-                                Log.d("setName",familyItem.getName());
-                                presenter.onResponse2(true,familyItem);
-                                presenter.makeToastMessage( "가족 추가가 되었습니다.");
+//                                                    Log.d("setName",familyItem.getName());
+                               presenter.onResponse2(true,familyItem);
+                               presenter.makeErrorDialog( "가족등록 "+"\n"+"완료되었습니다.");
+                               familyItems.add(familyItem);
+
+
+
                                 break;
                             case "403":
-                                presenter.makeToastMessage( "삽입시 중복이 됩니다.");
+                                presenter.makeErrorDialog( "전화번호 중복입니다.");
                                 break;
                             case "500":
-                                presenter.makeToastMessage( "서버 에러");
+                                presenter.makeErrorDialog( "서버 에러입니다.");
                                 //Log.d("eeeee3",finalUser2_id+User_Id.getUser_Id());
                                 break;
                         }
@@ -207,6 +231,54 @@ public class Register_Fam_Model implements IRegister_Presenter_To_FamModel {
         });
     }
 
+    public boolean setPreviousRegistered2(String id, final String pn) {
+
+       Retrofit retrofit2 = new Retrofit.Builder()
+                .baseUrl(userService.API_URL)
+                .addConverterFactory(ScalarsConverterFactory.create())
+                .addConverterFactory(GsonConverterFactory.create())
+                .build();
+      UserService  userService2 = retrofit2.create(UserService.class);
+
+
+        Call<Connected_Family> findFamilyVOCall = userService2.getConnectedFamilyInfo(id);
+        findFamilyVOCall.enqueue(new Callback<Connected_Family>() {
+            @Override
+            public void onResponse(Call<Connected_Family> call, Response<Connected_Family> response) {
+                Connected_Family findFamilyVO = response.body();
+
+                if (findFamilyVO.getStatus().equals("200")) {
+                    for(int i = 0; i < findFamilyVO.getResult().size();i++){
+
+                       if(findFamilyVO.getResult().get(i).equals(pn)){
+                           isAlreadyAdded = false;
+                       }else{
+                            isAlreadyAdded = true;
+                       }
+                    }
+                    Log.e(TAG, "onResponse: "+ familyItems.size() );
+                    presenter.sendArrayList(familyItems);
+                    presenter.onResponse(true);
+                } else if (findFamilyVO.getStatus().equals("204")) {
+                    presenter.makeToastMessage( "상대의 계정이 존재하지 않습니다.");
+                } else if (findFamilyVO.getStatus().equals("400")) {
+                    presenter.makeToastMessage("잘못된 요청입니다.");
+                } else if (findFamilyVO.getStatus().equals("500")) {
+                    presenter.makeToastMessage("서버 오루 입니다..");
+                }
+
+            }
+
+
+            @Override
+            public void onFailure(Call<Connected_Family> call, Throwable t) {
+                System.out.println(t.getMessage());
+            }
+        });
+
+        return isAlreadyAdded;
+    }
+
     @Override
     public void deleteFam(boolean isOkay, String id, final int position) {
 
@@ -233,10 +305,8 @@ public class Register_Fam_Model implements IRegister_Presenter_To_FamModel {
                 if(familyBodyVO.getStatus().equals("201")){
 
 
-                   //presenter.deleteResponse(true);
-                    Log.d("aaaaa0",""+familyItems.size());
 
-                    Log.d("aaaaa1",""+position+"ff"+familyItems.get(position).getName());
+
                     familyItems.remove(position);
                     Log.e(TAG, "delete "+id_list.size());
                     id_list.remove(position);
@@ -288,3 +358,48 @@ public class Register_Fam_Model implements IRegister_Presenter_To_FamModel {
 
 
 }
+//Retrofit retrofit2 = new Retrofit.Builder()
+//                                        .baseUrl(userService.API_URL)
+//                                        .addConverterFactory(ScalarsConverterFactory.create())
+//                                        .addConverterFactory(GsonConverterFactory.create())
+//                                        .build();
+//                                UserService  userService2 = retrofit2.create(UserService.class);
+//
+//
+//                                Call<Connected_Family> findFamilyVOCall = userService2.getConnectedFamilyInfo(User_Id.getUser_Id());
+//                                findFamilyVOCall.enqueue(new Callback<Connected_Family>() {
+//                                    @Override
+//                                    public void onResponse(Call<Connected_Family> call, Response<Connected_Family> response) {
+//                                        Connected_Family findFamilyVO = response.body();
+//
+//                                        if (findFamilyVO.getStatus().equals("200")) {
+//                                            for(int i = 0; i < findFamilyVO.getResult().size();i++){
+//
+//                                                if(findFamilyVO.getResult().get(i).getPhoneNumber().equals(user_pn)){
+//                                                    presenter.makeErrorDialog("전화번호 중복입니다.");
+//                                                    return;
+//                                                    //Log.e(TAG, "pn: ", findFamilyVO.getResult().get(i)+"     "+);
+//                                                }else{
+//                                                    id_list.add(finalUser2_id);
+//                                                    Log.d("setName",familyItem.getName());
+//                                                    presenter.onResponse2(true,familyItem);
+//                                                    presenter.makeErrorDialog( "가족등록 "+"\n"+"완료되었습니다.");
+//                                                }
+//                                            }
+//
+//                                        } else if (findFamilyVO.getStatus().equals("204")) {
+//                                            presenter.makeToastMessage( "상대의 계정이 존재하지 않습니다.");
+//                                        } else if (findFamilyVO.getStatus().equals("400")) {
+//                                            presenter.makeToastMessage("잘못된 요청입니다.");
+//                                        } else if (findFamilyVO.getStatus().equals("500")) {
+//                                            presenter.makeToastMessage("서버 오루 입니다..");
+//                                        }
+//
+//                                    }
+//
+//
+//                                    @Override
+//                                    public void onFailure(Call<Connected_Family> call, Throwable t) {
+//                                        System.out.println(t.getMessage());
+//                                    }
+//                                });
