@@ -2,9 +2,13 @@ package yaksok.dodream.com.yaksok_refactoring.view.MyPill.Dialog;
 
 import android.app.Dialog;
 import android.content.Context;
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.view.View;
+import android.view.Window;
 import android.widget.Button;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import yaksok.dodream.com.yaksok_refactoring.R;
@@ -15,6 +19,7 @@ public class Delete_Dialog extends Dialog implements View.OnClickListener,Dialog
     private Button positiveButton;
     private Button negativeButton;
     private Context context;
+    LinearLayout linearLayout;
     String p_name, p_data;
     int p_pill_no;
     Presenter_Dialog presenter_dialog;
@@ -46,7 +51,13 @@ public class Delete_Dialog extends Dialog implements View.OnClickListener,Dialog
         super.onCreate(savedInstanceState);
         setContentView(R.layout.pill_delete_dialog);
 
+
+
         presenter_dialog  = new Presenter_Dialog(this);
+
+        linearLayout = (LinearLayout)findViewById(R.id.d_linear);
+
+        linearLayout.setBackgroundResource(R.drawable.white_rect_radius);
 
         //init
         positiveButton = (Button)findViewById(R.id.cd_add_category_submit_bt);

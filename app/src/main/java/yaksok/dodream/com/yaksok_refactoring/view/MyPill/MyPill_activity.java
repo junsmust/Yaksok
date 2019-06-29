@@ -14,6 +14,7 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -25,6 +26,7 @@ import yaksok.dodream.com.yaksok_refactoring.Adapter.MyPill.MyPillItem;
 import yaksok.dodream.com.yaksok_refactoring.Adapter.MyPill.MypillListAdapter;
 import yaksok.dodream.com.yaksok_refactoring.ApplicationBase;
 import yaksok.dodream.com.yaksok_refactoring.C_Dialog;
+import yaksok.dodream.com.yaksok_refactoring.t_Dialog;
 import yaksok.dodream.com.yaksok_refactoring.view.MyPill.Dialog.Custom_pill_delete_Dialog;
 import yaksok.dodream.com.yaksok_refactoring.R;
 import yaksok.dodream.com.yaksok_refactoring.presenter.MyPill.Presenter_MyPill;
@@ -47,7 +49,8 @@ public class MyPill_activity extends ApplicationBase implements MyPill_Presenter
     public AlertDialog.Builder dialog;
     MyPillVO mypill = null;
     C_Dialog delete_D;
-
+    t_Dialog t_dialog;
+    LinearLayout linearLayout;
 
 
     @Override
@@ -81,6 +84,7 @@ public class MyPill_activity extends ApplicationBase implements MyPill_Presenter
             }
         });
         delete_D = new C_Dialog(this);
+        t_dialog = new t_Dialog(this);
 
 
         ActionBar.LayoutParams layoutParams = new ActionBar.LayoutParams(ActionBar.LayoutParams.MATCH_PARENT,ActionBar.LayoutParams.MATCH_PARENT);
@@ -93,7 +97,7 @@ public class MyPill_activity extends ApplicationBase implements MyPill_Presenter
         lv_MyPill = (ListView)findViewById(R.id.lv_MyPill);
         bt_Insert = (Button)findViewById(R.id.bt_Insert);
 
-
+        linearLayout = (LinearLayout)findViewById(R.id.linear_none_register);
 
         bt_Insert.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -110,7 +114,7 @@ public class MyPill_activity extends ApplicationBase implements MyPill_Presenter
         lv_MyPill.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                Delete_Dialog dialog1 = new Delete_Dialog(MyPill_activity.this);
+               /* Delete_Dialog dialog1 = new Delete_Dialog(MyPill_activity.this);
                 dialog1.setDialogListener(mypill.getResult().get(position).getName(),
                         mypill.getResult().get(position).getRegiDate().substring(0,10),
                         mypill.getResult().get(position).getMedicineNo(),new Delete_Dialog.CustomDialogListener() {
@@ -129,7 +133,8 @@ public class MyPill_activity extends ApplicationBase implements MyPill_Presenter
 
                     }
                 });
-                dialog1.show();
+                dialog1.show();*/
+               delete_pill(mypill.getResult().get(position).getMedicineNo());
 
 
 
@@ -151,8 +156,9 @@ public class MyPill_activity extends ApplicationBase implements MyPill_Presenter
 
 
     @Override
-    public void onMyPillResponce(boolean MyPillResponse) {
+    public void onMyPillResponce(boolean MyPillResponse,int status) {
         if(MyPillResponse){
+            linearLayout.setVisibility(View.INVISIBLE);
             adapter1 = new MypillListAdapter();
             lv_MyPill.setAdapter(adapter1);
             for(int i=0;i<mypill.getResult().size();i++) {
@@ -168,6 +174,12 @@ public class MyPill_activity extends ApplicationBase implements MyPill_Presenter
             }
             adapter1.notifyDataSetChanged();
             //lv_MyPill.setAdapter(adapter);
+        }
+        else if(status==204){
+            adapter1 = new MypillListAdapter();
+            lv_MyPill.setAdapter(adapter1);
+            adapter1.notifyDataSetChanged();
+            linearLayout.setVisibility(View.VISIBLE);
         }
         else{
             adapter1 = new MypillListAdapter();
@@ -186,6 +198,7 @@ public class MyPill_activity extends ApplicationBase implements MyPill_Presenter
     @Override
     public void onMyPillDeleteRespoce(boolean MyPillResponse) {
         if(MyPillResponse){
+            delete();
             onResume();
         }
     }
@@ -250,6 +263,27 @@ public class MyPill_activity extends ApplicationBase implements MyPill_Presenter
                 delete_D.dismiss();
             }
         });
+    }
+
+    private void delete_pill(final int pnos){
+        t_dialog.show();
+        t_dialog.ok_btn.setElevation(0);
+        t_dialog.ok_btn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                presenter_myPill.myPillDelete(pnos);
+                t_dialog.dismiss();
+            }
+        });
+
+        t_dialog.no_btn.setElevation(0);
+        t_dialog.no_btn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                t_dialog.dismiss();
+            }
+        });
+
     }
 
 

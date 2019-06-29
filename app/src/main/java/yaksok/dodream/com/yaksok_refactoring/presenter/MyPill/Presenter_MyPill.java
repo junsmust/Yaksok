@@ -22,8 +22,8 @@ public class Presenter_MyPill implements MyPillToPresenter {
     }
 
     @Override
-    public void onMyPillResponce(boolean MyPillResponse) {
-        view.onMyPillResponce(MyPillResponse);
+    public void onMyPillResponce(boolean MyPillResponse, int status) {
+        view.onMyPillResponce(MyPillResponse,status);
     }
 
     @Override

@@ -23,8 +23,8 @@ public class Presenter_InsertPill implements InsertPillToPresenter{
     }
 
     @Override
-    public void onInsertResponse(boolean response) {
-        view.onInsertResponse(response);
+    public void onInsertResponse(boolean response, int status) {
+        view.onInsertResponse(response, status);
     }
 
     @Override
