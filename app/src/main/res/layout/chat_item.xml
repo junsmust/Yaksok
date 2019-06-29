@@ -14,8 +14,8 @@
 
         <TextView
             android:id="@+id/user_iv"
-            android:layout_width="70dp"
-            android:layout_height="70dp"
+            android:layout_width="80dp"
+            android:layout_height="80dp"
             android:layout_margin="20dp"
             android:text="T"
             android:textSize="24dp"

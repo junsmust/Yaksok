@@ -148,7 +148,14 @@ public class Chat_Model implements I_chat_model {
 
                                         name_list = findFamilyVO.getResult().get(index).getNickName();
                                         last_nam_list = findFamilyVO.getResult().get(index).getNickName().substring(0,1);
-                                        last_message_list = bodyVO.getResult().get(0).getContent();
+                                    //Log.e( "onResponse3 ", bodyVO.getResult().get(0).getContent().length()+"  ");
+                                        if(bodyVO.getResult().get(0).getContent().length() >= 20){
+                                            last_message_list = bodyVO.getResult().get(0).getContent().substring(0,20)+"...";
+                                            Log.e( "onResponse3 ", bodyVO.getResult().get(0).getContent().length()+"  ");
+                                        }else{
+                                            last_message_list = bodyVO.getResult().get(0).getContent();
+                                        }
+
                                         last_message_time_list = lastTime;
 
                                         chat_list_model = new Chat_List_Model(id,name_list,last_nam_list,last_message_list,last_message_time_list);
@@ -176,7 +183,7 @@ public class Chat_Model implements I_chat_model {
 
                                     Log.e( "chat_list_modelsSize:1 ", chat_list_models.size()+" ");
 
-                                    //Log.e( "test", "\n"+"id :"+chat_list_model.getId()+" \n"+"name :"+name_list+"\n"+"lastname : "+last_nam_list+"\n"+"message :"+ last_message_list+"\n"+"messagetime :"+last_message_time_list+"\n");
+                                    //Log.e( "test_1", "\n"+"id :"+chat_list_model.getId()+" \n"+"name :"+name_list+"\n"+"lastname : "+last_nam_list+"\n"+"message :"+ last_message_list+"\n"+"messagetime :"+last_message_time_list+"\n");
 
 
 
