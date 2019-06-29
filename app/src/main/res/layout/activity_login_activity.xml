@@ -173,7 +173,7 @@
                 android:layout_gravity="center"
                 android:layout_margin="5dp"
                 android:background="#ffffff"
-                android:text="비밀번호 발급 "
+                android:text="비밀번호 발 "
                 android:textSize="11sp"
                 android:layout_weight="1"
                 android:gravity="center"

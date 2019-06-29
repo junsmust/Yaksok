@@ -163,12 +163,14 @@ public class LoginModel implements IPresennterToModel {
                 else if (bodyVO.getStatus().equals("500")) {
                     presenter_login.OnLoginResponse(false);
                     presenter_login.MakeToastMessage("서버 오류");
+                    Log.d("ddd2",user_info_model.getId()+"userinfo"+user_info_model.getUserType());
+
                 }
             }
 
             @Override
             public void onFailure(Call<BodyVO> call, Throwable t) {
-                Log.d("test",t.getMessage());
+                Log.d("test_1",t.getMessage());
                 presenter_login.redirectLoginActivity();
             }
         });

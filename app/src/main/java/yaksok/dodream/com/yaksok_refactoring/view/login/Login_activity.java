@@ -203,9 +203,7 @@ public class Login_activity extends ApplicationBase implements IPresenterToView{
                     String test_userType = loginInformation.getString("userType","");
                     Log.d("auttto",""+test_id+", "+test_pw+""+test_userType);
 
-
                     presenter_login.autoLogin(test_id,test_pw,test_userType,loginInformation.getBoolean("auto",true));
-
 
                     break;
                 case "N":
@@ -234,7 +232,7 @@ public class Login_activity extends ApplicationBase implements IPresenterToView{
         login_btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                //Toast.makeText(getApplicationContext(), "test", Toast.LENGTH_LONG).show();
+                //Toast.makeText(getApplicationContext(), "test_1", Toast.LENGTH_LONG).show();
                 presenter_login.autoLogin(id_edt.getText().toString(),pw_edt.getText().toString(),"G"
                         ,loginInformation.getBoolean("auto",true));
                 if(loginInformation.getBoolean("auto",true)){
