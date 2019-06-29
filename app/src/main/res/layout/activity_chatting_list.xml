@@ -9,11 +9,29 @@
     <!--android:layout_width="match_parent"-->
     <!--android:layout_height="wrap_content"-->
     <!--android:id="@+id/btn"/>-->
-    <ListView
-        android:id="@+id/family_connected_listview"
+    <FrameLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
-    </ListView>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:visibility="gone"
+            android:id="@+id/linear_none_chat">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:gravity="center"
+                android:text="매칭된 가족이 없습니다. " />
+        </LinearLayout>
+        <ListView
+            android:id="@+id/family_connected_listview"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+        </ListView>
+    </FrameLayout>
+
 
 </LinearLayout>

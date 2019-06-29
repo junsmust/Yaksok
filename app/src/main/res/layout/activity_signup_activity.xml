@@ -17,7 +17,8 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_margin="5dp"
-            android:orientation="vertical">
+            android:orientation="vertical"
+            android:layout_weight="1">
 
             <TextView
                 android:layout_width="wrap_content"
@@ -30,7 +31,7 @@
                 />
             <EditText
                 android:id="@+id/sign_id_edt"
-                android:layout_width="300dp"
+                android:layout_width="250dp"
                 android:layout_height="wrap_content"
                 android:focusable="true"
                 android:hint="영문 6자리 이상"
@@ -38,11 +39,12 @@
                 android:textColor="@color/black"
                 android:textSize="14dp"
                 android:theme="@style/EditTheme"
-                android:layout_below="@id/id_tv"/>
+                android:layout_below="@id/id_tv"
+                />
 
             <Button
                 android:id="@+id/sign_check_id_btn"
-                android:layout_width="60dp"
+                android:layout_width="70dp"
                 android:layout_height="30dp"
                 android:elevation="0dp"
                 android:background="@drawable/green_line_rec"
@@ -182,7 +184,7 @@
 
 
             <RelativeLayout
-                android:layout_width="300dp"
+                android:layout_width="250dp"
                 android:layout_height="wrap_content"
                 android:id="@+id/pn_relative"
                 android:layout_below="@+id/pn_id">
@@ -259,7 +261,7 @@
                         android:layout_toRightOf="@id/pn_relative"
                         android:layout_toEndOf="@id/pn_relative"
                         android:layout_below="@+id/pn_id"
-                        android:layout_width="60dp"
+                        android:layout_width="70dp"
                         android:layout_height="30dp"
                         android:elevation="0dp"
                         android:background="@drawable/green_line_rec"

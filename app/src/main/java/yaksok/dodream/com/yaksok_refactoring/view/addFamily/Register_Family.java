@@ -63,15 +63,21 @@ public class Register_Family extends ApplicationBase implements IRegister_Presen
     int width,height;
     public static LinearLayout none_register;
     C_Dialog c_dialog;
+    String first_user;
+
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_family);
-        intent = new Intent(getIntent());
+        intent = getIntent();
                 //itForSignUp = intent.getStringExtra("itForSignUp");
                 //Log.d("aaaaaaaaaaaaa",itForSignUp);
+
+        first_user = intent.getStringExtra("first_user");
+
+        Log.e( "onCreate: ",first_user+"       " );
 
         none_register = (LinearLayout)findViewById(R.id.linear_none_registered);
 
@@ -110,6 +116,14 @@ public class Register_Family extends ApplicationBase implements IRegister_Presen
         family_list_view = (SwipeMenuListView) findViewById(R.id.family_list);
         complete_btn = (Button)findViewById(R.id.family_complete_btn);
 
+
+
+
+        if(first_user == null){
+            complete_btn.setVisibility(View.GONE);
+        }else if(first_user.equals("first")){
+            complete_btn.setVisibility(View.VISIBLE);
+        }
 
         complete_btn.setOnClickListener(this);
         family_find_btn.setOnClickListener(this);
