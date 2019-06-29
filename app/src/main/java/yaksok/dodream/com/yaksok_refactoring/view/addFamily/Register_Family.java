@@ -124,6 +124,9 @@ public class Register_Family extends ApplicationBase implements IRegister_Presen
 
 
 
+
+
+
         SwipeMenuCreator creator = new SwipeMenuCreator() {
 
             @Override
@@ -132,20 +135,24 @@ public class Register_Family extends ApplicationBase implements IRegister_Presen
 
                 // set item background
 
-                // create "delete" item
-                SwipeMenuItem deleteItem = new SwipeMenuItem(
-                        getApplicationContext());
-                // set item background
-                deleteItem.setBackground(new ColorDrawable(Color.rgb(0xF9,
-                        0x3F, 0x25)));
-                // set item width
-                deleteItem.setWidth(140);
                 // set item height
                 // set a icon
-                 deleteItem.setIcon(R.drawable.delete6);
+                //deleteItem.setIcon(R.drawable.delete6);
+                 //deleteItem.setTitle("삭제");
                 // add to menu
+                SwipeMenuItem openItem = new SwipeMenuItem(
+                        getApplicationContext());
 
-                menu.addMenuItem(deleteItem);
+                openItem.setBackground(R.color.main_color);
+                openItem.setWidth(310);
+                openItem.setTitle("삭제");
+                openItem.setTitleColor(Color.parseColor("#FFFFFF"));
+                openItem.setTitleSize(20);
+
+
+               menu.addMenuItem(openItem);
+
+
             }
         };
 
@@ -161,7 +168,6 @@ public class Register_Family extends ApplicationBase implements IRegister_Presen
             public boolean onMenuItemClick(int position, SwipeMenu menu, int index) {
                 switch (index) {
                     case 0:
-
                         String name = ((FamilyItem)adapter.getItem(position)).getName();
                         deleteMakeDialog(name,position);
                         break;

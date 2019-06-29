@@ -1,5 +1,7 @@
 package yaksok.dodream.com.yaksok_refactoring.Adapter.chat;
 
+import android.annotation.SuppressLint;
+import android.graphics.Color;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -206,6 +208,7 @@ public class ChatAdapter extends RecyclerView.Adapter<ChatAdapter.ViewHolder>
         }
 */
 
+    @SuppressLint("ResourceAsColor")
     @Override
     public void onBindViewHolder(ViewHolder viewHolder, int position) {
 
@@ -239,7 +242,8 @@ public class ChatAdapter extends RecyclerView.Adapter<ChatAdapter.ViewHolder>
 
             viewHolder1.textTitle.setLayoutParams(layoutParams);
             viewHolder1.textTitle.setText(albumList.get(position).getContent());
-            viewHolder1.textTitle.setBackgroundResource(R.drawable.patch_right);
+            viewHolder1.textTitle.setTextColor(Color.parseColor("#FFFFFF"));
+            viewHolder1.textTitle.setBackgroundResource(R.drawable.my_chat_balloon);
           /*  viewHolder1.user2.setText(item.getGivingUser());
             viewHolder1.user2.setVisibility(View.INVISIBLE);*/
             viewHolder1.user1.setText(item.getReceivingUser());
@@ -312,7 +316,9 @@ public class ChatAdapter extends RecyclerView.Adapter<ChatAdapter.ViewHolder>
 
             viewHolder1.textTitle.setText(albumList.get(position).getContent());
             viewHolder1.textTitle.setLayoutParams(layoutParams);
-            viewHolder1.textTitle.setBackgroundResource(R.drawable.patch_left);
+           //viewHolder1.textTitle.setTextColor(R.color.white);
+            viewHolder1.textTitle.setTextColor(Color.parseColor("#000000"));
+            viewHolder1.textTitle.setBackgroundResource(R.drawable.other_person_chat_balloon);
 
             viewHolder1.user1.setText(item.getReceivingUser());
             viewHolder1.user1.setVisibility(View.INVISIBLE);
