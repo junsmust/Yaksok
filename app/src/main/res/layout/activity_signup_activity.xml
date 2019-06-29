@@ -41,7 +41,8 @@
                     android:hint="영문 6자리 이상"
                     android:inputType="textNoSuggestions"
                     android:textColor="@color/black"
-                    android:textSize="14dp" />
+                    android:textSize="14dp"
+                    android:theme="@style/EditTheme"/>
 
                 <Button
                     android:id="@+id/sign_check_id_btn"
@@ -53,7 +54,8 @@
                     android:text="중복확인"
                     android:textColor="@color/main_color"
                     android:textSize="11dp"
-                    android:textStyle="bold" />
+                    android:textStyle="bold"
+                    />
 
             </LinearLayout>
 
@@ -89,7 +91,8 @@
                     android:hint="특수문자 포함 6자리 이상"
                     android:inputType="textPassword|textNoSuggestions"
                     android:textColor="@color/black"
-                    android:textSize="14dp" />
+                    android:textSize="14dp"
+                    android:theme="@style/EditTheme"/>
 
 
             </android.support.design.widget.TextInputLayout>
@@ -125,7 +128,8 @@
                     android:hint="비밀번호와 동일하게 입력"
                     android:inputType="textPassword|textNoSuggestions"
                     android:textColor="@color/black"
-                    android:textSize="14dp" />
+                    android:textSize="14dp"
+                    android:theme="@style/EditTheme"/>
 
             </android.support.design.widget.TextInputLayout>
 
@@ -156,7 +160,8 @@
                 android:focusable="true"
                 android:hint="실명을 입력해주세요"
                 android:textColor="@color/black"
-                android:textSize="14dp" />
+                android:textSize="14dp"
+                android:theme="@style/EditTheme"/>
 
 
         </LinearLayout>
@@ -198,7 +203,8 @@
                         android:maxLength="3"
                         android:inputType="phone"
                         android:textColor="@color/black"
-                        android:textSize="14dp" />
+                        android:textSize="14dp"
+                        android:theme="@style/EditTheme"/>
 
                     <TextView
                         android:id="@+id/h1"
@@ -222,7 +228,8 @@
                         android:hint="1234"
                         android:inputType="phone"
                         android:textColor="@color/black"
-                        android:textSize="14dp" />
+                        android:textSize="14dp"
+                        android:theme="@style/EditTheme"/>
 
                     <TextView
                         android:id="@+id/h2"
@@ -246,7 +253,8 @@
                         android:maxLength="4"
                         android:inputType="phone"
                         android:textColor="@color/black"
-                        android:textSize="14dp" />
+                        android:textSize="14dp"
+                        android:theme="@style/EditTheme"/>
                 </RelativeLayout>
 
                 <Button
@@ -281,7 +289,8 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="horizontal">
+                android:orientation="horizontal"
+                android:gravity="center">
 
                 <EditText
                     android:id="@+id/sign_email_yourself_edt"
@@ -292,24 +301,27 @@
                     android:gravity="center"
                     android:textColor="@color/black"
                     android:textSize="14dp"
-                    android:theme="@style/EditTheme" />
+                    android:theme="@style/EditTheme"
+                    />
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text=" @"
                     android:textColor="@color/black"
-                    android:textSize="13dp" />
+                    android:textSize="13dp"
+                    android:gravity="center"/>
 
                 <Spinner
-                    android:gravity="center_vertical"
+                    android:gravity="center"
                     android:id="@+id/sign_email_spin"
                     android:layout_width="150dp"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
                     android:layout_weight="1"
                     android:textColor="@color/black"
-                    android:textSize="13dp" />
+                    android:textSize="13dp"
+                    />
 
 
             </LinearLayout>
@@ -331,7 +343,8 @@
                     android:layout_gravity="end"
                     android:layout_weight="1"
                     android:textColor="@color/black"
-                    android:visibility="gone" />
+                    android:visibility="visible"
+                    android:theme="@style/EditTheme"/>
 
             </LinearLayout>
 
@@ -352,7 +365,7 @@
                 android:textStyle="bold" />
 
             <LinearLayout
-                android:layout_width="match_parent"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:orientation="horizontal">
@@ -365,12 +378,6 @@
                     android:textColor="@color/black">
 
                 </Spinner>
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="년"
-                    android:textColor="@color/black" />
 
 
                 <Spinner

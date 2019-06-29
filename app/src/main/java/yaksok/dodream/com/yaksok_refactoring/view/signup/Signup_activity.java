@@ -58,6 +58,8 @@ public class Signup_activity extends ApplicationBase implements IPresenter_To_Si
     C_Dialog log_D;
     boolean self_email = false;
 
+    String year;
+
     User_Info_Model user_info_model;
 
     private TextInputLayout sign_up_pw_edt,sign_up_re_pw_edt;
@@ -232,11 +234,21 @@ public class Signup_activity extends ApplicationBase implements IPresenter_To_Si
         SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd");
         nowDate = simpleDateFormat.format(date);
 
+        year = "년도";
+        month = "월";
+        day = "일";
+
+
+      sign_up_year_spin.setSelection(0);
 
       sign_up_year_spin.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
           @Override
           public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-              presenterSignUp.guessAge(nowDate,String.valueOf(sign_up_year_spin.getItemAtPosition(position)));
+              if(!String.valueOf(sign_up_year_spin.getItemAtPosition(position)).equals("년도")){
+                  presenterSignUp.guessAge(nowDate,String.valueOf(sign_up_year_spin.getItemAtPosition(position)));
+                  year = String.valueOf(sign_up_year_spin.getItemAtPosition(position));
+              }
+
           }
 
           @Override
@@ -247,10 +259,14 @@ public class Signup_activity extends ApplicationBase implements IPresenter_To_Si
 
 
 
+        sign_up_month_spin.setSelection(0);
         sign_up_month_spin.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                month = sign_up_month_spin.getItemAtPosition(position).toString();
+                if(!String.valueOf(sign_up_month_spin.getItemAtPosition(position)).equals("월")){
+                    month = sign_up_month_spin.getItemAtPosition(position).toString();
+                }
+
             }
 
             @Override
@@ -259,13 +275,19 @@ public class Signup_activity extends ApplicationBase implements IPresenter_To_Si
             }
         });
 
+
+        sign_up_day_spin.setSelection(0);
         sign_up_day_spin.setAdapter(dayAdapter);
         sign_up_day_spin.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                day =  sign_up_day_spin.getItemAtPosition(position).toString();
-                presenterSignUp.setBirth(month,day);
-                birth = String.valueOf(month)+"-"+String.valueOf(day);
+                if(!String.valueOf(sign_up_day_spin.getItemAtPosition(position)).equals("일")){
+                    day =  sign_up_day_spin.getItemAtPosition(position).toString();
+                    presenterSignUp.setBirth(month,day);
+                    birth = String.valueOf(month)+"-"+String.valueOf(day);
+                }
+
+
 
 
             }
@@ -331,43 +353,6 @@ public class Signup_activity extends ApplicationBase implements IPresenter_To_Si
     protected void onStart() {
         super.onStart();
 
-       /* ActionBar actionBar = getSupportActionBar();
-
-        assert actionBar != null;
-        actionBar.setDisplayShowCustomEnabled(true);
-        actionBar.setDisplayShowHomeEnabled(false);
-        actionBar.setDisplayShowTitleEnabled(false);
-
-        View view = LayoutInflater.from(this).inflate(R.layout.chattingactionbar,null);
-        view.setElevation(-1);
-        ImageView imageView = view.findViewById(R.id.back_layout_imv);
-        TextView textView = view.findViewById(R.id.title_txt);
-
-        FrameLayout frameLayout = view.findViewById(R.id.frame_layout);
-
-        frameLayout.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                finish();
-            }
-        });
-
-
-        imageView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                finish();
-            }
-        });
-        textView.setText("회원가입");
-        textView.setTextColor(getResources().getColor(R.color.black));
-        textView.setGravity(Gravity.CENTER);
-        actionBar.setTitle(textView.getText().toString());
-
-
-
-        ActionBar.LayoutParams layoutParams = new ActionBar.LayoutParams(ActionBar.LayoutParams.MATCH_PARENT,ActionBar.LayoutParams.MATCH_PARENT,Gravity.CENTER_VERTICAL|Gravity.CENTER_HORIZONTAL);
-        actionBar.setCustomView(view,layoutParams);*/
     }
 
     @Override
@@ -499,6 +484,10 @@ public class Signup_activity extends ApplicationBase implements IPresenter_To_Si
                 else if(!avaliablePn){
                     phoneResult("전화번호 중복을 확인하세요");
                 }
+                else if(year.equals("년도") || month.equals("월") || day.equals("일")){
+                    errMessage("생년월일을 입력해주세요 ");
+                }
+
                 else if(m.matches()){
                     presenterSignUp.validateEmail(email_final);
                     user_info_model.setId(sign_up_id_edt.getText().toString());
@@ -624,5 +613,20 @@ public class Signup_activity extends ApplicationBase implements IPresenter_To_Si
             }
         });
     }
+    private void errMessage(String message){
+        log_D.text_tv.setText(message);
+
+        log_D.show();
+
+
+        log_D.ok_btn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                log_D.dismiss();
+
+            }
+        });
+    }
 
 }
+
