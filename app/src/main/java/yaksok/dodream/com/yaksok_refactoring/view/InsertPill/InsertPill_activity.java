@@ -98,7 +98,6 @@ public class InsertPill_activity extends ApplicationBase implements InsertPill_P
             @Override
             public void onClick(View v) {
                 finish();
-
             }
         });
 
@@ -600,5 +599,12 @@ public class InsertPill_activity extends ApplicationBase implements InsertPill_P
             }
         });
     }
+
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        finish();
+    }
+
 
 }
