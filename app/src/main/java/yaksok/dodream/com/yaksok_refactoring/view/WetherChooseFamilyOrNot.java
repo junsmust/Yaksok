@@ -4,6 +4,7 @@ import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.graphics.Paint;
 import android.support.annotation.NonNull;
+import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.MotionEvent;
@@ -45,6 +46,9 @@ public class WetherChooseFamilyOrNot extends ApplicationBase implements View.OnC
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_wether_choose_family_or_not);
 
+
+        ActionBar actionBar = getSupportActionBar();
+        actionBar.hide();
 
 
         register_btn = (Button) findViewById(R.id.register_btn);

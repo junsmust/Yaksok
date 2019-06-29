@@ -12,6 +12,7 @@ import android.os.Bundle;
 import android.text.InputType;
 import android.text.method.PasswordTransformationMethod;
 import android.util.Log;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.Button;
@@ -65,6 +66,7 @@ public class Login_activity extends ApplicationBase implements IPresenterToView{
     FrameLayout kakao_frame,naver_frame;
     private ImageView fake_kakao_iv,fake_naver_iv;
 
+    private FrameLayout id_fl,pw_pl;
     C_Dialog delete_D;
 
 
@@ -127,6 +129,25 @@ public class Login_activity extends ApplicationBase implements IPresenterToView{
         pw_find_prame = (FrameLayout)findViewById(R.id.frame_pw_find);
         signup_find_frame = (FrameLayout)findViewById(R.id.frame_signup);
 
+        id_fl = (FrameLayout)findViewById(R.id.id_fl);
+        pw_pl = (FrameLayout)findViewById(R.id.pw_fl);
+
+
+        id_fl.setOnTouchListener(new View.OnTouchListener() {
+            @Override
+            public boolean onTouch(View v, MotionEvent event) {
+                id_edt.setFocusable(true);
+                return true;
+            }
+        });
+
+        pw_pl.setOnTouchListener(new View.OnTouchListener() {
+            @Override
+            public boolean onTouch(View v, MotionEvent event) {
+               pw_edt.setFocusable(true);
+                return true;
+            }
+        });
 
 
         fake_naver_iv.setOnClickListener(new View.OnClickListener() {
