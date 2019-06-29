@@ -79,6 +79,8 @@ public class Chat_Room extends ApplicationBase implements I_chat_list{
     public static String last_name ;
 
 
+    public static String fcm_user_name;
+    public static boolean fcm_get_message;
 
 
 
@@ -101,11 +103,17 @@ public class Chat_Room extends ApplicationBase implements I_chat_list{
 
 
 
+
         lastime_sharepfreference = getSharedPreferences(user2_id,MODE_PRIVATE);
         time_editor = lastime_sharepfreference.edit();
 
         Log.e( "받을 사람 아이디 ",user2_id );
-        connectedName = intent.getStringExtra("user_name");
+        if(fcm_get_message){
+            connectedName = fcm_user_name;
+        }else{
+            connectedName = intent.getStringExtra("user_name");
+        }
+
 
         last_name = connectedName.substring(0,1);
 

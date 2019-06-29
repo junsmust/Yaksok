@@ -164,6 +164,8 @@ public class FirebaseMessageService extends FirebaseMessagingService {
 
 
                 Chatting_list.user_id = decodeId; // 상대 아이디 값
+                Chat_Room.fcm_get_message = true;
+                Chat_Room.fcm_user_name = decodeName;
                 Chatting_list.user = User_Id.getUser_Id(); // 자신의 아이디 값
                 Chat_Room.msgStatus = false; // 채팅방에 없다는 뜻
 
