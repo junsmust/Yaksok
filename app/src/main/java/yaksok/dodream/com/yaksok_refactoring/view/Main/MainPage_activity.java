@@ -8,6 +8,8 @@ import android.os.CountDownTimer;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.LinearLayout;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import yaksok.dodream.com.yaksok_refactoring.ApplicationBase;
@@ -28,6 +30,8 @@ public class MainPage_activity extends ApplicationBase implements Main_Presenter
     private int myNeaeTime_sec,hour,min;
     CountDownTimer countDownTimer = null;
     private Boolean countSW = false;
+    LinearLayout lL1;
+    ProgressBar progressBar;
 
 
     @Override
@@ -47,7 +51,10 @@ public class MainPage_activity extends ApplicationBase implements Main_Presenter
         bt_chat = (Button)findViewById(R.id.bt_Chat);
         tv_name = (TextView)findViewById(R.id.tv_main_name);
 
-        tv_name.setText(User_Id.getNickname());
+        progressBar = (ProgressBar)findViewById(R.id.progressBar);
+        lL1 = (LinearLayout)findViewById(R.id.lL1);
+
+       tv_name.setText(User_Id.getNickname());
         tv_name.setPaintFlags(tv_name.getPaintFlags() | Paint.FAKE_BOLD_TEXT_FLAG);
         tv_main_hour_text.setPaintFlags(tv_main_hour_text.getPaintFlags()  | Paint.FAKE_BOLD_TEXT_FLAG);
         tv_main_min_text.setPaintFlags(tv_main_min_text.getPaintFlags() | Paint.FAKE_BOLD_TEXT_FLAG);
@@ -87,6 +94,9 @@ public class MainPage_activity extends ApplicationBase implements Main_Presenter
     public void onMyNearPillResponce(boolean MyNearPillResponse, int status) {
         if(MyNearPillResponse) {
             if(status == 204){
+                progressBar.setVisibility(View.INVISIBLE);
+                lL1.setVisibility(View.VISIBLE);
+                progressBar.setIndeterminate(false);
                 tv_main_hour.setText(""+" "+"등록된 약이 없습니다");
                 tv_main_hour.setPaintFlags(tv_main_min.getPaintFlags() | Paint.FAKE_BOLD_TEXT_FLAG);
                 tv_main_hour.setTextSize(30);
@@ -100,6 +110,9 @@ public class MainPage_activity extends ApplicationBase implements Main_Presenter
                 //tv_main_sec_text.setText("");
             }
             else if(status == 200) {
+                progressBar.setVisibility(View.INVISIBLE);
+                lL1.setVisibility(View.VISIBLE);
+                progressBar.setIndeterminate(false);
                 tv_main_min.setTextSize(50);
                 tv_main_min.setTextColor(Color.WHITE);
                 tv_main_hour_text.setText("시간");
@@ -226,6 +239,9 @@ public class MainPage_activity extends ApplicationBase implements Main_Presenter
     @Override
     protected void onResume() {
         super.onResume();
+        lL1.setVisibility(View.INVISIBLE);
+        progressBar.setVisibility(View.VISIBLE);
+        progressBar.setIndeterminate(true);
             presenter_main.getNearTimePill();
     }
 

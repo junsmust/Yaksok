@@ -31,50 +31,71 @@
                     android:gravity="center"
                     android:orientation="horizontal">
 
-                    <LinearLayout
+
+                    <FrameLayout
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_gravity="bottom"
-                        android:layout_margin="6dp">
+                        android:layout_margin="6dp"
+                        >
 
-                        <TextView
-                            android:id="@+id/tv_main_hour"
+                        <ProgressBar
+                            android:id="@+id/progressBar"
+                            style="?android:attr/progressBarStyle"
+                            android:indeterminateTintMode="src_atop"
+                            android:indeterminateTint="#c4e6ff"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="00"
-                            android:textColor="#FFFFFF"
-                            android:textSize="60dp"
-                            android:textStyle="bold" />
+                            android:layout_gravity="center_vertical|center_horizontal"
+                            app:layout_constraintLeft_toLeftOf="parent"
+                            app:layout_constraintRight_toRightOf="parent" />
 
-                        <TextView
-                            android:id="@+id/tv_main_hour_text"
+                        <LinearLayout
+                            android:visibility="invisible"
+                            android:id="@+id/lL1"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="시간"
-                            android:textColor="#FFFFFF"
-                            android:textSize="60dp"
-                            android:textStyle="bold" />
+                            >
 
-                        <TextView
-                            android:id="@+id/tv_main_min"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_marginLeft="15dp"
-                            android:text="00"
-                            android:textColor="#FFFFFF"
-                            android:textSize="60dp"
-                            android:textStyle="bold" />
+                            <TextView
+                                android:id="@+id/tv_main_hour"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="00"
+                                android:textColor="#FFFFFF"
+                                android:textSize="60dp"
+                                android:textStyle="bold" />
 
-                        <TextView
-                            android:id="@+id/tv_main_min_text"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="분"
-                            android:textColor="#FFFFFF"
-                            android:textSize="60dp"
-                            android:textStyle="bold" />
+                            <TextView
+                                android:id="@+id/tv_main_hour_text"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="시간"
+                                android:textColor="#FFFFFF"
+                                android:textSize="60dp"
+                                android:textStyle="bold" />
 
-                    </LinearLayout>
+                            <TextView
+                                android:id="@+id/tv_main_min"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginLeft="15dp"
+                                android:text="00"
+                                android:textColor="#FFFFFF"
+                                android:textSize="60dp"
+                                android:textStyle="bold" />
+
+                            <TextView
+                                android:id="@+id/tv_main_min_text"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="분"
+                                android:textColor="#FFFFFF"
+                                android:textSize="60dp"
+                                android:textStyle="bold" />
+
+                        </LinearLayout>
+                    </FrameLayout>
                 </LinearLayout>
 
 
@@ -102,6 +123,7 @@
                         android:textSize="20dp" />
                 </LinearLayout>
             </LinearLayout>
+
             <LinearLayout
                 android:layout_width="10dp"
                 android:layout_height="match_parent"
@@ -114,6 +136,7 @@
             android:layout_height="match_parent"
             android:layout_gravity="bottom"
             android:orientation="vertical">
+
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
@@ -123,13 +146,13 @@
             </LinearLayout>
 
             <LinearLayout
-                android:layout_marginLeft="20dp"
-                android:layout_marginRight="20dp"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
+                android:layout_marginLeft="20dp"
+                android:layout_marginRight="20dp"
                 android:layout_weight="1"
-                android:elevation="15dp"
                 android:background="@drawable/main_trick_list"
+                android:elevation="15dp"
                 android:orientation="vertical">
 
                 <LinearLayout
