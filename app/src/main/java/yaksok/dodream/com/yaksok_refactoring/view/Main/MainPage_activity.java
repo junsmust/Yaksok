@@ -113,7 +113,7 @@ public class MainPage_activity extends ApplicationBase implements Main_Presenter
                 progressBar.setVisibility(View.INVISIBLE);
                 lL1.setVisibility(View.VISIBLE);
                 progressBar.setIndeterminate(false);
-                tv_main_min.setTextSize(50);
+                tv_main_hour.setTextSize(60);
                 tv_main_min.setTextColor(Color.WHITE);
                 tv_main_hour_text.setText("시간");
                 tv_main_min_text.setText("분");
