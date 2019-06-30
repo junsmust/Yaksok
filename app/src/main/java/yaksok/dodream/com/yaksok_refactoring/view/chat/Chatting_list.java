@@ -66,7 +66,7 @@ public class Chatting_list extends ApplicationBase implements I_chat_list{
         setContentView(R.layout.activity_chatting_list);
 
         chat_list = (ListView)findViewById(R.id.family_connected_listview);
-        linearLayout = (LinearLayout)findViewById(R.id.linear_none_chat);
+        //linearLayout = (LinearLayout)findViewById(R.id.linear_none_chat);
 
         presenter = new Chat_Presenter(this);
         delete_D = new C_Dialog(this);
