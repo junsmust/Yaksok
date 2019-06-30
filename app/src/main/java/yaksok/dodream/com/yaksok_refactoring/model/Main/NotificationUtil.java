@@ -1,11 +1,13 @@
 package yaksok.dodream.com.yaksok_refactoring.model.Main;
 
 import android.app.Notification;
+import android.app.NotificationChannel;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
+import android.support.v4.app.NotificationCompat;
 import android.util.Log;
 
 import yaksok.dodream.com.yaksok_refactoring.R;
@@ -18,6 +20,8 @@ public class NotificationUtil extends BroadcastReceiver{
     public static String userId;
     public static String userName;
     public static String pillName;
+    String channelId = "channel";
+    String channelName = "Channel Name";
     @Override
     public void onReceive(Context context, Intent intent) {
         Log.d("알람여부", "리시브 들어옴");
@@ -34,8 +38,6 @@ public class NotificationUtil extends BroadcastReceiver{
         String title = "알림";
         String text = "약 복용시간 입니다";
 
-
-
          userId = intent.getStringExtra("takingUser1");
          pillNo = intent.getStringExtra("PillNo");
          userName = intent.getStringExtra("a_name");
@@ -43,15 +45,37 @@ public class NotificationUtil extends BroadcastReceiver{
 
         Log.d("약 번호",pillNo+userId+userName);
 
-        Notification.Builder builder = new Notification.Builder(context)
-                .setContentIntent(pendingIntent)
-                .setSmallIcon(R.drawable.yaksokloggo)
-                .setContentTitle(title)
-                .setContentText(text)
-                .setDefaults(Notification.DEFAULT_SOUND | Notification.DEFAULT_VIBRATE)
-                .setTicker(ticker);
-        Notification notification = builder.build();
-        nm.notify(1, notification);
+        if (android.os.Build.VERSION.SDK_INT >= 26) {
+            Log.d("이거임??","ㅇㅇㅇㅇ");
+            int importance = NotificationManager.IMPORTANCE_HIGH;
+
+            NotificationChannel mChannel = new NotificationChannel(
+                    channelId, channelName, importance);
+
+            nm.createNotificationChannel(mChannel);
+
+            NotificationCompat.Builder builder = new NotificationCompat.Builder(context, channelId)
+                    .setContentIntent(pendingIntent)
+                    .setSmallIcon(R.mipmap.ic_launcher_yaksok)
+                    .setContentTitle(title)
+                    .setContentText(text)
+                    .setDefaults(Notification.DEFAULT_SOUND | Notification.DEFAULT_VIBRATE)
+                    .setTicker(ticker);
+            Notification notification = builder.build();
+            nm.notify(1, notification);
+        }
+        else {
+
+            Notification.Builder builder = new Notification.Builder(context)
+                    .setContentIntent(pendingIntent)
+                    .setSmallIcon(R.mipmap.ic_launcher_yaksok)
+                    .setContentTitle(title)
+                    .setContentText(text)
+                    .setDefaults(Notification.DEFAULT_SOUND | Notification.DEFAULT_VIBRATE)
+                    .setTicker(ticker);
+            Notification notification = builder.build();
+            nm.notify(1, notification);
+        }
 
         Intent intent_ = new Intent(context, Alarm_On.class);
         intent_.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_SINGLE_TOP);// 이거 안해주면 안됨
