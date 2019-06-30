@@ -40,6 +40,7 @@ public class WetherChooseFamilyOrNot extends ApplicationBase implements View.OnC
     private User_Info_Model user_info_model = new User_Info_Model();
     private Retrofit retrofit;
     private UserService userService;
+    private boolean first_user;
     TextView welcom;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -74,8 +75,11 @@ public class WetherChooseFamilyOrNot extends ApplicationBase implements View.OnC
         switch (v.getId()){
             case R.id.register_btn:
                 intent = new Intent(getApplicationContext(), Register_Family.class);
+               // first_user = true;
+                intent.putExtra("first_user", "first");
                 startActivity(intent);
                 finish();
+
                 break;
             case R.id.skip_btn:
                 intent = new Intent(getApplicationContext(), MainPage_activity.class);

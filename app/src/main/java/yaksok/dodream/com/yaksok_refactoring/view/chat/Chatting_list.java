@@ -12,6 +12,7 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -34,6 +35,7 @@ import yaksok.dodream.com.yaksok_refactoring.Adapter.chat.Chat_list_adater;
 import yaksok.dodream.com.yaksok_refactoring.Adapter.family.FamilyFindAdapter;
 import yaksok.dodream.com.yaksok_refactoring.Adapter.family.FamilyItem;
 import yaksok.dodream.com.yaksok_refactoring.ApplicationBase;
+import yaksok.dodream.com.yaksok_refactoring.C_Dialog;
 import yaksok.dodream.com.yaksok_refactoring.R;
 import yaksok.dodream.com.yaksok_refactoring.model.user.User_Id;
 import yaksok.dodream.com.yaksok_refactoring.presenter.chat.Chat_Presenter;
@@ -54,7 +56,9 @@ public class Chatting_list extends ApplicationBase implements I_chat_list{
     String id;
     public ArrayList<String> ids = new ArrayList<>();
     public ArrayList<Chat_List_Model> chat_list_model = new ArrayList<>();
+    public static LinearLayout linearLayout;
     SendMessageVO sendMessageVO;
+    C_Dialog delete_D;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -62,12 +66,15 @@ public class Chatting_list extends ApplicationBase implements I_chat_list{
         setContentView(R.layout.activity_chatting_list);
 
         chat_list = (ListView)findViewById(R.id.family_connected_listview);
+        linearLayout = (LinearLayout)findViewById(R.id.linear_none_chat);
 
         presenter = new Chat_Presenter(this);
+        delete_D = new C_Dialog(this);
 
 
         presenter.setPreviousRegistered();
 
+        // chat_presenter.makeToastMessage("상대의 계정이 존재하지 않습니다.");
 
         adapter = new Chat_list_adater(this,familyItemss,R.layout.chat_list_item);
 
@@ -148,7 +155,27 @@ public class Chatting_list extends ApplicationBase implements I_chat_list{
 
     @Override
     public void makeToastMessage(String message) {
-        Toast.makeText(getApplicationContext(),message,Toast.LENGTH_LONG).show();
+        //Toast.makeText(getApplicationContext(),message,Toast.LENGTH_LONG).show();
+        // chat_presenter.makeToastMessage("상대의 계정이 존재하지 않습니다.");
+        if(message.equals("상대의 계정이 존재하지 않습니다.")){
+            linearLayout.setVisibility(View.VISIBLE);
+        }else{
+            delete_D.text_tv.setText(message);
+
+            delete_D.show();
+
+
+            delete_D.ok_btn.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+
+                    delete_D.dismiss();
+                }
+            });
+        }
+
+
+
     }
 
     @Override

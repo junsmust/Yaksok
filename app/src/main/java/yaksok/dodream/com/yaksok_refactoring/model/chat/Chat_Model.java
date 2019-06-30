@@ -2,6 +2,7 @@ package yaksok.dodream.com.yaksok_refactoring.model.chat;
 
 import android.support.annotation.NonNull;
 import android.util.Log;
+import android.view.View;
 import android.widget.Toast;
 
 import com.google.firebase.iid.FirebaseInstanceId;
@@ -25,6 +26,7 @@ import yaksok.dodream.com.yaksok_refactoring.model.user.LoginModel;
 import yaksok.dodream.com.yaksok_refactoring.model.user.User_Id;
 import yaksok.dodream.com.yaksok_refactoring.presenter.chat.Chat_Presenter;
 import yaksok.dodream.com.yaksok_refactoring.view.chat.Chat_Room;
+import yaksok.dodream.com.yaksok_refactoring.view.chat.Chatting_list;
 import yaksok.dodream.com.yaksok_refactoring.vo.BodyVO;
 import yaksok.dodream.com.yaksok_refactoring.vo.Connected_Family;
 import yaksok.dodream.com.yaksok_refactoring.vo.FcmTokenVO;
@@ -142,6 +144,7 @@ public class Chat_Model implements I_chat_model {
                                     Log.d("실행", "실행 됨");
 
 
+                                    Chatting_list.linearLayout.setVisibility(View.GONE);
 
                                         CalculateTime calculateTime = new CalculateTime();
                                         String lastTime = calculateTime.formatTimeString((bodyVO.getResult().get(0).getRegiDate().replaceAll("-", "").replaceAll(":", "").replaceAll(" ", "").substring(0, 14)));

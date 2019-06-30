@@ -213,7 +213,7 @@ public class Register_Fam_Model implements IRegister_Presenter_To_FamModel {
                     presenter.sendArrayList(familyItems);
                     presenter.onResponse(true);
                 } else if (findFamilyVO.getStatus().equals("204")) {
-                   presenter.makeErrorDialog( "상대의 계정이"+"\n"+ "존재하지 않습니다.");
+                   presenter.makeToastMessage("상대의 계정이 존재하지 않습니다.");
                 } else if (findFamilyVO.getStatus().equals("400")) {
                    presenter.makeErrorDialog("잘못된 요청입니다.");
                 } else if (findFamilyVO.getStatus().equals("500")) {
