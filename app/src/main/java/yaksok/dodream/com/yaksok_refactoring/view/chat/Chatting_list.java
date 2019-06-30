@@ -44,7 +44,7 @@ import yaksok.dodream.com.yaksok_refactoring.vo.MessageService;
 import yaksok.dodream.com.yaksok_refactoring.vo.SendMessageVO;
 
 
-public class Chatting_list extends ApplicationBase implements I_chat_list{
+public class Chatting_list extends ApplicationBase implements I_chat_list {
     private ListView chat_list;
     private ArrayList<ChatItem> familyItemss = new ArrayList<>();
     private Chat_list_adater adapter;
@@ -70,14 +70,7 @@ public class Chatting_list extends ApplicationBase implements I_chat_list{
 
         presenter = new Chat_Presenter(this);
         delete_D = new C_Dialog(this);
-
-
-        presenter.setPreviousRegistered();
-
-        // chat_presenter.makeToastMessage("상대의 계정이 존재하지 않습니다.");
-
         adapter = new Chat_list_adater(this,familyItemss,R.layout.chat_list_item);
-
 
         chat_list.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
@@ -86,21 +79,14 @@ public class Chatting_list extends ApplicationBase implements I_chat_list{
 
                 presenter.sendIdIndex(chat_list_model.get(position).getId());
 
-               /* Log.e( "onItemClick:2 ", (((FamilyItem) adapter.getItem(position)).getName().substring(index1+1,index2)));
-                String user_name = (((FamilyItem) adapter.getItem(position)).getName().substring(0,index1));
-                user_id = (((FamilyItem) adapter.getItem(position)).getName().substring(index1+1,index2));*/
                 user = User_Id.getUser_Id();
                 String user_name = (((ChatItem) adapter.getItem(position)).getName());
                 Intent intent = new Intent(getApplicationContext(),Chat_Room.class);
                 intent.putExtra("user_name",user_name);
                 intent.putExtra("user_id",user_id);
 
-
                 startActivity(intent);
                 overridePendingTransition(R.anim.pull_out_left, R.anim.pull_in_right);
-
-
-
             }
         });
 
@@ -138,8 +124,6 @@ public class Chatting_list extends ApplicationBase implements I_chat_list{
         imageView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-//                Intent intent = new Intent(getApplicationContext(),MainPageActivity.class);
-//                startActivityForResult(intent,7777);
                 finish();
             }
         });
@@ -155,8 +139,6 @@ public class Chatting_list extends ApplicationBase implements I_chat_list{
 
     @Override
     public void makeToastMessage(String message) {
-        //Toast.makeText(getApplicationContext(),message,Toast.LENGTH_LONG).show();
-        // chat_presenter.makeToastMessage("상대의 계정이 존재하지 않습니다.");
         if(message.equals("상대의 계정이 존재하지 않습니다.")){
             linearLayout.setVisibility(View.VISIBLE);
         }else{
@@ -183,12 +165,6 @@ public class Chatting_list extends ApplicationBase implements I_chat_list{
         if(response){
             Log.e( "onResponse: ", chat_list_model.size()+" ");
             for(int i=0;i<chat_list_model.size();i++){
-                // Log.d("ffffff1"," "+familyItemss.size());
-               // Log.e( "familyitemssize",familyItemss.size()+"   "+familyItemss.get(i).getFirst_name()+ familyItemss.get(i).getName()+familyItemss.get(i).last_message+familyItemss.get(i).last_messge_time);
-                Log.e( "test_1","i "+i+  "\n"+"id :"+chat_list_model.get(i).getId()+" \n"+"name :"+chat_list_model.get(i).getName()+"\n"+"lastname : "+chat_list_model.get(i).getLastName()+"\n"+"message :"+ chat_list_model.get(i).getLastMessage()+"\n"+"messagetime :"+
-                        chat_list_model.get(i).getLastTime()+"\n");
-
-                //Log.e( "test_1", "\n"+"id :"+chat_list_model+" \n"+"name :"+name_list+"\n"+"lastname : "+last_nam_list+"\n"+"message :"+ last_message_list+"\n"+"messagetime :"+last_message_time_list+"\n");
                 adapter.addItem(chat_list_model.get(i).getLastName(),chat_list_model.get(i).getName(),chat_list_model.get(i).getLastMessage(),chat_list_model.get(i).getLastTime());
                 adapter.notifyDataSetChanged();
                 chat_list.setAdapter(adapter);
@@ -234,9 +210,6 @@ public class Chatting_list extends ApplicationBase implements I_chat_list{
     @Override
     protected void onResume() {
         super.onResume();
-       // this.chat_list_model.clear();
-        //presenter.setPreviousRegistered();
-        //Log.e("onResume: ",chat_list_model.size()+"   " );
         presenter.sendUpdate(chat_list_model);
     }
 
@@ -245,25 +218,14 @@ public class Chatting_list extends ApplicationBase implements I_chat_list{
         super.onPause();
         chat_list_model.clear();
         familyItemss.clear();
-       // presenter.sendUpdate(chat_list_model);
     }
 
-    @Override
-    protected void onRestart() {
-        super.onRestart();
-        //presenter.setPreviousRegistered();
-    }
 
     @Override
     protected void onDestroy() {
         super.onDestroy();
         this.chat_list_model.clear();
         familyItemss.clear();
-        Log.e("onDestroy: ", chat_list_model.size()+" chat_list_model ");
-
-        Log.e( "onDestroy","onDestroy@@@@" );
     }
 
-
 }
-

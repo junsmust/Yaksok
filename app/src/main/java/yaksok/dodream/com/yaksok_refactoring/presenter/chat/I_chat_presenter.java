@@ -11,14 +11,8 @@ public interface I_chat_presenter {
     void setPreviousRegistered();
     void makeToastMessage(String message);
     void onResponse(boolean response);
-    void sendArrayList(ArrayList<ChatItem> familyItems);
-    void sendChatArrayList(ArrayList<SendMessageVO> albumList);
-    void setChatUserInfo(String user_name,String user_id);
-    void sendMessage(String message,String user2_id);
     void sendArrayList2(ArrayList<Chat_List_Model> chat_list_model);
 
-    void sendSendVO(SendMessageVO sendVO);
-    void getPreviouseConversation(String u_id,String y_id);
 
     void sendIdIndex(int index);
 
@@ -28,4 +22,6 @@ public interface I_chat_presenter {
     void sendIdIndex(String id);
 
     void sendUpdate(ArrayList<Chat_List_Model> chat_list_model);
+
+     
 }

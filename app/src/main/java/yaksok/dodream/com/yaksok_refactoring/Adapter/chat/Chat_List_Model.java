@@ -10,7 +10,7 @@ import yaksok.dodream.com.yaksok_refactoring.presenter.chat.Chat_Presenter;
 
 public class Chat_List_Model {
    private String id,name,lastName,lastMessage,lastTime;
-   //private ArrayList<String> name;
+   public ArrayList<String> ids = new ArrayList<>();
 
 
     public Chat_List_Model() {
@@ -22,6 +22,14 @@ public class Chat_List_Model {
         this.lastName = lastName;
         this.lastMessage = lastMessage;
         this.lastTime = lastTime;
+    }
+
+    public ArrayList<String> getIds() {
+        return ids;
+    }
+
+    public void setIds(ArrayList<String> ids) {
+        this.ids = ids;
     }
 
     public String getId() {
