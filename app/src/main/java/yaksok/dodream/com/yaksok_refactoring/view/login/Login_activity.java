@@ -256,6 +256,8 @@ public class Login_activity extends ApplicationBase implements IPresenterToView{
                 //Toast.makeText(getApplicationContext(), "test_1", Toast.LENGTH_LONG).show();
                 presenter_login.autoLogin(id_edt.getText().toString(),pw_edt.getText().toString(),"G"
                         ,loginInformation.getBoolean("auto",true));
+                Log.e( "onbtn ", loginInformation.getBoolean("auto",true)+"?");
+
                 if(loginInformation.getBoolean("auto",true)){
 
                  editor.putString("id",id_edt.getText().toString());
