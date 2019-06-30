@@ -14,17 +14,20 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
+        android:screenOrientation="portrait"
         android:usesCleartextTraffic="true">
 
 
-        <activity android:name=".view.Splash">
+        <activity android:name=".view.Splash"
+            android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".view.login.Login_activity" />
+        <activity android:name=".view.login.Login_activity"
+            android:screenOrientation="portrait"/>
 
         <meta-data
             android:name="com.kakao.sdk.AppKey"
@@ -33,25 +36,36 @@
             android:name="com.kakao.sdk.ClientSecret"
             android:value="kakao client secret value" />
 
-        <activity android:name=".view.Main.MainPage_activity" />
-        <activity android:name=".view.MyPill.MyPill_activity" />
-        <activity android:name=".view.signup.Signup_activity" />
-        <activity android:name=".view.addFamily.Register_Family" />
+        <activity android:name=".view.Main.MainPage_activity"
+            android:screenOrientation="portrait"/>
+        <activity android:name=".view.MyPill.MyPill_activity"
+            android:screenOrientation="portrait"/>
+        <activity android:name=".view.signup.Signup_activity"
+            android:screenOrientation="portrait"/>
+        <activity android:name=".view.addFamily.Register_Family"
+            android:screenOrientation="portrait"/>
         <activity android:name=".view.InsertPill.InsertPill_activity"
-            android:windowSoftInputMode="adjustNothing"/>
+            android:windowSoftInputMode="adjustNothing"
+            android:screenOrientation="portrait"/>
         <activity
             android:name=".view.InsertPill.SearchPill.SearchPill_activity"
-            android:windowSoftInputMode="adjustPan" />
-        <activity android:name=".view.InsertPill.Sel_AlarmRecive.Sel_AlarmRecive_activity" />
+            android:windowSoftInputMode="adjustPan"
+            android:screenOrientation="portrait"/>
+        <activity android:name=".view.InsertPill.Sel_AlarmRecive.Sel_AlarmRecive_activity"
+            android:screenOrientation="portrait"/>
         <activity
             android:name=".view.Alarm_On"
             android:launchMode="singleInstance"
             android:screenOrientation="unspecified"
             android:theme="@android:style/Theme.Translucent" />
-        <activity android:name=".view.Settings.SettingActivity" />
-        <activity android:name=".view.Settings.Developer" />
-        <activity android:name=".view.Settings.MyPage" />
-        <activity android:name=".view.Settings.ChangePW" />
+        <activity android:name=".view.Settings.SettingActivity"
+            android:screenOrientation="portrait"/>
+        <activity android:name=".view.Settings.Developer"
+            android:screenOrientation="portrait"/>
+        <activity android:name=".view.Settings.MyPage"
+            android:screenOrientation="portrait"/>
+        <activity android:name=".view.Settings.ChangePW"
+            android:screenOrientation="portrait"/>
         <activity android:name=".ApplicationBase" />
 
 
@@ -99,24 +113,33 @@
 
 
 
-        <activity android:name=".view.Settings.New_Settings"/>
+        <activity android:name=".view.Settings.New_Settings"
+            android:screenOrientation="portrait"/>
 
 
         
 
-    <activity android:name=".view.signup.GetPn" />
-    <activity android:name=".view.chat.Chatting_list" />
-    <activity android:name=".view.chat.Chat_Room" />
+    <activity android:name=".view.signup.GetPn"
+        android:screenOrientation="portrait"/>
+    <activity android:name=".view.chat.Chatting_list"
+        android:screenOrientation="portrait"/>
+    <activity android:name=".view.chat.Chat_Room"
+        android:screenOrientation="portrait"/>
     <activity
         android:name=".view.Settings.MyPage"
-        tools:ignore="DuplicateActivity" />
+        tools:ignore="DuplicateActivity"
+        android:screenOrientation="portrait"/>
 
-    <activity android:name=".view.InsertPill.Temp" />
-    <activity android:name=".view.WetherChooseFamilyOrNot">
+    <activity android:name=".view.InsertPill.Temp"
+        android:screenOrientation="portrait"/>
+    <activity android:name=".view.WetherChooseFamilyOrNot"
+        android:screenOrientation="portrait">
 
     </activity>
-    <activity android:name=".view.find_pw.FindUserPassword" />
-        <activity android:name=".view.Find_Id.ID_find_layout"/>
+    <activity android:name=".view.find_pw.FindUserPassword"
+        android:screenOrientation="portrait"/>
+        <activity android:name=".view.Find_Id.ID_find_layout"
+            android:screenOrientation="portrait"/>
 
 
 
