@@ -24,6 +24,7 @@ import retrofit2.converter.gson.GsonConverterFactory;
 import retrofit2.converter.scalars.ScalarsConverterFactory;
 import yaksok.dodream.com.yaksok_refactoring.R;
 import yaksok.dodream.com.yaksok_refactoring.model.Main.NotificationUtil;
+import yaksok.dodream.com.yaksok_refactoring.view.Main.MainPage_activity;
 import yaksok.dodream.com.yaksok_refactoring.view.login.Login_activity;
 import yaksok.dodream.com.yaksok_refactoring.vo.BodyVO;
 import yaksok.dodream.com.yaksok_refactoring.vo.TakeOk;
@@ -100,13 +101,14 @@ public class Alarm_On extends Activity {
 
                 });
                 if(isAppRunning()){
-                    Intent i = new Intent(getApplicationContext()/*현재 액티비티 위치*/ , Login_activity.class/*이동 액티비티 위치*/);
+                    Log.d("알람끝","실행중임??");
+                    /*Intent i = new Intent(getApplicationContext()*//*현재 액티비티 위치*//* , Login_activity.class*//*이동 액티비티 위치*//*);
                     i.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP|Intent.FLAG_ACTIVITY_SINGLE_TOP);
-                    startActivity(i);
+                    startActivity(i);*/
                     finish();
                 }
                 else{
-                    finish();
+                    Log.d("알람끝","안실행중임");
                 }
             }
         });
