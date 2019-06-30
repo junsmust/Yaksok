@@ -18,7 +18,7 @@ import android.widget.EditText;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
+
 
 import com.google.firebase.iid.FirebaseInstanceId;
 
@@ -49,7 +49,7 @@ import yaksok.dodream.com.yaksok_refactoring.vo.MessageResultBodyVO;
 import yaksok.dodream.com.yaksok_refactoring.vo.MessageService;
 import yaksok.dodream.com.yaksok_refactoring.vo.SendMessageVO;
 
-public class Chat_Room extends ApplicationBase implements I_chat_list{
+public class Chat_Room extends ApplicationBase {
 
     private Intent intent;
     public static String user2_name,user2_id,my_id;
@@ -192,7 +192,7 @@ public class Chat_Room extends ApplicationBase implements I_chat_list{
                 sendVO.setGivingUser(User_Id.getUser_Id());
                 sendVO.setContent(ed_context.getText().toString());
                 sendVO.setReceivingUser(user2_id);
-                //sendVO.setRegidate(time);
+
 
 
                 Log.d("@@@@@@@@@@@"+"id",sendVO.getGivingUser()+"recive"+sendVO.getReceivingUser()+"context"+sendVO.getContent());
@@ -205,7 +205,6 @@ public class Chat_Room extends ApplicationBase implements I_chat_list{
                         //400: FCM error
                         //500 : Server Error
                         if(messageBodyVO.getStatus().equals("201")){
-                            Toast.makeText(getApplicationContext(),"전송되었습니다.",Toast.LENGTH_SHORT).show();
                             sendVO.setRegidate(messageBodyVO.getRegiDate().substring(11,16));
                             albumList.add(sendVO);
                             chat_recycler_list.setAdapter(chatAdapter);
@@ -217,9 +216,8 @@ public class Chat_Room extends ApplicationBase implements I_chat_list{
 
                         }
                         else if(messageBodyVO.getStatus().equals("400")){
-                            Toast.makeText(getApplicationContext(),"FCM Error",Toast.LENGTH_SHORT).show();
                         } else if (messageBodyVO.getStatus().equals("500")) {
-                            Toast.makeText(getApplicationContext(),"Server Error",Toast.LENGTH_SHORT).show();
+
                         }
                     }
 
@@ -265,8 +263,6 @@ public class Chat_Room extends ApplicationBase implements I_chat_list{
                 //204 : 값없음(null반환)
                 //500 : Server Error
                 assert bodyVO != null;
-                // Log.d("@@@@@@@@@@@@@@@@@@",bodyVO.getResult().get(0).getContent()+"id"+bodyVO.getResult().get(0).getGivingUser()+"id2"+bodyVO.getResult().get(0).getReceivingUser());
-                //Toast.makeText(getApplicationContext(),"body"+bodyVO.getStatus()+"result"+bodyVO.getResult().size(),Toast.LENGTH_SHORT).show();
 
                 if(bodyVO.getStatus().equals("200")){
                     for(int i = 0; i < bodyVO.getResult().size(); i++){
@@ -315,7 +311,7 @@ public class Chat_Room extends ApplicationBase implements I_chat_list{
                     ed_context.setFocusable(true);
                 }
                 else if(bodyVO.getStatus().equals("500")){
-                    Toast.makeText(getApplicationContext(),"서버 오류입니다.",Toast.LENGTH_SHORT).show();
+
                 }
 
             }
@@ -363,11 +359,11 @@ public class Chat_Room extends ApplicationBase implements I_chat_list{
         System.out.println("newIntent");
         if (intent != null) {
             if(!intent.getStringExtra("from").equals("")) {
-                Toast.makeText(getApplicationContext(), intent.getStringExtra("from"), Toast.LENGTH_LONG).show();
+
 
             }
             else{
-                Toast.makeText(getApplicationContext(),"NULLLLL",Toast.LENGTH_LONG).show();
+
             }
 
         }
@@ -426,44 +422,5 @@ public class Chat_Room extends ApplicationBase implements I_chat_list{
     }
 
 
-    @Override
-    public void makeToastMessage(String message) {
 
-    }
-
-    @Override
-    public void onResponse(boolean response) {
-
-    }
-
-    @Override
-    public void getArrayList(ArrayList<ChatItem> familyItems) {
-
-    }
-
-    @Override
-    public void sendChatArrayList(ArrayList<SendMessageVO> albumList) {
-
-    }
-
-    @Override
-    public void getSendVO(SendMessageVO sendVO) {
-
-    }
-
-    @Override
-    public void getId(String s) {
-
-    }
-
-    @Override
-    public void getArrayIds(ArrayList<String> ids) {
-
-    }
-
-    @Override
-    public void sendChatList2(ArrayList<Chat_List_Model> chat_list_model) {
-
-    }
 }
-

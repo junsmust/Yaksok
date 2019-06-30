@@ -23,7 +23,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:gravity="center"
-                android:text="매칭된 가족이 없습니다. " />
+                android:text="채팅 기록이 존재하지 않습니다. " />
         </LinearLayout>
         <ListView
             android:id="@+id/family_connected_listview"

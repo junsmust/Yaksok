@@ -43,39 +43,10 @@ public class Chat_Presenter implements I_chat_presenter {
         view.onResponse(response);
     }
 
-    @Override
-    public void sendArrayList(ArrayList<ChatItem> familyItems) {
-        view.getArrayList(familyItems);
-    }
-
-    @Override
-    public void sendChatArrayList(ArrayList<SendMessageVO> albumList) {
-        view.sendChatArrayList(albumList);
-    }
-
-    @Override
-    public void setChatUserInfo(String user_name, String user_id) {
-        model.setChatUserInfo(user_name, user_id);
-    }
-
-    @Override
-    public void sendMessage(String message, String user2_id) {
-        model.sendMessage(message, user2_id);
-    }
 
     @Override
     public void sendArrayList2(ArrayList<Chat_List_Model> chat_list_model) {
         view.sendChatList2(chat_list_model);
-    }
-
-    @Override
-    public void sendSendVO(SendMessageVO sendVO) {
-        view.getSendVO(sendVO);
-    }
-
-    @Override
-    public void getPreviouseConversation(String u_id, String y_id) {
-        model.getPreviouseConversation(u_id, y_id);
     }
 
     @Override
@@ -102,6 +73,8 @@ public class Chat_Presenter implements I_chat_presenter {
     public void sendUpdate(ArrayList<Chat_List_Model> chat_list_model) {
         model.sendUpdate(chat_list_model);
     }
+
+
 
 
 }
