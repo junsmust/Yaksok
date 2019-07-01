@@ -1,6 +1,8 @@
 package yaksok.dodream.com.yaksok_refactoring.view.chat;
 
 import android.annotation.SuppressLint;
+import android.app.KeyguardManager;
+import android.content.Context;
 import android.content.Intent;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
@@ -89,6 +91,19 @@ public class Chatting_list extends ApplicationBase implements I_chat_list {
                 overridePendingTransition(R.anim.pull_out_left, R.anim.pull_in_right);
             }
         });
+
+        KeyguardManager km = (KeyguardManager) getSystemService(Context.KEYGUARD_SERVICE);
+
+
+
+        if(km.inKeyguardRestrictedInputMode()){
+
+            chat_list_model.clear();
+            familyItemss.clear();
+
+        }
+
+
 
     }
 
@@ -220,6 +235,14 @@ public class Chatting_list extends ApplicationBase implements I_chat_list {
         familyItemss.clear();
     }
 
+    @Override
+    protected void onStop() {
+        super.onStop();
+
+        chat_list_model.clear();
+        familyItemss.clear();
+
+    }
 
     @Override
     protected void onDestroy() {
@@ -227,5 +250,12 @@ public class Chatting_list extends ApplicationBase implements I_chat_list {
         this.chat_list_model.clear();
         familyItemss.clear();
     }
+
+
+
+
+
+
+
 
 }

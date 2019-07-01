@@ -50,7 +50,7 @@
             android:layout_centerHorizontal="true"
             android:text="context"
             android:textSize="20sp"
-            android:maxWidth="300dp"
+            android:maxWidth="240sp"
             android:layout_centerInParent="true"/>
 
 
