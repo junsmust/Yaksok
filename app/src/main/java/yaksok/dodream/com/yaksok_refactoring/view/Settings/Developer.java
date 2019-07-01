@@ -20,7 +20,7 @@ import yaksok.dodream.com.yaksok_refactoring.R;
 
 public class Developer extends ApplicationBase{
     ListView lv1, lv2;
-    private String[] name1 = {"박성빈","박한을","홍지윤","서범준","이승준","한수정","윤예찬"};
+    private String[] name1 = {"박성빈","박한을","임지윤","서범준","이승준","한수정","윤예찬"};
     private String[] col1 = {"Columbia University in the City Of New York"+"\n"+"Computer Science and Mathematics",
             "성균관대학교 화학공학부",
             "홍익대학교 산업공학과",

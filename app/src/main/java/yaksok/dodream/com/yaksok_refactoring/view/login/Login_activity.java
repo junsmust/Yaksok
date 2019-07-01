@@ -11,6 +11,7 @@ import android.support.v7.app.ActionBar;
 import android.os.Bundle;
 import android.text.InputType;
 import android.text.method.PasswordTransformationMethod;
+import android.util.Base64;
 import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
@@ -131,6 +132,12 @@ public class Login_activity extends ApplicationBase implements IPresenterToView{
 
         id_fl = (FrameLayout)findViewById(R.id.id_fl);
         pw_pl = (FrameLayout)findViewById(R.id.pw_fl);
+
+        //SHA1: 28:46:DD:4A:64:30:9E:C8:64:42:4D:77:8A:B8:63:28:F0:51:A5:3D
+        byte[] sha1 = {
+                0x28, 0x46, (byte)0xDD, 0x4A, 0x64, 0x30, (byte) 0x9E, (byte) 0xC8, 0x64, 0x42,0x4D,0x77, (byte) 0x8A, (byte) 0xB8, 0x63, 0x28, (byte) 0xF0,0x51, (byte) 0xA5,0x3D
+        };
+        Log.d("keyHash: " , Base64.encodeToString(sha1, Base64.NO_WRAP));
 
 
         id_fl.setOnTouchListener(new View.OnTouchListener() {
