@@ -1,16 +1,19 @@
 package yaksok.dodream.com.yaksok_refactoring.view.Main;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.graphics.Paint;
 import android.os.Bundle;
 import android.os.CountDownTimer;
 import android.util.Log;
 import android.view.View;
+import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import yaksok.dodream.com.yaksok_refactoring.ApplicationBase;
 import yaksok.dodream.com.yaksok_refactoring.view.Settings.New_Settings;
@@ -20,6 +23,7 @@ import yaksok.dodream.com.yaksok_refactoring.presenter.Main.Presenter_Main;
 import yaksok.dodream.com.yaksok_refactoring.view.MyPill.MyPill_activity;
 import yaksok.dodream.com.yaksok_refactoring.view.addFamily.Register_Family;
 import yaksok.dodream.com.yaksok_refactoring.view.chat.Chatting_list;
+import yaksok.dodream.com.yaksok_refactoring.view.login.Login_activity;
 
 public class MainPage_activity extends ApplicationBase implements Main_PresenterToView, View.OnClickListener{
 
@@ -32,6 +36,10 @@ public class MainPage_activity extends ApplicationBase implements Main_Presenter
     private Boolean countSW = false;
     LinearLayout lL1;
     ProgressBar progressBar;
+    public SharedPreferences loginInformation;
+    public  SharedPreferences.Editor editor;
+    private final long FINISH_INTERVAL_TIME = 2000;
+    private long backPressedTime = 0;
 
 
     @Override
@@ -88,6 +96,10 @@ public class MainPage_activity extends ApplicationBase implements Main_Presenter
 
         bt_InsertFamily.setOnClickListener(this);
         bt_chat.setOnClickListener(this);
+
+        loginInformation = getSharedPreferences("user",MODE_PRIVATE);
+        editor = loginInformation.edit();
+
     }
 
     @Override // 가까운 약시간 요청해서 UI변경 할 부분
@@ -252,6 +264,39 @@ public class MainPage_activity extends ApplicationBase implements Main_Presenter
             countDownTimer.cancel();
 
     }
+
+    @Override
+    public void onBackPressed() {
+
+        if(loginInformation.getBoolean("auto",true)){
+            long tempTime = System.currentTimeMillis();//154872781039
+            long intervalTime = tempTime - backPressedTime; // 154872781039 - 0
+
+            // invervalTime = 154872781039
+            if(0 <= intervalTime && FINISH_INTERVAL_TIME >= intervalTime){
+                super.onBackPressed();
+                moveTaskToBack(true);
+                AppFinish();
+
+            }else{
+
+                backPressedTime = tempTime; //backPressedTime = 154872781039
+                Toast.makeText(getApplicationContext(),"종료하시려면 한번 더 눌러주세요",Toast.LENGTH_LONG).show();
+
+            }
+        }else{
+            finish();
+        }
+
+    }
+
+
+    public void AppFinish(){
+        finish();
+        System.exit(0);
+        android.os.Process.killProcess(android.os.Process.myPid());
+    }
+
 
     /* @Override
     public void onBackPressed() {
