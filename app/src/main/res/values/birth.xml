@@ -158,12 +158,6 @@
 
     </string-array>
 
-    <string-array name="phone_company">
-        <item>KT</item>
-        <item>SKT</item>
-        <item>LG</item>
-    </string-array>
-
     <string-array name="email_example">
         <item>naver.com</item>
         <item>hotmail.com</item>
