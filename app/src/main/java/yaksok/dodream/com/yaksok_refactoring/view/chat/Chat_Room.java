@@ -334,7 +334,6 @@ public class Chat_Room extends ApplicationBase {
     protected void onPause() {
         super.onPause();
         iInTheChattingRoom = false;
-        finish();
         //Chatting_list.presenter.setPreviousRegistered();
     }
 
@@ -348,8 +347,6 @@ public class Chat_Room extends ApplicationBase {
     protected void onDestroy() {
         super.onDestroy();
         iInTheChattingRoom = false;
-        finish();
-
 
         Log.e( "onDestroy: ","ccccc1" );
 

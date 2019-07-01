@@ -95,8 +95,8 @@ public class Chatting_list extends ApplicationBase implements I_chat_list {
         KeyguardManager km = (KeyguardManager) getSystemService(Context.KEYGUARD_SERVICE);
 
 
-
         if(km.inKeyguardRestrictedInputMode()){
+            Log.d("잠김","ㅇㅇ");
 
             chat_list_model.clear();
             familyItemss.clear();
@@ -225,6 +225,9 @@ public class Chatting_list extends ApplicationBase implements I_chat_list {
     @Override
     protected void onResume() {
         super.onResume();
+        Log.d("잠김","ㅇㅇ");
+        chat_list_model.clear();
+        familyItemss.clear();
         presenter.sendUpdate(chat_list_model);
     }
 
