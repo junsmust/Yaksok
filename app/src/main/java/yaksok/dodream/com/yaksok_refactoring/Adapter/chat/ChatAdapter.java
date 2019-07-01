@@ -243,7 +243,7 @@ public class ChatAdapter extends RecyclerView.Adapter<ChatAdapter.ViewHolder>
             viewHolder1.textTitle.setLayoutParams(layoutParams);
             viewHolder1.textTitle.setText(albumList.get(position).getContent());
             viewHolder1.textTitle.setTextColor(Color.parseColor("#FFFFFF"));
-            viewHolder1.textTitle.setBackgroundResource(R.drawable.my_chat_balloon);
+            viewHolder1.textTitle.setBackgroundResource(R.drawable.my_chat_balloon_ver_2);
           /*  viewHolder1.user2.setText(item.getGivingUser());
             viewHolder1.user2.setVisibility(View.INVISIBLE);*/
             viewHolder1.user1.setText(item.getReceivingUser());
@@ -300,10 +300,12 @@ public class ChatAdapter extends RecyclerView.Adapter<ChatAdapter.ViewHolder>
 
             //layoutParams.addRule(RelativeLayout.BELOW,R.id.user2_txt);
             layoutParams.addRule(RelativeLayout.END_OF,R.id.user_iv);
-            layoutParams.setMarginStart(15);
+            layoutParams.addRule(RelativeLayout.ALIGN_PARENT_BOTTOM);
+            //layoutParams.setMarginStart(8);
             layoutParams2.addRule(RelativeLayout.ALIGN_BASELINE,R.id.user_context);
             layoutParams7.addRule(RelativeLayout.ALIGN_TOP,R.id.user_context);
             layoutParams3.addRule(RelativeLayout.END_OF,R.id.user_context);
+            //layoutParams3.setMargins(0,0,0,13);
             //layoutParams3.addRule(RelativeLayout.BELOW,R.id.user2_txt);
             layoutParams3.addRule(RelativeLayout.ALIGN_PARENT_BOTTOM);
             layoutParams8.addRule(RelativeLayout.END_OF,R.id.user_iv);

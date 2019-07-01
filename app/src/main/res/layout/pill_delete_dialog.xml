@@ -15,7 +15,6 @@
         android:layout_gravity="center">
 
         <TextView
-            android:id="@+id/tv_a_title"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="알림"
@@ -27,7 +26,6 @@
             />
 
         <TextView
-            android:id="@+id/tv_delete_D_text"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginBottom="20dp"
