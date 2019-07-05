@@ -191,7 +191,8 @@ public class LoginModel implements IPresennterToModel {
 
         id = jsonObject.getJSONObject("response").getString("id");
         String name = jsonObject.getJSONObject("response").getString("name");
-        String profile_path = jsonObject.getJSONObject("response").getString("profile_image");
+      //  String profile_path = jsonObject.getJSONObject("response").getString("profile_image");
+        String profile_path = "";
         String email = jsonObject.getJSONObject("response").getString("email");
         String birthday = jsonObject.getJSONObject("response").getString("birthday");
         String age_range = jsonObject.getJSONObject("response").getString("age");
