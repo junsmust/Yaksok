@@ -6,7 +6,7 @@ android {
         applicationId "yaksok.dodream.com.yaksok"
         minSdkVersion 24
         targetSdkVersion 28
-        versionCode 1
+        versionCode 3
         versionName "1.2"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
 
