@@ -51,6 +51,7 @@ import yaksok.dodream.com.yaksok_refactoring.vo.SendMessageVO;
 
 public class Chat_Room extends ApplicationBase {
 
+    
     private Intent intent;
     public static String user2_name,user2_id,my_id;
     public static RecyclerView chat_recycler_list;
