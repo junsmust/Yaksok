@@ -14,6 +14,155 @@ import yaksok.dodream.com.yaksok_refactoring.model.user.User_Info_Model;
 public interface UserService {
     public static final String API_URL = "http://15.164.163.234:8080";
 
+
+    
+    //==User===
+    //
+    //[PUT] UpdateFCMToken
+    //
+    //변경 전 : PUT /users/fcmtokens
+    //body -> {“id” : “..” , “fcmToken” : “..”}
+    //
+    //변경 후 :  PATCH /users/{userId}
+    //body -> {“fcmToken” : “..”}
+    //——————————————
+    //
+    //[PUT] UpdateUserPassword
+    //
+    //변경 전 : PUT /users/{id}/originpasswords/{opw}/newpasswords/{npw}
+    //
+    //변경 후 : PATCH /users/{userId}		-> 모바일쪽에서 기존패스워드일치하는지 로그인API사용해야함
+    //body -> {“pw” : “..”}
+    //
+    //——————————————
+    //
+    //
+    //[PUT] FindUserPassword
+    //
+    //변경 전 : PUT /users/{id}/emails/{email}/passwords
+    //
+    //변경 후 : PATCH /emails/{email}/users/{userId}
+    //
+    //——————————————-
+    //
+    //[DELETE] DeleteUser
+    //
+    //변경 전 : DELETE /users
+    //body -> {“id” : “..” , “userType” : “..”}
+    //
+    //변경 후 : DELETE /users/{userId}/
+    //
+    //
+    //
+    //
+    //
+    //
+    //
+    //==Family===
+    //
+    //[GET] GetFamilyList
+    //
+    //변경 전 : GET /families/{userId}
+    //
+    //변경 후 : GET /users/{userId}/families
+    //——————————————
+    //
+    //
+    //[DELETE] DeleteFamily
+    //
+    //변경 전 : DELETE /families
+    //body -> {"user_1” : ”.., "user_2” : ”..”}
+    //
+    //변경 후 : DELETE /users/{user_1}/families/{user_2}
+
+    //==MyMedicine===
+    //
+    //[POST] RegisterMyMedicine
+    //
+    //변경 전 : POST /mymedicines?
+    //body -> {
+    //    "userId": “…”,
+    //    "name": “…”,
+    //    "dosagi": #,
+    //    "timeList": [
+    //        “….”,
+    //        “….”
+    //    ],
+    //    “alarmList": [     //요기 변경
+    //        “…”
+    //    ]
+    //}
+    //
+    //변경 후 : POST /my-medicines
+    //body -> {
+    //    "userId": “…”,
+    //    "name": “…”,
+    //    "dosagi": #,
+    //    "timeList": [
+    //        “….”,
+    //        “….”
+    //    ],
+    //    "notificationList": [
+    //        “…”
+    //    ]
+    //}
+    //——————————————
+    //
+    //[GET] GetMyMedicineList
+    //
+    //변경 전 : GET /mymedicines/{id}
+    //
+    //변경 후 : GET /users/{userId}/my-medicines
+    //——————————————
+    //
+    //[GET] GetNearTime
+    //
+    //변경 전 : GET /mymedicines/{userId}/neartime
+    //
+    //변경 후 : GET /users/{userId}/near-times
+    //——————————————
+    //
+    //[PUT] TakinMedicine
+    //
+    //변경 전 :  PUT /mymedicines/takingmedicine
+    //body -> {“givingUser” : “..”, “myMedicineNo” : “..”}
+    //
+    //변경 후 : PATCH /users/{givingUser}/my-medicines/{myMedicineNo}
+    //
+    //——————————————
+    //
+    //[DELETE] DeleteMyMedicine
+    //
+    //변경 전 : DELETE /mymedicines
+    //body -> {“myMedicineNo” : “..”}
+    //
+    //변경 후 : DELETE /my-medicines/{myMedicineNo}
+    //————————————————————————
+    //
+    //
+    //
+    //==Alarm  ->  Notification===
+    //
+    //[GET] GetChatingRoomList
+    //
+    //변경 전 : GET /alarms/{userId}
+    //
+    //변경 후 : GET /users/{userId}/notifications
+    //————————————————————————
+    //
+    //[DELETE] DeleteAlarm -> DeleteNotification
+    //
+    //변경 전 :  DELETE /alarms
+    //
+    //body -> {“alarmNo” : “..”}
+    //
+    //
+    //변경 후 : DELETE /notifications/{notificationNo}
+    //
+    //
+    //
+    //
+    //——————————————
     @POST("/users")
     Call<BodyVO>postSignUp(@Body User_Info_Model userVO);
 

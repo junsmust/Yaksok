@@ -12,6 +12,22 @@ public interface MessageService {
     public static final String API_URL = "http://15.164.163.234:8080";
 
 
+
+    //==Message===
+    //
+    //[GET] GetMessageList
+    //
+    //변경 전 : GET /messages/{user1}/{user2}?limit=#&offset=#
+    //
+    //변경 후 : GET /users/{user_1}/families/{user_2}/messages?limit=#&offset=#
+    //
+    //————————————————————————
+
+
+
+
+
+
     //messages/934294895/52416853?limit=10&offset=1
     //@GET("/users/{item} ? itemType=\"\" & behavior=\"\"")
     //    Call<BodyVO>GetOvelapPhoneNumber(@Path("item") String pn,@Query("itemType") String phoneNumber,@Query("behavior") String  confirmOverlapPhoneNum);
