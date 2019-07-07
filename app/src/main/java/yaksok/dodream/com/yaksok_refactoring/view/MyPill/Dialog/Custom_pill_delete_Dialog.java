@@ -22,6 +22,7 @@ import yaksok.dodream.com.yaksok_refactoring.presenter.MyPill.Dialog.Presenter_D
 import yaksok.dodream.com.yaksok_refactoring.view.MyPill.MyPill_activity;
 
 public class Custom_pill_delete_Dialog implements Dialog_PresenterToView{
+
     Context context;
     String pill_name,pill_data;
     int pillNo;
