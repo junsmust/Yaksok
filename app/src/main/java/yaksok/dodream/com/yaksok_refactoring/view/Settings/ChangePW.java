@@ -41,7 +41,7 @@ public class ChangePW extends AppCompatActivity implements ChangePW_PresenterToV
                 }
                 else{
                     //비밀번호 변경 API호출
-                    presenter_changePW.onChangePW(User_Id.getUser_Id(), et_orPW.getText().toString(),et_chPW.getText().toString());
+                    presenter_changePW.onChangePW(User_Id.getUser_Id(),et_chPW.getText().toString());
                 }
             }
         });

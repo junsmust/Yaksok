@@ -101,7 +101,7 @@ public class MyPill_Model implements MyPill_PresenterToModel {
             public void onResponse(Call<FamilyBodyVO> call, Response<FamilyBodyVO> response) {
                 FamilyBodyVO meDiDelete = response.body();
 
-                if(meDiDelete.getStatus().equals("201")){
+                if(meDiDelete.getStatus().equals("200")){
                     presenter_myPill.onMyPillDeleteRespoce(true);
                     Log.d("약 삭제 상태", "True");
                 }

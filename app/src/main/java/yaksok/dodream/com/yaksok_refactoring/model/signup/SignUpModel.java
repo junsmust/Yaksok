@@ -464,10 +464,9 @@ public class SignUpModel implements IPresenterToSignUpModel {
     }
     public void pushToken(){
         final FcmTokenVO fcmTokenVO = new FcmTokenVO();
-        fcmTokenVO.setId(user_info_model.getId());
         fcmTokenVO.setFcmToken(FirebaseInstanceId.getInstance().getToken());
 
-        Call<BodyVO> bodyVOCall = userService.putToken(fcmTokenVO);
+        Call<BodyVO> bodyVOCall = userService.putToken(User_Id.getUser_Id(),fcmTokenVO);
         bodyVOCall.enqueue(new Callback<BodyVO>() {
             @Override
             public void onResponse(@NonNull Call<BodyVO> call, @NonNull Response<BodyVO> response) {
@@ -476,10 +475,10 @@ public class SignUpModel implements IPresenterToSignUpModel {
                 Log.e( "onResponse:4113 ",bodyVO.getStatus().toString());
                 if(bodyVO.equals("201")){
                     if(user_info_model.getUserType().equals("G")){
-                        user_info_model.setFcmToken(fcmTokenVO.getFcmToken());
+                        //user_info_model.setFcmToken(fcmTokenVO.getFcmToken());
                     }else{
                         Log.e( "onResponse:4113 ",bodyVO.getStatus().toString());
-                        LoginModel.user_info_model.setFcmToken(fcmTokenVO.getFcmToken());
+                       // LoginModel.user_info_model.setFcmToken(fcmTokenVO.getFcmToken());
                     }
 
                 }

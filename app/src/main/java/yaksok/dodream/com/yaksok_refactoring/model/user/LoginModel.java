@@ -404,10 +404,9 @@ public class LoginModel implements IPresennterToModel {
 
 
         final FcmTokenVO fcmTokenVO = new FcmTokenVO();
-        fcmTokenVO.setId(User_Id.getUser_Id());
         fcmTokenVO.setFcmToken(FirebaseInstanceId.getInstance().getToken());
 
-        Call<BodyVO> bodyVOCall = userService.putToken(fcmTokenVO);
+        Call<BodyVO> bodyVOCall = userService.putToken(User_Id.getUser_Id(),fcmTokenVO);
         bodyVOCall.enqueue(new Callback<BodyVO>() {
             @Override
             public void onResponse(@NonNull Call<BodyVO> call, @NonNull Response<BodyVO> response) {

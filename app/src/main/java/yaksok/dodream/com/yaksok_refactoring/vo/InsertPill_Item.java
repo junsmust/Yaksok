@@ -6,11 +6,15 @@ public class InsertPill_Item {
     private String userId,name,dosagi;
     private List<String> timeList;
     private List<Integer> elementList;
-    private List<String> alarmList;
+    private List<String> notificationList;
 
-    public List<String> getAlarmList() { return alarmList; }
+    public List<String> getNotificationList() {
+        return notificationList;
+    }
 
-    public void setAlarmList(List<String> alarmList) { this.alarmList = alarmList; }
+    public void setNotificationList(List<String> notificationList) {
+        this.notificationList = notificationList;
+    }
 
     public String getUserId() {
         return userId;

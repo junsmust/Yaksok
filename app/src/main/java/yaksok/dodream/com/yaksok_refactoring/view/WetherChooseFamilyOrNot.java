@@ -99,11 +99,13 @@ public class WetherChooseFamilyOrNot extends ApplicationBase implements View.OnC
         userService = retrofit.create(UserService.class);
 
 
+        //@PATCH("/users/{userId}")
+        //    Call<BodyVO> putToken(String fcmToken);
+
         final FcmTokenVO fcmTokenVO = new FcmTokenVO();
-        fcmTokenVO.setId(User_Id.getUser_Id());
         fcmTokenVO.setFcmToken(FirebaseInstanceId.getInstance().getToken());
 
-        Call<BodyVO> bodyVOCall = userService.putToken(fcmTokenVO);
+        Call<BodyVO> bodyVOCall = userService.putToken(User_Id.getUser_Id(),fcmTokenVO);
         bodyVOCall.enqueue(new Callback<BodyVO>() {
             @Override
             public void onResponse(@NonNull Call<BodyVO> call, @NonNull Response<BodyVO> response) {

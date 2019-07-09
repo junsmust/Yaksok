@@ -26,8 +26,8 @@ public class Presenter_ChangePW implements ChangePWToPresenter{
     public void setModel(ChangePW_PresenterToModel model) { this.model = model; }
 
     @Override
-    public void onChangePW(String id, String opw,String ch_pw) {
-        model.onChangePw(id,opw,ch_pw);
+    public void onChangePW(String id, String ch_pw) {
+        model.onChangePw(id,ch_pw);
     }
 
     @Override

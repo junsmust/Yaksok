@@ -307,7 +307,7 @@ public class InsertPill_activity extends ApplicationBase implements InsertPill_P
                     insertPill_item.setName(et_name.getText().toString());
                     insertPill_item.setDosagi(tv_dosagi.getText().toString());
                     insertPill_item.setTimeList(time);
-                    insertPill_item.setAlarmList(family_id);
+                    insertPill_item.setNotificationList(family_id);
                     insertPill_item.setUserId(User_Id.getUser_Id());
 
                     presenter_insertPill.insertPill(insertPill_item);

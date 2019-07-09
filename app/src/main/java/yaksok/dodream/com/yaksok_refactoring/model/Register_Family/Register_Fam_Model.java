@@ -240,21 +240,21 @@ public class Register_Fam_Model implements IRegister_Presenter_To_FamModel {
                 .addConverterFactory(GsonConverterFactory.create())
                 .build();
         deleteService = retrofit.create(DeleteService.class);
-
+/*
         FamilyDelVO familyDelVO = new FamilyDelVO();
         familyDelVO.setUser_1(User_Id.getUser_Id());
-        familyDelVO.setUser_2(id_list.get(position));
+        familyDelVO.setUser_2(id_list.get(position));*/
 
-        Log.d("dddddd5",familyDelVO.getUser_1()+" "+familyDelVO.getUser_2());
+      /*  Log.d("dddddd5",familyDelVO.getUser_1()+" "+familyDelVO.getUser_2());*/
 
-        Call<FamilyBodyVO> delectionCall = deleteService.deleteBody(familyDelVO);
+        Call<FamilyBodyVO> delectionCall = deleteService.deleteBody(User_Id.getUser_Id(),id_list.get(position));
 
         delectionCall.enqueue(new Callback<FamilyBodyVO>() {
             @Override
             public void onResponse(Call<FamilyBodyVO> call, Response<FamilyBodyVO> response) {
                 FamilyBodyVO familyBodyVO = response.body();
                 Log.d("dddddd2",familyBodyVO.getStatus());
-                if(familyBodyVO.getStatus().equals("201")){
+                if(familyBodyVO.getStatus().equals("200")){
 
 
 

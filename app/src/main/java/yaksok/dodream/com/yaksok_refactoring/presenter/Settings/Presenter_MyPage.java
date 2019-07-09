@@ -35,8 +35,8 @@ public class Presenter_MyPage implements MyPageToPresenter {
     }
 
     @Override
-    public void onChangePW(String id, String opw, String ch_pw) {
-        model.onChangePw(id,opw,ch_pw);
+    public void onChangePW(String id,String od_pw, String ch_pw) {
+        model.onChangePw(id,od_pw,ch_pw);
     }
 
     @Override

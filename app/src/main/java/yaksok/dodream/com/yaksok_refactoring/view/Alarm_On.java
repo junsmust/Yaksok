@@ -58,9 +58,9 @@ public class Alarm_On extends Activity {
                 .addConverterFactory(GsonConverterFactory.create())
                 .build();
         userService = retrofit.create(UserService.class);
-        takeOk = new TakeOk();
+       /* takeOk = new TakeOk();
         takeOk.setGivingUser(NotificationUtil.userId);
-        takeOk.setMyMedicineNo(NotificationUtil.pillNo);
+        takeOk.setMyMedicineNo(NotificationUtil.pillNo);*/
 
         text.setText(NotificationUtil.userName+"("+NotificationUtil.userId+")님"+"\n"+NotificationUtil.pillName+"(약) 복용시간입니다.");
 
@@ -81,13 +81,14 @@ public class Alarm_On extends Activity {
                // startActivityForResult(intent1,7000);
                 //finish();
                 //startActivity(intent1);
-                Call<BodyVO> call = userService.putTakeMedicine(takeOk);
+                //@Path("givingUser") String givingUser,@Path("myMedicineNo") String myMedicineNo
+                Call<BodyVO> call = userService.putTakeMedicine(NotificationUtil.userId,NotificationUtil.pillNo);
                 System.out.println("@@@@@@@@@@@@@@@@@@@");
                 call.enqueue(new Callback<BodyVO>() {
                     @Override
                     public void onResponse(Call<BodyVO> call, Response<BodyVO> response) {
                         BodyVO mVO = response.body();
-                        if (mVO.getStatus().equals("201")) {
+                        if (mVO.getStatus().equals("200")) {
                             Log.d("약복용 서비스 ", "복용 완료");
                         } else if (mVO.getStatus().equals("202")) {
                             Log.d("약복용 서비스 ", "복용 완료 후 약 삭제");
