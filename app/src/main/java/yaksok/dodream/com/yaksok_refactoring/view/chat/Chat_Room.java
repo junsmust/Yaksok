@@ -4,6 +4,7 @@ import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.drawable.Drawable;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -49,7 +50,7 @@ import yaksok.dodream.com.yaksok_refactoring.vo.MessageResultBodyVO;
 import yaksok.dodream.com.yaksok_refactoring.vo.MessageService;
 import yaksok.dodream.com.yaksok_refactoring.vo.SendMessageVO;
 
-public class Chat_Room extends ApplicationBase {
+public class Chat_Room extends ApplicationBase implements SwipeRefreshLayout.OnRefreshListener {
 
     
     private Intent intent;
@@ -86,8 +87,12 @@ public class Chat_Room extends ApplicationBase {
 
 
     public static ArrayList<SendMessageVO> albumList = new ArrayList<>();
+    public static ArrayList<SendMessageVO> albumList2 = new ArrayList<>();
     public static LinearLayoutManager linearLayoutManager;
     private Chat_Presenter presenter,presenter2;
+    private SwipeRefreshLayout refreshLayout;
+    private int message_size = 10;
+    private int offset = 0;
 
     @SuppressLint("CommitPrefEdits")
     @Override
@@ -138,7 +143,9 @@ public class Chat_Room extends ApplicationBase {
         ed_context.setFocusable(true);
         user_context = ed_context.getText().toString();
         bt_send = (Button)findViewById(R.id.send_btn);
+        refreshLayout = (SwipeRefreshLayout)findViewById(R.id.refresh_layout);
 
+        refreshLayout.setOnRefreshListener(this);
 
 
         your_id = user2_id;
@@ -155,10 +162,11 @@ public class Chat_Room extends ApplicationBase {
 
 
         chatAdapter = new ChatAdapter(albumList,R.layout.chat_item);
+        chat_recycler_list.setAdapter(new ChatAdapter(albumList,R.layout.chat_item));
 
         if(intent.getStringExtra("goBack")==null){
             linearLayoutManager.setStackFromEnd(true);
-            getPreviouseConversation(User_Id.getUser_Id(),user2_id);
+            getPreviouseConversation(User_Id.getUser_Id(),user2_id,message_size,offset);
 
         }
         else if(intent.getStringExtra("goBack").equals("123")){
@@ -170,7 +178,7 @@ public class Chat_Room extends ApplicationBase {
             }
 
             Log.d("uuuuuu",u_id+"   "+y_id);
-            getPreviouseConversation(u_id,y_id);
+            getPreviouseConversation(u_id,y_id,message_size,offset);
 
         }
 
@@ -246,13 +254,13 @@ public class Chat_Room extends ApplicationBase {
     }
 
     @SuppressLint("LongLogTag")
-    public void getPreviouseConversation(String u_id, String y_id) {
+    public void getPreviouseConversation(String u_id, String y_id,int message_size,int offset) {
 
         Log.e( "getPreviouseConversation: ",u_id+" "+y_id );
 
 
         Log.e("onResponse: ",u_id+y_id+"  dadddaad" );
-        Call<MessageBodyVO> call = messageService.getTheChatting(u_id,y_id,10,0);
+        Call<MessageBodyVO> call = messageService.getTheChatting(u_id,y_id,message_size,offset);
         call.enqueue(new Callback<MessageBodyVO>() {
             @Override
             public void onResponse(Call<MessageBodyVO> call, Response<MessageBodyVO> response) {
@@ -266,6 +274,8 @@ public class Chat_Room extends ApplicationBase {
                 assert bodyVO != null;
 
                 if(bodyVO.getStatus().equals("200")){
+                    clear();
+
                     for(int i = 0; i < bodyVO.getResult().size(); i++){
                         Log.d("실행","실행 됨");
 
@@ -282,12 +292,13 @@ public class Chat_Room extends ApplicationBase {
 
                         //Collections.reverse(albumList);//역순으로
                         Log.d("list_test", sendMessageVO.getContent() + "," + i);
-                        albumList.add(sendMessageVO);
-                        Log.d("album_test", albumList.get(i).getContent());
+                        albumList2.add(sendMessageVO);
+                        //Log.d("album_test", albumList.get(i).getContent());
                         name = bodyVO.getResult().get(i).getGivingUser();
 
 
                     }
+                    Collections.reverse(albumList2);
 
                     long now = System.currentTimeMillis();
                     Date date = new Date(now);
@@ -301,11 +312,17 @@ public class Chat_Room extends ApplicationBase {
                     Log.e( "registed now time ", bodyVO.getResult().get(bodyVO.getResult().size()-1).getRegiDate());
 
 
+                    albumList.addAll(0,albumList2);
 
-                    Collections.reverse(albumList);
+                    chatAdapter.notifyDataSetChanged();
                     chat_recycler_list.setAdapter(new ChatAdapter(albumList,R.layout.chat_item));
+
+
+                    Log.d("adapter: ", chatAdapter.getItemCount()+" ");
                     linearLayoutManager.setStackFromEnd(true);
+
                     chat_recycler_list.setLayoutManager(linearLayoutManager);
+
                     //mRecyclerView.setItemAnimator(new DefaultItemAnimator());
                     Log.d("name111","aaa"+name);
                 }else if(bodyVO.getStatus().equals("204")){
@@ -420,5 +437,23 @@ public class Chat_Room extends ApplicationBase {
     }
 
 
+    @Override
+    public void onRefresh() {
+       // clear();
 
+      // offset = message_size;
+        //message_size += 10;
+
+        Log.e("onRefresh: ", albumList.size() +"    "+ message_size);
+        getPreviouseConversation(User_Id.getUser_Id(),user2_id,message_size,albumList.size());
+        refreshLayout.setRefreshing(false);
+
+
+
+
+    }
+
+    private void clear() {
+        albumList2.clear();
+    }
 }
