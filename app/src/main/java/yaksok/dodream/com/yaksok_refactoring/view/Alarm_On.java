@@ -5,6 +5,7 @@ import android.app.ActivityManager;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.PowerManager;
 import android.support.annotation.Nullable;
 import android.support.v4.app.ActivityCompat;
 import android.util.Log;
@@ -38,6 +39,8 @@ public class Alarm_On extends Activity {
     TakeOk takeOk;
     boolean status;
     Intent launchIntent;
+
+    PowerManager.WakeLock wakeLock;
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -61,6 +64,9 @@ public class Alarm_On extends Activity {
        /* takeOk = new TakeOk();
         takeOk.setGivingUser(NotificationUtil.userId);
         takeOk.setMyMedicineNo(NotificationUtil.pillNo);*/
+
+
+        getWindow().addFlags(WindowManager.LayoutParams.FLAG_SHOW_WHEN_LOCKED);
 
         text.setText(NotificationUtil.userName+"("+NotificationUtil.userId+")님"+"\n"+NotificationUtil.pillName+"(약) 복용시간입니다.");
 
@@ -126,7 +132,6 @@ public class Alarm_On extends Activity {
         List<ActivityManager.RunningAppProcessInfo> procInfos = activityManager.getRunningAppProcesses();
         for(int i = 0; i < procInfos.size(); i++){
             if(procInfos.get(i).processName.equals(getPackageName())){
-
                 return true;
             }
         }

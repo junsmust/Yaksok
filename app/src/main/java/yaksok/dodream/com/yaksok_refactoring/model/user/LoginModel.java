@@ -114,7 +114,7 @@ public class LoginModel implements IPresennterToModel {
                 .build();
         userService = retrofit.create(UserService.class);
 
-        Log.d("ddd",user_info_model.getId()+"userinfo"+user_info_model.getUserType());
+        Log.d("ddd",user_info_model.getId()+"userinfo"+user_info_model.getUserType()+user_info_model.getPw());
 
         //Log.d("check",user_info_model+" ");
         Call<BodyVO> bodyVOCall = userService.postGneralLogin(user_info_model);

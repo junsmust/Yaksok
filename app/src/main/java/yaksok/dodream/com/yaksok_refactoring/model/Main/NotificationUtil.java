@@ -9,6 +9,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.support.v4.app.NotificationCompat;
 import android.util.Log;
+import android.view.WindowManager;
 
 import yaksok.dodream.com.yaksok_refactoring.R;
 import yaksok.dodream.com.yaksok_refactoring.model.user.User_Id;
@@ -43,9 +44,10 @@ public class NotificationUtil extends BroadcastReceiver{
          userName = intent.getStringExtra("a_name");
          pillName = intent.getStringExtra("pill_Names");
 
+
         Log.d("약 번호",pillNo+userId+userName);
 
-        if (android.os.Build.VERSION.SDK_INT >= 26) {
+        /*if (android.os.Build.VERSION.SDK_INT >= 26) {
             Log.d("이거임??","ㅇㅇㅇㅇ");
             int importance = NotificationManager.IMPORTANCE_HIGH;
 
@@ -75,7 +77,7 @@ public class NotificationUtil extends BroadcastReceiver{
                     .setTicker(ticker);
             Notification notification = builder.build();
             nm.notify(1, notification);
-        }
+        }*/
 
         Intent intent_ = new Intent(context, Alarm_On.class);
         intent_.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_SINGLE_TOP);// 이거 안해주면 안됨

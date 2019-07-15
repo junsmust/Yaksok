@@ -94,7 +94,7 @@ public class MyPill_Model implements MyPill_PresenterToModel {
         Log.d("약 pillNo",String.valueOf(pillNo));
         myMedicineNoVO1.setMyMedicineNo(pillNo);
 
-        Call<FamilyBodyVO> myMedicineNoVOCall = deleteService.deleteMyMedicine(myMedicineNoVO1);
+        Call<FamilyBodyVO> myMedicineNoVOCall = deleteService.deleteMyMedicine(pillNo);
         Log.d("약 넘버",String.valueOf(myMedicineNoVO1.getMyMedicineNo()));
         myMedicineNoVOCall.enqueue(new Callback<FamilyBodyVO>() {
             @Override

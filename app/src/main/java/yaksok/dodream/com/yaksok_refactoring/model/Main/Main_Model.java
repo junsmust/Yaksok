@@ -41,6 +41,7 @@ public class Main_Model implements Main_PresenterToModel{
         pilltime_sec = 0;
         ptime = 0;
         times = 0;
+//        Log.d("#####$$%%",User_Id.getUser_Id());
         retrofit = new Retrofit.Builder()
                 .baseUrl(userService.API_URL)
                 .addConverterFactory(ScalarsConverterFactory.create())
@@ -52,7 +53,7 @@ public class Main_Model implements Main_PresenterToModel{
             @Override
             public void onResponse(Call<NearTimePillVO> call, Response<NearTimePillVO> response) {
                 NearTimePillVO nearTimePillVO = response.body();
-                System.out.println("############" + nearTimePillVO.getStatus());
+                Log.d("############", nearTimePillVO.getStatus());
                 if (nearTimePillVO.getStatus().equals("200")) {
                     pillNo = nearTimePillVO.getResult().getMyMedicineNo();
                     pillName = nearTimePillVO.getResult().getName();
