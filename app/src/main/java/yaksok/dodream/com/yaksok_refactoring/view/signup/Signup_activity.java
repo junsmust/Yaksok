@@ -73,6 +73,8 @@ public class Signup_activity extends ApplicationBase implements IPresenter_To_Si
 
         presenterSignUp = new PresenterSignUp(this);
 
+        presenterSignUp.getMyContext(Signup_activity.this);
+
         log_D = new C_Dialog(this);
 
 
@@ -627,6 +629,8 @@ public class Signup_activity extends ApplicationBase implements IPresenter_To_Si
             }
         });
     }
+
+
 
 }
 

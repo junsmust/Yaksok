@@ -1,5 +1,7 @@
 package yaksok.dodream.com.yaksok_refactoring.presenter.signup_presenter;
 
+import android.content.Context;
+
 import yaksok.dodream.com.yaksok_refactoring.model.signup.IPresenterToSignUpModel;
 import yaksok.dodream.com.yaksok_refactoring.model.signup.SignUpModel;
 import yaksok.dodream.com.yaksok_refactoring.model.user.User_Info_Model;
@@ -141,5 +143,8 @@ public class PresenterSignUp implements ITo_Presenter_SignUp {
         model.setSignUp(user_info_model);
     }
 
-
+    @Override
+    public void getMyContext(Context context) {
+        model.getMyContext(context);
+    }
 }

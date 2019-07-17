@@ -1,6 +1,7 @@
 package yaksok.dodream.com.yaksok_refactoring.model.signup;
 
 import android.annotation.SuppressLint;
+import android.content.Context;
 import android.content.Intent;
 import android.support.annotation.NonNull;
 import android.text.TextUtils;
@@ -14,12 +15,15 @@ import java.util.Date;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import okhttp3.OkHttpClient;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 import retrofit2.converter.scalars.ScalarsConverterFactory;
+import yaksok.dodream.com.yaksok_refactoring.NullHostNameVerifier;
+import yaksok.dodream.com.yaksok_refactoring.SSLUtil;
 import yaksok.dodream.com.yaksok_refactoring.model.chat.User_info;
 import yaksok.dodream.com.yaksok_refactoring.model.user.LoginModel;
 import yaksok.dodream.com.yaksok_refactoring.model.user.User_Id;
@@ -38,6 +42,7 @@ public class SignUpModel implements IPresenterToSignUpModel {
     private User_Info_Model user_info_model = new User_Info_Model();
     private Retrofit retrofit;
     private UserService userService;
+    Context context;
 
 
     public SignUpModel() {
@@ -58,7 +63,7 @@ public class SignUpModel implements IPresenterToSignUpModel {
 
             Log.e("validateId: ",id );
             retrofit = new Retrofit.Builder()
-                    .baseUrl(userService.API_URL)
+                    .baseUrl(UserService.API_URL)
                     .addConverterFactory(ScalarsConverterFactory.create())
                     .addConverterFactory(GsonConverterFactory.create())
                     .build();
@@ -180,9 +185,12 @@ public class SignUpModel implements IPresenterToSignUpModel {
     @Override
     public void onSignUp(final User_Info_Model user_info_model) {
 
-
         retrofit = new Retrofit.Builder()
-                .baseUrl(userService.API_URL)
+                .baseUrl(UserService.POST_URL)
+                .client( new OkHttpClient.Builder()
+                        .sslSocketFactory(SSLUtil.getPinnedCertSslSocketFactory(context))  //ssl
+                        .hostnameVerifier(new NullHostNameVerifier())                       //ssl HostName Pass
+                        .build())
                 .addConverterFactory(ScalarsConverterFactory.create())
                 .addConverterFactory(GsonConverterFactory.create())
                 .build();
@@ -321,7 +329,11 @@ public class SignUpModel implements IPresenterToSignUpModel {
 
         this.user_info_model = user_info_model;
         retrofit = new Retrofit.Builder()
-                .baseUrl(userService.API_URL)
+                .baseUrl(UserService.POST_URL)
+                .client( new OkHttpClient.Builder()
+                        .sslSocketFactory(SSLUtil.getPinnedCertSslSocketFactory(context))  //ssl
+                        .hostnameVerifier(new NullHostNameVerifier())                       //ssl HostName Pass
+                        .build())
                 .addConverterFactory(ScalarsConverterFactory.create())
                 .addConverterFactory(GsonConverterFactory.create())
                 .build();
@@ -496,7 +508,11 @@ public class SignUpModel implements IPresenterToSignUpModel {
 
         Log.d("maybe_perform","maybe_perform");
         Retrofit retrofit = new Retrofit.Builder()
-                .baseUrl(userService.API_URL)
+                .baseUrl(UserService.POST_URL)
+                .client( new OkHttpClient.Builder()
+                        .sslSocketFactory(SSLUtil.getPinnedCertSslSocketFactory(context))  //ssl
+                        .hostnameVerifier(new NullHostNameVerifier())                       //ssl HostName Pass
+                        .build())
                 .addConverterFactory(ScalarsConverterFactory.create())
                 .addConverterFactory(GsonConverterFactory.create())
                 .build();
@@ -561,5 +577,10 @@ public class SignUpModel implements IPresenterToSignUpModel {
             }
         });
 
+    }
+
+    @Override
+    public void getMyContext(Context context) {
+        this.context = context;
     }
 }
