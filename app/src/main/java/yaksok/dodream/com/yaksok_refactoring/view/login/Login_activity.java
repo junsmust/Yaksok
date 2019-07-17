@@ -185,6 +185,7 @@ public class Login_activity extends ApplicationBase implements IPresenterToView{
 
         presenter_login = new Presenter_Login(this);
 
+        presenter_login.getMyCotext(Login_activity.this);
 
         presenter_login.sendEditor(editor);
 

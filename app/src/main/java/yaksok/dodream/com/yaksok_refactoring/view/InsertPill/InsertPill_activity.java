@@ -29,14 +29,25 @@ import android.widget.Toast;
 import java.util.ArrayList;
 import java.util.List;
 
+import okhttp3.OkHttpClient;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
+import retrofit2.Retrofit;
+import retrofit2.converter.gson.GsonConverterFactory;
+import retrofit2.converter.scalars.ScalarsConverterFactory;
 import yaksok.dodream.com.yaksok_refactoring.ApplicationBase;
 import yaksok.dodream.com.yaksok_refactoring.C_Dialog;
 import yaksok.dodream.com.yaksok_refactoring.CustomChoiceListViewAdapter;
 import yaksok.dodream.com.yaksok_refactoring.CustomDialog;
+import yaksok.dodream.com.yaksok_refactoring.NullHostNameVerifier;
 import yaksok.dodream.com.yaksok_refactoring.R;
+import yaksok.dodream.com.yaksok_refactoring.SSLUtil;
 import yaksok.dodream.com.yaksok_refactoring.model.user.User_Id;
 import yaksok.dodream.com.yaksok_refactoring.presenter.InsertPill.Presenter_InsertPill;
+import yaksok.dodream.com.yaksok_refactoring.vo.BodyVO;
 import yaksok.dodream.com.yaksok_refactoring.vo.InsertPill_Item;
+import yaksok.dodream.com.yaksok_refactoring.vo.UserService;
 
 public class InsertPill_activity extends ApplicationBase implements InsertPill_PresenterToView, View.OnClickListener{
 
@@ -70,6 +81,8 @@ public class InsertPill_activity extends ApplicationBase implements InsertPill_P
     int status = 1;
     boolean slid_Satuts=false;
     C_Dialog customDialog;
+    Retrofit retrofit;
+    private static UserService userService;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -113,6 +126,7 @@ public class InsertPill_activity extends ApplicationBase implements InsertPill_P
         insertPill_item = new InsertPill_Item();
 
         presenter_insertPill.getFamilyList();
+        presenter_insertPill.getMyContext(InsertPill_activity.this);
 
         family_id = new ArrayList<String>();
 
@@ -309,7 +323,7 @@ public class InsertPill_activity extends ApplicationBase implements InsertPill_P
                     insertPill_item.setTimeList(time);
                     insertPill_item.setNotificationList(family_id);
                     insertPill_item.setUserId(User_Id.getUser_Id());
-
+                    //test(insertPill_item);
                     presenter_insertPill.insertPill(insertPill_item);
                 }
 
@@ -604,6 +618,44 @@ public class InsertPill_activity extends ApplicationBase implements InsertPill_P
     public void onBackPressed() {
         super.onBackPressed();
         finish();
+    }
+
+    public void test(InsertPill_Item insertPill_item){
+        retrofit = new Retrofit.Builder()
+                .baseUrl("https://172.20.10.7:8443")
+                .client( new OkHttpClient.Builder()
+                        .sslSocketFactory(SSLUtil.getPinnedCertSslSocketFactory(this))  //ssl
+                        .hostnameVerifier(new NullHostNameVerifier())                       //ssl HostName Pass
+                        .build())
+                .addConverterFactory(ScalarsConverterFactory.create())
+                .addConverterFactory(GsonConverterFactory.create())
+                .build();
+        userService = retrofit.create(UserService.class);
+
+        Call<BodyVO> call = userService.postMyInserttPill(insertPill_item);
+        call.enqueue(new Callback<BodyVO>() {
+            @Override
+            public void onResponse(Call<BodyVO> call, Response<BodyVO> response) {
+                BodyVO statusVO = response.body();
+                //System.out.println("############" + statusVO.getStatus());
+                if (statusVO.getStatus().equals("201")) {
+                    onInsertResponse(true,201);
+                } else if (statusVO.getStatus().equals("402")) {
+                    onInsertResponse(false,402);
+                }
+                else if(statusVO.getStatus().equals("403")){
+                    onInsertResponse(false,403);
+                }
+                else if (statusVO.getStatus().equals("500")){
+                    onInsertResponse(false,500);
+                }
+            }
+
+            @Override
+            public void onFailure(Call<BodyVO> call, Throwable t) {
+
+            }
+        });
     }
 
 

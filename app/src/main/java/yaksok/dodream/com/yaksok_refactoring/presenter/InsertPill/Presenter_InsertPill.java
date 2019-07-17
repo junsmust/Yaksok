@@ -1,5 +1,7 @@
 package yaksok.dodream.com.yaksok_refactoring.presenter.InsertPill;
 
+import android.content.Context;
+
 import java.util.List;
 
 import yaksok.dodream.com.yaksok_refactoring.model.InsertPill.InsertPill_Model;
@@ -40,5 +42,10 @@ public class Presenter_InsertPill implements InsertPillToPresenter{
     @Override
     public void myFamilyList(List<String> myFamilyList, List<String> myFamily_Id) {
         view.myFamilyList(myFamilyList, myFamily_Id);
+    }
+
+    @Override
+    public void getMyContext(Context context) {
+        model.getMyContext(context);
     }
 }
