@@ -25,12 +25,15 @@ import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import okhttp3.OkHttpClient;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 import retrofit2.converter.scalars.ScalarsConverterFactory;
+import yaksok.dodream.com.yaksok_refactoring.NullHostNameVerifier;
+import yaksok.dodream.com.yaksok_refactoring.SSLUtil;
 import yaksok.dodream.com.yaksok_refactoring.model.signup.SignUpModel;
 import yaksok.dodream.com.yaksok_refactoring.presenter.login_presenter.Presenter_Login;
 import yaksok.dodream.com.yaksok_refactoring.presenter.Main.Presenter_Main;
@@ -49,6 +52,7 @@ public class LoginModel implements IPresennterToModel {
 
     Presenter_Login presenter_login;
     Presenter_Main presenter_main;
+    Context context;
 
     private static OAuthLogin oAuthLogin;
     private static Context mContext;
@@ -108,7 +112,11 @@ public class LoginModel implements IPresennterToModel {
 
         Log.d("maybe_perform","maybe_perform");
         Retrofit retrofit = new Retrofit.Builder()
-                .baseUrl(userService.API_URL)
+                .baseUrl(UserService.POST_URL)
+                .client( new OkHttpClient.Builder()
+                        .sslSocketFactory(SSLUtil.getPinnedCertSslSocketFactory(context))  //ssl
+                        .hostnameVerifier(new NullHostNameVerifier())                       //ssl HostName Pass
+                        .build())
                 .addConverterFactory(ScalarsConverterFactory.create())
                 .addConverterFactory(GsonConverterFactory.create())
                 .build();
@@ -175,6 +183,11 @@ public class LoginModel implements IPresennterToModel {
             }
         });
 
+    }
+
+    @Override
+    public void getMyContext(Context context) {
+        this.context = context;
     }
 
     @Override
@@ -396,7 +409,11 @@ public class LoginModel implements IPresennterToModel {
     public void pushToken(){
 
         Retrofit retrofit = new Retrofit.Builder()
-                .baseUrl(userService.API_URL)
+                .baseUrl(UserService.POST_URL)
+                .client( new OkHttpClient.Builder()
+                        .sslSocketFactory(SSLUtil.getPinnedCertSslSocketFactory(context))  //ssl
+                        .hostnameVerifier(new NullHostNameVerifier())                       //ssl HostName Pass
+                        .build())
                 .addConverterFactory(ScalarsConverterFactory.create())
                 .addConverterFactory(GsonConverterFactory.create())
                 .build();

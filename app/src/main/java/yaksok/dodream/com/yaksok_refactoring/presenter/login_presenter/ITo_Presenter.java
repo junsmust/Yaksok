@@ -1,6 +1,7 @@
 package yaksok.dodream.com.yaksok_refactoring.presenter.login_presenter;
 
 
+import android.content.Context;
 import android.content.SharedPreferences;
 
 import com.kakao.usermgmt.response.model.UserAccount;
@@ -27,7 +28,7 @@ public interface ITo_Presenter {
      void onSnsSignUp(String userType);
      void sendEditor(SharedPreferences.Editor editor);
      void performLoginOperation(final User_Info_Model user_info_model);
-
+     void getMyCotext(Context context);
 
 
      void findPassword();
