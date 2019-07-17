@@ -10,7 +10,8 @@ import retrofit2.http.Query;
 
 public interface MessageService {
     // public static String API_URL = "http://15.164.163.234:8080";
-    public static String API_URL = "http://172.20.10.7:8080";
+    public static String API_URL = "http://15.164.163.234:8080";
+    public static String POST_URL = "https://15.164.163.234:8443";
 
 
 

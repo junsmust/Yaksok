@@ -1,13 +1,17 @@
 package yaksok.dodream.com.yaksok_refactoring.model.find_pw;
 
+import android.content.Context;
 import android.util.Log;
 
+import okhttp3.OkHttpClient;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 import retrofit2.converter.scalars.ScalarsConverterFactory;
+import yaksok.dodream.com.yaksok_refactoring.NullHostNameVerifier;
+import yaksok.dodream.com.yaksok_refactoring.SSLUtil;
 import yaksok.dodream.com.yaksok_refactoring.presenter.find_pw.Find_pw_presenter;
 import yaksok.dodream.com.yaksok_refactoring.vo.BodyVO;
 import yaksok.dodream.com.yaksok_refactoring.vo.UserService;
@@ -15,6 +19,7 @@ import yaksok.dodream.com.yaksok_refactoring.vo.UserService;
 public class Find_pw_model implements I_Find_pw_model {
     Find_pw_presenter pw_presenter;
     private static UserService userService;
+    Context context;
 
     public Find_pw_model(Find_pw_presenter pw_presenter) {
         this.pw_presenter = pw_presenter;
@@ -23,7 +28,11 @@ public class Find_pw_model implements I_Find_pw_model {
     @Override
     public void findPw(String id, final String email) {
         Retrofit retrofit = new Retrofit.Builder()
-                .baseUrl(userService.API_URL)
+                .baseUrl(UserService.POST_URL)
+                .client( new OkHttpClient.Builder()
+                        .sslSocketFactory(SSLUtil.getPinnedCertSslSocketFactory(context))  //ssl
+                        .hostnameVerifier(new NullHostNameVerifier())                       //ssl HostName Pass
+                        .build())
                 .addConverterFactory(ScalarsConverterFactory.create())
                 .addConverterFactory(GsonConverterFactory.create())
                 .build();
@@ -53,5 +62,10 @@ public class Find_pw_model implements I_Find_pw_model {
         });
 
 
+    }
+
+    @Override
+    public void getMyContext(Context context) {
+        this.context = context;
     }
 }

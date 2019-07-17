@@ -477,6 +477,16 @@ public class SignUpModel implements IPresenterToSignUpModel {
     public void pushToken(){
         final FcmTokenVO fcmTokenVO = new FcmTokenVO();
         fcmTokenVO.setFcmToken(FirebaseInstanceId.getInstance().getToken());
+        retrofit = new Retrofit.Builder()
+                .baseUrl(UserService.POST_URL)
+                .client( new OkHttpClient.Builder()
+                        .sslSocketFactory(SSLUtil.getPinnedCertSslSocketFactory(context))  //ssl
+                        .hostnameVerifier(new NullHostNameVerifier())                       //ssl HostName Pass
+                        .build())
+                .addConverterFactory(ScalarsConverterFactory.create())
+                .addConverterFactory(GsonConverterFactory.create())
+                .build();
+        userService = retrofit.create(UserService.class);
 
         Call<BodyVO> bodyVOCall = userService.putToken(User_Id.getUser_Id(),fcmTokenVO);
         bodyVOCall.enqueue(new Callback<BodyVO>() {

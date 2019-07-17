@@ -8,7 +8,8 @@ import retrofit2.http.Path;
 
 public interface DeleteService {
    // public static String API_URL = "http://15.164.163.234:8080";
-   public static String API_URL = "http://172.20.10.7:8080";
+   public static String API_URL = "http://15.164.163.234:8080";
+    public static String POST_URL = "https://15.164.163.234:8443";
 
     @HTTP(method = "DELETE",path = "/users/{user_1}/families/{user_2}")
     Call<FamilyBodyVO> deleteBody(@Path("user_1") String user_1,@Path("user_2") String user_2);

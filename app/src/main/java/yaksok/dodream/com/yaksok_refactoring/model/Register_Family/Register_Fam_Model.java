@@ -1,10 +1,12 @@
 package yaksok.dodream.com.yaksok_refactoring.model.Register_Family;
 
+import android.content.Context;
 import android.util.Log;
 import android.view.View;
 
 import java.util.ArrayList;
 
+import okhttp3.OkHttpClient;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -13,6 +15,8 @@ import retrofit2.converter.gson.GsonConverterFactory;
 import retrofit2.converter.scalars.ScalarsConverterFactory;
 import yaksok.dodream.com.yaksok_refactoring.Adapter.family.FamilyFindAdapter;
 import yaksok.dodream.com.yaksok_refactoring.Adapter.family.FamilyItem;
+import yaksok.dodream.com.yaksok_refactoring.NullHostNameVerifier;
+import yaksok.dodream.com.yaksok_refactoring.SSLUtil;
 import yaksok.dodream.com.yaksok_refactoring.model.user.User_Id;
 import yaksok.dodream.com.yaksok_refactoring.presenter.family_register.Register_Fam_Presenter;
 import yaksok.dodream.com.yaksok_refactoring.view.addFamily.Register_Family;
@@ -43,6 +47,7 @@ public class Register_Fam_Model implements IRegister_Presenter_To_FamModel {
     private ArrayList<String> regi_list = new ArrayList<>();
     private int index;
     private boolean isAlreadyAdded = false;
+    Context context;
 
 
     public Register_Fam_Model(Register_Fam_Presenter presenter) {
@@ -132,6 +137,16 @@ public class Register_Fam_Model implements IRegister_Presenter_To_FamModel {
                 //201 : OK
                 //403 : 삽입시 중복
                 //500 : Server Error
+        retrofit = new Retrofit.Builder()
+                .baseUrl(UserService.POST_URL)
+                .client( new OkHttpClient.Builder()
+                        .sslSocketFactory(SSLUtil.getPinnedCertSslSocketFactory(context))  //ssl
+                        .hostnameVerifier(new NullHostNameVerifier())                       //ssl HostName Pass
+                        .build())
+                .addConverterFactory(ScalarsConverterFactory.create())
+                .addConverterFactory(GsonConverterFactory.create())
+                .build();
+        userService = retrofit.create(UserService.class);
 
                 Log.d("eeeeee",familyVO.getUser_1()+familyVO.getUser_2());
                 Call<BodyVO> call = userService.postRegisterFamily(familyVO);
@@ -235,7 +250,11 @@ public class Register_Fam_Model implements IRegister_Presenter_To_FamModel {
     public void deleteFam(boolean isOkay, String id, final int position) {
 
         retrofit = new Retrofit.Builder()
-                .baseUrl(deleteService.API_URL)
+                .baseUrl(UserService.POST_URL)
+                .client( new OkHttpClient.Builder()
+                        .sslSocketFactory(SSLUtil.getPinnedCertSslSocketFactory(context))  //ssl
+                        .hostnameVerifier(new NullHostNameVerifier())                       //ssl HostName Pass
+                        .build())
                 .addConverterFactory(ScalarsConverterFactory.create())
                 .addConverterFactory(GsonConverterFactory.create())
                 .build();
@@ -296,7 +315,10 @@ public class Register_Fam_Model implements IRegister_Presenter_To_FamModel {
         this.familyItems = familyItems;
     }
 
-
+    @Override
+    public void getMyContext(Context context) {
+        this.context = context;
+    }
 
 
 }

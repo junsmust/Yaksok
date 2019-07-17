@@ -17,13 +17,16 @@ import android.widget.TextView;
 
 import java.util.List;
 
+import okhttp3.OkHttpClient;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 import retrofit2.converter.scalars.ScalarsConverterFactory;
+import yaksok.dodream.com.yaksok_refactoring.NullHostNameVerifier;
 import yaksok.dodream.com.yaksok_refactoring.R;
+import yaksok.dodream.com.yaksok_refactoring.SSLUtil;
 import yaksok.dodream.com.yaksok_refactoring.model.Main.NotificationUtil;
 import yaksok.dodream.com.yaksok_refactoring.view.Main.MainPage_activity;
 import yaksok.dodream.com.yaksok_refactoring.view.login.Login_activity;
@@ -56,7 +59,11 @@ public class Alarm_On extends Activity {
         TextView text = (TextView)findViewById(R.id.tv_D_text);
 
         retrofit = new Retrofit.Builder()
-                .baseUrl(userService.API_URL)
+                .baseUrl(UserService.POST_URL)
+                .client( new OkHttpClient.Builder()
+                        .sslSocketFactory(SSLUtil.getPinnedCertSslSocketFactory(this))  //ssl
+                        .hostnameVerifier(new NullHostNameVerifier())                       //ssl HostName Pass
+                        .build())
                 .addConverterFactory(ScalarsConverterFactory.create())
                 .addConverterFactory(GsonConverterFactory.create())
                 .build();

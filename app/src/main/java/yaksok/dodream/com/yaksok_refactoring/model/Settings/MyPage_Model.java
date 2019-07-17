@@ -1,15 +1,21 @@
 package yaksok.dodream.com.yaksok_refactoring.model.Settings;
 
+import android.content.Context;
 import android.content.Intent;
 import android.util.Log;
 import android.widget.Toast;
 
+import java.util.concurrent.CopyOnWriteArrayList;
+
+import okhttp3.OkHttpClient;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 import retrofit2.converter.scalars.ScalarsConverterFactory;
+import yaksok.dodream.com.yaksok_refactoring.NullHostNameVerifier;
+import yaksok.dodream.com.yaksok_refactoring.SSLUtil;
 import yaksok.dodream.com.yaksok_refactoring.model.user.User_Id;
 import yaksok.dodream.com.yaksok_refactoring.model.user.User_Info_Model;
 import yaksok.dodream.com.yaksok_refactoring.presenter.Settings.Presenter_MyPage;
@@ -24,13 +30,18 @@ public class MyPage_Model implements MyPage_PresenterToModel {
     private static UserService userService;
     private static DeleteService deleteService;
     Retrofit retrofit;
+    Context context;
 
     public MyPage_Model(Presenter_MyPage presenter_myPage){this.presenter_myPage = presenter_myPage;}
 
     @Override
     public void onSecOut() {
         retrofit = new Retrofit.Builder()
-                .baseUrl(deleteService.API_URL)
+                .baseUrl(UserService.POST_URL)
+                .client( new OkHttpClient.Builder()
+                        .sslSocketFactory(SSLUtil.getPinnedCertSslSocketFactory(context))  //ssl
+                        .hostnameVerifier(new NullHostNameVerifier())                       //ssl HostName Pass
+                        .build())
                 .addConverterFactory(ScalarsConverterFactory.create())
                 .addConverterFactory(GsonConverterFactory.create())
                 .build();
@@ -83,11 +94,20 @@ public class MyPage_Model implements MyPage_PresenterToModel {
 
     }
 
+    @Override
+    public void getMyCotext(Context context) {
+        this.context = context;
+    }
+
     public void performLoginOperation(final User_Info_Model user_info_model, final String ch_pw) {
 
         Log.d("maybe_perform","maybe_perform");
-        Retrofit retrofit = new Retrofit.Builder()
-                .baseUrl(userService.API_URL)
+        retrofit = new Retrofit.Builder()
+                .baseUrl(UserService.POST_URL)
+                .client( new OkHttpClient.Builder()
+                        .sslSocketFactory(SSLUtil.getPinnedCertSslSocketFactory(context))  //ssl
+                        .hostnameVerifier(new NullHostNameVerifier())                       //ssl HostName Pass
+                        .build())
                 .addConverterFactory(ScalarsConverterFactory.create())
                 .addConverterFactory(GsonConverterFactory.create())
                 .build();

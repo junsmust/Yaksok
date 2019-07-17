@@ -1,5 +1,6 @@
 package yaksok.dodream.com.yaksok_refactoring.model.Find_Id;
 
+import android.content.Context;
 import android.util.Log;
 
 import retrofit2.Call;
@@ -19,6 +20,7 @@ public class FindID_Model implements FindID_PresenterToModel {
     Presenter_FindID presenter_findID;
     private UserService userService;
     public Retrofit retrofit;
+    Context context;
     public FindID_Model(Presenter_FindID presenter_findID){this.presenter_findID = presenter_findID;}
 
     @Override
@@ -62,5 +64,10 @@ public class FindID_Model implements FindID_PresenterToModel {
             }
         });
 
+    }
+
+    @Override
+    public void getMyContext(Context context) {
+        this.context = context;
     }
 }

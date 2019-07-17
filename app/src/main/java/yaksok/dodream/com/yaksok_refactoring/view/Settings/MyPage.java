@@ -109,6 +109,8 @@ public class MyPage extends ApplicationBase implements MyPage_PresenterToView {
 
         presenter_myPage = new Presenter_MyPage(this);
 
+        presenter_myPage.getMyContext(MyPage.this);
+
         id = (TextView) findViewById(R.id.tv_setting_id);
         nickname = (TextView) findViewById(R.id.tv_setting_nickname);
         phone = (TextView) findViewById(R.id.tv_setting_phone);

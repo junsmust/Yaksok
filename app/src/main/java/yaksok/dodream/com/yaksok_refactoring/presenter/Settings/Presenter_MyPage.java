@@ -1,5 +1,6 @@
 package yaksok.dodream.com.yaksok_refactoring.presenter.Settings;
 
+import android.content.Context;
 import android.view.View;
 
 import yaksok.dodream.com.yaksok_refactoring.model.Settings.MyPage_Model;
@@ -42,5 +43,10 @@ public class Presenter_MyPage implements MyPageToPresenter {
     @Override
     public void onChangeResponse(boolean response, int status) {
         view.onChangeResponse(response,status);
+    }
+
+    @Override
+    public void getMyContext(Context context) {
+        model.getMyCotext(context);
     }
 }
