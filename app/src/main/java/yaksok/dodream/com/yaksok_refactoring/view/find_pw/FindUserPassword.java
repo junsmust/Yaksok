@@ -109,6 +109,8 @@ public class FindUserPassword extends ApplicationBase implements I_find_pw,View.
         email_edt = (EditText) findViewById(R.id.find_pw_email_edt);
         find_btn = (Button) findViewById(R.id.find_pw_btn);
 
+        pw_presenter.getContext(FindUserPassword.this);
+
 
         id = id_edt.getText().toString();
         email = email_edt.getText().toString();

@@ -1,5 +1,7 @@
 package yaksok.dodream.com.yaksok_refactoring.presenter.MyPill;
 
+import android.content.Context;
+
 import java.util.List;
 
 import yaksok.dodream.com.yaksok_refactoring.model.MyPill.MyPill_Model;
@@ -39,6 +41,11 @@ public class Presenter_MyPill implements MyPillToPresenter {
     @Override
     public void onMyPillDeleteRespoce(boolean MyPillResponse) {
         view.onMyPillDeleteRespoce(MyPillResponse);
+    }
+
+    @Override
+    public void getMyContext(Context context) {
+        model.getMyContext(context);
     }
 
 

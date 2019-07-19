@@ -13,13 +13,14 @@ import yaksok.dodream.com.yaksok_refactoring.model.user.User_Info_Model;
 
 public interface UserService {
     // public static String API_URL = "http://15.164.163.234:8080";
-    public static String API_URL = "http://172.20.10.7:8080";
+    public static String API_URL = "http://15.164.163.234:8080";
+    public static String POST_URL = "https://15.164.163.234:8443";
     
 
     @POST("/users")
     Call<BodyVO>postSignUp(@Body User_Info_Model userVO);
 
-    @POST("/users/login")
+    @POST("users/login")
     Call<BodyVO>postGneralLogin(@Body User_Info_Model userVO);
 
     @PATCH("/users/{userId}")
@@ -27,6 +28,9 @@ public interface UserService {
 
     @PATCH("/users/{userId}")
     Call<BodyVO>putChangePW(@Path("userId") String id, @Body User_Info_Model user_info_model);
+
+    @GET("/server-statuses")
+    Call<BodyVO>getServerStatus();
 
 
     @GET("/users/{userId}/my-medicines")
@@ -36,13 +40,13 @@ public interface UserService {
     Call<NearTimePillVO>getNearTime(@Path("userId") String userId);
 
 
-    @GET("medicines/{item}")
+    @GET("/medicines/{item}")
     Call<SearchPillListVO>getSearchPillList(@Path("item") String item, @Query("itemType") String itemtype);
 
     @POST("families/")
     Call<BodyVO>postRegisterFamily(@Body FamilyVO familyVO);
 
-    @GET("/users/{userId}/families")
+    @GET("/v1/users/{userId}/families")
     Call<Connected_Family> getConnectedFamilyInfo(@Path("userId") String userId);
 
 

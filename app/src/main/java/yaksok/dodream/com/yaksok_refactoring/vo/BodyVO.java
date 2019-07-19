@@ -70,6 +70,8 @@ public class BodyVO {
         private String ageRange;
         @SerializedName("userType")@Expose
         private String userType;
+        @SerializedName("isServerFixing")@Expose
+        private String statuses;
 
             public String getPw() {
                 return pw;
@@ -142,6 +144,10 @@ public class BodyVO {
             public String getUserType() {
                 return userType;
             }
+
+            public String getStatuses() { return statuses; }
+
+            public void setStatuses(String statuses) { this.statuses = statuses; }
         }
     //HTTP GET   users/{item} ? itemTyp
 //ex) /01027250856 ? itemType=phoneNumber

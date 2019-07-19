@@ -105,6 +105,7 @@ public class Register_Family extends ApplicationBase implements IRegister_Presen
 
 
         presenter = new Register_Fam_Presenter(this);
+        presenter.getMyContext(Register_Family.this);
 
         presenter.setPreviousRegistered();
 

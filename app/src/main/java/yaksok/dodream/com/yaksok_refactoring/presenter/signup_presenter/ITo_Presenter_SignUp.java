@@ -1,5 +1,7 @@
 package yaksok.dodream.com.yaksok_refactoring.presenter.signup_presenter;
 
+import android.content.Context;
+
 import yaksok.dodream.com.yaksok_refactoring.model.user.User_Info_Model;
 
 public interface ITo_Presenter_SignUp {
@@ -27,6 +29,7 @@ public interface ITo_Presenter_SignUp {
     void isValidedPW(boolean isPw);
     void isValidedEmail(boolean isEmail);
     void isValidedPn(boolean isPn);
+    void getMyContext(Context context);
 
     void setSignUp(User_Info_Model user_info_model);
 

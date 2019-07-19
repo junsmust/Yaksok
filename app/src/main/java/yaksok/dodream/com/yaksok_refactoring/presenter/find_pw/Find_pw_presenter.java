@@ -1,5 +1,7 @@
 package yaksok.dodream.com.yaksok_refactoring.presenter.find_pw;
 
+import android.content.Context;
+
 import yaksok.dodream.com.yaksok_refactoring.model.find_pw.Find_pw_model;
 import yaksok.dodream.com.yaksok_refactoring.model.find_pw.I_Find_pw_model;
 import yaksok.dodream.com.yaksok_refactoring.view.find_pw.I_find_pw;
@@ -21,5 +23,10 @@ public class Find_pw_presenter implements I_Find_pw_presenter {
     @Override
     public void findPW(String id, String email) {
         model.findPw(id,email);
+    }
+
+    @Override
+    public void getContext(Context context) {
+        model.getMyContext(context);
     }
 }

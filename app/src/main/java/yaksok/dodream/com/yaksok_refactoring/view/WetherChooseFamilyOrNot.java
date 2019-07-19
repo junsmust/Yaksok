@@ -16,6 +16,7 @@ import android.widget.TextView;
 
 import com.google.firebase.iid.FirebaseInstanceId;
 
+import okhttp3.OkHttpClient;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -23,7 +24,9 @@ import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 import retrofit2.converter.scalars.ScalarsConverterFactory;
 import yaksok.dodream.com.yaksok_refactoring.ApplicationBase;
+import yaksok.dodream.com.yaksok_refactoring.NullHostNameVerifier;
 import yaksok.dodream.com.yaksok_refactoring.R;
+import yaksok.dodream.com.yaksok_refactoring.SSLUtil;
 import yaksok.dodream.com.yaksok_refactoring.model.user.User_Id;
 import yaksok.dodream.com.yaksok_refactoring.model.user.User_Info_Model;
 import yaksok.dodream.com.yaksok_refactoring.view.Main.MainPage_activity;
@@ -92,7 +95,11 @@ public class WetherChooseFamilyOrNot extends ApplicationBase implements View.OnC
     public void pushToken(){
 
         retrofit = new Retrofit.Builder()
-                .baseUrl(userService.API_URL)
+                .baseUrl(UserService.POST_URL)
+                .client( new OkHttpClient.Builder()
+                        .sslSocketFactory(SSLUtil.getPinnedCertSslSocketFactory(WetherChooseFamilyOrNot.this))  //ssl
+                        .hostnameVerifier(new NullHostNameVerifier())                       //ssl HostName Pass
+                        .build())
                 .addConverterFactory(ScalarsConverterFactory.create())
                 .addConverterFactory(GsonConverterFactory.create())
                 .build();

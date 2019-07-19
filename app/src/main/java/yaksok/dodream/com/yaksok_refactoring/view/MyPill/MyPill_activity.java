@@ -109,6 +109,8 @@ public class MyPill_activity extends ApplicationBase implements MyPill_Presenter
         });
         presenter_myPill = new Presenter_MyPill( this);
 
+        presenter_myPill.getMyContext(MyPill_activity.this);
+
         final Context context = this;
 
         lv_MyPill.setOnItemClickListener(new AdapterView.OnItemClickListener() {

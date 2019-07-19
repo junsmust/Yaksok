@@ -1,17 +1,22 @@
 package yaksok.dodream.com.yaksok_refactoring.model.MyPill;
 
+import android.content.Context;
 import android.util.Log;
 import android.widget.Toast;
 
 import java.util.ArrayList;
 import java.util.List;
 
+import okhttp3.OkHttpClient;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 import retrofit2.converter.scalars.ScalarsConverterFactory;
+import yaksok.dodream.com.yaksok_refactoring.NullHostNameVerifier;
+import yaksok.dodream.com.yaksok_refactoring.R;
+import yaksok.dodream.com.yaksok_refactoring.SSLUtil;
 import yaksok.dodream.com.yaksok_refactoring.model.user.User_Id;
 import yaksok.dodream.com.yaksok_refactoring.presenter.MyPill.Presenter_MyPill;
 import yaksok.dodream.com.yaksok_refactoring.vo.DeleteMyMeidicineVO;
@@ -27,6 +32,7 @@ public class MyPill_Model implements MyPill_PresenterToModel {
     Presenter_MyPill presenter_myPill;
     List<String> pillList = new ArrayList<String>();
     public DeleteService deleteService;
+    Context context;
 
 
     public MyPill_Model(Presenter_MyPill presenter_myPill){this.presenter_myPill = presenter_myPill;}
@@ -84,7 +90,11 @@ public class MyPill_Model implements MyPill_PresenterToModel {
     @Override
     public void myPillDelete(int pillNo) {
         retrofit = new Retrofit.Builder()
-                .baseUrl(userService.API_URL)
+                .baseUrl(UserService.POST_URL)
+                .client( new OkHttpClient.Builder()
+                        .sslSocketFactory(SSLUtil.getPinnedCertSslSocketFactory(context))  //ssl
+                        .hostnameVerifier(new NullHostNameVerifier())                       //ssl HostName Pass
+                        .build())
                 .addConverterFactory(ScalarsConverterFactory.create())
                 .addConverterFactory(GsonConverterFactory.create())
                 .build();
@@ -116,5 +126,10 @@ public class MyPill_Model implements MyPill_PresenterToModel {
 
             }
         });
+    }
+
+    @Override
+    public void getMyContext(Context context) {
+        this.context = context;
     }
 }

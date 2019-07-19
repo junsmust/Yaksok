@@ -1,21 +1,32 @@
 package yaksok.dodream.com.yaksok_refactoring.model.InsertPill;
 
+import android.content.Context;
+import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 import android.util.Log;
 import android.widget.Toast;
 
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.net.ssl.SSLSocketFactory;
+import javax.net.ssl.TrustManager;
+
+import okhttp3.OkHttpClient;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 import retrofit2.converter.scalars.ScalarsConverterFactory;
+import yaksok.dodream.com.yaksok_refactoring.NullHostNameVerifier;
+import yaksok.dodream.com.yaksok_refactoring.OkSSL;
+import yaksok.dodream.com.yaksok_refactoring.SSLUtil;
 import yaksok.dodream.com.yaksok_refactoring.model.user.User_Id;
 import yaksok.dodream.com.yaksok_refactoring.presenter.InsertPill.Presenter_InsertPill;
 import yaksok.dodream.com.yaksok_refactoring.presenter.InsertPill.SearchPill.Presenter_SearchPill;
 import yaksok.dodream.com.yaksok_refactoring.presenter.InsertPill.Sel_AlarmRecive.Presenter_Sel_AlarmRecive;
+import yaksok.dodream.com.yaksok_refactoring.view.InsertPill.InsertPill_activity;
 import yaksok.dodream.com.yaksok_refactoring.vo.BodyVO;
 import yaksok.dodream.com.yaksok_refactoring.vo.Connected_Family;
 import yaksok.dodream.com.yaksok_refactoring.vo.InsertPill_Item;
@@ -28,6 +39,7 @@ public class InsertPill_Model implements InsertPill_PresenterToModel {
     List<String> familyList = new ArrayList<String>();
     List<String> familyList_id = new ArrayList<String>();
     Retrofit retrofit;
+    Context context=null;
 
     public InsertPill_Model(Presenter_InsertPill presenter_insertPill){
         this.presenter_insertPill = presenter_insertPill;
@@ -35,8 +47,13 @@ public class InsertPill_Model implements InsertPill_PresenterToModel {
 
     @Override
     public void InsertPill(InsertPill_Item insertPillItem) {
+        Log.d("컨텍스트 완료",context.getPackageName());
         retrofit = new Retrofit.Builder()
-                .baseUrl(userService.API_URL)
+                .baseUrl(UserService.POST_URL)
+                .client( new OkHttpClient.Builder()
+                        .sslSocketFactory(SSLUtil.getPinnedCertSslSocketFactory(context))  //ssl
+                        .hostnameVerifier(new NullHostNameVerifier())                       //ssl HostName Pass
+                        .build())
                 .addConverterFactory(ScalarsConverterFactory.create())
                 .addConverterFactory(GsonConverterFactory.create())
                 .build();
@@ -113,5 +130,11 @@ public class InsertPill_Model implements InsertPill_PresenterToModel {
                // System.out.println(t.getMessage());
             }
         });
+    }
+
+    @Override
+    public void getMyContext(Context context) {
+        this.context = context;
+
     }
 }

@@ -1,5 +1,7 @@
 package yaksok.dodream.com.yaksok_refactoring.presenter.family_register;
 
+import android.content.Context;
+
 import java.util.ArrayList;
 
 import yaksok.dodream.com.yaksok_refactoring.Adapter.family.FamilyFindAdapter;
@@ -19,6 +21,7 @@ public interface IRegister_fam_presenter {
     void setPreviousRegistered();
     void sendAdapter(FamilyFindAdapter adapter);
     void sendToViewAdapter(FamilyFindAdapter adapter);
+    void getMyContext(Context context);
 
     void makeErrorDialog(String s);
 }

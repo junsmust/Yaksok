@@ -1,6 +1,7 @@
 package yaksok.dodream.com.yaksok_refactoring.model.user;
 
 
+import android.content.Context;
 import android.content.SharedPreferences;
 
 import com.kakao.usermgmt.response.model.UserAccount;
@@ -24,7 +25,7 @@ public interface IPresennterToModel  {
     void autoLogin(String id,String userType,boolean auto);
     void getEditor(SharedPreferences.Editor editor);
     void performLoginOperation(final User_Info_Model user_info_model);
-
+    void getMyContext(Context context);
 
     void findPassword();
 }

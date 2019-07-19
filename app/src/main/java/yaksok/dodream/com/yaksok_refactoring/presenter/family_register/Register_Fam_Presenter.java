@@ -1,6 +1,7 @@
 package yaksok.dodream.com.yaksok_refactoring.presenter.family_register;
 
 
+import android.content.Context;
 import android.util.Log;
 
 import java.util.ArrayList;
@@ -91,6 +92,11 @@ public class Register_Fam_Presenter implements IRegister_fam_presenter {
     @Override
     public void sendToViewAdapter(FamilyFindAdapter adapter) {
         view.getFromModelAdapter(adapter);
+    }
+
+    @Override
+    public void getMyContext(Context context) {
+        model.getMyContext(context);
     }
 
     @Override

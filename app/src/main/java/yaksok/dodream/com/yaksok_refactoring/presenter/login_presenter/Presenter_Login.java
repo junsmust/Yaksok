@@ -1,5 +1,6 @@
 package yaksok.dodream.com.yaksok_refactoring.presenter.login_presenter;
 
+import android.content.Context;
 import android.content.SharedPreferences;
 import android.util.Log;
 
@@ -107,6 +108,11 @@ public class Presenter_Login implements ITo_Presenter {
     @Override
     public void performLoginOperation(User_Info_Model user_info_model) {
         model.performLoginOperation(user_info_model);
+    }
+
+    @Override
+    public void getMyCotext(Context context) {
+        model.getMyContext(context);
     }
 
     @Override

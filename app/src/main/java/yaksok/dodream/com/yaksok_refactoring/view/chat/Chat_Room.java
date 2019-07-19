@@ -29,6 +29,7 @@ import java.util.Collections;
 import java.util.Date;
 import java.util.Locale;
 
+import okhttp3.OkHttpClient;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -41,7 +42,9 @@ import yaksok.dodream.com.yaksok_refactoring.Adapter.chat.ChatItem;
 import yaksok.dodream.com.yaksok_refactoring.Adapter.chat.Chat_List_Model;
 import yaksok.dodream.com.yaksok_refactoring.Adapter.family.FamilyItem;
 import yaksok.dodream.com.yaksok_refactoring.ApplicationBase;
+import yaksok.dodream.com.yaksok_refactoring.NullHostNameVerifier;
 import yaksok.dodream.com.yaksok_refactoring.R;
+import yaksok.dodream.com.yaksok_refactoring.SSLUtil;
 import yaksok.dodream.com.yaksok_refactoring.model.chat.Chat_Model;
 import yaksok.dodream.com.yaksok_refactoring.model.user.User_Id;
 import yaksok.dodream.com.yaksok_refactoring.presenter.chat.Chat_Presenter;
@@ -49,6 +52,7 @@ import yaksok.dodream.com.yaksok_refactoring.vo.MessageBodyVO;
 import yaksok.dodream.com.yaksok_refactoring.vo.MessageResultBodyVO;
 import yaksok.dodream.com.yaksok_refactoring.vo.MessageService;
 import yaksok.dodream.com.yaksok_refactoring.vo.SendMessageVO;
+import yaksok.dodream.com.yaksok_refactoring.vo.UserService;
 
 public class Chat_Room extends ApplicationBase implements SwipeRefreshLayout.OnRefreshListener {
 
@@ -205,6 +209,16 @@ public class Chat_Room extends ApplicationBase implements SwipeRefreshLayout.OnR
 
 
                 Log.d("@@@@@@@@@@@"+"id",sendVO.getGivingUser()+"recive"+sendVO.getReceivingUser()+"context"+sendVO.getContent());
+                retrofit = new Retrofit.Builder()
+                        .baseUrl(UserService.POST_URL)
+                        .client( new OkHttpClient.Builder()
+                                .sslSocketFactory(SSLUtil.getPinnedCertSslSocketFactory(Chat_Room.this))  //ssl
+                                .hostnameVerifier(new NullHostNameVerifier())                       //ssl HostName Pass
+                                .build())
+                        .addConverterFactory(ScalarsConverterFactory.create())
+                        .addConverterFactory(GsonConverterFactory.create())
+                        .build();
+                messageService= retrofit.create(MessageService.class);
                 Call<MessageResultBodyVO> call = messageService.sendAmeesage(sendVO);
                 call.enqueue(new Callback<MessageResultBodyVO>() {
                     @Override

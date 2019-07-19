@@ -1,5 +1,7 @@
 package yaksok.dodream.com.yaksok_refactoring.model.signup;
 
+import android.content.Context;
+
 import yaksok.dodream.com.yaksok_refactoring.model.user.User_Info_Model;
 
 public interface IPresenterToSignUpModel {
@@ -20,6 +22,7 @@ public interface IPresenterToSignUpModel {
     void setUserType(String userType);
     void setGeneralUserType();
     void setPn(String pn, String usertype);
+    void getMyContext(Context context);
 
     void setSignUp(User_Info_Model user_info_model);
 
