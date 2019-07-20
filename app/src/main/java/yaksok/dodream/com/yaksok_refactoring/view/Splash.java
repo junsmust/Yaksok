@@ -59,6 +59,8 @@ public class Splash extends AppCompatActivity implements Splash_PresenterToView 
             else if(isFixing.equals("Y")){
                 serverFix();
             }
+           /* startActivity(new Intent(getApplicationContext(),Login_activity.class));
+            finish();*/
         }
     }
 

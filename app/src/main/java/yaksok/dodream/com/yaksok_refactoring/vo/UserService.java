@@ -46,7 +46,7 @@ public interface UserService {
     @POST("families/")
     Call<BodyVO>postRegisterFamily(@Body FamilyVO familyVO);
 
-    @GET("/v1/users/{userId}/families")
+    @GET("/users/{userId}/families")
     Call<Connected_Family> getConnectedFamilyInfo(@Path("userId") String userId);
 
 
