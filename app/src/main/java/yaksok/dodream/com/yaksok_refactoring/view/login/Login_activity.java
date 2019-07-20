@@ -274,11 +274,16 @@ public class Login_activity extends ApplicationBase implements IPresenterToView{
                  editor.apply();
                  }
                  else{
-                    User_Info_Model user_info_model = new User_Info_Model();
-                    user_info_model.setId(id_edt.getText().toString());
-                    user_info_model.setPw(pw_edt.getText().toString());
-                    user_info_model.setUserType("G");
-                    presenter_login.performLoginOperation(user_info_model);
+                     if(id_edt.getText().equals("") || pw_edt.getText().equals("")){
+                         onMakeToastMessage("아이디 및 비밀번호를 확인해주세요");
+                     }else{
+                         User_Info_Model user_info_model = new User_Info_Model();
+                         user_info_model.setId(id_edt.getText().toString());
+                         user_info_model.setPw(pw_edt.getText().toString());
+                         user_info_model.setUserType("G");
+                         presenter_login.performLoginOperation(user_info_model);
+                     }
+
                 }
             }
         });
