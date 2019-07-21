@@ -10,14 +10,14 @@
         android:background="#ffffff"
         android:layout_marginRight="15dp"
         android:layout_marginLeft="15dp">
-        <TextView
+        <!--<TextView
             android:layout_marginLeft="2dp"
             android:layout_marginTop="5dp"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="1기"
             android:textSize="15dp"
-            android:background="#ffffff"/>
+            android:background="#ffffff"/>-->
         <LinearLayout
             android:layout_marginTop="5dp"
             android:layout_marginBottom="5dp"
@@ -31,7 +31,7 @@
                 android:dividerHeight="0dp"
                 android:background="#ffffff"></ListView>
         </LinearLayout>
-
+<!--
         <TextView
             android:textSize="15dp"
             android:layout_marginLeft="2dp"
@@ -39,7 +39,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="2기"
-            android:background="#ffffff"/>
+            android:background="#ffffff"/>-->
         <LinearLayout
             android:layout_marginTop="5dp"
             android:layout_marginBottom="5dp"

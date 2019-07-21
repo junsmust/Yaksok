@@ -20,14 +20,14 @@ import yaksok.dodream.com.yaksok_refactoring.R;
 
 public class Developer extends ApplicationBase{
     ListView lv1, lv2;
-    private String[] name1 = {"박성빈","박한을","임지윤","서범준","이승준","한수정","윤예찬"};
+   /* private String[] name1 = {"박성빈","박한을","임지윤","서범준","이승준","한수정","윤예찬"};
     private String[] col1 = {"Columbia University in the City Of New York"+"\n"+"Computer Science and Mathematics",
             "성균관대학교 화학공학부",
             "홍익대학교 산업공학과",
             "강남대학교 소프트웨어응용학부",
             "숭실대학교 소프트웨어학부",
             "한양대학교 ERICA캠퍼스 산업경영공학과",
-            "주식회사 스칼라데이터(SCALAR DATA Co., Ltd.) 대표이사"};
+            "주식회사 스칼라데이터(SCALAR DATA Co., Ltd.) 대표이사"};*/
     private String[] name2 = {"박한을","서범준","윤성희","권재환","이재석","임명준","권보미"};
     private String[] col2 = {"성균관대학교 화학공학부",
             "강남대학교 소프트웨어응용학부",
@@ -36,7 +36,7 @@ public class Developer extends ApplicationBase{
             "강남대학교 컴퓨터공학과",
             "강남대학교 컴퓨터공학과",
             "디자이너"};
-    Team1_Adapter adapter1;
+   /* Team1_Adapter adapter1;*/
     Team1_Adapter adapter2;
 
     ImageView imageView;
@@ -77,29 +77,29 @@ public class Developer extends ApplicationBase{
         ActionBar.LayoutParams layoutParams = new ActionBar.LayoutParams(ActionBar.LayoutParams.MATCH_PARENT,ActionBar.LayoutParams.MATCH_PARENT);
         actionBar.setCustomView(view,layoutParams);
 
-        lv1 = (ListView)findViewById(R.id.lv_developer1);
+       /* lv1 = (ListView)findViewById(R.id.lv_developer1);*/
         lv2 = (ListView)findViewById(R.id.lv_developer2);
 
-        ArrayList<Item> arrayList1 = new ArrayList<Item>();
+      /*  ArrayList<Item> arrayList1 = new ArrayList<Item>();*/
         ArrayList<Item> arrayList2 = new ArrayList<Item>();
-        adapter1 = new Team1_Adapter();
-
+       /* adapter1 = new Team1_Adapter();
+*/
         adapter2 = new Team1_Adapter();
-
+/*
         for(int i=0; i<name1.length; i++){
             adapter1.addItem(name1[i],col1[i]);
         }
         lv1.setAdapter(adapter1);
 
-       /* MyAdapter adapter1 = new MyAdapter(this, arrayList1);
-        */
+       *//* MyAdapter adapter1 = new MyAdapter(this, arrayList1);
+        *//*
 
         ViewGroup.LayoutParams params = lv1.getLayoutParams();
         params.height = 300 * 7;
         lv1.setLayoutParams(params);
-        lv1.setAdapter(adapter1);
+        lv1.setAdapter(adapter1);*/
 
-        for(int i=0; i<name1.length; i++){
+        for(int i=0; i<name2.length; i++){
             adapter2.addItem(name2[i],col2[i]);
         }
         lv2.setAdapter(adapter2);
@@ -108,8 +108,8 @@ public class Developer extends ApplicationBase{
          */
 
         ViewGroup.LayoutParams params2 = lv2.getLayoutParams();
-        params.height = 300 * 7;
-        lv2.setLayoutParams(params);
+        params2.height = 300 * 7;
+        lv2.setLayoutParams(params2);
         lv2.setAdapter(adapter2);
 
 
